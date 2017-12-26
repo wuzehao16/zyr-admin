@@ -44,7 +44,8 @@ class StandardTable extends PureComponent {
     const { selectedRowKeys, totalCallNo } = this.state;
     const { data: { list, pagination }, loading } = this.props;
 
-    const status = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
+    const columnStatus = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
+    const parentColumnStatus = ['金融资讯', '系统消息', '常识讲堂'];
     const onlineStatus = ['是', '否'];
     const contentLabelStatus =['推荐','热点','最新','视频'];
     const columns = [
@@ -58,35 +59,17 @@ class StandardTable extends PureComponent {
       },
       {
         title: '归属栏目',
-        dataIndex: 'callNo',
-        sorter: true,
-        align: 'right',
-        render: val => `${val} 万`,
+        dataIndex: 'parentColumn',
+        render(val) {
+          return `${parentColumnStatus[val]}`
+        },
       },
       {
         title: '栏目名称',
-        dataIndex: 'status',
-        filters: [
-          {
-            text: status[0],
-            value: 0,
-          },
-          {
-            text: status[1],
-            value: 1,
-          },
-          {
-            text: status[2],
-            value: 2,
-          },
-          {
-            text: status[3],
-            value: 3,
-          },
-        ],
+        dataIndex: 'columnStatus',
         render(val) {
           // return <Badge status={statusMap[val]} text={status[val]} />;
-          return `${status[val]}`
+          return `${columnStatus[val]}`
         },
       },
       {
@@ -103,9 +86,16 @@ class StandardTable extends PureComponent {
       {
         title: '是否在线',
         dataIndex: 'online',
-        render(val) {
-          return `${onlineStatus[val]}`
-        },
+        filters: [
+          {
+            text: 'dasdsaf',
+            value: 0,
+          },
+          {
+            text: 'sdfdsf',
+            value: 1,
+          },
+        ],
       },
       {
         title: '固顶截止日期',

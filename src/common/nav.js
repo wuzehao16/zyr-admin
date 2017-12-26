@@ -173,12 +173,12 @@ export const getNavData = app => [
           {
             name: '信息管理',
             path: 'information',
-            component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Content')),
+            component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Information')),
           },
           {
             name: '栏目管理',
             path: 'column',
-            component: dynamicWrapper(app, [], () => import('../routes/Exception/404')),
+            component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Column')),
           },
         ],
       }
