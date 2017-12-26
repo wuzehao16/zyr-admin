@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
 import { Table, Alert, Badge, Divider } from 'antd';
+import { Link } from 'react-router-dom'
 import styles from './index.less';
 
 const statusMap = ['default', 'processing', 'success', 'error'];
@@ -120,7 +121,13 @@ class StandardTable extends PureComponent {
         title: '操作',
         render: () => (
           <div>
-            <a href="">详情</a>
+            <Link to={{
+              pathname: '/content/information/detail',
+              search: '?sort=name',
+              hash: '#the-hash',
+            }}>
+            详情
+          </Link>
             <Divider type="vertical" />
             <a href="">编辑</a>
           </div>

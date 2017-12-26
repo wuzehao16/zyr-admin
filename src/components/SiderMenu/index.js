@@ -43,7 +43,8 @@ export default class SiderMenu extends PureComponent {
       return [];
     }
     return menusData.map((item) => {
-      if (!item.name) {
+      // 三级路由处理
+      if (!item.name || item.isHide) {
         return null;
       }
       let itemPath;
@@ -52,7 +53,7 @@ export default class SiderMenu extends PureComponent {
       } else {
         itemPath = `${parentPath}/${item.path || ''}`.replace(/\/+/g, '/');
       }
-      if (item.children && item.children.some(child => child.name)) {
+      if (item.children && item.children.some(child => child.name && !child.isHide)) {
         return (
           <SubMenu
             title={

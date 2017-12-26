@@ -174,6 +174,14 @@ export const getNavData = app => [
             name: '信息管理',
             path: 'information',
             component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Information')),
+            children: [
+              {
+                name: '详情',
+                path: 'detail',
+                isHide: true,
+                component: dynamicWrapper(app, ['profile'], () => import('../routes/Content/Detail')),
+              },
+            ],
           },
           {
             name: '栏目管理',

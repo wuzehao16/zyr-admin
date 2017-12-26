@@ -100,8 +100,6 @@ class ColumnTable extends PureComponent {
         title: '操作',
         render: () => (
           <div>
-            <a href="">详情</a>
-            <Divider type="vertical" />
             <a href="">编辑</a>
           </div>
         ),
