@@ -22,7 +22,7 @@ describe('Content', () => {
   //     .wait('.ant-layout-sider h1') // should display error
   //     .evaluate(() => document.body.innerHTML)
   //     .end();
-  //   expect(text).toContain('<h1>Ant Design Pro</h1>');
+  //   expect(text).toContain('<h1>众银云测</h1>');
   // });
   // it('should get more search query', async () => {
   //   await page.click()

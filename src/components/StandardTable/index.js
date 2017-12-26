@@ -88,14 +88,17 @@ class StandardTable extends PureComponent {
         dataIndex: 'online',
         filters: [
           {
-            text: 'dasdsaf',
+            text: onlineStatus[0],
             value: 0,
           },
           {
-            text: 'sdfdsf',
+            text: onlineStatus[1],
             value: 1,
           },
         ],
+        render(val) {
+          return `${onlineStatus[val]}`
+        },
       },
       {
         title: '固顶截止日期',

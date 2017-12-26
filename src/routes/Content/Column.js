@@ -16,7 +16,11 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 @Form.create()
 export default class TableList extends PureComponent {
   state = {
-    addInputValue: '',
+    parentColumn: '',
+    columnTitle: '',
+    sort: '',
+    visible: '',
+    columnImg: '',
     modalVisible: false,
     expandForm: false,
     selectedRows: [],
@@ -135,9 +139,32 @@ export default class TableList extends PureComponent {
     });
   }
 
-  handleAddInput = (e) => {
+  parentColumnInput = (e) => {
     this.setState({
-      addInputValue: e.target.value,
+      parentColumn: e.target.value,
+    });
+  }
+
+  columnTitleInput = (e) => {
+    this.setState({
+      columnTitle: e.target.value,
+    });
+  }
+
+  sortInput = (e) => {
+    this.setState({
+      sort: e.target.value,
+    });
+  }
+
+  columnImgInput = (e) => {
+    this.setState({
+      columnImg: e.target.value,
+    });
+  }
+  visibleInput = (value) => {
+    this.setState({
+      visible: value,
     });
   }
 
@@ -145,7 +172,11 @@ export default class TableList extends PureComponent {
     this.props.dispatch({
       type: 'content/add',
       payload: {
-        description: this.state.addInputValue,
+        parentColumn: this.state.parentColumn,
+        columnTitle: this.state.columnTitle,
+        sort: this.state.sort,
+        columnImg: this.state.columnImg,
+        visible: this.state.visible,
       },
     });
 
@@ -235,8 +266,8 @@ export default class TableList extends PureComponent {
               {getFieldDecorator('status1')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="">全部</Option>
-                  <Option value="0">是</Option>
-                  <Option value="1">否</Option>
+                  <Option value="1">是</Option>
+                  <Option value="0">否</Option>
                 </Select>
               )}
             </FormItem>
@@ -268,7 +299,7 @@ export default class TableList extends PureComponent {
 
   render() {
     const { content: { loading: ruleLoading, data } } = this.props;
-    const { selectedRows, modalVisible, addInputValue } = this.state;
+    const { selectedRows, modalVisible, parentColumn, columnTitle, sort, columnImg, visible} = this.state;
 
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -311,7 +342,7 @@ export default class TableList extends PureComponent {
           </div>
         </Card>
         <Modal
-          title="新建规则"
+          title="栏目新增"
           visible={modalVisible}
           onOk={this.handleAdd}
           onCancel={() => this.handleModalVisible()}
@@ -319,9 +350,40 @@ export default class TableList extends PureComponent {
           <FormItem
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 15 }}
-            label="描述"
+            label="父级栏目"
           >
-            <Input placeholder="请输入" onChange={this.handleAddInput} value={addInputValue} />
+            <Input placeholder="请输入" onChange={this.parentColumnInput} value={parentColumn} />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="栏目名称"
+          >
+            <Input placeholder="请输入" onChange={this.columnTitleInput} value={columnTitle} />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="排列顺序"
+          >
+            <Input placeholder="请输入" onChange={this.sortInput} value={sort} />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="是否显示"
+          >
+              <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.visibleInput} >
+                <Option value="0">是</Option>
+                <Option value="1">否</Option>
+              </Select>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="栏目图片"
+          >
+            <Input placeholder="请输入" onChange={this.columnImgInput} value={columnImg} />
           </FormItem>
         </Modal>
       </PageHeaderLayout>

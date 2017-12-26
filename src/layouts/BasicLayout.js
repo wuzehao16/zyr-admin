@@ -58,10 +58,10 @@ class BasicLayout extends React.PureComponent {
   getPageTitle() {
     const { location, getRouteData } = this.props;
     const { pathname } = location;
-    let title = 'Ant Design Pro';
+    let title = '众银云测';
     getRouteData('BasicLayout').forEach((item) => {
       if (item.path === pathname) {
-        title = `${item.name} - Ant Design Pro`;
+        title = `${item.name} - 众银云测`;
       }
     });
     return title;
@@ -120,12 +120,12 @@ class BasicLayout extends React.PureComponent {
             </div>
             <GlobalFooter
               links={[{
-                title: 'Pro 首页',
-                href: 'http://pro.ant.design',
+                title: '众易融',
+                href: 'http://www.zyrbank.com',
                 blankTarget: true,
               }, {
                 title: 'GitHub',
-                href: 'https://github.com/ant-design/ant-design-pro',
+                href: 'https://github.com/wuzehao16/zyr-admin',
                 blankTarget: true,
               }, {
                 title: 'Ant Design',
@@ -134,7 +134,7 @@ class BasicLayout extends React.PureComponent {
               }]}
               copyright={
                 <div>
-                  Copyright <Icon type="copyright" /> 2017 蚂蚁金服体验技术部出品
+                  Copyright <Icon type="copyright" /> 2017 众银云测技术部出品
                 </div>
               }
             />
