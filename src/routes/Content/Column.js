@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Upload} from 'antd';
 import StandardTable from '../../components/ColumnTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -9,6 +9,14 @@ import styles from './TableList.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
+
+const upLoadProps = {
+  action: '//jsonplaceholder.typicode.com/posts/',
+  listType: 'picture',
+  // defaultFileList: [...fileList],
+  className: 'uploadlist-inline',
+};
+
 
 @connect(state => ({
   content: state.content,
@@ -22,9 +30,10 @@ export default class TableList extends PureComponent {
     visible: '',
     columnImg: '',
     modalVisible: false,
+    fileList: [],
     expandForm: false,
     selectedRows: [],
-    formValues: {},
+   formValues: {},
   };
 
   componentDidMount() {
@@ -132,7 +141,6 @@ export default class TableList extends PureComponent {
       });
     });
   }
-
   handleModalVisible = (flag) => {
     this.setState({
       modalVisible: !!flag,
@@ -183,6 +191,13 @@ export default class TableList extends PureComponent {
     message.success('添加成功');
     this.setState({
       modalVisible: false,
+    });
+  }
+
+  onFileChange = (info) => {
+    let fileList = info.fileList;
+    this.setState({
+      fileList: info.fileList,
     });
   }
 
@@ -293,13 +308,14 @@ export default class TableList extends PureComponent {
     );
   }
 
+
   renderForm() {
     return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
   }
 
   render() {
     const { content: { loading: ruleLoading, data } } = this.props;
-    const { selectedRows, modalVisible, parentColumn, columnTitle, sort, columnImg, visible} = this.state;
+    const { selectedRows, modalVisible, parentColumn, columnTitle, sort, columnImg, visible, fileList} = this.state;
 
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -383,8 +399,18 @@ export default class TableList extends PureComponent {
             wrapperCol={{ span: 15 }}
             label="栏目图片"
           >
-            <Input placeholder="请输入" onChange={this.columnImgInput} value={columnImg} />
+
+              <Upload {...upLoadProps} onChange={this.onFileChange}>
+                {fileList.length >= 1 ? null :
+              <Button>
+                <Icon type="upload" /> upload
+              </Button>
+              }
+            </Upload>
+
+            {/* <Input placeholder="请输入" onChange={this.columnImgInput} value={columnImg} /> */}
           </FormItem>
+
         </Modal>
       </PageHeaderLayout>
     );
