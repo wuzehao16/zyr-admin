@@ -176,10 +176,10 @@ export const getNavData = app => [
             component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Information')),
             children: [
               {
-                name: '详情',
-                path: 'detail',
+                name: '新增',
+                path: 'add',
                 isHide: true,
-                component: dynamicWrapper(app, ['profile'], () => import('../routes/Content/Detail')),
+                component: dynamicWrapper(app, ['form'], () => import('../routes/Content/AddInformation')),
               },
             ],
           },

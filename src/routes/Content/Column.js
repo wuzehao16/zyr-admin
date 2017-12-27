@@ -33,7 +33,7 @@ export default class TableList extends PureComponent {
     fileList: [],
     expandForm: false,
     selectedRows: [],
-   formValues: {},
+    formValues: {},
   };
 
   componentDidMount() {
@@ -399,7 +399,6 @@ export default class TableList extends PureComponent {
             wrapperCol={{ span: 15 }}
             label="栏目图片"
           >
-
               <Upload {...upLoadProps} onChange={this.onFileChange}>
                 {fileList.length >= 1 ? null :
               <Button>
@@ -407,8 +406,6 @@ export default class TableList extends PureComponent {
               </Button>
               }
             </Upload>
-
-            {/* <Input placeholder="请输入" onChange={this.columnImgInput} value={columnImg} /> */}
           </FormItem>
 
         </Modal>
