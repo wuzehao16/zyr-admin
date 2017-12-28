@@ -166,9 +166,9 @@ export const getNavData = app => [
         ],
       },
       {
-        name: '内容管理',             // 页面名称，会展示在菜单栏中
-        path: 'content',               // 匹配的路由
-        icon: 'book',              // 页面图标，会展示在菜单栏中
+        name: '内容管理', // 页面名称，会展示在菜单栏中
+        path: 'content', // 匹配的路由
+        icon: 'book', // 页面图标，会展示在菜单栏中
         children: [
           {
             name: '信息管理',
@@ -189,7 +189,7 @@ export const getNavData = app => [
             component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Column')),
           },
         ],
-      }
+      },
     ],
   },
   {

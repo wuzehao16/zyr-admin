@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Upload} from 'antd';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, Modal, message, Upload } from 'antd';
 import StandardTable from '../../components/ColumnTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -195,7 +195,7 @@ export default class TableList extends PureComponent {
   }
 
   onFileChange = (info) => {
-    let fileList = info.fileList;
+    const fileList = info.fileList;
     this.setState({
       fileList: info.fileList,
     });
@@ -315,7 +315,7 @@ export default class TableList extends PureComponent {
 
   render() {
     const { content: { loading: ruleLoading, data } } = this.props;
-    const { selectedRows, modalVisible, parentColumn, columnTitle, sort, columnImg, visible, fileList} = this.state;
+    const { selectedRows, modalVisible, parentColumn, columnTitle, sort, columnImg, visible, fileList } = this.state;
 
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -389,18 +389,18 @@ export default class TableList extends PureComponent {
             wrapperCol={{ span: 15 }}
             label="是否显示"
           >
-              <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.visibleInput} >
-                <Option value="0">是</Option>
-                <Option value="1">否</Option>
-              </Select>
+            <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.visibleInput} >
+              <Option value="0">是</Option>
+              <Option value="1">否</Option>
+            </Select>
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 15 }}
             label="栏目图片"
           >
-              <Upload {...upLoadProps} onChange={this.onFileChange}>
-                {fileList.length >= 1 ? null :
+            <Upload {...upLoadProps} onChange={this.onFileChange}>
+              {fileList.length >= 1 ? null :
               <Button>
                 <Icon type="upload" /> upload
               </Button>

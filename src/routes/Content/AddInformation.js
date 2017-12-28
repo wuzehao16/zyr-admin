@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Upload
+  Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Upload,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './AddInformation.less';
@@ -78,10 +78,10 @@ export default class BasicForms extends PureComponent {
             >
               {getFieldDecorator('column')(
                 <Select defaultValue="lucy">
-                 <Option value="jack">Jack</Option>
-                 <Option value="lucy">Lucy</Option>
-                 <Option value="Yiminghe">yiminghe</Option>
-               </Select>
+                  <Option value="jack">Jack</Option>
+                  <Option value="lucy">Lucy</Option>
+                  <Option value="Yiminghe">yiminghe</Option>
+                </Select>
               )}
             </FormItem>
             <FormItem
@@ -102,10 +102,10 @@ export default class BasicForms extends PureComponent {
             >
               {getFieldDecorator('informationTitle')(
                 <Select defaultValue="lucy" >
-                 <Option value="jack">Jack</Option>
-                 <Option value="lucy">Lucy</Option>
-                 <Option value="Yiminghe">yiminghe</Option>
-               </Select>
+                  <Option value="jack">Jack</Option>
+                  <Option value="lucy">Lucy</Option>
+                  <Option value="Yiminghe">yiminghe</Option>
+                </Select>
               )}
             </FormItem>
             <FormItem
@@ -114,9 +114,9 @@ export default class BasicForms extends PureComponent {
             >
               {getFieldDecorator('enable')(
                 <Select defaultValue="lucy">
-                 <Option value="1">是</Option>
-                 <Option value="0">否</Option>
-               </Select>
+                  <Option value="1">是</Option>
+                  <Option value="0">否</Option>
+                </Select>
               )}
             </FormItem>
             <FormItem
@@ -140,7 +140,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请选择起止日期',
                 }],
               })(
-                <DatePicker style={{ width: '100%' }}  />
+                <DatePicker style={{ width: '100%' }} />
               )}
             </FormItem>
             <FormItem
@@ -159,8 +159,8 @@ export default class BasicForms extends PureComponent {
               label="栏目图片"
               {...formItemLayout}
             >
-                <Upload {...upLoadProps} onChange={this.onFileChange}>
-                  {fileList.length >= 1 ? null :
+              <Upload {...upLoadProps} onChange={this.onFileChange}>
+                {fileList.length >= 1 ? null :
                 <Button>
                   <Icon type="upload" /> upload
                 </Button>
@@ -186,8 +186,8 @@ export default class BasicForms extends PureComponent {
               label="代表图片"
               {...formItemLayout}
             >
-                <Upload {...upLoadProps} onChange={this.onFileChange}>
-                  {fileList.length >= 1 ? null :
+              <Upload {...upLoadProps} onChange={this.onFileChange}>
+                {fileList.length >= 1 ? null :
                 <Button>
                   <Icon type="upload" /> upload
                 </Button>
@@ -209,6 +209,7 @@ export default class BasicForms extends PureComponent {
                 )}
               </div>
             </FormItem>
+
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交

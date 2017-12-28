@@ -1,11 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
-import { Link } from 'react-router-dom';
-import { BrowserRouter  } from 'react-router';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu } from 'antd';
+import PropTypes from 'prop-types';
 import StandardTable from '../../components/InformationTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import PropTypes from "prop-types";
 import styles from './TableList.less';
 
 const FormItem = Form.Item;
@@ -18,14 +16,12 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 @Form.create()
 export default class TableList extends PureComponent {
   static contextTypes = {
-    router: PropTypes.object
+    router: PropTypes.object,
   }
-  constructor(props, context) {
-     super(props, context);
-  }
+  // constructor(props, context) {
+  //   super(props, context);
+  // }
   state = {
-    addInputValue: '',
-    modalVisible: false,
     expandForm: false,
     selectedRows: [],
     formValues: {},
@@ -137,7 +133,7 @@ export default class TableList extends PureComponent {
     });
   }
   toAdd = () => {
-    this.context.router.history.push("/content/information/add");
+    this.context.router.history.push('/content/information/add');
   }
 
   renderSimpleForm() {
@@ -253,7 +249,7 @@ export default class TableList extends PureComponent {
 
   render() {
     const { content: { loading: ruleLoading, data } } = this.props;
-    const { selectedRows, modalVisible, addInputValue } = this.state;
+    const { selectedRows } = this.state;
 
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -270,9 +266,9 @@ export default class TableList extends PureComponent {
               {this.renderForm()}
             </div>
             <div className={styles.tableListOperator}>
-                <Button icon="plus" type="primary" onClick={() => this.toAdd()}>
+              <Button icon="plus" type="primary" onClick={() => this.toAdd()}>
                     新建
-                </Button>
+              </Button>
               {
                 selectedRows.length > 0 && (
                   <span>

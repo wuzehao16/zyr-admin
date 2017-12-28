@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
 import { Table, Alert, Badge, Divider } from 'antd';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import styles from './index.less';
 
 const statusMap = ['default', 'processing', 'success', 'error'];
@@ -48,7 +48,7 @@ class StandardTable extends PureComponent {
     const columnStatus = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
     const parentColumnStatus = ['金融资讯', '系统消息', '常识讲堂'];
     const onlineStatus = ['是', '否'];
-    const contentLabelStatus =['推荐','热点','最新','视频'];
+    const contentLabelStatus = ['推荐', '热点', '最新', '视频'];
     const columns = [
       {
         title: '序号',
@@ -62,7 +62,7 @@ class StandardTable extends PureComponent {
         title: '归属栏目',
         dataIndex: 'parentColumn',
         render(val) {
-          return `${parentColumnStatus[val]}`
+          return `${parentColumnStatus[val]}`;
         },
       },
       {
@@ -70,14 +70,14 @@ class StandardTable extends PureComponent {
         dataIndex: 'columnStatus',
         render(val) {
           // return <Badge status={statusMap[val]} text={status[val]} />;
-          return `${columnStatus[val]}`
+          return `${columnStatus[val]}`;
         },
       },
       {
         title: '内容标签',
         dataIndex: 'contentLabel',
         render(val) {
-          return `${contentLabelStatus[val]}`
+          return `${contentLabelStatus[val]}`;
         },
       },
       {
@@ -98,7 +98,7 @@ class StandardTable extends PureComponent {
           },
         ],
         render(val) {
-          return `${onlineStatus[val]}`
+          return `${onlineStatus[val]}`;
         },
       },
       {
@@ -125,9 +125,10 @@ class StandardTable extends PureComponent {
               pathname: '/content/information/detail',
               search: '?sort=name',
               hash: '#the-hash',
-            }}>
+            }}
+            >
             详情
-          </Link>
+            </Link>
             <Divider type="vertical" />
             <a href="">编辑</a>
           </div>

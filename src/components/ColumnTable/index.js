@@ -47,7 +47,7 @@ class ColumnTable extends PureComponent {
     const columnStatus = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
     const parentColumnStatus = ['金融资讯', '系统消息', '常识讲堂'];
     const onlineStatus = ['是', '否'];
-    const contentLabelStatus =['推荐','热点','最新','视频'];
+    const contentLabelStatus = ['推荐', '热点', '最新', '视频'];
     const columns = [
       {
         title: 'ID',
@@ -57,7 +57,7 @@ class ColumnTable extends PureComponent {
         title: '上级栏目',
         dataIndex: 'parentColumn',
         render(val) {
-          return `${parentColumnStatus[val]}`
+          return `${parentColumnStatus[val]}`;
         },
       },
       {
@@ -65,14 +65,14 @@ class ColumnTable extends PureComponent {
         dataIndex: 'columnStatus',
         render(val) {
           // return <Badge columnStatus={statusMap[val]} text={columnStatus[val]} />;
-          return `${columnStatus[val]}`
+          return `${columnStatus[val]}`;
         },
       },
       {
         title: '内容标签',
         dataIndex: 'contentLabel',
         render(val) {
-          return `${contentLabelStatus[val]}`
+          return `${contentLabelStatus[val]}`;
         },
       },
       {
@@ -83,7 +83,7 @@ class ColumnTable extends PureComponent {
         title: '是否显示',
         dataIndex: 'online',
         render(val) {
-          return `${onlineStatus[val]}`
+          return `${onlineStatus[val]}`;
         },
       },
       {
