@@ -222,7 +222,7 @@ export default class TableList extends PureComponent {
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="内容标题">
-              {getFieldDecorator('status')(
+              {getFieldDecorator('title')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
@@ -262,14 +262,14 @@ export default class TableList extends PureComponent {
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="内容标题">
-              {getFieldDecorator('status')(
+              {getFieldDecorator('title')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="内容标签">
-              {getFieldDecorator('content2')(
+              {getFieldDecorator('contentLable')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
@@ -278,7 +278,7 @@ export default class TableList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="是否在线">
-              {getFieldDecorator('status1')(
+              {getFieldDecorator('online')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="">全部</Option>
                   <Option value="1">是</Option>

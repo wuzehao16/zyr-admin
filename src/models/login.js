@@ -10,6 +10,7 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
+      console.log(payload)
       yield put({
         type: 'changeSubmitting',
         payload: true,
