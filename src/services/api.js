@@ -33,32 +33,6 @@ export async function addRule(params) {
   });
 }
 
-// 内容管理
-
-export async function queryContent(params) {
-  return request(`/api/content?${stringify(params)}`);
-}
-
-export async function removeContent(params) {
-  return request('/api/content', {
-    method: 'POST',
-    body: {
-      ...params,
-      method: 'delete',
-    },
-  });
-}
-
-export async function addContent(params) {
-  return request('/api/content', {
-    method: 'POST',
-    body: {
-      ...params,
-      method: 'post',
-    },
-  });
-}
-
 export async function fakeSubmitForm(params) {
   return request('/api/forms', {
     method: 'POST',

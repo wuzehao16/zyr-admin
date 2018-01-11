@@ -1,20 +1,16 @@
 import React, { PureComponent } from 'react';
-import { Layout, Menu, Icon, Spin, Tag, Dropdown, Avatar, message } from 'antd';
+import { Layout, Menu, Icon, Spin, Tag, Dropdown, Avatar, Divider } from 'antd';
 import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import Debounce from 'lodash-decorators/debounce';
-import NoticeIcon from '../../components/NoticeIcon';
-import HeaderSearch from '../../components/HeaderSearch';
+import { Link } from 'dva/router';
+import NoticeIcon from '../NoticeIcon';
+import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 
 const { Header } = Layout;
 
 export default class GlobalHeader extends PureComponent {
-  componentDidMount() {
-    this.props.dispatch({
-      type: 'user/fetchCurrent',
-    });
-  }
   componentWillUnmount() {
     this.triggerResizeEvent.cancel();
   }
@@ -45,33 +41,9 @@ export default class GlobalHeader extends PureComponent {
     });
     return groupBy(newNotices, 'type');
   }
-  handleNoticeClear = (type) => {
-    message.success(`清空了${type}`);
-    this.props.dispatch({
-      type: 'global/clearNotices',
-      payload: type,
-    });
-  }
-  handleNoticeVisibleChange = (visible) => {
-    if (visible) {
-      this.props.dispatch({
-        type: 'global/fetchNotices',
-      });
-    }
-  }
-  handleMenuClick = ({ key }) => {
-    if (key === 'logout') {
-      this.props.dispatch({
-        type: 'login/logout',
-      });
-    }
-  }
   toggle = () => {
-    const { collapsed } = this.props;
-    this.props.dispatch({
-      type: 'global/changeLayoutCollapsed',
-      payload: !collapsed,
-    });
+    const { collapsed, onCollapse } = this.props;
+    onCollapse(!collapsed);
     this.triggerResizeEvent();
   }
   @Debounce(600)
@@ -82,10 +54,11 @@ export default class GlobalHeader extends PureComponent {
   }
   render() {
     const {
-      currentUser, collapsed, fetchingNotices,
+      currentUser, collapsed, fetchingNotices, isMobile, logo,
+      onNoticeVisibleChange, onMenuClick, onNoticeClear,
     } = this.props;
     const menu = (
-      <Menu className={styles.menu} selectedKeys={[]} onClick={this.handleMenuClick}>
+      <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         <Menu.Item disabled><Icon type="user" />个人中心</Menu.Item>
         <Menu.Item disabled><Icon type="setting" />设置</Menu.Item>
         <Menu.Divider />
@@ -95,6 +68,16 @@ export default class GlobalHeader extends PureComponent {
     const noticeData = this.getNoticeData();
     return (
       <Header className={styles.header}>
+        {isMobile && (
+          [
+            (
+              <Link to="/" className={styles.logo} key="logo">
+                <img src={logo} alt="logo" width="32" />
+              </Link>
+            ),
+            <Divider type="vertical" key="line" />,
+          ]
+        )}
         <Icon
           className={styles.trigger}
           type={collapsed ? 'menu-unfold' : 'menu-fold'}
@@ -118,8 +101,8 @@ export default class GlobalHeader extends PureComponent {
             onItemClick={(item, tabProps) => {
               console.log(item, tabProps); // eslint-disable-line
             }}
-            onClear={this.handleNoticeClear}
-            onPopupVisibleChange={this.handleNoticeVisibleChange}
+            onClear={onNoticeClear}
+            onPopupVisibleChange={onNoticeVisibleChange}
             loading={fetchingNotices}
             popupAlign={{ offset: [20, -16] }}
           >
@@ -146,7 +129,7 @@ export default class GlobalHeader extends PureComponent {
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>
                 <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
-                {currentUser.name}
+                <span className={styles.name}>{currentUser.name}</span>
               </span>
             </Dropdown>
           ) : <Spin size="small" style={{ marginLeft: 8 }} />}

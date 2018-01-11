@@ -14,7 +14,7 @@ function getBreadcrumb(breadcrumbNameMap, url) {
   if (breadcrumbNameMap[urlWithoutSplash]) {
     return breadcrumbNameMap[urlWithoutSplash];
   }
-  let breadcrumb = '';
+  let breadcrumb = {};
   Object.keys(breadcrumbNameMap).forEach((item) => {
     const itemRegExpStr = `^${item.replace(/:[\w-]+/g, '[\\w-]+')}$`;
     const itemRegExp = new RegExp(itemRegExpStr);
@@ -60,47 +60,11 @@ export default class PageHeader extends PureComponent {
     const {
       title, logo, action, content, extraContent,
       breadcrumbList, tabList, className, linkElement = 'a',
+      activeTabKey,
     } = this.props;
     const clsString = classNames(styles.pageHeader, className);
     let breadcrumb;
-    if (routes && params) {
-      breadcrumb = (
-        <Breadcrumb
-          className={styles.breadcrumb}
-          routes={routes.filter(route => route.breadcrumbName)}
-          params={params}
-          itemRender={this.itemRender}
-        />
-      );
-    } else if (location && location.pathname && (!breadcrumbList)) {
-      const pathSnippets = location.pathname.split('/').filter(i => i);
-      const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-        const currentBreadcrumb = getBreadcrumb(breadcrumbNameMap, url);
-        const isLinkable = (index !== pathSnippets.length - 1) && currentBreadcrumb.component;
-        return (
-          <Breadcrumb.Item key={url}>
-            {createElement(
-              isLinkable ? linkElement : 'span',
-              { [linkElement === 'a' ? 'href' : 'to']: url },
-              currentBreadcrumb.name || url,
-            )}
-          </Breadcrumb.Item>
-        );
-      });
-      const breadcrumbItems = [(
-        <Breadcrumb.Item key="home">
-          {createElement(linkElement, {
-            [linkElement === 'a' ? 'href' : 'to']: '/',
-          }, '首页')}
-        </Breadcrumb.Item>
-      )].concat(extraBreadcrumbItems);
-      breadcrumb = (
-        <Breadcrumb className={styles.breadcrumb}>
-          {breadcrumbItems}
-        </Breadcrumb>
-      );
-    } else if (breadcrumbList && breadcrumbList.length) {
+    if (breadcrumbList && breadcrumbList.length) {
       breadcrumb = (
         <Breadcrumb className={styles.breadcrumb}>
           {
@@ -116,11 +80,58 @@ export default class PageHeader extends PureComponent {
           }
         </Breadcrumb>
       );
+    } else if (routes && params) {
+      breadcrumb = (
+        <Breadcrumb
+          className={styles.breadcrumb}
+          routes={routes.filter(route => route.breadcrumbName)}
+          params={params}
+          itemRender={this.itemRender}
+        />
+      );
+    } else if (location && location.pathname) {
+      const pathSnippets = location.pathname.split('/').filter(i => i);
+      const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+        const currentBreadcrumb = getBreadcrumb(breadcrumbNameMap, url);
+        const isLinkable = (index !== pathSnippets.length - 1) && currentBreadcrumb.component;
+        return currentBreadcrumb.name && !currentBreadcrumb.hideInBreadcrumb ? (
+          <Breadcrumb.Item key={url}>
+            {createElement(
+              isLinkable ? linkElement : 'span',
+              { [linkElement === 'a' ? 'href' : 'to']: url },
+              currentBreadcrumb.name,
+            )}
+          </Breadcrumb.Item>
+        ) : null;
+      });
+      const breadcrumbItems = [(
+        <Breadcrumb.Item key="home">
+          {createElement(linkElement, {
+            [linkElement === 'a' ? 'href' : 'to']: '/',
+          }, '首页')}
+        </Breadcrumb.Item>
+      )].concat(extraBreadcrumbItems);
+      breadcrumb = (
+        <Breadcrumb className={styles.breadcrumb}>
+          {breadcrumbItems}
+        </Breadcrumb>
+      );
     } else {
       breadcrumb = null;
     }
 
-    const tabDefaultValue = tabList && (tabList.filter(item => item.default)[0] || tabList[0]);
+    let tabDefaultValue;
+    if (activeTabKey !== undefined && tabList) {
+      tabDefaultValue = tabList.filter(item => item.default)[0] || tabList[0];
+    }
+
+    const activeKeyProps = {
+      defaultActiveKey: tabDefaultValue && tabDefaultValue.key,
+    };
+    if (activeTabKey !== undefined) {
+      activeKeyProps.activeKey = activeTabKey;
+    }
 
     return (
       <div className={clsString}>
@@ -140,16 +151,17 @@ export default class PageHeader extends PureComponent {
         </div>
         {
           tabList &&
-          tabList.length &&
-          <Tabs
-            className={styles.tabs}
-            defaultActiveKey={(tabDefaultValue && tabDefaultValue.key)}
-            onChange={this.onChange}
-          >
-            {
-              tabList.map(item => <TabPane tab={item.tab} key={item.key} />)
-            }
-          </Tabs>
+          tabList.length && (
+            <Tabs
+              className={styles.tabs}
+              {...activeKeyProps}
+              onChange={this.onChange}
+            >
+              {
+                tabList.map(item => <TabPane tab={item.tab} key={item.key} />)
+              }
+            </Tabs>
+          )
         }
       </div>
     );

@@ -1,47 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, Route } from 'dva/router';
+import { Link, Redirect, Switch, Route } from 'dva/router';
 import DocumentTitle from 'react-document-title';
 import { Icon } from 'antd';
 import GlobalFooter from '../components/GlobalFooter';
 import styles from './UserLayout.less';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo.svg';
+import { getRoutes } from '../utils/utils';
 
 const links = [{
+  key: 'help',
   title: '帮助',
   href: '',
 }, {
+  key: 'privacy',
   title: '隐私',
   href: '',
 }, {
+  key: 'terms',
   title: '条款',
   href: '',
 }];
 
-const copyright = <div>Copyright <Icon type="copyright" /> 2017 众银云测技术部出品</div>;
+const copyright = <div>Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品</div>;
 
 class UserLayout extends React.PureComponent {
-  static childContextTypes = {
-    location: PropTypes.object,
-  }
-  getChildContext() {
-    const { location } = this.props;
-    return { location };
-  }
   getPageTitle() {
-    const { getRouteData, location } = this.props;
+    const { routerData, location } = this.props;
     const { pathname } = location;
-    let title = '众银云测';
-    getRouteData('UserLayout').forEach((item) => {
-      if (item.path === pathname) {
-        title = `${item.name} - 众银云测`;
-      }
-    });
+    let title = 'Ant Design Pro';
+    if (routerData[pathname] && routerData[pathname].name) {
+      title = `${routerData[pathname].name} - Ant Design Pro`;
+    }
     return title;
   }
   render() {
-    const { getRouteData } = this.props;
-
+    const { routerData, match } = this.props;
     return (
       <DocumentTitle title={this.getPageTitle()}>
         <div className={styles.container}>
@@ -49,23 +42,24 @@ class UserLayout extends React.PureComponent {
             <div className={styles.header}>
               <Link to="/">
                 <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>众银云测</span>
+                <span className={styles.title}>Ant Design</span>
               </Link>
             </div>
-            <div className={styles.desc}>众银云测是深圳最具影响力的金融公司 </div>
+            <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
           </div>
-          {
-            getRouteData('UserLayout').map(item =>
+          <Switch>
+            {getRoutes(match.path, routerData).map(item =>
               (
                 <Route
-                  exact={item.exact}
-                  key={item.path}
+                  key={item.key}
                   path={item.path}
                   component={item.component}
+                  exact={item.exact}
                 />
               )
-            )
-          }
+            )}
+            <Redirect exact from="/user" to="/user/login" />
+          </Switch>
           <GlobalFooter className={styles.footer} links={links} copyright={copyright} />
         </div>
       </DocumentTitle>

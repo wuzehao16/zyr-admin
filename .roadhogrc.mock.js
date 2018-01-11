@@ -7,6 +7,7 @@ import { getProfileBasicData } from './mock/profile';
 import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
 import { getContent, postContent} from './mock/content'
+import { getSystemUser, postSystemUser} from './mock/systemUser';
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -59,6 +60,16 @@ const proxy = {
     },
     $body: postRule,
   },
+  'GET /api/systemUser': getSystemUser,
+  'POST /api/systemUser': {
+    $params: {
+      pageSize: {
+        desc: '分页',
+        exp: 2,
+      },
+    },
+    $body: postSystemUser,
+  },
   'POST /api/forms': (req, res) => {
     res.send({ message: 'Ok' });
   },
@@ -77,7 +88,7 @@ const proxy = {
         type,
         currentAuthority: 'admin'
       });
-      return;
+      return ;
     }
     if(password === '123456' && userName === 'user'){
       res.send({
@@ -85,7 +96,7 @@ const proxy = {
         type,
         currentAuthority: 'user'
       });
-      return;
+      return ;
     }
     res.send({
       status: 'error',
@@ -94,9 +105,36 @@ const proxy = {
     });
   },
   'POST /api/register': (req, res) => {
-    res.send({ status: 'ok', currentAthority: 'user' });
+    res.send({ status: 'ok', currentAuthority: 'user' });
   },
   'GET /api/notices': getNotices,
+  'GET /api/500': (req, res) => {
+    res.status(500).send({
+      "timestamp": 1513932555104,
+      "status": 500,
+      "error": "error",
+      "message": "error",
+      "path": "/base/category/list"
+    });
+  },
+  'GET /api/404': (req, res) => {
+    res.status(404).send({
+      "timestamp": 1513932643431,
+      "status": 404,
+      "error": "Not Found",
+      "message": "No message available",
+      "path": "/base/category/list/2121212"
+    });
+  },
+  'GET /api/403': (req, res) => {
+    res.status(403).send({
+      "timestamp": 1513932555104,
+      "status": 403,
+      "error": "Unauthorized",
+      "message": "Unauthorized",
+      "path": "/base/category/list"
+    });
+  },
   'GET /api/content': getContent,
   'POST /api/content': {
     $params: {

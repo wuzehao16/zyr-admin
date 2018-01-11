@@ -1,4 +1,4 @@
-import { queryContent, removeContent, addContent } from '../services/api';
+import { queryContent, removeContent, addContent } from '../services/content';
 
 export default {
   namespace: 'content',

@@ -14,8 +14,9 @@ const FormItem = Form.Item;
 
 /* eslint react/no-array-index-key: 0 */
 @Form.create()
-@connect(state => ({
-  list: state.list,
+@connect(({ list, loading }) => ({
+  list,
+  loading: loading.models.list,
 }))
 export default class CoverCardList extends PureComponent {
   componentDidMount() {
@@ -46,7 +47,7 @@ export default class CoverCardList extends PureComponent {
   }
 
   render() {
-    const { list: { list = [], loading }, form } = this.props;
+    const { list: { list = [] }, loading, form } = this.props;
     const { getFieldDecorator } = form;
 
     const cardList = list ? (
@@ -124,7 +125,7 @@ export default class CoverCardList extends PureComponent {
               grid
               last
             >
-              <Row gutter={24}>
+              <Row gutter={16}>
                 <Col lg={8} md={10} sm={10} xs={24}>
                   <FormItem
                     {...formItemLayout}

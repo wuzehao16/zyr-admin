@@ -1,7 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import moment from 'moment';
 import { Table, Alert, Badge, Divider } from 'antd';
-import { Link } from 'react-router-dom';
 import styles from './index.less';
 
 const statusMap = ['default', 'processing', 'success', 'error'];
@@ -45,93 +44,63 @@ class StandardTable extends PureComponent {
     const { selectedRowKeys, totalCallNo } = this.state;
     const { data: { list, pagination }, loading } = this.props;
 
-    const columnStatus = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
-    const parentColumnStatus = ['金融资讯', '系统消息', '常识讲堂'];
-    const onlineStatus = ['是', '否'];
-    const contentLabelStatus = ['推荐', '热点', '最新', '视频'];
+    const status = ['关闭', '运行中', '已上线', '异常'];
+
     const columns = [
       {
-        title: '序号',
+        title: '规则编号',
         dataIndex: 'no',
       },
       {
-        title: '内容标题',
+        title: '描述',
         dataIndex: 'description',
       },
       {
-        title: '归属栏目',
-        dataIndex: 'parentColumn',
-        render(val) {
-          return `${parentColumnStatus[val]}`;
-        },
+        title: '服务调用次数',
+        dataIndex: 'callNo',
+        sorter: true,
+        align: 'right',
+        render: val => `${val} 万`,
       },
       {
-        title: '栏目名称',
-        dataIndex: 'columnStatus',
-        render(val) {
-          // return <Badge status={statusMap[val]} text={status[val]} />;
-          return `${columnStatus[val]}`;
-        },
-      },
-      {
-        title: '内容标签',
-        dataIndex: 'contentLabel',
-        render(val) {
-          return `${contentLabelStatus[val]}`;
-        },
-      },
-      {
-        title: '固顶级别',
-        dataIndex: 'topIndex',
-      },
-      {
-        title: '是否在线',
-        dataIndex: 'online',
+        title: '状态',
+        dataIndex: 'status',
         filters: [
           {
-            text: onlineStatus[0],
+            text: status[0],
             value: 0,
           },
           {
-            text: onlineStatus[1],
+            text: status[1],
             value: 1,
+          },
+          {
+            text: status[2],
+            value: 2,
+          },
+          {
+            text: status[3],
+            value: 3,
           },
         ],
         render(val) {
-          return `${onlineStatus[val]}`;
+          return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
-        title: '固顶截止日期',
+        title: '更新时间',
         dataIndex: 'updatedAt',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
-      {
-        title: '创建人',
-        dataIndex: 'creator',
-      },
-      {
-        title: '创建时间',
-        dataIndex: 'createdAt',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '操作',
         render: () => (
-          <div>
-            <Link to={{
-              pathname: '/content/information/detail',
-              search: '?sort=name',
-              hash: '#the-hash',
-            }}
-            >
-            详情
-            </Link>
+          <Fragment>
+            <a href="">配置</a>
             <Divider type="vertical" />
-            <a href="">编辑</a>
-          </div>
+            <a href="">订阅警报</a>
+          </Fragment>
         ),
       },
     ];
@@ -152,7 +121,7 @@ class StandardTable extends PureComponent {
 
     return (
       <div className={styles.standardTable}>
-        {/* <div className={styles.tableAlert}>
+        <div className={styles.tableAlert}>
           <Alert
             message={(
               <div>
@@ -164,7 +133,7 @@ class StandardTable extends PureComponent {
             type="info"
             showIcon
           />
-        </div> */}
+        </div>
         <Table
           loading={loading}
           rowKey={record => record.key}
