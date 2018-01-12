@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { routerRedux, Link } from 'dva/router';
-import { Form, Input, Button, Select, Row, Col, Popover, Progress } from 'antd';
+import { Form, Input, Button, Select, Row, Col, Popover, Progress, Cascader, Upload, Icon, Modal } from 'antd';
+import options from '../../common/addressOptions';
 import styles from './Register.less';
 
 const FormItem = Form.Item;
@@ -19,6 +20,14 @@ const passwordProgressMap = {
   pass: 'normal',
   pool: 'exception',
 };
+// const fileList = [{
+//   uid: -1,
+//   name: 'xxx.png',
+//   status: 'done',
+//   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+//   thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+// }];
+// const fileList = [];
 
 @connect(({ register, loading }) => ({
   register,
@@ -32,6 +41,9 @@ export default class Register extends Component {
     visible: false,
     help: '',
     prefix: '86',
+    previewVisible: false,
+    previewImage: '',
+    fileList:[]
   };
 
   componentWillReceiveProps(nextProps) {
@@ -69,6 +81,9 @@ export default class Register extends Component {
   };
 
   handleSubmit = (e) => {
+    const { form } = this.props;
+    const value = form.getFieldValue('city');
+    console.log(value)
     e.preventDefault();
     this.props.form.validateFields({ force: true }, (err, values) => {
       if (!err) {
@@ -147,17 +162,151 @@ export default class Register extends Component {
       </div>
     ) : null;
   };
+  handleCancel = () => this.setState({ previewVisible: false })
 
+  handlePreview = (file) => {
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true,
+    });
+  }
+
+  handleChange = ({ fileList }) => this.setState({ fileList })
   render() {
     const { form, submitting } = this.props;
-    const { getFieldDecorator } = form;
-    const { count, prefix } = this.state;
+    const { getFieldDecorator, getFieldValue } = form;
+    const { count, prefix, fileList, previewVisible, previewImage, } = this.state;
+    const uploadButton = (
+      <Button>
+        <Icon type="upload" /> 上传机构logo
+      </Button>
+    );
     return (
       <div className={styles.main}>
         <h3>注册</h3>
         <Form onSubmit={this.handleSubmit}>
           <FormItem>
-            {getFieldDecorator('mail', {
+            {getFieldDecorator('city',{
+              rules: [
+                {
+                  required: true,
+                  message: '请选择所在城市！',
+                },
+              ],
+            })(
+              <Cascader options={options} placeholder="所在城市" />
+            )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator('institutionName',{
+              rules: [
+                {
+                  required: true,
+                  message: '请选择机构类型！',
+                },
+              ],
+            })(
+              <Select placeholder="机构类型">
+                <Option value="0">关闭</Option>
+                <Option value="1">运行中</Option>
+              </Select>
+            )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator('manageName', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输选择机构名称！',
+                },
+              ],
+            })(
+              <Select placeholder="机构名称"
+                >
+                <Option value="2">平安银行</Option>
+                <Option value="1">华夏银行</Option>
+                <Option value="">其他</Option>
+              </Select>
+            )}
+          </FormItem>
+          <FormItem
+            style={{
+              display: getFieldValue('manageName') === '' ? 'block' : 'none',
+            }}
+            >
+            {getFieldDecorator('otherManageName')(
+              <Input
+                placeholder="机构名称"
+              />
+            )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator('sublInstitution')(
+              <Input type="text" placeholder="下属机构"/>
+            )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator('contactsPeople')}
+            <Input type="text" placeholder="联系人"/>
+          </FormItem>
+          <FormItem>
+            <InputGroup compact>
+              <Select
+                value={prefix}
+                onChange={this.changePrefix}
+                style={{ width: '20%' }}
+              >
+                <Option value="86">+86</Option>
+              </Select>
+              {getFieldDecorator('contactPhone', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请输入手机号！',
+                  },
+                  {
+                    pattern: /^1\d{10}$/,
+                    message: '手机号格式错误！',
+                  },
+                ],
+              })(
+                <Input
+                  style={{ width: '80%' }}
+                  placeholder="11位手机号"
+                />
+              )}
+            </InputGroup>
+          </FormItem>
+          <FormItem>
+            <Upload
+              action= '//jsonplaceholder.typicode.com/posts/'
+              listType= 'picture'
+              fileList= {fileList}
+              onPreview={this.handlePreview}
+              onChange={this.handleChange}
+            >
+              {fileList.length >= 1 ? null : uploadButton}
+            </Upload>
+            <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+             <img alt="example" style={{ width: '100%' }} src={previewImage} />
+           </Modal>
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator('loginAccount', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入登陆账号！',
+                },
+                {
+                  pattern: /^[a-zA-Z0-9_]{6,18}$/,
+                  message: '请输入6-18位字母或数字！',
+                },
+              ],
+            })(<Input size="large" placeholder="登陆账号"/>)}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator('contactEmail', {
               rules: [
                 {
                   required: true,
@@ -213,38 +362,7 @@ export default class Register extends Component {
               ],
             })(<Input size="large" type="password" placeholder="确认密码" />)}
           </FormItem>
-          <FormItem>
-            <InputGroup compact>
-              <Select
-                size="large"
-                value={prefix}
-                onChange={this.changePrefix}
-                style={{ width: '20%' }}
-              >
-                <Option value="86">+86</Option>
-                <Option value="87">+87</Option>
-              </Select>
-              {getFieldDecorator('mobile', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入手机号！',
-                  },
-                  {
-                    pattern: /^1\d{10}$/,
-                    message: '手机号格式错误！',
-                  },
-                ],
-              })(
-                <Input
-                  size="large"
-                  style={{ width: '80%' }}
-                  placeholder="11位手机号"
-                />
-              )}
-            </InputGroup>
-          </FormItem>
-          <FormItem>
+          {/* <FormItem>
             <Row gutter={8}>
               <Col span={16}>
                 {getFieldDecorator('captcha', {
@@ -267,7 +385,7 @@ export default class Register extends Component {
                 </Button>
               </Col>
             </Row>
-          </FormItem>
+          </FormItem> */}
           <FormItem>
             <Button
               size="large"

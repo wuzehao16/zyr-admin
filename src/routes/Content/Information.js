@@ -133,7 +133,7 @@ export default class TableList extends PureComponent {
     });
   }
   toAdd = () => {
-    this.context.router.history.push('/content/information/add');
+    this.context.router.history.push('/content/add-information');
   }
 
   renderSimpleForm() {

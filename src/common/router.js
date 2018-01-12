@@ -157,13 +157,16 @@ export const getRouterData = (app) => {
     '/user/register-result': {
       component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
     },
-    '/institution': {
+    '/institution/main': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/Institution/TableList')),
+    },
+    '/institution/add': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/Institution/AddInstitution')),
     },
     '/content/information': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Information')),
     },
-    '/content/add': {
+    '/content/add-information': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/AddInformation')),
     },
     '/content/column': {

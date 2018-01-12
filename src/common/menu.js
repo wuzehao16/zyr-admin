@@ -128,6 +128,13 @@ const menuData = [{
     {
       name: '信息管理',
       path: 'information',
+      // children:[
+      //   {
+      //     name:'新增',
+      //     path:'add',
+      //     // hideInMenu: true,
+      //   }
+      // ]
     },
     {
       name: '栏目管理',
