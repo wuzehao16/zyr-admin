@@ -11,7 +11,7 @@ import { getSystemUser, postSystemUser} from './mock/systemUser';
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
-const noProxy = process.env.NO_PROXY === 'true';
+const noProxy = process.env.NO_PROXY === 'false';
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const proxy = {
@@ -80,30 +80,31 @@ const proxy = {
   'GET /api/fake_chart_data': getFakeChartData,
   'GET /api/profile/basic': getProfileBasicData,
   'GET /api/profile/advanced': getProfileAdvancedData,
-  'POST /api/login/account': (req, res) => {
-    const { loginPassword, loginAccount, type } = req.body;
-    if(loginAccount === '888888' && loginPassword === 'admin'){
-      res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'admin'
-      });
-      return ;
-    }
-    if(loginPassword === '123456' && loginAccount === 'user'){
-      res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'user'
-      });
-      return ;
-    }
-    res.send({
-      status: 'error',
-      type,
-      currentAuthority: 'guest'
-    });
-  },
+  // 'POST /sysAnno/login': (req, res) => {
+  //   const { loginPassword, loginAccount, type } = req.body;
+  //   if(loginPassword === '888888' && loginAccount === 'admin'){
+  //     res.send({
+  //       status: 'ok',
+  //       type,
+  //       currentAuthority: 'admin'
+  //     });
+  //     return ;
+  //   }
+  //   if(loginPassword === '123456' && loginAccount === 'user'){
+  //     res.send({
+  //       status: 'ok',
+  //       type,
+  //       currentAuthority: 'user'
+  //     });
+  //     return ;
+  //   }
+  //   res.send({
+  //     status: 'error',
+  //     type,
+  //     currentAuthority: 'guest'
+  //   });
+  // },
+  'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
   'POST /api/register': (req, res) => {
     res.send({ status: 'ok', currentAuthority: 'user' });
   },
@@ -147,4 +148,7 @@ const proxy = {
   },
 };
 
-export default noProxy ? {} : delay(proxy, 1000);
+export default noProxy ? {} : {
+  ...delay(proxy, 1000),
+  'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
+};

@@ -5,6 +5,15 @@
   margin: 0 auto;
   background-color: #fff;
   padding: 20px 0;
+  box-shadow: 0 0 20px rgba(0,0,0,.08), inset 0 0 3px #fff;
+  .title{
+    margin-left: 50px;
+    color: #3c3c3c;
+  }
+  .subtitle{
+    margin-left: 50px;
+    color: @grey-color;
+  }
   .icon {
     font-size: 24px;
     color: rgba(0, 0, 0, 0.2);
@@ -16,14 +25,20 @@
       transition: color .3s;
     }
   }
-
+  .tabtitle{
+    .ant-form{
+      .ant-tabs-bar{
+        display: none !important;
+      }
+    }
+  }
   .other {
     text-align: left;
-    margin-top: 48px;
+    margin-top: 24px;
     line-height: 22px;
-
+    color: @grey-color;
     .register {
-      float: right;
+      color: #4877ee;
     }
   }
 }
