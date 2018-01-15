@@ -9727,9 +9727,9 @@ rmc-feedback@^1.0.0:
     babel-runtime "6.x"
     classnames "^2.2.5"
 
-roadhog-api-doc@^0.3.4:
-  version "0.3.4"
-  resolved "http://registry.npm.taobao.org/roadhog-api-doc/download/roadhog-api-doc-0.3.4.tgz#2375bc8bd96a7af0cddccb1e6b13cbed2a46558d"
+roadhog-api-doc@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/roadhog-api-doc/download/roadhog-api-doc-1.0.0.tgz#c8e69aa81de12643b353848b3f369c90775d748d"
   dependencies:
     chalk "^2.1.0"
     chokidar "^1.7.0"
