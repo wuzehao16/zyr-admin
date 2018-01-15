@@ -19,7 +19,6 @@ class StandardTable extends PureComponent {
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
-
     if (this.props.onSelectRow) {
       this.props.onSelectRow(selectedRows);
     }

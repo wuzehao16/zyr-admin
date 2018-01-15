@@ -401,9 +401,11 @@ export default class TableList extends PureComponent {
           >
             <Upload {...upLoadProps} onChange={this.onFileChange}>
               {fileList.length >= 1 ? null :
-              <Button>
-                <Icon type="upload" /> upload
-              </Button>
+              (
+                <Button>
+                  <Icon type="upload" /> upload
+                </Button>
+)
               }
             </Upload>
           </FormItem>

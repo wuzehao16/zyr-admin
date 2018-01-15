@@ -1,14 +1,12 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
-import { Table, Alert, Badge, Divider } from 'antd';
+import { Table, Alert, Divider } from 'antd';
 import { Link } from 'react-router-dom';
 import styles from './index.less';
 
-const statusMap = ['default', 'processing', 'success', 'error'];
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
-    totalCallNo: 0,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -16,21 +14,16 @@ class StandardTable extends PureComponent {
     if (nextProps.selectedRows.length === 0) {
       this.setState({
         selectedRowKeys: [],
-        totalCallNo: 0,
       });
     }
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
-    const totalCallNo = selectedRows.reduce((sum, val) => {
-      return sum + parseFloat(val.callNo, 10);
-    }, 0);
-
     if (this.props.onSelectRow) {
       this.props.onSelectRow(selectedRows);
     }
 
-    this.setState({ selectedRowKeys, totalCallNo });
+    this.setState({ selectedRowKeys });
   }
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -42,7 +35,7 @@ class StandardTable extends PureComponent {
   }
 
   render() {
-    const { selectedRowKeys, totalCallNo } = this.state;
+    const { selectedRowKeys } = this.state;
     const { data: { list, pagination }, loading } = this.props;
 
     const columnStatus = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
@@ -152,19 +145,18 @@ class StandardTable extends PureComponent {
 
     return (
       <div className={styles.standardTable}>
-        {/* <div className={styles.tableAlert}>
+        <div className={styles.tableAlert}>
           <Alert
             message={(
               <div>
                 已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                服务调用总计 <span style={{ fontWeight: 600 }}>{totalCallNo}</span> 万
                 <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
               </div>
             )}
             type="info"
             showIcon
           />
-        </div> */}
+        </div>
         <Table
           loading={loading}
           rowKey={record => record.key}

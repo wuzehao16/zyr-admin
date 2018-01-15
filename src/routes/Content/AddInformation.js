@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Upload,
+  Form, Input, DatePicker, Select, Button, Card, Radio, Icon, Upload,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './AddInformation.less';
@@ -43,7 +43,7 @@ export default class BasicForms extends PureComponent {
 
   render() {
     const { submitting } = this.props;
-    const { getFieldDecorator, getFieldValue } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {
       labelCol: {
@@ -65,7 +65,7 @@ export default class BasicForms extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="基础表单" content="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。">
+      <PageHeaderLayout title="基础表单" >
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -161,9 +161,11 @@ export default class BasicForms extends PureComponent {
             >
               <Upload {...upLoadProps} onChange={this.onFileChange}>
                 {fileList.length >= 1 ? null :
-                <Button>
-                  <Icon type="upload" /> upload
-                </Button>
+                (
+                  <Button>
+                    <Icon type="upload" /> upload
+                  </Button>
+)
                 }
               </Upload>
             </FormItem>
@@ -188,9 +190,11 @@ export default class BasicForms extends PureComponent {
             >
               <Upload {...upLoadProps} onChange={this.onFileChange}>
                 {fileList.length >= 1 ? null :
-                <Button>
-                  <Icon type="upload" /> upload
-                </Button>
+                (
+                  <Button>
+                    <Icon type="upload" /> upload
+                  </Button>
+)
                 }
               </Upload>
             </FormItem>

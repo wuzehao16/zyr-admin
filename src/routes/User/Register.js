@@ -43,7 +43,7 @@ export default class Register extends Component {
     prefix: '86',
     previewVisible: false,
     previewImage: '',
-    fileList:[]
+    fileList: [],
   };
 
   componentWillReceiveProps(nextProps) {
@@ -83,7 +83,7 @@ export default class Register extends Component {
   handleSubmit = (e) => {
     const { form } = this.props;
     const value = form.getFieldValue('city');
-    console.log(value)
+    console.log(value);
     e.preventDefault();
     this.props.form.validateFields({ force: true }, (err, values) => {
       if (!err) {
@@ -175,7 +175,7 @@ export default class Register extends Component {
   render() {
     const { form, submitting } = this.props;
     const { getFieldDecorator, getFieldValue } = form;
-    const { count, prefix, fileList, previewVisible, previewImage, } = this.state;
+    const { count, prefix, fileList, previewVisible, previewImage } = this.state;
     const uploadButton = (
       <Button>
         <Icon type="upload" /> 上传机构logo
@@ -186,7 +186,7 @@ export default class Register extends Component {
         <h3>注册</h3>
         <Form onSubmit={this.handleSubmit}>
           <FormItem>
-            {getFieldDecorator('city',{
+            {getFieldDecorator('city', {
               rules: [
                 {
                   required: true,
@@ -198,7 +198,7 @@ export default class Register extends Component {
             )}
           </FormItem>
           <FormItem>
-            {getFieldDecorator('institutionName',{
+            {getFieldDecorator('institutionName', {
               rules: [
                 {
                   required: true,
@@ -221,8 +221,7 @@ export default class Register extends Component {
                 },
               ],
             })(
-              <Select placeholder="机构名称"
-                >
+              <Select placeholder="机构名称">
                 <Option value="2">平安银行</Option>
                 <Option value="1">华夏银行</Option>
                 <Option value="">其他</Option>
@@ -233,7 +232,7 @@ export default class Register extends Component {
             style={{
               display: getFieldValue('manageName') === '' ? 'block' : 'none',
             }}
-            >
+          >
             {getFieldDecorator('otherManageName')(
               <Input
                 placeholder="机构名称"
@@ -242,12 +241,12 @@ export default class Register extends Component {
           </FormItem>
           <FormItem>
             {getFieldDecorator('sublInstitution')(
-              <Input type="text" placeholder="下属机构"/>
+              <Input type="text" placeholder="下属机构" />
             )}
           </FormItem>
           <FormItem>
             {getFieldDecorator('contactsPeople')}
-            <Input type="text" placeholder="联系人"/>
+            <Input type="text" placeholder="联系人" />
           </FormItem>
           <FormItem>
             <InputGroup compact>
@@ -279,17 +278,17 @@ export default class Register extends Component {
           </FormItem>
           <FormItem>
             <Upload
-              action= '//jsonplaceholder.typicode.com/posts/'
-              listType= 'picture'
-              fileList= {fileList}
+              action="//jsonplaceholder.typicode.com/posts/"
+              listType="picture"
+              fileList={fileList}
               onPreview={this.handlePreview}
               onChange={this.handleChange}
             >
               {fileList.length >= 1 ? null : uploadButton}
             </Upload>
             <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-             <img alt="example" style={{ width: '100%' }} src={previewImage} />
-           </Modal>
+              <img alt="example" style={{ width: '100%' }} src={previewImage} />
+            </Modal>
           </FormItem>
           <FormItem>
             {getFieldDecorator('loginAccount', {
@@ -303,7 +302,7 @@ export default class Register extends Component {
                   message: '请输入6-18位字母或数字！',
                 },
               ],
-            })(<Input size="large" placeholder="登陆账号"/>)}
+            })(<Input size="large" placeholder="登陆账号" />)}
           </FormItem>
           <FormItem>
             {getFieldDecorator('contactEmail', {

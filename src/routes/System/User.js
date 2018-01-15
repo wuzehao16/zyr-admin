@@ -189,7 +189,7 @@ export default class TableList extends PureComponent {
   render() {
     const { systemUser: { data }, loading } = this.props;
     const { selectedRows, modalVisible, addInputValue } = this.state;
-    console.log(data)
+    console.log(data);
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
@@ -269,11 +269,11 @@ export default class TableList extends PureComponent {
             wrapperCol={{ span: 15 }}
             label="用户组"
           >
-              <Select placeholder="请选择" style={{ width: '100%' }}>
-                <Option value="0">管理员</Option>
-                <Option value="1">机构管理员</Option>
-                <Option value="2">客服</Option>
-              </Select>
+            <Select placeholder="请选择" style={{ width: '100%' }}>
+              <Option value="0">管理员</Option>
+              <Option value="1">机构管理员</Option>
+              <Option value="2">客服</Option>
+            </Select>
           </FormItem>
         </Modal>
       </PageHeaderLayout>

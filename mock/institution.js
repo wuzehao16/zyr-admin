@@ -17,7 +17,7 @@ for (let i = 0; i < 46; i += 1) {
   });
 }
 
-export function getSystemUser(req, res, u) {
+export function getinstitution(req, res, u) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -73,7 +73,7 @@ export function getSystemUser(req, res, u) {
   }
 }
 
-export function postSystemUser(req, res, u, b) {
+export function postinstitution(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
