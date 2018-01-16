@@ -80,31 +80,31 @@ const proxy = {
   'GET /api/fake_chart_data': getFakeChartData,
   'GET /api/profile/basic': getProfileBasicData,
   'GET /api/profile/advanced': getProfileAdvancedData,
-  // 'POST /sysAnno/login': (req, res) => {
-  //   const { loginPassword, loginAccount, type } = req.body;
-  //   if(loginPassword === '888888' && loginAccount === 'admin'){
-  //     res.send({
-  //       status: 'ok',
-  //       type,
-  //       currentAuthority: 'admin'
-  //     });
-  //     return ;
-  //   }
-  //   if(loginPassword === '123456' && loginAccount === 'user'){
-  //     res.send({
-  //       status: 'ok',
-  //       type,
-  //       currentAuthority: 'user'
-  //     });
-  //     return ;
-  //   }
-  //   res.send({
-  //     status: 'error',
-  //     type,
-  //     currentAuthority: 'guest'
-  //   });
-  // },
-  'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
+  'POST /api/sysAnno/login': (req, res) => {
+    const { loginPassword, loginAccount, type } = req.body;
+    if(loginPassword === '888888' && loginAccount === 'admin'){
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: 'admin'
+      });
+      return ;
+    }
+    if(loginPassword === '123456' && loginAccount === 'user'){
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: 'user'
+      });
+      return ;
+    }
+    res.send({
+      status: 'error',
+      type,
+      currentAuthority: 'guest'
+    });
+  },
+  // 'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
   'POST /api/register': (req, res) => {
     res.send({ status: 'ok', currentAuthority: 'user' });
   },
@@ -148,7 +148,8 @@ const proxy = {
   },
 };
 
-export default noProxy ? {} : {
-  ...delay(proxy, 1000),
-  'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
-};
+export default noProxy ? {} : delay(proxy, 1000);
+// export default noProxy ? {} : {
+//   ...delay(proxy, 1000),
+//   'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
+// };

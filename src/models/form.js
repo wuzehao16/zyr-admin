@@ -11,6 +11,8 @@ export default {
       receiverAccount: 'test@example.com',
       receiverName: 'Alex',
       amount: '500',
+      contactPhone: '',
+      prefix: '86',
     },
   },
 
