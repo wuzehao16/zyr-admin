@@ -19,7 +19,19 @@ class Step2 extends React.PureComponent {
   state = {
     count: 0,
   };
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+  componentDidMount = () => {
+    this.onGetCaptcha();
+  };
   onGetCaptcha = () => {
+    this.props.dispatch({
+      type: 'register/getPhoneCaptcha',
+      payload: {
+        ...this.props.data,
+      },
+    });
     let count = 59;
     this.setState({ count });
     this.interval = setInterval(() => {
@@ -34,15 +46,16 @@ class Step2 extends React.PureComponent {
     const { form, data, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const { count } = this.state;
-    const onPrev = () => {
-      dispatch(routerRedux.push('/form/step-form'));
-    };
+    // const onPrev = () => {
+    //   dispatch(routerRedux.push('/form/step-form'));
+    // };
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields((err, values) => {
+        console.log(123)
         if (!err) {
           dispatch({
-            type: 'form/submitStepForm',
+            type: 'register/submitStep2Form',
             payload: {
               ...data,
               ...values,
@@ -55,7 +68,7 @@ class Step2 extends React.PureComponent {
       <div>
         <h2 className={styles.title}>注册</h2>
         <Divider style={{ margin: '10px 0 24px' }} />
-        <div style={{marginLeft: 8}}>已向{data.contactPhone}发送短信，请输入四位验证码</div>
+        <div style={{marginLeft: 8}}>已向{data.userPhone}发送短信，请输入四位验证码</div>
         <Form layout="horizontal" className={styles.stepForm}>
           <Form.Item>
             <Row gutter={8}>
@@ -85,15 +98,12 @@ class Step2 extends React.PureComponent {
             style={{ marginBottom: 8 }}
             wrapperCol={{
               xs: { span: 24, offset: 0 },
-              sm: { span: formItemLayout.wrapperCol.span, offset: formItemLayout.labelCol.span },
+              sm: { span: 24, offset: 0 },
             }}
             label=""
           >
-            <Button type="primary" onClick={onValidateForm} loading={submitting}>
-              提交
-            </Button>
-            <Button onClick={onPrev} style={{ marginLeft: 8 }}>
-              上一步
+            <Button type="primary" onClick={onValidateForm} loading={submitting} className={styles.step1next}>
+              下一步
             </Button>
           </Form.Item>
         </Form>
@@ -102,7 +112,7 @@ class Step2 extends React.PureComponent {
   }
 }
 
-export default connect(({ form, loading }) => ({
-  submitting: loading.effects['form/submitStepForm'],
-  data: form.step,
+export default connect(({ register, loading }) => ({
+  submitting: loading.effects['register/submitStepForm'],
+  data: register.step,
 }))(Step2);

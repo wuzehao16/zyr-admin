@@ -24,16 +24,24 @@ class Step1 extends React.PureComponent {
     });
   };
   render() {
-    const { form, dispatch, data } = this.props;
+    const { form, dispatch, data, submitting } = this.props;
+    console.log("data",data)
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
         if (!err) {
           dispatch({
-            type: 'form/saveStepFormData',
-            payload: values,
+            type: 'register/submitStep1Form',
+            payload: {
+              ...data,
+              ...values,
+            },
           });
-          dispatch(routerRedux.push('/user/register/confirm'));
+          // dispatch({
+          //   type: 'form/saveStepFormData',
+          //   payload: values,
+          // });
+          // dispatch(routerRedux.push('/user/register/confirm'));
         }
       });
     };
@@ -52,7 +60,7 @@ class Step1 extends React.PureComponent {
               >
                 <Option value="86">+86</Option>
               </Select>
-              {getFieldDecorator('contactPhone', {
+              {getFieldDecorator('userPhone', {
                 rules: [
                   {
                     required: true,
@@ -79,7 +87,7 @@ class Step1 extends React.PureComponent {
             }}
             label=""
           >
-            <Button type="primary" onClick={onValidateForm} className={styles.step1next}>
+            <Button type="primary" onClick={onValidateForm} className={styles.step1next} loading={submitting}>
               下一步
             </Button>
           </Form.Item>
@@ -92,7 +100,7 @@ class Step1 extends React.PureComponent {
     );
   }
 }
-
-export default connect(({ form }) => ({
-  data: form.step,
+export default connect(({ register, loading }) => ({
+  submitting: loading.effects['register/submitStep1Form'],
+  data: register.step,
 }))(Step1);

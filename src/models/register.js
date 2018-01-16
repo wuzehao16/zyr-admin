@@ -1,27 +1,70 @@
-import { fakeRegister } from '../services/api';
-
+import { routerRedux } from 'dva/router';
+import { message } from 'antd';
+import { fakeSubmitForm } from '../services/api';
+import { msgPhone, validataPhone } from '../services/register'
 export default {
   namespace: 'register',
 
   state: {
-    status: undefined,
+    step: {
+      userPhone: '',
+      prefix: '86',
+      fileList: [],
+    },
   },
 
   effects: {
-    *submit(_, { call, put }) {
-      const response = yield call(fakeRegister);
+    *submitRegularForm({ payload }, { call }) {
+      yield call(fakeSubmitForm, payload);
+      message.success('提交成功');
+    },
+    *submitStep1Form({ payload }, { call, put }) {
+      console.log(payload)
+      // yield call(msgPhone, payload);
       yield put({
-        type: 'registerHandle',
-        payload: response,
+        type: 'saveStepFormData',
+        payload,
       });
+      yield put(routerRedux.push('/user/register/step2'));
+    },
+    *getPhoneCaptcha({ payload }, { call, put }) {
+      const response = yield call(msgPhone, payload);
+      if(response.code == 0){
+        message.success('发送成功');
+      }
+    },
+    *submitStep2Form({ payload }, { call, put }) {
+      console.log(payload)
+      yield call(validataPhone, payload);
+      // yield put({
+      //   type: 'saveStepFormData',
+      //   payload,
+      // });
+      yield put(routerRedux.push('/user/register/step3'));
+    },
+    *submitStep3Form({ payload }, { call, put }) {
+      console.log(payload)
+      // yield call(validataPhone, payload);
+      // yield put({
+      //   type: 'saveStepFormData',
+      //   payload,
+      // });
+      yield put(routerRedux.push('/user/register/step4'));
+    },
+    *submitAdvancedForm({ payload }, { call }) {
+      yield call(fakeSubmitForm, payload);
+      message.success('提交成功');
     },
   },
 
   reducers: {
-    registerHandle(state, { payload }) {
+    saveStepFormData(state, { payload }) {
       return {
         ...state,
-        status: payload.status,
+        step: {
+          ...state.step,
+          ...payload,
+        },
       };
     },
   },

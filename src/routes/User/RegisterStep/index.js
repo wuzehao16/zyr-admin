@@ -42,7 +42,7 @@ export default class StepForm extends PureComponent {
                   />
                 ))
               }
-              <Redirect exact from="/user/register" to="/user/register/info" />
+              <Redirect exact from="/user/register" to="/user/register/step1" />
               <Route render={NotFound} />
             </Switch>
           </div>

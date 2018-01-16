@@ -108,6 +108,12 @@ const proxy = {
   'POST /api/register': (req, res) => {
     res.send({ status: 'ok', currentAuthority: 'user' });
   },
+  'POST /sysAnno/sendLoginMessage': (req, res) => {
+    res.send({ status: 'ok', code: 0 });
+  },
+  'POST /sysAnno/vaLidatacode': (req, res) => {
+    res.send({ status: 'ok', code: 0 });
+  },
   'GET /api/notices': getNotices,
   'GET /api/500': (req, res) => {
     res.status(500).send({
