@@ -52,7 +52,6 @@ class Step2 extends React.PureComponent {
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields((err, values) => {
-        console.log(123)
         if (!err) {
           dispatch({
             type: 'register/submitStep2Form',

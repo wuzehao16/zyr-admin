@@ -167,7 +167,7 @@ export default class BasicForms extends PureComponent {
                   <Button>
                     <Icon type="upload" /> upload
                   </Button>
-)
+                )
                 }
               </Upload>
             </FormItem>

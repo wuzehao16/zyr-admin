@@ -31,10 +31,22 @@ class Step4 extends React.PureComponent {
   }
 
   onGetCaptcha = () => {
+    const { form } = this.props;
+    const contactEmail = form.getFieldValue('contactEmail');
+    const regex = /^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/;
+    if (!regex.test(contactEmail)) {
+      form.setFields({
+        contactEmail: {
+          value: contactEmail,
+          errors: [new Error('请输入正确的邮箱地址！')],
+        },
+      });
+      return
+    }
     this.props.dispatch({
       type:'register/getEmailCaptcha',
       payload:{
-        ...this.props.data.contactEmail,
+        contactEmail,
       }
     })
     let count = 59;
@@ -139,7 +151,6 @@ class Step4 extends React.PureComponent {
           <Upload
             action="//jsonplaceholder.typicode.com/posts/"
             listType="picture-card"
-            fileList={fileList}
             onPreview={this.handlePreview}
             onChange={this.handleChange}
           >
@@ -200,65 +211,66 @@ class Step4 extends React.PureComponent {
               </Select>
             )}
           </Form.Item>
-          <Form.Item
-            label="机构类型"
-            {...formItemLayout}
-          >
-            {getFieldDecorator('institutionName', {
-              rules: [
-                {
-                  required: true,
-                  message: '请选择机构类型！',
-                },
-              ],
-            })(
-              <Select placeholder="银行名称" onChange={this.getSubInstitution}>
-                {data.institutionList
-                  ? institutionListOptions
-                  : null}
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="机构名称"
-            {...formItemLayout}
-            >
-            {getFieldDecorator('manageName', {
-              rules: [
-                {
-                  required: true,
-                  message: '请输选择下属机构！',
-                },
-              ],
-            })(
-              <Select placeholder="下属机构">
-                {data.subInstitutionList
-                  ? subInstitutionListOptions
-                  : null}
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="机构名称"
-            {...formItemLayout}
-            style={{
-              display: getFieldValue('manageName') === '' ? 'block' : 'none',
-            }}
-          >
-            {getFieldDecorator('otherManageName')(
-              <Input
-                placeholder="机构名称"
-              />
-            )}
-          </Form.Item>
-          {/* <Form.Item
-            label="下属结构"
-            {...formItemLayout}
-            >
-            {getFieldDecorator('sublInstitution')(
-              <Input type="text" placeholder="下属机构" />
-            )}
-          </Form.Item> */}
+          {
+            ((value = getFieldValue('institutionId'))=> {
+              switch(value){
+               case '0':
+                return <div>
+                        <Form.Item
+                          label="银行名称"
+                          {...formItemLayout}
+                         >
+                          {getFieldDecorator('manageName', {
+                            rules: [
+                              {
+                                required: true,
+                                message: '请选择机构类型！',
+                              },
+                            ],
+                          })(
+                            <Select placeholder="银行名称" onChange={this.getSubInstitution}>
+                              {data.institutionList
+                                ? institutionListOptions
+                                : null}
+                            </Select>
+                          )}
+                        </Form.Item>
+                        <Form.Item
+                          label="下属机构"
+                          {...formItemLayout}
+                          >
+                          {getFieldDecorator('sublInstitution')(
+                            <Select placeholder="下属机构">
+                              {data.subInstitutionList
+                                ? subInstitutionListOptions
+                                : null}
+                            </Select>
+                          )}
+                        </Form.Item>
+                       </div>
+                case '1':
+                  return      <Form.Item
+                          label="机构名称"
+                          {...formItemLayout}
+                         >
+                          {getFieldDecorator('manageName',{
+                            rules: [
+                              {
+                                required: true,
+                                message: '机构名称',
+                              },
+                            ],
+                          })(
+                            <Input
+                              placeholder="机构名称"
+                            />
+                          )}
+                        </Form.Item>
+                  default:
+                    return null
+            }
+          })()
+          }
           <Form.Item
             label="邮箱"
             {...formItemLayout}
@@ -289,12 +301,11 @@ class Step4 extends React.PureComponent {
                       message: '请输入验证码！',
                     },
                   ],
-                })(<Input size="large" placeholder="验证码" />)}
+                })(<Input placeholder="验证码" />)}
               </Col>
               <Col span={8}>
                 <Button
-                  size="large"
-                  disabled={count || !contactEmail}
+                  disabled={count || !getFieldValue('contactEmail')}
                   className={styles.getCaptcha}
                   onClick={this.onGetCaptcha}
                 >

@@ -28,7 +28,6 @@ class Step1 extends React.PureComponent {
     if (value && value.length > 10) {
       //react使用正则表达式变量的test方法进行校验，直接使用value.match(regex)显示match未定义
       if (regex.test(value)) {
-        console.log(1)
         callback();
       } else {
         callback('请输入正确的手机号码！');
@@ -44,7 +43,6 @@ class Step1 extends React.PureComponent {
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
-        console.log(err,values, "err")
         if (!/^1[3|4|5|8]\d{9}$/.test(values.userPhone)) {
           form.setFields({
             userPhone: {
