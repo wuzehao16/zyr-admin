@@ -5,7 +5,7 @@ import { routerRedux } from 'dva/router';
 import Result from '../../../components/Result';
 import styles from './style.less';
 
-class Step3 extends React.PureComponent {
+class Step5 extends React.PureComponent {
   render() {
     const { dispatch, data } = this.props;
     const onFinish = () => {
@@ -54,6 +54,6 @@ class Step3 extends React.PureComponent {
   }
 }
 
-export default connect(({ form }) => ({
-  data: form.step,
-}))(Step3);
+export default connect(({ register }) => ({
+  data: register.step,
+}))(Step5);

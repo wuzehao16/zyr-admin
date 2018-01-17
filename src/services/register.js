@@ -13,3 +13,27 @@ export async function validataPhone(params) {
     body: params,
   })
 }
+export async function msgEmail(params) {
+  return request('sysAnno/sendLoginEmail',{
+    method: 'POST',
+    body: params,
+  })
+}
+export async function getInstitution(params) {
+  return request('sysAnno/getInstitutionByCityCode',{
+    method: 'POST',
+    body: params,
+  })
+}
+export async function getSubInstitution(params) {
+  return request('sysAnno/getSubInstitutionByInstitutionCode',{
+    method: 'POST',
+    body: params,
+  })
+}
+export async function register(params) {
+  return request('sysAnno/register',{
+    method: 'POST',
+    body: params,
+  })
+}

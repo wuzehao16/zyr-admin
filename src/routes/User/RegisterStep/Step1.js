@@ -23,12 +23,37 @@ class Step1 extends React.PureComponent {
       prefix: value,
     });
   };
+  checkPhone(rule, value, callback) {
+    var regex = /^1[3|4|5|8]\d{9}$/;
+    if (value && value.length > 10) {
+      //react使用正则表达式变量的test方法进行校验，直接使用value.match(regex)显示match未定义
+      if (regex.test(value)) {
+        console.log(1)
+        callback();
+      } else {
+        callback('请输入正确的手机号码！');
+      }
+    } else {
+      callback();
+      //这里的callback函数会报错
+    }
+  };
   render() {
     const { form, dispatch, data, submitting } = this.props;
     console.log("data",data)
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
+        console.log(err,values, "err")
+        if (!/^1[3|4|5|8]\d{9}$/.test(values.userPhone)) {
+          form.setFields({
+            userPhone: {
+              value: values.userPhone,
+              errors: [new Error('请输入正确的手机号码！')],
+            },
+          });
+          return
+        }
         if (!err) {
           dispatch({
             type: 'register/submitStep1Form',
@@ -64,18 +89,24 @@ class Step1 extends React.PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: '请输入手机号！',
+                    message: '请输入手机号!',
                   },
                   {
-                    pattern: /^1\d{10}$/,
-                    message: '手机号格式错误！',
+                    validator: this.checkPhone,
                   },
+                  // {
+                    // pattern: /^1[3|4|5|8]\d{9}$/,
+                  //   message: '手机号格式错误！',
+                  //   min: 11
+                  // },
                 ],
               })(
                 <Input
                   size="large"
+                  maxLength="11"
                   style={{ width: '80%' }}
                   placeholder="请输入手机号"
+                  onPressEnter={onValidateForm}
                 />
               )}
             </InputGroup>

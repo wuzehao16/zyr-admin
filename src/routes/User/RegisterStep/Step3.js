@@ -55,7 +55,6 @@ class Step3 extends React.PureComponent {
   getPasswordStatus = () => {
     const { form } = this.props;
     const value = form.getFieldValue('password');
-    console.log(this.checkPass(value))
     if (value && this.checkPass(value) > 3 && value.length > 7) {
       return 'ok';
     }
@@ -129,7 +128,7 @@ class Step3 extends React.PureComponent {
   checkConfirm = (rule, value, callback) => {
     const { form } = this.props;
     if (value && value !== form.getFieldValue('password')) {
-      callback('两次输入的密码不匹配!');
+      callback('两次输入的密码不一致!');
     } else {
       callback();
     }
@@ -217,7 +216,7 @@ class Step3 extends React.PureComponent {
                     validator: this.checkConfirm,
                   },
                 ],
-              })(<Input size="large" type="password" placeholder="确认密码" />)}
+              })(<Input size="large" type="password" placeholder="确认密码" onPressEnter={onValidateForm}/>)}
           </Form.Item>
           <Form.Item
             style={{ marginBottom: 8 }}

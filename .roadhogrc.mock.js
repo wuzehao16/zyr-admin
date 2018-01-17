@@ -6,8 +6,9 @@ import { imgMap } from './mock/utils';
 import { getProfileBasicData } from './mock/profile';
 import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
-import { getContent, postContent} from './mock/content'
-import { getSystemUser, postSystemUser} from './mock/systemUser';
+import { getContent, postContent } from './mock/content'
+import { getSystemUser, postSystemUser } from './mock/systemUser';
+import { getInstitution, getSubInstitution } from './mock/register'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -111,6 +112,9 @@ const proxy = {
   'POST /sysAnno/sendLoginMessage': (req, res) => {
     res.send({ status: 'ok', code: 0 });
   },
+  'POST /sysAnno/sendLoginEmail': (req, res) => {
+    res.send({ status: 'ok', code: 0 });
+  },
   'POST /sysAnno/vaLidatacode': (req, res) => {
     res.send({ status: 'ok', code: 0 });
   },
@@ -152,6 +156,8 @@ const proxy = {
     },
     $body: postContent,
   },
+  'POST /sysAnno/getInstitutionByCityCode': getInstitution,
+  'POST /sysAnno/getSubInstitutionByInstitutionCode': getSubInstitution
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

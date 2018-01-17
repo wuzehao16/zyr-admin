@@ -80,7 +80,7 @@ class Step2 extends React.PureComponent {
                       message: '请输入验证码！',
                     },
                   ],
-                })(<Input size="large" placeholder="验证码" />)}
+                })(<Input size="large" placeholder="验证码" onPressEnter={onValidateForm}/>)}
               </Col>
               <Col span={8}>
                 <Button

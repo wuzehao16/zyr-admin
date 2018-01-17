@@ -22,13 +22,21 @@ class Step4 extends React.PureComponent {
   state = {
     previewVisible: false,
     previewImage: '',
-    count:'',
+    count: '',
+    contactEmail: '',
+    fileList: [],
   };
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
   onGetCaptcha = () => {
+    this.props.dispatch({
+      type:'register/getEmailCaptcha',
+      payload:{
+        ...this.props.data.contactEmail,
+      }
+    })
     let count = 59;
     this.setState({ count });
     this.interval = setInterval(() => {
@@ -74,20 +82,41 @@ class Step4 extends React.PureComponent {
       previewVisible: true,
     });
   }
+  handleChange = ({ fileList }) => this.setState({ fileList })
+  getInstitution = (code) => {
+    this.props.dispatch({
+      type: 'register/getInstitution',
+      payload: {
+        code: code
+      },
+    });
+  }
+  getSubInstitution = (code) => {
+    this.props.dispatch({
+      type: 'register/getSubInstitution',
+      payload: {
+        code: code
+      },
+    });
+  }
   render() {
     const { form, data, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFields, getFieldValue  } = form;
-    const { previewVisible, previewImage, count } = this.state;
-    // const onPrev = () => {
-    //   dispatch(routerRedux.push('/form/step-form'));
-    // };
+    const { previewVisible, previewImage, count, fileList, contactEmail } = this.state;
+    const cityOptions = options.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    if (data.institutionList) {
+      var institutionListOptions = data.institutionList.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
+    if (data.subInstitutionList) {
+      var subInstitutionListOptions = data.subInstitutionList.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields((err, values) => {
-        console.log(123)
         if (!err) {
+          console.log(values)
           dispatch({
-            type: 'register/submitStep3Form',
+            type: 'register/submitStep4Form',
             payload: {
               ...data,
               ...values,
@@ -106,21 +135,36 @@ class Step4 extends React.PureComponent {
       <div>
         <h2 className={styles.title}>机构信息</h2>
         <Divider style={{ margin: '10px 0 24px' }} />
+        <div className="clearfix">
+          <Upload
+            action="//jsonplaceholder.typicode.com/posts/"
+            listType="picture-card"
+            fileList={fileList}
+            onPreview={this.handlePreview}
+            onChange={this.handleChange}
+          >
+            {fileList.length >= 1 ? null : uploadButton}
+          </Upload>
+          <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+            <img alt="example" style={{ width: '100%' }} src={previewImage} />
+          </Modal>
+        </div>
         <Form layout="horizontal" className={styles.stepForm}>
-          <Form.Item>
+          {/* <Form.Item>
             <Upload
-              action="//jsonplaceholder.typicode.com/posts/"
+              action="//192.168.2.101:8080/sysAnno/uploadImage"
+              // action="https://jsonplaceholder.typicode.com/posts/"
               listType="picture-card"
-              fileList={data.fileList}
+              fileList={fileList}
               onPreview={this.handlePreview}
               onChange={this.handleChange}
             >
-              {data.fileList.length >= 1 ? null : uploadButton}
+              {fileList.length >= 1 ? null : uploadButton}
             </Upload>
             <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
               <img alt="example" style={{ width: '100%' }} src={previewImage} />
             </Modal>
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item
             label="所在城市"
             {...formItemLayout}
@@ -133,7 +177,27 @@ class Step4 extends React.PureComponent {
                 },
               ],
             })(
-              <Cascader options={options} placeholder="所在城市" />
+              <Select placeholder="所在城市" onChange={this.getInstitution}>
+                {cityOptions}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="机构类型"
+            {...formItemLayout}
+          >
+            {getFieldDecorator('institutionId', {
+              rules: [
+                {
+                  required: true,
+                  message: '请选择机构类型！',
+                },
+              ],
+            })(
+              <Select placeholder="机构类型">
+                <Option value="0">银行</Option>
+                <Option value="1">小额贷款</Option>
+              </Select>
             )}
           </Form.Item>
           <Form.Item
@@ -148,9 +212,10 @@ class Step4 extends React.PureComponent {
                 },
               ],
             })(
-              <Select placeholder="机构类型">
-                <Option value="0">银行</Option>
-                <Option value="1">机构</Option>
+              <Select placeholder="银行名称" onChange={this.getSubInstitution}>
+                {data.institutionList
+                  ? institutionListOptions
+                  : null}
               </Select>
             )}
           </Form.Item>
@@ -162,14 +227,14 @@ class Step4 extends React.PureComponent {
               rules: [
                 {
                   required: true,
-                  message: '请输选择机构名称！',
+                  message: '请输选择下属机构！',
                 },
               ],
             })(
-              <Select placeholder="机构名称">
-                <Option value="2">平安银行</Option>
-                <Option value="1">华夏银行</Option>
-                <Option value="">其他</Option>
+              <Select placeholder="下属机构">
+                {data.subInstitutionList
+                  ? subInstitutionListOptions
+                  : null}
               </Select>
             )}
           </Form.Item>
@@ -229,7 +294,7 @@ class Step4 extends React.PureComponent {
               <Col span={8}>
                 <Button
                   size="large"
-                  disabled={count}
+                  disabled={count || !contactEmail}
                   className={styles.getCaptcha}
                   onClick={this.onGetCaptcha}
                 >
@@ -241,13 +306,13 @@ class Step4 extends React.PureComponent {
           <h2 style={{textAlign: 'center'}}>个人信息</h2>
           <Form.Item
             >
-            {getFieldDecorator('sublInstitution')(
-              <Input size="large" type="text" placeholder="如何称呼您" />
+            {getFieldDecorator('userName')(
+              <Input size="large" type="text" maxLength="15" placeholder="请输入账号" />
             )}
           </Form.Item>
           <Form.Item
             >
-              <Input size="large" type="text" value={data.contactPhone} disabled/>
+              <Input size="large" type="text" value={data.userPhone} disabled/>
           </Form.Item>
           <Form.Item
             style={{ marginBottom: 8 }}

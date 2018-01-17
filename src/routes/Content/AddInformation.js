@@ -15,14 +15,16 @@ const upLoadProps = {
   action: '//jsonplaceholder.typicode.com/posts/',
   listType: 'picture',
   // defaultFileList: [...fileList],
-  className: 'uploadlist-inline',
+  // className: 'uploadlist-inline',
 };
-const fileList = [];
 @connect(state => ({
   submitting: state.form.regularFormSubmitting,
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
+  state = {
+    fileList : [],
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -44,7 +46,7 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting } = this.props;
     const { getFieldDecorator } = this.props.form;
-
+    const { fileList } = this.state
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
