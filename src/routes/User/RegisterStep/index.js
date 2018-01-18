@@ -23,14 +23,14 @@ export default class StepForm extends PureComponent {
   render() {
     const { match, routerData } = this.props;
     return (
-      <div>
+      <div className={styles.main}>
         <Card bordered={false}>
           <div>
-            <Steps current={this.getCurrentStep()} className={styles.steps}>
+            {/* <Steps current={this.getCurrentStep()} className={styles.steps}>
               <Step title="填写转账信息" />
               <Step title="确认转账信息" />
               <Step title="完成" />
-            </Steps>
+            </Steps> */}
             <Switch>
               {
                 getRoutes(match.path, routerData).map(item => (
@@ -42,7 +42,7 @@ export default class StepForm extends PureComponent {
                   />
                 ))
               }
-              <Redirect exact from="/user/register" to="/user/register/info" />
+              <Redirect exact from="/user/register" to="/user/register/step1" />
               <Route render={NotFound} />
             </Switch>
           </div>

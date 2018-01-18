@@ -154,22 +154,31 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['login'], () => import('../routes/User/Login')),
     },
     '/user/register': {
-      component: dynamicWrapper(app, ['login'], () => import('../routes/User/RegisterStep')),
+      component: dynamicWrapper(app, ['register'], () => import('../routes/User/RegisterStep')),
     },
-    '/user/register/info': {
+    '/user/register/step1': {
       component: dynamicWrapper(app, ['register'], () => import('../routes/User/RegisterStep/Step1')),
     },
-    '/user/register/confirm': {
+    '/user/register/step2': {
       component: dynamicWrapper(app, ['register'], () => import('../routes/User/RegisterStep/Step2')),
     },
-    '/user/register/result': {
+    '/user/register/step3': {
       component: dynamicWrapper(app, ['register'], () => import('../routes/User/RegisterStep/Step3')),
+    },
+    '/user/register/step4': {
+      component: dynamicWrapper(app, ['register'], () => import('../routes/User/RegisterStep/Step4')),
+    },
+    '/user/register/step5': {
+      component: dynamicWrapper(app, ['register'], () => import('../routes/User/RegisterStep/Step5')),
     },
     '/user/register1': {
       component: dynamicWrapper(app, ['register'], () => import('../routes/User/Register')),
     },
     '/user/register-result': {
       component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
+    },
+    '/user/reset-password': {
+      component: dynamicWrapper(app, ['resetPassword'], () => import('../routes/User/ResetPassword')),
     },
     '/institution/main': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/Institution/TableList')),

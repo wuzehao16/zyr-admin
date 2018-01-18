@@ -6,12 +6,13 @@ import { imgMap } from './mock/utils';
 import { getProfileBasicData } from './mock/profile';
 import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
-import { getContent, postContent} from './mock/content'
-import { getSystemUser, postSystemUser} from './mock/systemUser';
+import { getContent, postContent } from './mock/content'
+import { getSystemUser, postSystemUser } from './mock/systemUser';
+import { getInstitution, getSubInstitution } from './mock/register'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
-const noProxy = process.env.NO_PROXY === 'true';
+const noProxy = process.env.NO_PROXY === 'false';
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const proxy = {
@@ -80,19 +81,19 @@ const proxy = {
   'GET /api/fake_chart_data': getFakeChartData,
   'GET /api/profile/basic': getProfileBasicData,
   'GET /api/profile/advanced': getProfileAdvancedData,
-  'POST /api/login/account': (req, res) => {
-    const { password, userName, type } = req.body;
-    if(password === '888888' && userName === 'admin'){
+  'POST /api/sysAnno/login': (req, res) => {
+    const { loginPassword, loginAccount, type } = req.body;
+    if(loginPassword === '888888' && loginAccount === 'admin'){
       res.send({
-        status: 'ok',
+        msg: 'ok',
         type,
         currentAuthority: 'admin'
       });
       return ;
     }
-    if(password === '123456' && userName === 'user'){
+    if(loginPassword === '123456' && loginAccount === 'user'){
       res.send({
-        status: 'ok',
+        msg: 'ok',
         type,
         currentAuthority: 'user'
       });
@@ -104,8 +105,18 @@ const proxy = {
       currentAuthority: 'guest'
     });
   },
+  // 'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
   'POST /api/register': (req, res) => {
-    res.send({ status: 'ok', currentAuthority: 'user' });
+    res.send({ msg: 'ok', currentAuthority: 'user' });
+  },
+  'POST /sysAnno/sendLoginMessage': (req, res) => {
+    res.send({ msg: 'ok', code: 0 });
+  },
+  'POST /sysAnno/sendLoginEmail': (req, res) => {
+    res.send({ msg: 'ok', code: 0 });
+  },
+  'POST /sysAnno/vaLidatacode': (req, res) => {
+    res.send({ msg: 'ok', code: 0 });
   },
   'GET /api/notices': getNotices,
   'GET /api/500': (req, res) => {
@@ -145,6 +156,15 @@ const proxy = {
     },
     $body: postContent,
   },
+  'POST /sysAnno/getInstitutionByCityCode': getInstitution,
+  'POST /sysAnno/getSubInstitutionByInstitutionCode': getSubInstitution,
+  'POST /sysAnno/myPwdOrEmail': (req, res) => {
+      res.send({ msg: 'ok', code: 0 });
+    },
 };
 
 export default noProxy ? {} : delay(proxy, 1000);
+// export default noProxy ? {} : {
+//   ...delay(proxy, 1000),
+//   'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
+// };

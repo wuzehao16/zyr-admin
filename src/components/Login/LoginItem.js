@@ -29,10 +29,37 @@ function generator({ defaultProps, defaultRules, type }) {
         clearInterval(this.interval);
       }
       onGetCaptcha = () => {
+        var value;
+        if (this.props.name === 'phoneCaptcha') {
+          value = this.context.form.getFieldValue('userPhone');
+          if (!/^1[3|4|5|8]\d{9}$/.test(value)) {
+            this.context.form.setFields({
+              userPhone: {
+                value: value,
+                errors: [new Error('请输入正确的手机号码！')],
+              },
+            });
+            return
+          }
+        }
+        if (this.props.name === 'emailCaptcha') {
+          value = this.context.form.getFieldValue('userEmail');
+                    console.log(value)
+          if (!/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/.test(value)) {
+            this.context.form.setFields({
+              userEmail: {
+                value: value,
+                errors: [new Error('请输入正确的邮箱地址！')],
+              },
+            });
+            return
+          }
+        }
+
         let count = 59;
         this.setState({ count });
         if (this.props.onGetCaptcha) {
-          this.props.onGetCaptcha();
+          this.props.onGetCaptcha(value);
         }
         this.interval = setInterval(() => {
           count -= 1;
