@@ -69,7 +69,7 @@ export default {
       yield put(routerRedux.push('/user/register/step4'));
     },
     *submitStep4Form({ payload }, { call, put }) {
-
+      yield call(register, payload);
       yield put({
         type: 'saveStepFormData',
         payload,

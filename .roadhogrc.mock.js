@@ -161,6 +161,9 @@ const proxy = {
   'POST /sysAnno/myPwdOrEmail': (req, res) => {
       res.send({ msg: 'ok', code: 0 });
     },
+  'POST /sysAnno/register': (req, res) => {
+      res.send({ msg: 'ok', code: 0 });
+    },
 };
 
 export default noProxy ? {} : delay(proxy, 1000);
