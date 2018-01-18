@@ -62,7 +62,7 @@ export default class LoginPage extends Component {
             <Password name="loginPassword" placeholder="请输入密码" />
           </Tab> */}
           <UserName name="loginAccount" placeholder="手机/用户名/邮箱" maxLength="24"/>
-          <Password name="loginPassword" placeholder="请输入密码" />
+          <Password name="loginPassord" placeholder="请输入密码" />
           <div>
             <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>自动登录</Checkbox>
             <Link style={{ float: 'right' }} to="/user/reset-password">忘记密码</Link>

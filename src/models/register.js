@@ -9,7 +9,6 @@ export default {
     step: {
       userPhone: '',
       prefix: '86',
-      fileList: [],
     },
   },
 

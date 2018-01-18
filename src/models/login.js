@@ -11,6 +11,7 @@ export default {
   effects: {
     *login({ payload }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload);
+      response.currentAuthority =  'admin'
       yield put({
         type: 'changeLoginStatus',
         payload: response,

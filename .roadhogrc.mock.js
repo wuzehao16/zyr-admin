@@ -105,17 +105,17 @@ const proxy = {
       currentAuthority: 'guest'
     });
   },
-  // 'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
+  // 'POST /api/api/sysAnno/login': 'http://192.168.2.101:8080/api/sysAnno/login',
   'POST /api/register': (req, res) => {
     res.send({ msg: 'ok', currentAuthority: 'user' });
   },
-  'POST /sysAnno/sendLoginMessage': (req, res) => {
+  'POST /api/sysAnno/sendLoginMessage': (req, res) => {
     res.send({ msg: 'ok', code: 0 });
   },
-  'POST /sysAnno/sendLoginEmail': (req, res) => {
+  'POST /api/sysAnno/sendLoginEmail': (req, res) => {
     res.send({ msg: 'ok', code: 0 });
   },
-  'POST /sysAnno/vaLidatacode': (req, res) => {
+  'POST /api/sysAnno/vaLidatacode': (req, res) => {
     res.send({ msg: 'ok', code: 0 });
   },
   'GET /api/notices': getNotices,
@@ -156,15 +156,15 @@ const proxy = {
     },
     $body: postContent,
   },
-  'POST /sysAnno/getInstitutionByCityCode': getInstitution,
-  'POST /sysAnno/getSubInstitutionByInstitutionCode': getSubInstitution,
-  'POST /sysAnno/myPwdOrEmail': (req, res) => {
+  'POST /api/sysAnno/getInstitutionByCityCode': getInstitution,
+  'POST /api/sysAnno/getSubInstitutionByInstitutionCode': getSubInstitution,
+  'POST /api/sysAnno/myPwdOrEmail': (req, res) => {
       res.send({ msg: 'ok', code: 0 });
     },
-  'POST /sysAnno/register': (req, res) => {
+  'POST /api/sysAnno/register': (req, res) => {
       res.send({ msg: 'ok', code: 0 });
     },
-  'POST /sysAnno/queryAllInstitution': (req, res) => {
+  'POST /api/sysAnno/queryAllInstitution': (req, res) => {
       res.send({
           "code": 0,
           "msg": "ok",
@@ -198,5 +198,5 @@ const proxy = {
 export default noProxy ? {} : delay(proxy, 1000);
 // export default noProxy ? {} : {
 //   ...delay(proxy, 1000),
-//   'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
+//   'POST /api/api/sysAnno/login': 'http://192.168.2.101:8080/api/sysAnno/login',
 // };

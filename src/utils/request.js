@@ -1,5 +1,5 @@
 import fetch from 'dva/fetch';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据',
@@ -20,7 +20,12 @@ const codeMessage = {
 };
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response;
+    if(response.code == 0){
+      return response;
+    } else{
+      // message.error(response.json().data.msg);
+      return response;
+    }
   }
   const errortext = codeMessage[response.status] || response.statusText;
   notification.error({

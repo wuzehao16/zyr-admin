@@ -23,7 +23,7 @@ class Step4 extends React.PureComponent {
     previewVisible: false,
     previewImage: '',
     count: '',
-    contactEmail: '',
+    userEmail: '',
     fileList: [],
   };
   componentWillUnmount() {
@@ -34,12 +34,12 @@ class Step4 extends React.PureComponent {
   }
   onGetCaptcha = () => {
     const { form } = this.props;
-    const contactEmail = form.getFieldValue('contactEmail');
-    const regex = /^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/;
-    if (!regex.test(contactEmail)) {
+    const userEmail = form.getFieldValue('userEmail');
+    const regex = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    if (!regex.test(userEmail)) {
       form.setFields({
-        contactEmail: {
-          value: contactEmail,
+        userEmail: {
+          value: userEmail,
           errors: [new Error('请输入正确的邮箱地址！')],
         },
       });
@@ -48,7 +48,7 @@ class Step4 extends React.PureComponent {
     this.props.dispatch({
       type:'register/getEmailCaptcha',
       payload:{
-        contactEmail,
+        userEmail,
       }
     })
     let count = 59;
@@ -106,7 +106,7 @@ class Step4 extends React.PureComponent {
     this.props.dispatch({
       type: 'register/getInstitution',
       payload: {
-        code: code
+        cityCode: code
       },
     });
   }
@@ -114,14 +114,14 @@ class Step4 extends React.PureComponent {
     this.props.dispatch({
       type: 'register/getSubInstitution',
       payload: {
-        code: code
+        parentId: code
       },
     });
   }
   render() {
     const { form, data, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFields, getFieldValue  } = form;
-    const { previewVisible, previewImage, count, fileList, contactEmail } = this.state;
+    const { previewVisible, previewImage, count, fileList, userEmail } = this.state;
     const cityOptions = options.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     if (data.institutionTypeList) {
       var institutionTypeListOptions = data.institutionTypeList.map(item => <Option key={item.institutionCode} value={item.institutionCode}>{item.institutionName}</Option>);
@@ -301,7 +301,7 @@ class Step4 extends React.PureComponent {
             label="邮箱"
             {...formItemLayout}
             >
-            {getFieldDecorator('contactEmail', {
+            {getFieldDecorator('userEmail', {
               rules: [
                 {
                   required: true,
@@ -331,7 +331,7 @@ class Step4 extends React.PureComponent {
               </Col>
               <Col span={8}>
                 <Button
-                  disabled={count || !getFieldValue('contactEmail')}
+                  disabled={count || !getFieldValue('userEmail')}
                   className={styles.getCaptcha}
                   onClick={this.onGetCaptcha}
                 >

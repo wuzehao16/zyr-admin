@@ -8,13 +8,13 @@ export async function msgPhone(params) {
   });
 }
 export async function msgEmail(params) {
-  return request('sysAnno/sendEmail',{
+  return request('/sysAnno/sendEmail',{
     method: 'POST',
     body: params,
   })
 }
 export async function resetPassword(params) {
-  return request('sysAnno/myPwdOrEmail',{
+  return request('/sysAnno/myPwdOrEmail',{
     method: 'POST',
     body: params,
   })
