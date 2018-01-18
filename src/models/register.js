@@ -84,7 +84,6 @@ export default {
 
   reducers: {
     saveStepFormData(state, { payload }) {
-      console.log(payload)
       return {
         ...state,
         step: {

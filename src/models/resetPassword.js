@@ -15,8 +15,29 @@ export default {
       const response = yield call(msgPhone, payload);
       console.log(2)
     },
+    *savePhone({ payload }, { call, put }) {
+      yield put({
+        type: 'saveStepFormData',
+        ...payload,
+      });
+
+    },
+    *saveEmail({ payload }, { call, put }) {
+      yield put({
+        type: 'saveStepFormData',
+        ...payload,
+      });
+    },
     *reset({ payload }, { call, put }) {
       const response = yield call(resetPassword, payload);
+    },
+  },
+  reducers: {
+    saveStepFormData(state, { payload }) {
+      return {
+        ...state,
+        ...payload
+      };
     },
   },
 };

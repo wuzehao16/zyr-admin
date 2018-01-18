@@ -39,7 +39,6 @@ class Step1 extends React.PureComponent {
   };
   render() {
     const { form, dispatch, data, submitting } = this.props;
-    console.log("data",data)
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {

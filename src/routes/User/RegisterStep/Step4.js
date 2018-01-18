@@ -126,7 +126,6 @@ class Step4 extends React.PureComponent {
       e.preventDefault();
       validateFields((err, values) => {
         if (!err) {
-          console.log(values)
           dispatch({
             type: 'register/submitStep4Form',
             payload: {

@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Alert, Divider, Row, Col, Popover, Progress } from 'antd';
-import { routerRedux } from 'dva/router';
-import { digitUppercase } from '../../../utils/utils';
+import { Form, Input, Button, Divider, Progress } from 'antd';
 import styles from './style.less';
 
 const passwordStatusMap = {
@@ -16,14 +14,6 @@ const passwordProgressMap = {
   pass: 'normal',
   pool: 'exception',
 };
-const formItemLayout = {
-  labelCol: {
-    span: 5,
-  },
-  wrapperCol: {
-    span: 19,
-  },
-};
 
 @Form.create()
 class Step3 extends React.PureComponent {
@@ -31,7 +21,6 @@ class Step3 extends React.PureComponent {
     confirmDirty: false,
     visible: false,
     help: '',
-    previewVisible: false,
   };
   checkPass = (s) => {
     // if (s.length < 8) {
@@ -39,16 +28,16 @@ class Step3 extends React.PureComponent {
     // }
     let ls = 0;
     if (s.match(/([a-z])+/)) {
-      ls++;
+      ls += 1;
     }
     if (s.match(/([0-9])+/)) {
-      ls++;
+      ls += 1;
     }
     if (s.match(/([A-Z])+/)) {
-      ls++;
+      ls += 1;
     }
     if (s.match(/[^a-zA-Z0-9]+/)) {
-      ls++;
+      ls += 1;
     }
     return ls
   }
@@ -143,7 +132,6 @@ class Step3 extends React.PureComponent {
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields((err, values) => {
-        console.log(123)
         if (!err) {
           dispatch({
             type: 'register/submitStep3Form',

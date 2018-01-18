@@ -83,7 +83,6 @@ export default class Register extends Component {
   handleSubmit = (e) => {
     const { form } = this.props;
     const value = form.getFieldValue('city');
-    console.log(value);
     e.preventDefault();
     this.props.form.validateFields({ force: true }, (err, values) => {
       if (!err) {

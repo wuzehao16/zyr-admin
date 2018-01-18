@@ -16,7 +16,6 @@ const actions = (
 class RegisterResult extends React.PureComponent {
   render() {
     const { data } = this.props;
-    console.log(data)
     const title = <div className={styles.title}>你的账户：{data.contactEmail} 注册成功</div>;
     return (
       <Result
