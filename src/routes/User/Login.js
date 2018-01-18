@@ -52,7 +52,7 @@ export default class LoginPage extends Component {
           defaultActiveKey={type}
           className={styles.tabtitle}
         >
-          <Tab key="account" tab="账户密码登录">
+          {/* <Tab key="account" tab="账户密码登录">
             {
               login.status === 'error' &&
               !login.submitting &&
@@ -60,10 +60,12 @@ export default class LoginPage extends Component {
             }
             <UserName name="loginAccount" placeholder="手机/用户名/邮箱" />
             <Password name="loginPassword" placeholder="请输入密码" />
-          </Tab>
+          </Tab> */}
+          <UserName name="loginAccount" placeholder="手机/用户名/邮箱" maxLength="24"/>
+          <Password name="loginPassword" placeholder="请输入密码" />
           <div>
             <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>自动登录</Checkbox>
-            <a style={{ float: 'right' }} href="">忘记密码</a>
+            <Link style={{ float: 'right' }} to="/user/reset-password">忘记密码</Link>
           </div>
             <Submit loading={submitting}>登录</Submit>
           <div className={styles.other}>

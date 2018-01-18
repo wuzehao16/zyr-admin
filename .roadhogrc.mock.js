@@ -85,7 +85,7 @@ const proxy = {
     const { loginPassword, loginAccount, type } = req.body;
     if(loginPassword === '888888' && loginAccount === 'admin'){
       res.send({
-        status: 'ok',
+        msg: 'ok',
         type,
         currentAuthority: 'admin'
       });
@@ -93,7 +93,7 @@ const proxy = {
     }
     if(loginPassword === '123456' && loginAccount === 'user'){
       res.send({
-        status: 'ok',
+        msg: 'ok',
         type,
         currentAuthority: 'user'
       });
@@ -107,16 +107,16 @@ const proxy = {
   },
   // 'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
   'POST /api/register': (req, res) => {
-    res.send({ status: 'ok', currentAuthority: 'user' });
+    res.send({ msg: 'ok', currentAuthority: 'user' });
   },
   'POST /sysAnno/sendLoginMessage': (req, res) => {
-    res.send({ status: 'ok', code: 0 });
+    res.send({ msg: 'ok', code: 0 });
   },
   'POST /sysAnno/sendLoginEmail': (req, res) => {
-    res.send({ status: 'ok', code: 0 });
+    res.send({ msg: 'ok', code: 0 });
   },
   'POST /sysAnno/vaLidatacode': (req, res) => {
-    res.send({ status: 'ok', code: 0 });
+    res.send({ msg: 'ok', code: 0 });
   },
   'GET /api/notices': getNotices,
   'GET /api/500': (req, res) => {
@@ -157,7 +157,10 @@ const proxy = {
     $body: postContent,
   },
   'POST /sysAnno/getInstitutionByCityCode': getInstitution,
-  'POST /sysAnno/getSubInstitutionByInstitutionCode': getSubInstitution
+  'POST /sysAnno/getSubInstitutionByInstitutionCode': getSubInstitution,
+  'POST /sysAnno/myPwdOrEmail': (req, res) => {
+      res.send({ msg: 'ok', code: 0 });
+    },
 };
 
 export default noProxy ? {} : delay(proxy, 1000);
