@@ -164,6 +164,35 @@ const proxy = {
   'POST /sysAnno/register': (req, res) => {
       res.send({ msg: 'ok', code: 0 });
     },
+  'POST /sysAnno/queryAllInstitution': (req, res) => {
+      res.send({
+          "code": 0,
+          "msg": "ok",
+          "data": [
+              {
+                  "institutionId": "04d54b7a25f0473f9679096cfab7597c",
+                  "institutionName": "银行",
+                  "createUserId": "admin",
+                  "createTime": 1516184455966,
+                  "institutionCode": "1"
+              },
+              {
+                  "institutionId": "8a411da788c24402a39a7826aae26b8e",
+                  "institutionName": "金融机构",
+                  "createUserId": "admin",
+                  "createTime": 1516186974926,
+                  "institutionCode": "2"
+              },
+              {
+                  "institutionId": "6015ed04cf524ff6a043443a03a87185",
+                  "institutionName": "小额贷款",
+                  "createUserId": "admin",
+                  "createTime": 1516187373343,
+                  "institutionCode": "3"
+              }
+          ]
+      });
+    },
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

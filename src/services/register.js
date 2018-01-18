@@ -19,6 +19,12 @@ export async function msgEmail(params) {
     body: params,
   })
 }
+export async function getInstitutionType(params) {
+  return request('sysAnno/queryAllInstitution',{
+    method: 'POST',
+    body: params,
+  })
+}
 export async function getInstitution(params) {
   return request('sysAnno/getInstitutionByCityCode',{
     method: 'POST',

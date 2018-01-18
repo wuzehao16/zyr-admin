@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 import { fakeSubmitForm } from '../services/api';
-import { msgPhone, validataPhone, msgEmail, getInstitution,getSubInstitution, register } from '../services/register'
+import { msgPhone, validataPhone, msgEmail, getInstitution, getSubInstitution, getInstitutionType, register } from '../services/register'
 export default {
   namespace: 'register',
 
@@ -39,12 +39,21 @@ export default {
         message.success('发送成功');
       }
     },
+    *getInstitutionType({ payload }, { call, put }) {
+      const response = yield call(getInstitutionType, payload);
+      yield put({
+        type: 'saveStepFormData',
+        payload:{
+          institutionTypeList : response.data
+        },
+      });
+    },
     *getInstitution({ payload }, { call, put }) {
       const response = yield call(getInstitution, payload);
       yield put({
         type: 'saveStepFormData',
         payload:{
-          institutionList : response
+          institutionList : response.data
         },
       });
     },
@@ -53,7 +62,7 @@ export default {
       yield put({
         type: 'saveStepFormData',
         payload:{
-          subInstitutionList : response
+          subInstitutionList : response.data
         },
       });
     },

@@ -29,7 +29,9 @@ class Step4 extends React.PureComponent {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
+  componentDidMount () {
+    this.getInstitutionType();
+  }
   onGetCaptcha = () => {
     const { form } = this.props;
     const contactEmail = form.getFieldValue('contactEmail');
@@ -95,6 +97,11 @@ class Step4 extends React.PureComponent {
     });
   }
   handleChange = ({ fileList }) => this.setState({ fileList })
+  getInstitutionType = () => {
+    this.props.dispatch({
+      type: 'register/getInstitutionType',
+    });
+  }
   getInstitution = (code) => {
     this.props.dispatch({
       type: 'register/getInstitution',
@@ -116,11 +123,14 @@ class Step4 extends React.PureComponent {
     const { getFieldDecorator, validateFields, getFieldValue  } = form;
     const { previewVisible, previewImage, count, fileList, contactEmail } = this.state;
     const cityOptions = options.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    if (data.institutionTypeList) {
+      var institutionTypeListOptions = data.institutionTypeList.map(item => <Option key={item.institutionCode} value={item.institutionCode}>{item.institutionName}</Option>);
+    }
     if (data.institutionList) {
-      var institutionListOptions = data.institutionList.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      var institutionListOptions = data.institutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
     }
     if (data.subInstitutionList) {
-      var subInstitutionListOptions = data.subInstitutionList.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      var subInstitutionListOptions = data.subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
     }
     const onValidateForm = (e) => {
       e.preventDefault();
@@ -179,7 +189,7 @@ class Step4 extends React.PureComponent {
             label="所在城市"
             {...formItemLayout}
           >
-            {getFieldDecorator('city', {
+            {getFieldDecorator('cityCode', {
               rules: [
                 {
                   required: true,
@@ -205,21 +215,20 @@ class Step4 extends React.PureComponent {
               ],
             })(
               <Select placeholder="机构类型">
-                <Option value="0">银行</Option>
-                <Option value="1">小额贷款</Option>
+                {institutionTypeListOptions}
               </Select>
             )}
           </Form.Item>
           {
             ((value = getFieldValue('institutionId'))=> {
               switch(value){
-               case '0':
+               case '1':
                 return <div>
                         <Form.Item
                           label="银行名称"
                           {...formItemLayout}
                          >
-                          {getFieldDecorator('manageName', {
+                          {getFieldDecorator('manageId', {
                             rules: [
                               {
                                 required: true,
@@ -247,7 +256,25 @@ class Step4 extends React.PureComponent {
                           )}
                         </Form.Item>
                        </div>
-                case '1':
+                case '2':
+                  return      <Form.Item
+                          label="机构名称"
+                          {...formItemLayout}
+                         >
+                          {getFieldDecorator('manageName',{
+                            rules: [
+                              {
+                                required: true,
+                                message: '机构名称',
+                              },
+                            ],
+                          })(
+                            <Input
+                              placeholder="机构名称"
+                            />
+                          )}
+                        </Form.Item>
+                case '3':
                   return      <Form.Item
                           label="机构名称"
                           {...formItemLayout}
@@ -293,7 +320,7 @@ class Step4 extends React.PureComponent {
             >
             <Row gutter={8}>
               <Col span={16}>
-                {getFieldDecorator('captcha', {
+                {getFieldDecorator('emailCode', {
                   rules: [
                     {
                       required: true,

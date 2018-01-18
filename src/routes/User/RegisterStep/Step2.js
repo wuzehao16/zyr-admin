@@ -72,7 +72,7 @@ class Step2 extends React.PureComponent {
           <Form.Item>
             <Row gutter={8}>
               <Col span={16}>
-                {getFieldDecorator('captcha', {
+                {getFieldDecorator('code', {
                   rules: [
                     {
                       required: true,
