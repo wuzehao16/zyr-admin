@@ -23,7 +23,18 @@ class Step2 extends React.PureComponent {
     clearInterval(this.interval);
   }
   componentDidMount = () => {
-    this.onGetCaptcha();
+    this.setCaptcha();
+  };
+  setCaptcha = () => {
+    let count = 59;
+    this.setState({ count });
+    this.interval = setInterval(() => {
+      count -= 1;
+      this.setState({ count });
+      if (count === 0) {
+        clearInterval(this.interval);
+      }
+    }, 1000);
   };
   onGetCaptcha = () => {
     this.props.dispatch({

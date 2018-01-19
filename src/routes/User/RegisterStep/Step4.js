@@ -51,6 +51,7 @@ class Step4 extends React.PureComponent {
         userEmail,
       }
     })
+    console.log(this.props.data)
     let count = 59;
     this.setState({ count });
     this.interval = setInterval(() => {
@@ -206,7 +207,7 @@ class Step4 extends React.PureComponent {
             label="机构类型"
             {...formItemLayout}
           >
-            {getFieldDecorator('institutionId', {
+            {getFieldDecorator('institutionCode', {
               rules: [
                 {
                   required: true,
@@ -220,7 +221,7 @@ class Step4 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            ((value = getFieldValue('institutionId'))=> {
+            ((value = getFieldValue('institutionCode'))=> {
               switch(value){
                case '1':
                 return <div>

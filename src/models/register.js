@@ -9,6 +9,7 @@ export default {
     step: {
       userPhone: '',
       prefix: '86',
+      isEmailRegister: 0
     },
   },
 
@@ -19,7 +20,13 @@ export default {
     },
     *submitStep1Form({ payload }, { call, put }) {
       console.log(payload)
-      // yield call(msgPhone, payload);
+      const response = yield call(msgPhone, payload);
+      if(response.code == 0){
+        message.success('发送成功');
+      } else{
+        message.error(response.msg);
+        return
+      }
       yield put({
         type: 'saveStepFormData',
         payload,
@@ -30,12 +37,23 @@ export default {
       const response = yield call(msgPhone, payload);
       if(response.code == 0){
         message.success('发送成功');
+      } else{
+        message.error(response.msg);
       }
     },
     *getEmailCaptcha({ payload }, { call, put }) {
       const response = yield call(msgEmail, payload);
       if(response.code == 0){
         message.success('发送成功');
+      } else{
+        console.log(1)
+        yield put({
+          type: 'saveStepFormData',
+          payload:{
+            isEmailRegister : 1
+          },
+        });
+        message.error(response.msg);
       }
     },
     *getInstitutionType({ payload }, { call, put }) {
@@ -66,7 +84,13 @@ export default {
       });
     },
     *submitStep2Form({ payload }, { call, put }) {
-      yield call(validataPhone, payload);
+      const response = yield call(validataPhone, payload);
+      if(response.code == 0){
+        message.success('发送成功');
+      } else{
+        message.error(response.msg);
+        return
+      }
       yield put(routerRedux.push('/user/register/step3'));
     },
     *submitStep3Form({ payload }, { call, put }) {

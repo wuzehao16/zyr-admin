@@ -20,12 +20,7 @@ const codeMessage = {
 };
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    if(response.code == 0){
       return response;
-    } else{
-      // message.error(response.json().data.msg);
-      return response;
-    }
   }
   const errortext = codeMessage[response.status] || response.statusText;
   notification.error({
