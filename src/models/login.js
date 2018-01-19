@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { fakeAccountLogin } from '../services/api';
 import { setAuthority } from '../utils/authority';
 
@@ -28,6 +29,7 @@ export default {
         // yield put(routerRedux.push('/'));
         window.location.reload();
       }
+      message.error(response.msg);
     },
     *logout(_, { put }) {
       yield put({

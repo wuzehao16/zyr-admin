@@ -6,9 +6,9 @@ import { imgMap } from './mock/utils';
 import { getProfileBasicData } from './mock/profile';
 import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
-import { getContent, postContent } from './mock/content'
+import { getContent, postContent } from './mock/content';
 import { getSystemUser, postSystemUser } from './mock/systemUser';
-import { getInstitution, getSubInstitution } from './mock/register'
+import { getInstitution, getSubInstitution } from './mock/register';
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理

@@ -1,5 +1,7 @@
-import { msgPhone, msgEmail, resetPassword } from '../services/resetPassword';
+import { routerRedux } from 'dva/router';
 import { message } from 'antd';
+import { msgPhone, msgEmail, resetPassword } from '../services/resetPassword';
+
 export default {
   namespace: 'resetPassword',
 
@@ -8,32 +10,29 @@ export default {
   },
 
   effects: {
-    *getEmailCaptcha({ payload }, { call, put }) {
+    *getEmailCaptcha({ payload }, { call }) {
       const response = yield call(msgEmail, payload);
-      if(response.code == 0){
+      if (response.code === 0) {
         message.success('发送成功');
-      } else{
+      } else {
         message.error(response.msg);
-        return
       }
     },
-    *getPhoneCaptcha({ payload }, { call, put }) {
+    *getPhoneCaptcha({ payload }, { call }) {
       const response = yield call(msgPhone, payload);
-      if(response.code == 0){
+      if (response.code === 0) {
         message.success('发送成功');
-      } else{
+      } else {
         message.error(response.msg);
-        return
       }
     },
-    *savePhone({ payload }, { call, put }) {
+    *savePhone({ payload }, { put }) {
       yield put({
         type: 'saveStepFormData',
         ...payload,
       });
-
     },
-    *saveEmail({ payload }, { call, put }) {
+    *saveEmail({ payload }, { put }) {
       yield put({
         type: 'saveStepFormData',
         ...payload,
@@ -41,19 +40,20 @@ export default {
     },
     *reset({ payload }, { call, put }) {
       const response = yield call(resetPassword, payload);
-      if(response.code == 0){
+      if (response.code === 0) {
         message.success('发送成功');
-      } else{
+      } else {
         message.error(response.msg);
-        return
+        return;
       }
+      yield put(routerRedux.push('/user/login'));
     },
   },
   reducers: {
     saveStepFormData(state, { payload }) {
       return {
         ...state,
-        ...payload
+        ...payload,
       };
     },
   },
