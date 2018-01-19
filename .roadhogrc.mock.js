@@ -9,6 +9,7 @@ import { getNotices } from './mock/notices';
 import { getContent, postContent } from './mock/content';
 import { getSystemUser, postSystemUser } from './mock/systemUser';
 import { getInstitution, getSubInstitution } from './mock/register';
+import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary} from './mock/dictionary'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -61,8 +62,8 @@ const proxy = {
     },
     $body: postRule,
   },
-  'GET /mapi/systemUser': getSystemUser,
-  'POST /mapi/systemUser': {
+  'GET /api/systemUser': getSystemUser,
+  'POST /api/systemUser': {
     $params: {
       pageSize: {
         desc: '分页',
@@ -193,6 +194,9 @@ const proxy = {
           ]
       });
     },
+    'GET /api/sys/selectDictionary': selectDictionary,
+    'POST /api/sys/saveDictionary': saveDictionary,
+    'DELETE /api/sys/deleteDictionary/*': deleteDictionary,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

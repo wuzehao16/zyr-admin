@@ -78,7 +78,7 @@ class Step2 extends React.PureComponent {
       <div>
         <h2 className={styles.title}>注册</h2>
         <Divider style={{ margin: '10px 0 24px' }} />
-        <div style={{marginLeft: 8}}>已向{data.userPhone}发送短信，请输入四位验证码</div>
+        <div style={{marginLeft: 8}}>已向{data.userPhone}发送短信，请输入六位验证码</div>
         <Form layout="horizontal" className={styles.stepForm}>
           <Form.Item>
             <Row gutter={8}>

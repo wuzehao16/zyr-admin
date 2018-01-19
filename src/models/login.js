@@ -15,6 +15,7 @@ export default {
       if (response.code === 0) {
         response.currentAuthority = 'admin';
       } else {
+        message.error(response.msg);
         response.currentAuthority = 'guest';
       }
       yield put({
@@ -29,7 +30,6 @@ export default {
         // yield put(routerRedux.push('/'));
         window.location.reload();
       }
-      message.error(response.msg);
     },
     *logout(_, { put }) {
       yield put({

@@ -150,6 +150,10 @@ const menuData = [{
   children: [{
     name: '用户管理',
     path: 'user',
+  },
+  {
+    name: '字典管理',
+    path: 'dict',
   }],
 }, {
   name: '使用文档',
