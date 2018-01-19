@@ -11,7 +11,11 @@ export default {
   effects: {
     *login({ payload }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload);
-      response.currentAuthority =  'admin'
+      if (response.code === 0) {
+        response.currentAuthority =  'admin'
+      } else {
+        response.currentAuthority =  'guest'
+      }
       yield put({
         type: 'changeLoginStatus',
         payload: response,

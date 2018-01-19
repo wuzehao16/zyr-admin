@@ -82,27 +82,27 @@ const proxy = {
   'GET /api/profile/basic': getProfileBasicData,
   'GET /api/profile/advanced': getProfileAdvancedData,
   'POST /api/sysAnno/login': (req, res) => {
-    const { loginPassword, loginAccount, type } = req.body;
-    if(loginPassword === '888888' && loginAccount === 'admin'){
+    const { loginPassord, loginAccount, type } = req.body;
+    if(loginPassord === '888888' && loginAccount === 'admin'){
       res.send({
+        code: 0,
         msg: 'ok',
         type,
-        currentAuthority: 'admin'
       });
       return ;
     }
-    if(loginPassword === '123456' && loginAccount === 'user'){
+    if(loginPassord === '123456' && loginAccount === 'user'){
       res.send({
+        code: 0,
         msg: 'ok',
         type,
-        currentAuthority: 'user'
       });
       return ;
     }
     res.send({
+      code: 1,
       status: 'error',
       type,
-      currentAuthority: 'guest'
     });
   },
   // 'POST /api/api/sysAnno/login': 'http://192.168.2.101:8080/api/sysAnno/login',
