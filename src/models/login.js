@@ -12,9 +12,9 @@ export default {
     *login({ payload }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload);
       if (response.code === 0) {
-        response.currentAuthority =  'admin'
+        response.currentAuthority = 'admin';
       } else {
-        response.currentAuthority =  'guest'
+        response.currentAuthority = 'guest';
       }
       yield put({
         type: 'changeLoginStatus',
