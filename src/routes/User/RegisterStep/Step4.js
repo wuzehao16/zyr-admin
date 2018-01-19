@@ -51,7 +51,6 @@ class Step4 extends React.PureComponent {
         userEmail,
       }
     })
-    console.log(this.props.data)
     let count = 59;
     this.setState({ count });
     this.interval = setInterval(() => {

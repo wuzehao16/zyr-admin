@@ -46,7 +46,6 @@ export default {
       if(response.code == 0){
         message.success('发送成功');
       } else{
-        console.log(1)
         yield put({
           type: 'saveStepFormData',
           payload:{
