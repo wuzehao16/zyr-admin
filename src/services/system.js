@@ -49,7 +49,6 @@ export async function addDict(params) {
     method: 'POST',
     body: {
       ...params,
-      method: 'post',
     },
   });
 }

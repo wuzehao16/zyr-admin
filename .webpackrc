@@ -21,7 +21,7 @@
   "hash": true,
   "proxy": {
      "/mapi/*": {
-       "target": "http://192.168.2.112:8080",
+       "target": "http://192.168.2.101:8080",
        "pathRewrite": { "^/mapi" : "" }
      }
    }

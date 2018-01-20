@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import { Row, Col, Card, Form, Input, Icon, Button, Dropdown, Menu, Modal, message, Select } from 'antd';
 import StandardTable from '../../components/Dictionary';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
 import styles from './User.less';
 
 const FormItem = Form.Item;
@@ -17,12 +16,11 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 @Form.create()
 export default class TableList extends PureComponent {
   state = {
-    label: '',
     type: '',
-    value: '',
     modalVisible: false,
     selectedRows: [],
     formValues: {},
+    isAdd: true,
   };
 
   componentDidMount() {
@@ -35,7 +33,6 @@ export default class TableList extends PureComponent {
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
     const { formValues } = this.state;
-
     const filters = Object.keys(filtersArg).reduce((obj, key) => {
       const newObj = { ...obj };
       newObj[key] = getValue(filtersArg[key]);
@@ -59,11 +56,10 @@ export default class TableList extends PureComponent {
   }
 
   handleFormReset = () => {
-    const { form, dispatch } = this.props;
-    form.resetFields();
+    const { dispatch } = this.props;
     this.setState({
-      formValues: {},
-    });
+      type: '',
+    })
     dispatch({
       type: 'systemDict/fetch',
       payload: {},
@@ -101,45 +97,55 @@ export default class TableList extends PureComponent {
     });
   }
 
+  // handleSearch = (e) => {
+  //   e.preventDefault();
+  //
+  //   const { dispatch, form } = this.props;
+  //
+  //   form.validateFields((err, fieldsValue) => {
+  //     if (err) return;
+  //
+  //     const values = {
+  //       ...fieldsValue,
+  //       updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+  //     };
+  //
+  //     this.setState({
+  //       formValues: values,
+  //     });
+  //
+  //     dispatch({
+  //       type: 'systemDict/fetch',
+  //       payload: values,
+  //     });
+  //   });
+  // }
   handleSearch = (e) => {
     e.preventDefault();
-
-    const { dispatch, form } = this.props;
-
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
-
-      const values = {
-        ...fieldsValue,
-        updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
-      };
-
-      this.setState({
-        formValues: values,
-      });
-
-      dispatch({
-        type: 'systemDict/fetch',
-        payload: values,
-      });
+    const { dispatch } = this.props
+    const { type } = this.state;
+    console.log(type)
+    dispatch({
+      type: 'systemDict/fetch',
+      payload: {
+        type: type
+      },
     });
+  }
+  
+  addDict = () => {
+    this.props.form.resetFields();
+    this.setState({
+      isAdd: true,
+    });
+    this.handleModalVisible(true);
   }
 
   handleModalVisible = (flag) => {
+    const { form } = this.props;
     this.setState({
       modalVisible: !!flag,
-    });
-  }
-
-  handleLabelInput = (e) => {
-    this.setState({
-      label: e.target.value,
-    });
-  }
-
-  handleValueInput = (e) => {
-    this.setState({
-      value: e.target.value,
+      // isAdd: true,
     });
   }
 
@@ -150,34 +156,62 @@ export default class TableList extends PureComponent {
   }
 
   handleAdd = () => {
-    this.props.dispatch({
-      type: 'systemDict/add',
-      payload: {
-        label: this.state.label,
-        value: this.state.value,
-        type: this.state.type,
-      },
-    });
-
-    message.success('添加成功');
+  const {form, dispatch} = this.props;
+  const {isAdd, id} = this.state;
+  form.validateFields({
+    force: true
+  }, (err, values) => {
+    this.setState({formValues: values});
+    if (!err) {
+      if (this.state.isAdd) {
+        dispatch({
+          type: 'systemDict/add',
+          payload: {
+            ...values
+          }
+        });
+      } else {
+        dispatch({
+          type: 'systemDict/update',
+          payload: {
+            ...values,
+            id: id
+          }
+        });
+      }
+      message.success('添加成功');
+      form.resetFields();
+      this.handleModalVisible(false);
+      this.setState({formValues: {}});
+    }
+  });
+}
+  handleEdit = (item) => {
+    const { setFieldsValue } = this.props.form;
+    console.log(item)
     this.setState({
-      modalVisible: false,
-    });
+      isAdd: false,
+      id: item.id,
+    })
+    setFieldsValue({
+      label: item.label,
+      value: item.value,
+      type: item.type,
+    })
+    this.handleModalVisible(true);
   }
-
   renderSimpleForm() {
+    const { type } = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="字典类型">
-              {getFieldDecorator('type')(
-                <Input placeholder="请输入" />
-              )}
+                <Input placeholder="请输入" onChange={this.handleTypeInput} value={type}/>
             </FormItem>
           </Col>
-          <Col md={24} sm={24}>
+          <Col md={16} sm={24}>
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">查询</Button>
               <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
@@ -190,7 +224,9 @@ export default class TableList extends PureComponent {
 
   render() {
     const { systemDict: { data }, loading } = this.props;
-    const { selectedRows, modalVisible, type, label, value } = this.state;
+    console.log(data,"data")
+    const { selectedRows, modalVisible, type, label, value, isAdd } = this.state;
+    const { getFieldDecorator } = this.props.form
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
@@ -206,7 +242,7 @@ export default class TableList extends PureComponent {
               {this.renderSimpleForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+              <Button icon="plus" type="primary" onClick={() => this.addDict()}>
                 新建
               </Button>
               {
@@ -228,36 +264,79 @@ export default class TableList extends PureComponent {
               data={data}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
+              handleEdit={this.handleEdit}
             />
+            {/* <TableForm
+              value={data.list}
+              onChange={this.handleEdit}
+            /> */}
           </div>
         </Card>
         <Modal
-          title="新建字典"
+          title={isAdd ? "新建字典" : '编辑字典'}
           visible={modalVisible}
           onOk={this.handleAdd}
           onCancel={() => this.handleModalVisible()}
         >
+          <Form>
           <FormItem
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 15 }}
             label="字典名称"
+            >
+            {getFieldDecorator('label', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入字典名称！',
+                },
+              ],
+            })(
+              <Input placeholder="请输入" />
+            )}
+          </FormItem>
+          {/* <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="字典名称"
+            required="true"
           >
             <Input placeholder="请输入" onChange={this.handleLabelInput} value={label} />
-          </FormItem>
+          </FormItem> */}
           <FormItem
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 15 }}
             label="字典值"
           >
-            <Input placeholder="请输入" onChange={this.handleValueInput} value={value} />
+            {getFieldDecorator('value', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入字典值！',
+                },
+              ],
+            })(
+              <Input placeholder="请输入" />
+            )}
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 15 }}
             label="字典类型"
+            required="true"
           >
-            <Input placeholder="请输入" onChange={this.handleTypeInput} value={type} />
+            {getFieldDecorator('type', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入字典类型！',
+                },
+              ],
+            })(
+              <Input placeholder="请输入" />
+            )}
           </FormItem>
+          </Form>
         </Modal>
       </PageHeaderLayout>
     );

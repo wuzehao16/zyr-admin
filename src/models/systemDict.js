@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { queryDict, removeDict, addDict, updateDict } from '../services/system';
 
 export default {
@@ -13,6 +14,7 @@ export default {
   effects: {
     *fetch({ payload }, { call, put }) {
       const response = yield call(queryDict, payload);
+      console.log(response)
       yield put({
         type: 'save',
         payload: response,
@@ -24,6 +26,9 @@ export default {
         type: 'save',
         payload: response,
       });
+      if (response.code !== 0) {
+        message.error(response.msg);
+      }
       if (callback) callback();
     },
     *update({ payload, callback }, { call, put }) {

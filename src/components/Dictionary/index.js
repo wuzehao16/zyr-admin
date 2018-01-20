@@ -1,9 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
 import moment from 'moment';
-import { Table, Alert, Badge, Divider } from 'antd';
+import { Table, Alert, Badge, Divider, Card, Icon, Input } from 'antd';
 import styles from './index.less';
-
 const statusMap = ['default', 'processing', 'success', 'error'];
+
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
@@ -33,15 +33,25 @@ class StandardTable extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], []);
   }
-  handleEdit = (e) => {
-    console.log(e)
+  handleEdit = (id) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(id);
+    }
   }
+  onCellChange = (key, dataIndex) => {
+   return (value) => {
+     const dataSource = [...this.state.dataSource];
+     const target = dataSource.find(item => item.key === key);
+     if (target) {
+       target[dataIndex] = value;
+       this.setState({ dataSource });
+     }
+   };
+ }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { list, pagination }, loading } = this.props;
-
-    const status = ['关闭', '管理员', '机构管理员', '客服'];
-
+    const { data: { data, count }, loading } = this.props;
+    // const { getFieldDecorator } = this.props.form;
     const columns = [
       {
         title: '序号',
@@ -77,18 +87,21 @@ class StandardTable extends PureComponent {
       },
       {
         title: '操作',
-        render: () => (
-          <Fragment>
-            <a onClick={this.handleEdit}>编辑</a>
-          </Fragment>
-        ),
+        render: (text, record) => {
+          return (
+            data.length > 1 ?
+            (
+                <a onClick={() => this.handleEdit(record)}>编辑</a>
+            ) : null
+          );
+        },
       },
     ];
 
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      total: count,
     };
 
     const rowSelection = {
@@ -117,7 +130,7 @@ class StandardTable extends PureComponent {
           loading={loading}
           rowKey={record => record.key}
           rowSelection={rowSelection}
-          dataSource={list}
+          dataSource={data}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}

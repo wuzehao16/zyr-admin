@@ -197,6 +197,7 @@ const proxy = {
     'GET /api/sys/selectDictionary': selectDictionary,
     'POST /api/sys/saveDictionary': saveDictionary,
     'DELETE /api/sys/deleteDictionary/*': deleteDictionary,
+    'PUT /api/sys/updateDictionary': updateDictionary,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

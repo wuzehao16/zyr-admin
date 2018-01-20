@@ -48,8 +48,8 @@ export function selectDictionary(req, res, u) {
     dataSource = filterDataSource;
   }
 
-  if (params.no) {
-    dataSource = dataSource.filter(data => data.no.indexOf(params.no) > -1);
+  if (params.type) {
+    dataSource = dataSource.filter(data => data.type.indexOf(params.type) > -1);
   }
 
   let pageSize = 10;
@@ -58,12 +58,9 @@ export function selectDictionary(req, res, u) {
   }
 
   const result = {
-    list: dataSource,
-    pagination: {
-      total: dataSource.length,
-      pageSize,
-      current: parseInt(params.currentPage, 10) || 1,
-    },
+    code: 0,
+    data: dataSource,
+    count: dataSource.length,
   };
 
   if (res && res.json) {
@@ -80,28 +77,25 @@ export function saveDictionary(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, no } = body;
+  const { method, id } = body;
     /* eslint no-case-declarations:0 */
-    tableListDataSource = tableListDataSource.filter(item => no.indexOf(item.no) === -1);
+    // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     const i = Math.ceil(Math.random() * 10000);
     tableListDataSource.unshift({
       key: i,
-      id: `${i}`,
-      title: `一个任务名称 ${i}`,
+      id: `${ i}`,
       updateUser: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
       value: body.value,
       label: body.label,
       type: body.type,
       updatedAt: new Date,
       createdAt: new Date,
-      progress: Math.ceil(Math.random() * 100),
     });
-  const result = {
-    list: tableListDataSource,
-    pagination: {
-      total: tableListDataSource.length,
-    },
-  };
+    const result = {
+      code: 0,
+      data: tableListDataSource,
+      count: tableListDataSource.length,
+    };
 
   if (res && res.json) {
     res.json(result);
@@ -121,12 +115,48 @@ export function deleteDictionary(req, res, u, b) {
   const idArray = url.split("/")
   const id = idArray[idArray.length - 1]
     tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
-    console.log(id)
   const result = {
-    list: tableListDataSource,
-    pagination: {
-      total: tableListDataSource.length,
-    },
+    code: 0,
+    data: tableListDataSource,
+    count: tableListDataSource.length,
+  };
+
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
+export function updateDictionary(req, res, u, b) {
+  let url = u;
+  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+    url = req.url; // eslint-disable-line
+  }
+
+  const body = (b && b.body) || req.body;
+  const { method, id } = body;
+    /* eslint no-case-declarations:0 */
+    // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
+    tableListDataSource.map((item,index) => {
+      var idSting = id;
+      idSting = idSting.toString();
+      if(idSting.indexOf(item.id) !== -1){
+      tableListDataSource[index]={
+          key: body.id,
+          id: `${body.id}`,
+          updateUser: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
+          value: body.value,
+          label: body.label,
+          type: body.type,
+          updatedAt: new Date,
+          createdAt: new Date,
+        }
+      }
+    });
+  const result = {
+    code: 0,
+    data: tableListDataSource,
+    count: tableListDataSource.length,
   };
 
   if (res && res.json) {
@@ -136,7 +166,4 @@ export function deleteDictionary(req, res, u, b) {
   }
 }
 
-const updateDictionary = {
-  code:0
-}
 export default { selectDictionary, deleteDictionary, updateDictionary, saveDictionary};
