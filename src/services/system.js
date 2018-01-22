@@ -1,12 +1,12 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
 
-export async function queryRule(params) {
-  return request(`/api/systemUser?${stringify(params)}`);
+export async function queryUser(params) {
+  return request(`/api/sys/selectUsers?${stringify(params)}`);
 }
 
-export async function removeRule(params) {
-  return request('/api/systemUser', {
+export async function removeUser(params) {
+  return request('/api/sys/deleteUser', {
     method: 'POST',
     body: {
       ...params,
@@ -15,8 +15,17 @@ export async function removeRule(params) {
   });
 }
 
-export async function addRule(params) {
-  return request('/api/systemUser', {
+export async function updateUser(params) {
+  return request('/api/sys/updateUser', {
+    method: 'PUT',
+    body: {
+      ...params,
+    },
+  });
+}
+
+export async function addUser(params) {
+  return request('/api/sys/insertUser', {
     method: 'POST',
     body: {
       ...params,

@@ -9,7 +9,8 @@ import { getNotices } from './mock/notices';
 import { getContent, postContent } from './mock/content';
 import { getSystemUser, postSystemUser } from './mock/systemUser';
 import { getInstitution, getSubInstitution } from './mock/register';
-import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary} from './mock/dictionary'
+import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary } from './mock/dictionary'
+import { selectUsers, deleteUser, updateUser, saveUser } from './mock/systemUser'
 import { getMenuData } from './mock/menus'
 import { format, delay } from 'roadhog-api-doc';
 
@@ -63,16 +64,10 @@ const proxy = {
     },
     $body: postRule,
   },
-  'GET /api/systemUser': getSystemUser,
-  'POST /api/systemUser': {
-    $params: {
-      pageSize: {
-        desc: '分页',
-        exp: 2,
-      },
-    },
-    $body: postSystemUser,
-  },
+  'GET /api/sys/selectUsers': selectUsers,
+  'POST /api/sys/insertUser': saveUser,
+  'DELETE /api/sys/deleteUser/*': deleteUser,
+  'PUT /api/sys/updateUser': updateUser,
   'POST /api/forms': (req, res) => {
     res.send({ message: 'Ok' });
   },

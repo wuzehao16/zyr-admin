@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Table, Alert, Badge, Divider } from 'antd';
 import styles from './index.less';
 
-const statusMap = ['default', 'processing', 'success', 'error'];
+const statusMap = ['error', 'success'];
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
@@ -36,30 +36,31 @@ class StandardTable extends PureComponent {
 
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { list, pagination }, loading } = this.props;
+    console.log(this.props)
+    const { data: { data, count }, loading } = this.props;
 
-    const status = ['关闭', '管理员', '机构管理员', '客服'];
+    const status = ['是', '否'];
 
     const columns = [
       {
         title: '序号',
-        dataIndex: 'no',
+        dataIndex: 'userId',
+      },
+      {
+        title: '账号',
+        dataIndex: 'loginAccount',
       },
       {
         title: '姓名',
-        dataIndex: 'name',
+        dataIndex: 'userName',
       },
       {
-        title: '电话',
-        dataIndex: 'phone',
+        title: '创建人',
+        dataIndex: 'createUser',
       },
       {
-        title: '邮箱',
-        dataIndex: 'email',
-      },
-      {
-        title: '状态',
-        dataIndex: 'status',
+        title: '是否锁定',
+        dataIndex: 'islock',
         filters: [
           {
             text: status[0],
@@ -69,22 +70,14 @@ class StandardTable extends PureComponent {
             text: status[1],
             value: 1,
           },
-          {
-            text: status[2],
-            value: 2,
-          },
-          {
-            text: status[3],
-            value: 3,
-          },
         ],
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
       },
       {
-        title: '注册时间',
-        dataIndex: 'createdAt',
+        title: '创建时间',
+        dataIndex: 'createTime',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
@@ -98,8 +91,6 @@ class StandardTable extends PureComponent {
         title: '操作',
         render: () => (
           <Fragment>
-            <a href="">配置</a>
-            <Divider type="vertical" />
             <a href="/system/user/edit">编辑</a>
           </Fragment>
         ),
@@ -109,7 +100,7 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      count,
     };
 
     const rowSelection = {
@@ -138,7 +129,7 @@ class StandardTable extends PureComponent {
           loading={loading}
           rowKey={record => record.key}
           rowSelection={rowSelection}
-          dataSource={list}
+          dataSource={data}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}

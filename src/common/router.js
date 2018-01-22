@@ -180,7 +180,7 @@ export const getRouterData = (app) => {
     '/user/reset-password': {
       component: dynamicWrapper(app, ['resetPassword'], () => import('../routes/User/ResetPassword')),
     },
-    '/institution/main': {
+    '/institution': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/Institution/TableList')),
     },
     '/institution/add': {

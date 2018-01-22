@@ -5,19 +5,17 @@ let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
     key: i,
-    no: ` ${i}`,
-    title: `一个任务名称 ${i}`,
-    name: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
-    phone: '13855555555',
-    email: 'cc@gmail.com',
-    status: Math.floor(Math.random() * 10) % 4,
+    userId: `${i}`,
+    loginAccount: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
+    userName: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
+    createUser: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
-    createdAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
-    progress: Math.ceil(Math.random() * 100),
+    createTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
+    islock: Math.floor(Math.random() * 2),
   });
 }
 
-export function getSystemUser(req, res, u) {
+export function selectUsers(req, res, u) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -37,20 +35,20 @@ export function getSystemUser(req, res, u) {
     });
   }
 
-  if (params.status) {
-    const status = params.status.split(',');
+  if (params.islock) {
+    const islock = params.islock.split(',');
     let filterDataSource = [];
-    status.forEach((s) => {
+    islock.forEach((s) => {
       filterDataSource = filterDataSource.concat(
-        [...dataSource].filter(data => parseInt(data.status, 10) === parseInt(s[0], 10))
+        [...dataSource].filter(data => parseInt(data.islock, 10) === parseInt(s[0], 10))
       );
     });
     dataSource = filterDataSource;
   }
 
-  if (params.no) {
-    dataSource = dataSource.filter(data => data.no.indexOf(params.no) > -1);
-  }
+  // if (params.islock) {
+  //   dataSource = dataSource.filter(data => data.islock.indexOf(params.islock) > -1);
+  // }
 
   let pageSize = 10;
   if (params.pageSize) {
@@ -58,12 +56,9 @@ export function getSystemUser(req, res, u) {
   }
 
   const result = {
-    list: dataSource,
-    pagination: {
-      total: dataSource.length,
-      pageSize,
-      current: parseInt(params.currentPage, 10) || 1,
-    },
+    code: 0,
+    data: dataSource,
+    count: dataSource.length,
   };
 
   if (res && res.json) {
@@ -73,7 +68,40 @@ export function getSystemUser(req, res, u) {
   }
 }
 
-export function postSystemUser(req, res, u, b) {
+export function saveUser(req, res, u, b) {
+  let url = u;
+  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+    url = req.url; // eslint-disable-line
+  }
+
+  const body = (b && b.body) || req.body;
+  const { method, id } = body;
+    /* eslint no-case-declarations:0 */
+    // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
+    const i = Math.ceil(Math.random() * 10000);
+    tableListDataSource.unshift({
+      key: i,
+      id: `${ i}`,
+      updateUser: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
+      value: body.value,
+      label: body.label,
+      type: body.type,
+      updatedAt: new Date,
+      createTime: new Date,
+    });
+    const result = {
+      code: 0,
+      data: tableListDataSource,
+      count: tableListDataSource.length,
+    };
+
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
+export function deleteUser(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -81,36 +109,52 @@ export function postSystemUser(req, res, u, b) {
 
   const body = (b && b.body) || req.body;
   const { method, no } = body;
-
-  switch (method) {
     /* eslint no-case-declarations:0 */
-    case 'delete':
-      tableListDataSource = tableListDataSource.filter(item => no.indexOf(item.no) === -1);
-      break;
-    case 'post':
-      const i = Math.ceil(Math.random() * 10000);
-      tableListDataSource.unshift({
-        key: i,
-        no: ` ${i}`,
-        title: `一个任务名称 ${i}`,
-        name: '曲丽丽',
-        phone: '13855555555',
-        email: 'cc@gmail.com',
-        status: Math.floor(Math.random() * 10) % 4,
-        updatedAt: new Date(),
-        createdAt: new Date(),
-        progress: Math.ceil(Math.random() * 100),
-      });
-      break;
-    default:
-      break;
+  const idArray = url.split("/")
+  const id = idArray[idArray.length - 1]
+    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
+  const result = {
+    code: 0,
+    data: tableListDataSource,
+    count: tableListDataSource.length,
+  };
+
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
+export function updateUser(req, res, u, b) {
+  let url = u;
+  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+    url = req.url; // eslint-disable-line
   }
 
+  const body = (b && b.body) || req.body;
+  const { method, id } = body;
+    /* eslint no-case-declarations:0 */
+    // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
+    tableListDataSource.map((item,index) => {
+      var idSting = id;
+      idSting = idSting.toString();
+      if(idSting.indexOf(item.id) !== -1){
+      tableListDataSource[index]={
+          key: body.id,
+          id: `${body.id}`,
+          updateUser: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
+          value: body.value,
+          label: body.label,
+          type: body.type,
+          updatedAt: new Date,
+          createTime: new Date,
+        }
+      }
+    });
   const result = {
-    list: tableListDataSource,
-    pagination: {
-      total: tableListDataSource.length,
-    },
+    code: 0,
+    data: tableListDataSource,
+    count: tableListDataSource.length,
   };
 
   if (res && res.json) {
@@ -120,7 +164,4 @@ export function postSystemUser(req, res, u, b) {
   }
 }
 
-export default {
-  getSystemUser,
-  postSystemUser,
-};
+export default { selectUsers, deleteUser, updateUser, saveUser};
