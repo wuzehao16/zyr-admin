@@ -15,7 +15,7 @@ import { getRoutes } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 import { getMenuData } from '../common/menu';
 import logo from '../assets/logo.png';
-
+import App from './App'
 const { Content } = Layout;
 const { AuthorizedRoute } = Authorized;
 
@@ -64,6 +64,7 @@ enquireScreen((b) => {
   isMobile = b;
 });
 
+@App
 class BasicLayout extends React.PureComponent {
   static childContextTypes = {
     location: PropTypes.object,
@@ -92,9 +93,9 @@ class BasicLayout extends React.PureComponent {
   getPageTitle() {
     const { routerData, location } = this.props;
     const { pathname } = location;
-    let title = 'Ant Design Pro';
+    let title = '众银云测';
     if (routerData[pathname] && routerData[pathname].name) {
-      title = `${routerData[pathname].name} - Ant Design Pro`;
+      title = `${routerData[pathname].name} - 众银云测`;
     }
     return title;
   }
@@ -127,7 +128,7 @@ class BasicLayout extends React.PureComponent {
   }
   render() {
     const {
-      currentUser, collapsed, fetchingNotices, notices, routerData, match, location,
+      currentUser, collapsed, fetchingNotices, notices, routerData, match, location,memus
     } = this.props;
     const layout = (
       <Layout>
@@ -137,7 +138,7 @@ class BasicLayout extends React.PureComponent {
           // If you do not have the Authorized parameter
           // you will be forced to jump to the 403 interface without permission
           Authorized={Authorized}
-          menuData={getMenuData()}
+          menuData={memus}
           collapsed={collapsed}
           location={location}
           isMobile={this.state.isMobile}
@@ -225,4 +226,5 @@ export default connect(({ user, global, loading }) => ({
   collapsed: global.collapsed,
   fetchingNotices: loading.effects['global/fetchNotices'],
   notices: global.notices,
+  memus: global.menus
 }))(BasicLayout);

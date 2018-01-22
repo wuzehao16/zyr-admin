@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 import { fakeSubmitForm } from '../services/api';
-import { msgPhone, validataPhone, msgEmail, getInstitution,getSubInstitution, register } from '../services/register'
+import { msgPhone, validataPhone, msgEmail, getInstitution, getSubInstitution, getInstitutionType, register } from '../services/register'
 export default {
   namespace: 'register',
 
@@ -9,7 +9,7 @@ export default {
     step: {
       userPhone: '',
       prefix: '86',
-      fileList: [],
+      isEmailRegister: 0
     },
   },
 
@@ -20,7 +20,13 @@ export default {
     },
     *submitStep1Form({ payload }, { call, put }) {
       console.log(payload)
-      // yield call(msgPhone, payload);
+      const response = yield call(msgPhone, payload);
+      if(response.code == 0){
+        message.success('发送成功');
+      } else{
+        message.error(response.msg);
+        return
+      }
       yield put({
         type: 'saveStepFormData',
         payload,
@@ -31,20 +37,39 @@ export default {
       const response = yield call(msgPhone, payload);
       if(response.code == 0){
         message.success('发送成功');
+      } else{
+        message.error(response.msg);
       }
     },
     *getEmailCaptcha({ payload }, { call, put }) {
       const response = yield call(msgEmail, payload);
       if(response.code == 0){
         message.success('发送成功');
+      } else{
+        yield put({
+          type: 'saveStepFormData',
+          payload:{
+            isEmailRegister : 1
+          },
+        });
+        message.error(response.msg);
       }
+    },
+    *getInstitutionType({ payload }, { call, put }) {
+      const response = yield call(getInstitutionType, payload);
+      yield put({
+        type: 'saveStepFormData',
+        payload:{
+          institutionTypeList : response.data
+        },
+      });
     },
     *getInstitution({ payload }, { call, put }) {
       const response = yield call(getInstitution, payload);
       yield put({
         type: 'saveStepFormData',
         payload:{
-          institutionList : response
+          institutionList : response.data
         },
       });
     },
@@ -53,12 +78,18 @@ export default {
       yield put({
         type: 'saveStepFormData',
         payload:{
-          subInstitutionList : response
+          subInstitutionList : response.data
         },
       });
     },
     *submitStep2Form({ payload }, { call, put }) {
-      yield call(validataPhone, payload);
+      const response = yield call(validataPhone, payload);
+      if(response.code == 0){
+        message.success('发送成功');
+      } else{
+        message.error(response.msg);
+        return
+      }
       yield put(routerRedux.push('/user/register/step3'));
     },
     *submitStep3Form({ payload }, { call, put }) {
@@ -69,7 +100,7 @@ export default {
       yield put(routerRedux.push('/user/register/step4'));
     },
     *submitStep4Form({ payload }, { call, put }) {
-
+      yield call(register, payload);
       yield put({
         type: 'saveStepFormData',
         payload,

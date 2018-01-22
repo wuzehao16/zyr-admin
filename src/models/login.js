@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { fakeAccountLogin } from '../services/api';
 import { setAuthority } from '../utils/authority';
 
@@ -11,6 +12,12 @@ export default {
   effects: {
     *login({ payload }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload);
+      if (response.code === 0) {
+        response.currentAuthority = 'admin';
+      } else {
+        message.error(response.msg);
+        response.currentAuthority = 'guest';
+      }
       yield put({
         type: 'changeLoginStatus',
         payload: response,

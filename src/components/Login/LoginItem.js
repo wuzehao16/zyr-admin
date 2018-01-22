@@ -44,8 +44,7 @@ function generator({ defaultProps, defaultRules, type }) {
         }
         if (this.props.name === 'emailCaptcha') {
           value = this.context.form.getFieldValue('userEmail');
-                    console.log(value)
-          if (!/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/.test(value)) {
+          if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value)) {
             this.context.form.setFields({
               userEmail: {
                 value: value,

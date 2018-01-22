@@ -61,7 +61,7 @@ export async function queryFakeList(params) {
 }
 
 export async function fakeAccountLogin(params) {
-  return request('/api/sysAnno/login', {
+  return request('/mapi/sysAnno/login', {
     method: 'POST',
     body: params,
   });
@@ -76,4 +76,7 @@ export async function fakeRegister(params) {
 
 export async function queryNotices() {
   return request('/api/notices');
+}
+export async function queryMenus() {
+  return request('/api/sys/menus');
 }

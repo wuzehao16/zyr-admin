@@ -1,53 +1,103 @@
-const getInstitution = [
-  {
-    label: '平安银行',
-    value: 0,
-  },
-  {
-    label: '浦发银行',
-    value: 1,
-  },
-  {
-    label: '珠海银行',
-    value: 2,
-  },
-  {
-    label: '中国银行',
-    value: 3,
-  },
-  {
-    label: '建设银行',
-    value: 4,
-  },
-  {
-    label: '农业银行',
-    value: 5,
-  }
-]
-const getSubInstitution = [
-  {
-    label: '上梅林分行',
-    value: 0,
-  },
-  {
-    label: '上梅林分行2',
-    value: 1,
-  },
-  {
-    label: '上梅林分行3',
-    value: 2,
-  },
-  {
-    label: '上梅林分行4',
-    value: 3,
-  },
-  {
-    label: '上梅林分行5',
-    value: 4,
-  },
-  {
-    label: '中山',
-    value: 5,
-  }
-]
+const getInstitution = {
+    "code": 0,
+    "msg": "ok",
+    "data": [
+        {
+            "manageId": "1f27c1d8131a4096bd1e659f9cce94e2",
+            "institutionId": "8a411da788c24402a39a7826aae26b8e",
+            "manageName": "海通证券",
+            "city": "深圳",
+            "sublInstitution": null,
+            "contacts": "陈秋燕",
+            "contactPhone": "15999646203",
+            "startStatus": null,
+            "manageLogoId": null,
+            "createTime": 1516254564935,
+            "approvalStatus": null,
+            "cityCode": "1",
+            "institutionCode": "2"
+        },
+        {
+            "manageId": "40f05aeb7ef247da8d00e08d5b317cab",
+            "institutionId": "04d54b7a25f0473f9679096cfab7597c",
+            "manageName": "华夏银行",
+            "city": "深圳",
+            "sublInstitution": null,
+            "contacts": "陈秋燕",
+            "contactPhone": "15355498056",
+            "startStatus": null,
+            "manageLogoId": null,
+            "createTime": 1516254570936,
+            "approvalStatus": null,
+            "cityCode": "1",
+            "institutionCode": "1"
+        },
+        {
+            "manageId": "5a840b4f457543beaf267b7b39024dd7",
+            "institutionId": null,
+            "manageName": "天风证券",
+            "city": "深圳",
+            "sublInstitution": null,
+            "contacts": null,
+            "contactPhone": null,
+            "startStatus": 0,
+            "manageLogoId": null,
+            "createTime": 1516253793935,
+            "approvalStatus": null,
+            "cityCode": "1",
+            "institutionCode": "2"
+        },
+        {
+            "manageId": "5e553724754f4d47b57c45ff6afd53d6",
+            "institutionId": "04d54b7a25f0473f9679096cfab7597c",
+            "manageName": "平安银行",
+            "city": "深圳",
+            "sublInstitution": null,
+            "contacts": "王日梅",
+            "contactPhone": "15999646232",
+            "startStatus": null,
+            "manageLogoId": null,
+            "createTime": 1516254505835,
+            "approvalStatus": null,
+            "cityCode": "1",
+            "institutionCode": "1"
+        }
+    ]
+}
+const getSubInstitution = {
+    "code": 0,
+    "msg": "ok",
+    "data": [
+        {
+            "manageId": "2890c98fa9474bf1ac8ecb282357fc28",
+            "institutionId": "04d54b7a25f0473f9679096cfab7597c",
+            "manageName": "平安南山分行",
+            "city": "深圳",
+            "sublInstitution": "5e553724754f4d47b57c45ff6afd53d6",
+            "contacts": "陈秋燕",
+            "contactPhone": "15999646203",
+            "startStatus": null,
+            "manageLogoId": null,
+            "createTime": 1516254568440,
+            "approvalStatus": null,
+            "cityCode": "1",
+            "institutionCode": "1"
+        },
+        {
+            "manageId": "4269f2e11e144ff5a57dfbe674cfecd9",
+            "institutionId": "04d54b7a25f0473f9679096cfab7597c",
+            "manageName": "平安福田分行",
+            "city": "深圳",
+            "sublInstitution": "5e553724754f4d47b57c45ff6afd53d6",
+            "contacts": "陈成邦5",
+            "contactPhone": "15999646203",
+            "startStatus": 0,
+            "manageLogoId": null,
+            "createTime": 1516257944994,
+            "approvalStatus": null,
+            "cityCode": "1",
+            "institutionCode": "1"
+        }
+    ]
+}
 export default {getInstitution,getSubInstitution};
