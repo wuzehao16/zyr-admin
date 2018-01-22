@@ -9,7 +9,7 @@ const menuData = [{
     name: '监控页',
     path: 'monitor',
   }, {
-    name: '工作台1',
+    name: '工作台',
     path: 'workplace',
     // hideInMenu: true,
   }],
@@ -160,20 +160,19 @@ const menuData = [{
   icon: 'book',
   path: 'http://pro.ant.design/docs/getting-started',
   target: '_blank',
-}];
+}]
+export function getMenuData(req, res, u, b) {
+  const result = {
+    code: 0,
+    data: menuData,
+  };
 
-function formatter(data, parentPath = '', parentAuthority) {
-  return data.map((item) => {
-    const result = {
-      ...item,
-      path: `${parentPath}${item.path}`,
-      authority: item.authority || parentAuthority,
-    };
-    if (item.children) {
-      result.children = formatter(item.children, `${parentPath}${item.path}/`, item.authority);
-    }
+  if (res && res.json) {
+    res.json(result);
+  } else {
     return result;
-  });
+  }
 }
-
-export const getMenuData = () => formatter(menuData);
+export default {
+  getMenuData,
+};
