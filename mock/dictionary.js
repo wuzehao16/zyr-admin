@@ -136,9 +136,7 @@ export function updateDictionary(req, res, u, b) {
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     tableListDataSource.map((item,index) => {
-      var idSting = id;
-      idSting = idSting.toString();
-      if(idSting.indexOf(item.id) !== -1){
+      if(item.id == id){
       tableListDataSource[index]={
           key: body.id,
           id: `${body.id}`,

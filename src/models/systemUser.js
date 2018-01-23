@@ -1,5 +1,6 @@
 import { queryAllRole, queryUser, removeUser, addUser, updateUser } from '../services/system';
-
+import { routerRedux } from 'dva/router';
+import { message } from 'antd';
 export default {
   namespace: 'systemUser',
 
@@ -34,6 +35,7 @@ export default {
         type: 'save',
         payload: response,
       });
+      yield put(routerRedux.push('/system/user'));
       if (callback) callback();
     },
     *remove({ payload, callback }, { call, put }) {
@@ -44,13 +46,14 @@ export default {
       });
       if (callback) callback();
     },
-    *update({ payload }, { call }) {
+    *update({ payload }, { call, put }) {
       yield call(updateUser, payload);
       message.success('提交成功');
+      yield put(routerRedux.push('/system/user'));
     },
     *saveUser({ payload }, { call, put }) {
       yield put({
-        type: 'saveUser',
+        type: 'saveUserInfo',
         payload: payload,
       });
     },
@@ -63,7 +66,7 @@ export default {
         data: action.payload,
       };
     },
-    saveUser(state, action) {
+    saveUserInfo(state, action) {
       return {
         ...state,
         data: action.payload,
@@ -72,12 +75,13 @@ export default {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      return history.listen(({ pathname, query }) => {
-        console.log(query,pathname)
-        // dispatch({
-        //   type:'saveUser',
-        //   payload: query
-        // })
+      return history.listen(({ pathname, state }) => {
+        if(pathname ==="/system/user/edit"){
+          dispatch({
+            type:'saveUser',
+            payload: state
+          })
+        }
         // if (pathname === url) {
         //   dispatch({ type: 'fetch', payload: { current: 1, size: 20, ...query } });
         // }

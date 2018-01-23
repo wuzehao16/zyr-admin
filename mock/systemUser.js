@@ -8,10 +8,11 @@ for (let i = 0; i < 46; i += 1) {
     userId: `${i}`,
     loginAccount: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
     userName: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
+    loginpassord: '123',
     createUser: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
-    islock: Math.floor(Math.random() * 2),
+    islock: '1',
     sysRoles: [{
       roleId: "575eb9a313794afaac82265afe9ab49a",
       roleName: "运维人员"
@@ -85,11 +86,13 @@ export function saveUser(req, res, u, b) {
     const i = Math.ceil(Math.random() * 10000);
     tableListDataSource.unshift({
       key: i,
-      id: `${ i}`,
+      userId: `${ i}`,
       updateUser: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
-      value: body.value,
-      label: body.label,
-      type: body.type,
+      loginpassord: body.loginpassord,
+      loginAccount: body.loginAccount,
+      userName: body.userName,
+      islock: body.islock,
+      sysRoles: body.sysRoles,
       updatedAt: new Date,
       createTime: new Date,
     });
@@ -115,8 +118,8 @@ export function deleteUser(req, res, u, b) {
   const { method, no } = body;
     /* eslint no-case-declarations:0 */
   const idArray = url.split("/")
-  const id = idArray[idArray.length - 1]
-    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
+  const userId = idArray[idArray.length - 1]
+    tableListDataSource = tableListDataSource.filter(item => userId.indexOf(item.userId) === -1);
   const result = {
     code: 0,
     data: tableListDataSource,
@@ -136,20 +139,20 @@ export function updateUser(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, id } = body;
+  const { method, userId } = body;
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     tableListDataSource.map((item,index) => {
-      var idSting = id;
-      idSting = idSting.toString();
-      if(idSting.indexOf(item.id) !== -1){
+      if(userId == item.userId){
       tableListDataSource[index]={
-          key: body.id,
-          id: `${body.id}`,
+          key: body.userId,
+          userId: `${body.userId}`,
           updateUser: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
-          value: body.value,
-          label: body.label,
-          type: body.type,
+          loginpassord: body.loginpassord,
+          loginAccount: body.loginAccount,
+          userName: body.userName,
+          sysRoles: body.sysRoles,
+          islock: body.islock,
           updatedAt: new Date,
           createTime: new Date,
         }

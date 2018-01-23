@@ -15,11 +15,61 @@ const options = [
   { label: 'Orange', value: 'Orange' },
 ];
 
-@connect(({ loading }) => ({
+@connect(({systemUser, loading }) => ({
+  data: systemUser,
   submitting: loading.effects['systemUser/update'],
 }))
-@Form.create()
+@Form.create({
+  // mapPropsToFields(props) {
+  //   console.log('mapPropsToFields', props);
+  //   const item = props.data.data.item;
+  //   console.log(item.loginAccount)
+  //   return {
+  //     loginAccount: Form.createFormField(item.loginAccount),
+  //     loginpassord: Form.createFormField(item.loginpassord),
+  //     userName: Form.createFormField(item.userNames),
+  //     islock: Form.createFormField(item.islock),
+  //     userId: Form.createFormField(item.islock),
+  //   };
+  // },
+  // onFieldsChange(props, fields) {
+  //   console.log('onFieldsChange', fields);
+  //   props.dispatch({
+  //     type: 'save_fields',
+  //     payload: fields,
+  //   });
+  // },
+  //  onValuesChange(_, values) {
+  //   console.log(values);
+  // },
+})
 export default class BasicForms extends PureComponent {
+  componentWillMount () {
+    this.queryAllRole();
+  }
+  queryAllRole = () => {
+    this.props.dispatch({
+      type: 'systemUser/queryAllRole',
+    });
+  }
+  componentDidMount () {
+    const { setFieldsValue } = this.props.form;
+    if (this.props.data.data.item) {
+      const item = this.props.data.data.item;
+      var sysRoles = [];
+      if (item.sysRoles) {
+         sysRoles = item.sysRoles.map(item=>{return item.roleId})
+      }
+      setFieldsValue({
+        loginAccount: item.loginAccount,
+        loginpassord: item.loginpassord,
+        userName: item.userName,
+        islock: item.islock,
+        userId: item.userId,
+        sysRoles: sysRoles,
+      })
+    }
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -32,7 +82,7 @@ export default class BasicForms extends PureComponent {
 
       if (!err) {
         this.props.dispatch({
-          type: 'form/submitRegularForm',
+          type: 'systemUser/update',
           payload: newValue,
         });
         newValue = {}
@@ -43,9 +93,12 @@ export default class BasicForms extends PureComponent {
     console.log(value)
   }
   render() {
-    const { submitting } = this.props;
+    const { submitting, data } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    console.log(this , "edituser")
+    if (data.data.roleList) {
+      var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
+    }
+    getFieldDecorator('userId')
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -130,10 +183,11 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="是否锁定"
               >
-              {getFieldDecorator('sysRoles', {
-                initialValue:['Pear']
-              })(
-                <CheckboxGroup options={options} onChange={this.onChange} />
+              {getFieldDecorator('sysRoles')(
+                <CheckboxGroup  onChange={this.onChange} >
+                  {RoleOptions}
+                </CheckboxGroup>
+
               )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>

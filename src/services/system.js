@@ -9,14 +9,10 @@ export async function queryAllRole(params) {
 }
 
 export async function removeUser(params) {
-  return request('/api/sys/deleteUser', {
-    method: 'POST',
-    body: {
-      ...params,
-    },
+  return request(`/api/sys/deleteUser/${params.userId}`, {
+    method: 'Delete',
   });
 }
-
 export async function updateUser(params) {
   return request('/api/sys/updateUser', {
     method: 'PUT',
@@ -40,7 +36,6 @@ export async function queryDict(params) {
 }
 
 export async function removeDict(params) {
-  console.log(params)
   return request(`/api/sys/deleteDictionary/${params.id}`, {
     method: 'Delete',
   });

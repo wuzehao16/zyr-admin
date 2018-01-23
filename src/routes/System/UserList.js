@@ -80,7 +80,7 @@ export default class TableList extends PureComponent {
         dispatch({
           type: 'systemUser/remove',
           payload: {
-            no: selectedRows.map(row => row.no).join(','),
+            userId: selectedRows.map(row => row.userId).join(','),
           },
           callback: () => {
             this.setState({
@@ -154,7 +154,7 @@ export default class TableList extends PureComponent {
     this.props.dispatch(routerRedux.push({
       pathname: '/system/user/edit',
       state:{
-        item
+        item: item
       }
     }));
   }
