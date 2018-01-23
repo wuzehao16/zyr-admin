@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { Row, Col, Card, Form, Input, Icon, Button, Dropdown, Menu, message, Select } from 'antd';
-import StandardTable from '../../components/SystemUserTable';
+import StandardTable from '../../components/SystemMenuTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './User.less';
@@ -11,9 +11,9 @@ const FormItem = Form.Item;
 const { Option } = Select;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
-@connect(({ systemUser, loading }) => ({
-  systemUser,
-  loading: loading.models.systemUser,
+  @connect(({ systemMenu, loading }) => ({
+    systemMenu,
+    loading: loading.models.systemMenu,
 }))
 @Form.create()
 export default class TableList extends PureComponent {
@@ -25,7 +25,7 @@ export default class TableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'systemUser/fetch',
+        type: 'systemMenu/fetch',
     });
   }
 
@@ -50,7 +50,7 @@ export default class TableList extends PureComponent {
     }
 
     dispatch({
-      type: 'systemUser/fetch',
+      type: 'systemMenu/fetch',
       payload: params,
     });
   }
@@ -62,7 +62,7 @@ export default class TableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'systemUser/fetch',
+      type: 'systemMenu/fetch',
       payload: {},
     });
   }
@@ -76,7 +76,7 @@ export default class TableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'systemUser/remove',
+            type: 'systemMenu/remove',
           payload: {
             userId: selectedRows.map(row => row.userId).join(','),
           },
@@ -116,14 +116,13 @@ export default class TableList extends PureComponent {
       });
 
       dispatch({
-        type: 'systemUser/fetch',
+          type: 'systemMenu/fetch',
         payload: values,
       });
     });
   }
 
   handleEdit = (item) => {
-    console.log(item);
     this.props.dispatch(routerRedux.push({
       pathname: '/system/user/edit',
       state:{
@@ -131,31 +130,9 @@ export default class TableList extends PureComponent {
       }
     }));
   }
-  renderSimpleForm() {
-    const { getFieldDecorator } = this.props.form;
-    return (
-      <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="账号">
-              {getFieldDecorator('loginAccount')(
-                <Input placeholder="请输入" />
-              )}
-            </FormItem>
-          </Col>
-          <Col md={16} sm={24}>
-            <span className={styles.submitButtons}>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-            </span>
-          </Col>
-        </Row>
-      </Form>
-    );
-  }
 
   render() {
-    const { systemUser: { data }, loading, dispatch } = this.props;
+    const { systemMenu: { data }, loading, dispatch } = this.props;
     const { selectedRows, modalVisible, addInputValue } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -168,11 +145,8 @@ export default class TableList extends PureComponent {
       <PageHeaderLayout title="用户列表">
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListForm}>
-              {this.renderSimpleForm()}
-            </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push(`/system/user/add`))}>
+              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push(`/system/menu/add`))}>
                 新建
               </Button>
               {

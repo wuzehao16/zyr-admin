@@ -152,6 +152,10 @@ const menuData = [{
     path: 'user',
   },
   {
+    name: '菜单管理',
+    path: 'menu',
+  },
+  {
     name: '字典管理',
     path: 'dict',
   }],

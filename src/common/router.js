@@ -210,6 +210,15 @@ export const getRouterData = (app) => {
     '/system/dict': {
       component: dynamicWrapper(app, ['systemDict'], () => import('../routes/System/Dict')),
     },
+    '/system/menu': {
+      component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/Menu')),
+    },
+    '/system/menu/list': {
+      component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/MenuList')),
+    },
+    '/system/menu/add': {
+      component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/AddMenu')),
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

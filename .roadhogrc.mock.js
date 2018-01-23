@@ -12,6 +12,7 @@ import { getInstitution, getSubInstitution } from './mock/register';
 import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary } from './mock/dictionary'
 import { selectUsers, deleteUser, updateUser, saveUser, selectAllRole } from './mock/systemUser'
 import { getMenuData } from './mock/menus'
+import { selectMenuAll } from './mock/systemMenu'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -196,6 +197,7 @@ const proxy = {
     'DELETE /api/sys/deleteDictionary/*': deleteDictionary,
     'PUT /api/sys/updateDictionary': updateDictionary,
     'GET /api/sys/menus': getMenuData,
+    'GET /api/sys/selectMenuAll': selectMenuAll,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

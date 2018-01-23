@@ -48,7 +48,6 @@ export async function updateDict(params) {
     },
   });
 }
-
 export async function addDict(params) {
   return request('/api/sys/saveDictionary', {
     method: 'POST',
@@ -56,4 +55,7 @@ export async function addDict(params) {
       ...params,
     },
   });
+}
+export async function queryMenu(params) {
+  return request(`/api/sys/selectMenuAll?${stringify(params)}`);
 }
