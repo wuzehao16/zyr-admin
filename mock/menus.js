@@ -150,6 +150,13 @@ const menuData = [{
   children: [{
     name: '用户管理',
     path: 'user',
+    // children:[
+    //   {
+    //     name:'用户列表',
+    //     path:'list',
+    //     // hideInMenu: true,
+    //   }
+    // ]
   },
   {
     name: '字典管理',

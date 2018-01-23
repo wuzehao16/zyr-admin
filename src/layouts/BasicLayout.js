@@ -179,6 +179,7 @@ class BasicLayout extends React.PureComponent {
                     <Redirect key={item.from} exact from={item.from} to={item.to} />
                   )
                 }
+                {/* <Route exact path="/system/user/add" component={routerData['/system/user/add'].component} /> */}
                 <Redirect exact from="/" to="/dashboard/analysis" />
                 <Route render={NotFound} />
               </Switch>
@@ -202,7 +203,7 @@ class BasicLayout extends React.PureComponent {
               }]}
               copyright={
                 <div>
-                  Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
+                  Copyright <Icon type="copyright" /> 2018 众银云测技术部出品
                 </div>
               }
             />

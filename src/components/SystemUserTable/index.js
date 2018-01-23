@@ -91,7 +91,7 @@ class StandardTable extends PureComponent {
         title: '操作',
         render: () => (
           <Fragment>
-            <a href="/system/user/edit">编辑</a>
+            <a href="localhost:8080/system/user/edit">编辑</a>
           </Fragment>
         ),
       },
