@@ -89,10 +89,7 @@ class StandardTable extends PureComponent {
         title: '操作',
         render: (text, record) => {
           return (
-            data.length > 1 ?
-            (
-                <a onClick={() => this.handleEdit(record)}>编辑</a>
-            ) : null
+              <a onClick={() => this.handleEdit(record)}>编辑</a>
           );
         },
       },

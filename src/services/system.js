@@ -4,13 +4,15 @@ import request from '../utils/request';
 export async function queryUser(params) {
   return request(`/api/sys/selectUsers?${stringify(params)}`);
 }
+export async function queryAllRole(params) {
+  return request(`/api/sys/selectAllRole?${stringify(params)}`);
+}
 
 export async function removeUser(params) {
   return request('/api/sys/deleteUser', {
     method: 'POST',
     body: {
       ...params,
-      method: 'delete',
     },
   });
 }
@@ -29,7 +31,6 @@ export async function addUser(params) {
     method: 'POST',
     body: {
       ...params,
-      method: 'post',
     },
   });
 }

@@ -15,15 +15,11 @@ const options = [
   { label: 'Orange', value: 'Orange' },
 ];
 
-@connect(({ systemUser, loading }) => ({
-  data:systemUser,
-  submitting: loading.effects['systemUser/add'],
+@connect(({ loading }) => ({
+  submitting: loading.effects['systemUser/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  componentDidMount () {
-    this.queryAllRole();
-  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -36,7 +32,7 @@ export default class BasicForms extends PureComponent {
 
       if (!err) {
         this.props.dispatch({
-          type: 'systemUser/add',
+          type: 'form/submitRegularForm',
           payload: newValue,
         });
         newValue = {}
@@ -46,17 +42,10 @@ export default class BasicForms extends PureComponent {
   onChange = (value) => {
     console.log(value)
   }
-  queryAllRole = () => {
-    this.props.dispatch({
-      type: 'systemUser/queryAllRole',
-    });
-  }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    if (data.data.roleList) {
-      var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
-    }
+    console.log(this , "edituser")
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -77,7 +66,7 @@ export default class BasicForms extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="新增用户" >
+      <PageHeaderLayout title="修改用户" >
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -141,10 +130,10 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="是否锁定"
               >
-              {getFieldDecorator('sysRoles')(
-                <CheckboxGroup  onChange={this.onChange} >
-                  {RoleOptions}
-                </CheckboxGroup>
+              {getFieldDecorator('sysRoles', {
+                initialValue:['Pear']
+              })(
+                <CheckboxGroup options={options} onChange={this.onChange} />
               )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>

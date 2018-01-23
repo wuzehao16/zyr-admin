@@ -26,6 +26,12 @@ class StandardTable extends PureComponent {
     this.setState({ selectedRowKeys });
   }
 
+  handleEdit = (id) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(id);
+    }
+  }
+
   handleTableChange = (pagination, filters, sorter) => {
     this.props.onChange(pagination, filters, sorter);
   }
@@ -36,7 +42,6 @@ class StandardTable extends PureComponent {
 
   render() {
     const { selectedRowKeys } = this.state;
-    console.log(this.props)
     const { data: { data, count }, loading } = this.props;
 
     const status = ['是', '否'];
@@ -89,11 +94,11 @@ class StandardTable extends PureComponent {
       },
       {
         title: '操作',
-        render: () => (
-          <Fragment>
-            <a href="localhost:8080/system/user/edit">编辑</a>
-          </Fragment>
-        ),
+        render: (text, record) => {
+          return (
+              <a onClick={() => this.handleEdit(record)}>编辑</a>
+          );
+        },
       },
     ];
 

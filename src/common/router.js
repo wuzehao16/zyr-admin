@@ -205,7 +205,7 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/AddUser')),
     },
     '/system/user/edit': {
-      component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/AddUser')),
+      component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/EditUser')),
     },
     '/system/dict': {
       component: dynamicWrapper(app, ['systemDict'], () => import('../routes/System/Dict')),

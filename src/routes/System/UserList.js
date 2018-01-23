@@ -149,7 +149,15 @@ export default class TableList extends PureComponent {
       modalVisible: false,
     });
   }
-
+  handleEdit = (item) => {
+    console.log(item);
+    this.props.dispatch(routerRedux.push({
+      pathname: '/system/user/edit',
+      state:{
+        item
+      }
+    }));
+  }
   renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -213,6 +221,7 @@ export default class TableList extends PureComponent {
               data={data}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
+              handleEdit={this.handleEdit}
             />
           </div>
         </Card>

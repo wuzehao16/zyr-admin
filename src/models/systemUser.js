@@ -1,4 +1,4 @@
-import { queryUser, removeUser, addUser } from '../services/system';
+import { queryAllRole, queryUser, removeUser, addUser, updateUser } from '../services/system';
 
 export default {
   namespace: 'systemUser',
@@ -7,6 +7,7 @@ export default {
     data: {
       list: [],
       pagination: {},
+      roleList: []
     },
   },
 
@@ -16,6 +17,15 @@ export default {
       yield put({
         type: 'save',
         payload: response,
+      });
+    },
+    *queryAllRole({ payload }, { call, put }) {
+      const response = yield call(queryAllRole, payload);
+      yield put({
+        type: 'save',
+        payload: {
+          roleList: response.data
+        },
       });
     },
     *add({ payload, callback }, { call, put }) {
@@ -34,6 +44,16 @@ export default {
       });
       if (callback) callback();
     },
+    *update({ payload }, { call }) {
+      yield call(updateUser, payload);
+      message.success('提交成功');
+    },
+    *saveUser({ payload }, { call, put }) {
+      yield put({
+        type: 'saveUser',
+        payload: payload,
+      });
+    },
   },
 
   reducers: {
@@ -42,6 +62,26 @@ export default {
         ...state,
         data: action.payload,
       };
+    },
+    saveUser(state, action) {
+      return {
+        ...state,
+        data: action.payload,
+      };
+    },
+  },
+  subscriptions: {
+    setup({ dispatch, history }) {
+      return history.listen(({ pathname, query }) => {
+        console.log(query,pathname)
+        // dispatch({
+        //   type:'saveUser',
+        //   payload: query
+        // })
+        // if (pathname === url) {
+        //   dispatch({ type: 'fetch', payload: { current: 1, size: 20, ...query } });
+        // }
+      });
     },
   },
 };

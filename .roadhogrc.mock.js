@@ -10,7 +10,7 @@ import { getContent, postContent } from './mock/content';
 import { getSystemUser, postSystemUser } from './mock/systemUser';
 import { getInstitution, getSubInstitution } from './mock/register';
 import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary } from './mock/dictionary'
-import { selectUsers, deleteUser, updateUser, saveUser } from './mock/systemUser'
+import { selectUsers, deleteUser, updateUser, saveUser, selectAllRole } from './mock/systemUser'
 import { getMenuData } from './mock/menus'
 import { format, delay } from 'roadhog-api-doc';
 
@@ -65,6 +65,7 @@ const proxy = {
     $body: postRule,
   },
   'GET /api/sys/selectUsers': selectUsers,
+  'GET /api/sys/selectAllRole': selectAllRole,
   'POST /api/sys/insertUser': saveUser,
   'DELETE /api/sys/deleteUser/*': deleteUser,
   'PUT /api/sys/updateUser': updateUser,

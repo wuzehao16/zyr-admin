@@ -132,7 +132,7 @@ export default class TableList extends PureComponent {
       },
     });
   }
-  
+
   addDict = () => {
     this.props.form.resetFields();
     this.setState({
@@ -188,7 +188,6 @@ export default class TableList extends PureComponent {
 }
   handleEdit = (item) => {
     const { setFieldsValue } = this.props.form;
-    console.log(item)
     this.setState({
       isAdd: false,
       id: item.id,
