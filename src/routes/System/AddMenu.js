@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox, Radio
+  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox, Radio, Modal
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import Treebeard from "../../components/Treebeard"
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -28,8 +29,15 @@ const formItemLayout = {
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  componentWillMount () {
-    this.queryAllRole();
+  state = {
+    modalVisible: false,
+    item: {}
+  }
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'systemUser/fetch',
+    });
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -53,10 +61,28 @@ export default class BasicForms extends PureComponent {
   onChange = (value) => {
     console.log(value)
   }
-  queryAllRole = () => {
-    this.props.dispatch({
-      type: 'systemMenu/queryAllRole',
+  handleModalVisible = (flag) => {
+    const { form } = this.props;
+    this.setState({
+      modalVisible: !!flag,
+      // isAdd: true,
     });
+  }
+  handleAdd = () => {
+    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    const { item } = this.state;
+    this.handleModalVisible();
+    getFieldDecorator('parentId')
+    setFieldsValue({
+      parentName: item.name,
+      parentId: item.meunId,
+    })
+  }
+  onToggle = (item) => {
+    const { getFieldDecorator } = this.props.form;
+    this.setState({
+      item: item,
+    })
   }
   renderCatalogue() {
     const { getFieldDecorator } = this.props.form;
@@ -110,7 +136,7 @@ export default class BasicForms extends PureComponent {
           {...formItemLayout}
           label="授权标识"
          >
-          {getFieldDecorator('"perms')(
+          {getFieldDecorator('perms')(
             <Input placeholder="多个用逗号分隔，如：user:list,user:create" />
           )}
         </FormItem>
@@ -170,13 +196,13 @@ export default class BasicForms extends PureComponent {
 
     }
   }
+  onClick(v) {
+    console.log(v)
+  }
   render() {
     const { submitting, data } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    if (data.data.roleList) {
-      var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
-    }
-
+    const { modalVisible } = this.state;
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
@@ -206,6 +232,20 @@ export default class BasicForms extends PureComponent {
                 </RadioGroup>
               )}
             </FormItem>
+            <Modal
+              title="选择上级菜单"
+              visible={modalVisible}
+              onOk={this.handleAdd}
+              onCancel={() => this.handleModalVisible()}
+            >
+              <Form>
+                <Treebeard
+                  data={data}
+                  onToggle={this.onToggle}
+                />
+              </Form>
+            </Modal>
+
             <FormItem
               {...formItemLayout}
               label="菜单名称"
@@ -222,12 +262,12 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="上级菜单"
              >
-              {getFieldDecorator('parentId', {
+              {getFieldDecorator('parentName', {
                 rules: [{
                   required: true, message: '菜单名称或按钮名称',
                 }],
               })(
-                <Input placeholder="请输入菜单名称或按钮名称" />
+                <Input placeholder="请输入菜单名称或按钮名称" onClick={() => this.handleModalVisible(true)}/>
               )}
             </FormItem>
             {this.renderForm()}

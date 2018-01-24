@@ -22,7 +22,7 @@ export default class TableList extends PureComponent {
     formValues: {},
   };
 
-  componentDidMount() {
+  componentWillMount() {
     const { dispatch } = this.props;
     dispatch({
       type: 'systemUser/fetch',
@@ -156,7 +156,7 @@ export default class TableList extends PureComponent {
 
   render() {
     const { systemUser: { data }, loading, dispatch } = this.props;
-    const { selectedRows, modalVisible, addInputValue } = this.state;
+    const { selectedRows } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
