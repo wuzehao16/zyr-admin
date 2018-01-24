@@ -32,7 +32,6 @@ export default class BasicForms extends PureComponent {
       if (item.sysMenus) {
          sysMenus = item.sysMenus.map(item=>{return item.meunId})
       }
-      console.log(sysMenus, "sysMenus")
       setFieldsValue({
         remark: item.remark,
         roleId: item.roleId,

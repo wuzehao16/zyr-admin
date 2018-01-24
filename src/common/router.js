@@ -219,6 +219,9 @@ export const getRouterData = (app) => {
     '/system/menu/add': {
       component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/AddMenu')),
     },
+    '/system/menu/edit': {
+      component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/EditMenu')),
+    },
     '/system/role': {
       component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/Role')),
     },

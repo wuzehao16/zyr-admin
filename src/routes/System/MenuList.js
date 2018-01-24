@@ -124,7 +124,7 @@ export default class TableList extends PureComponent {
 
   handleEdit = (item) => {
     this.props.dispatch(routerRedux.push({
-      pathname: '/system/user/edit',
+      pathname: '/system/menu/edit',
       state:{
         item: item
       }

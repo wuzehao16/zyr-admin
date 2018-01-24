@@ -93,14 +93,14 @@ class StandardTable extends PureComponent {
       //   sorter: true,
       //   render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       // },
-      // {
-      //   title: '操作',
-      //   render: (text, record) => {
-      //     return (
-      //         <a onClick={() => this.handleEdit(record)}>编辑</a>
-      //     );
-      //   },
-      // },
+      {
+        title: '操作',
+        render: (text, record) => {
+          return (
+              <a onClick={() => this.handleEdit(record)}>编辑</a>
+          );
+        },
+      },
     ];
 
     const paginationProps = {
