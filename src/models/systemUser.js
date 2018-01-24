@@ -82,9 +82,6 @@ export default {
             payload: state
           })
         }
-        // if (pathname === url) {
-        //   dispatch({ type: 'fetch', payload: { current: 1, size: 20, ...query } });
-        // }
       });
     },
   },

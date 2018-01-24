@@ -1,43 +1,14 @@
 import { Tree } from 'antd';
 const TreeNode = Tree.TreeNode;
 
-// const treeData = [{
-//   title: '0-0',
-//   key: '0-0',
-//   children: [{
-//     title: '0-0-0',
-//     key: '0-0-0',
-//     children: [
-//       { title: '0-0-0-0', key: '0-0-0-0' },
-//       { title: '0-0-0-1', key: '0-0-0-1' },
-//       { title: '0-0-0-2', key: '0-0-0-2' },
-//     ],
-//   }, {
-//     title: '0-0-1',
-//     key: '0-0-1',
-//     children: [
-//       { title: '0-0-1-0', key: '0-0-1-0' },
-//       { title: '0-0-1-1', key: '0-0-1-1' },
-//       { title: '0-0-1-2', key: '0-0-1-2' },
-//     ],
-//   }, {
-//     title: '0-0-2',
-//     key: '0-0-2',
-//   }],
-// }, {
-//   title: '0-1',
-//   key: '0-1',
-//   children: [
-//     { title: '0-1-0-0', key: '0-1-0-0' },
-//     { title: '0-1-0-1', key: '0-1-0-1' },
-//     { title: '0-1-0-2', key: '0-1-0-2' },
-//   ],
-// }, {
-//   title: '0-2',
-//   key: '0-2',
-// }];
-
 class RoleTree extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.defaultCheckedKeys) {
+      this.setState({
+        checkedKeys: nextProps.defaultCheckedKeys
+      });
+    }
+  }
   state = {
     expandedKeys: [],
     autoExpandParent: true,
@@ -64,6 +35,14 @@ class RoleTree extends React.Component {
     console.log('onSelect', info);
     this.setState({ selectedKeys });
   }
+  // defaultCheckedKeys = () => {
+  //   console.log(this, "this")
+  //   if(this.props.defaultCheckedKeys) {
+  //     thie.setState({
+  //       checkedKeys:this.props.defaultCheckedKeys,
+  //     })
+  //   }
+  // }
   renderTreeNodes = (data) => {
     return data.map((item) => {
       if (item.children) {
@@ -78,11 +57,6 @@ class RoleTree extends React.Component {
   }
   render() {
     const { data } = this.props;
-    var treeData;
-    if (typeof data.data == "object") {
-      treeData = [data.data]
-    }
-    console.log(treeData, data)
     return (
       <Tree
         checkable
@@ -92,9 +66,9 @@ class RoleTree extends React.Component {
         onCheck={this.onCheck}
         checkedKeys={this.state.checkedKeys}
         onSelect={this.onSelect}
-        selectedKeys={this.state.selectedKeys}
+        // defaultValue={this.state.selectedKeys}
       >
-        {this.renderTreeNodes(treeData)}
+        {this.renderTreeNodes([data])}
       </Tree>
     );
   }

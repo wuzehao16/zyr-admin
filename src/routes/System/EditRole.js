@@ -17,11 +17,29 @@ const CheckboxGroup = Checkbox.Group;
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'systemRole/fetchMenu',
-    });
+  // componentWillMount() {
+  //   const { dispatch } = this.props;
+  //   dispatch({
+  //     type: 'systemRole/fetchMenu',
+  //   });
+  // }
+  componentDidMount () {
+    const { setFieldsValue } = this.props.form;
+    console.log(this,"edit")
+    if (this.props.data.item) {
+      const item = this.props.data.item;
+      var sysMenus = [];
+      if (item.sysMenus) {
+         sysMenus = item.sysMenus.map(item=>{return item.meunId})
+      }
+      console.log(sysMenus, "sysMenus")
+      setFieldsValue({
+        remark: item.remark,
+        roleId: item.roleId,
+        roleName: item.roleName,
+        sysMenus: sysMenus,
+      })
+    }
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -49,6 +67,8 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
+    getFieldDecorator('roleId');
+    // this.onCheck(getFieldValue('sysMenus'));
     if (data.data.roleList) {
       var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
     }
@@ -72,7 +92,7 @@ export default class BasicForms extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="新增角色" >
+      <PageHeaderLayout title="编辑角色" >
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -111,6 +131,7 @@ export default class BasicForms extends PureComponent {
                   <RoleTree
                     data={data.menuList}
                     onCheck={this.onCheck}
+                    defaultCheckedKeys={getFieldValue('sysMenus')}
                     />
                 )}
             </FormItem>

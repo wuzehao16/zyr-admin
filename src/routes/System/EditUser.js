@@ -9,11 +9,6 @@ import styles from './style.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 const CheckboxGroup = Checkbox.Group;
-const options = [
-  { label: 'Apple', value: 'Apple' },
-  { label: 'Pear', value: 'Pear' },
-  { label: 'Orange', value: 'Orange' },
-];
 
 @connect(({systemUser, loading }) => ({
   data: systemUser,

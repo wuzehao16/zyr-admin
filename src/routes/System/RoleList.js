@@ -123,12 +123,16 @@ export default class TableList extends PureComponent {
   }
 
   handleEdit = (item) => {
-    this.props.dispatch(routerRedux.push({
-      pathname: '/system/role/edit',
-      state:{
-        item: item
-      }
-    }));
+    // this.props.dispatch(routerRedux.push({
+    //   pathname: '/system/role/edit',
+    //   state:{
+    //     item
+    //   }
+    // }));
+    this.props.dispatch({
+      type:'systemRole/saveRole',
+      payload: item
+    })
   }
 
   render() {

@@ -228,6 +228,9 @@ export const getRouterData = (app) => {
     '/system/role/add': {
       component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/AddRole')),
     },
+    '/system/role/edit': {
+      component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/EditRole')),
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

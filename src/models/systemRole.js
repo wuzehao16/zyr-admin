@@ -10,14 +10,16 @@ export default {
       list: [],
       pagination: {},
     },
+    menuList:{},
+    item: {}
   },
 
   effects: {
     *fetchMenu({ payload }, { call, put }) {
       const response = yield call(queryMenu, payload);
       yield put({
-        type: 'save',
-        payload: response,
+        type: 'saveMenu',
+        payload: response.data,
       });
     },
     *fetch({ payload }, { call, put }) {
@@ -49,6 +51,19 @@ export default {
       message.success('提交成功');
       yield put(routerRedux.push('/system/role'));
     },
+    *saveRole({payload}, { call, put }) {
+      yield put({
+        type: 'saveRoleInfo',
+        payload: payload,
+      });
+      const response = yield call(queryMenu, payload);
+      yield put({
+        type: 'saveMenu',
+        payload: response.data,
+      });
+      yield put(routerRedux.push('/system/role/edit'));
+
+    },
   },
 
   reducers: {
@@ -58,5 +73,30 @@ export default {
         data: action.payload,
       };
     },
+    saveMenu(state, action) {
+      return {
+        ...state,
+        menuList: action.payload,
+      };
+    },
+    saveRoleInfo(state, action) {
+      return {
+        ...state,
+        item: action.payload,
+      };
+    },
   },
+  // subscriptions: {
+  //   setup({ dispatch, history }) {
+  //     return history.listen(({ pathname, state }) => {
+  //       console.log(state)
+  //       if(pathname ==="/system/role/edit"){
+  //         dispatch({
+  //           type:'saveRole',
+  //           payload: state
+  //         })
+  //       }
+  //     });
+  //   },
+  // },
 };
