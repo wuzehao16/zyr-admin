@@ -81,3 +81,28 @@ export async function addMenu(params) {
     },
   });
 }
+export async function queryRole(params) {
+  return request(`/api/sys/selectAllRole?${stringify(params)}`);
+}
+export async function removeRole(params) {
+  return request(`/api/sys/deleteRoles/${params.userId}`, {
+    method: 'Delete',
+  });
+}
+export async function updateRole(params) {
+  return request('/api/sys/updateRole', {
+    method: 'PUT',
+    body: {
+      ...params,
+    },
+  });
+}
+
+export async function addRole(params) {
+  return request('/api/sys/insertRole', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}

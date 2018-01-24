@@ -26,7 +26,7 @@ export default class SearchList extends Component {
               )
             )
           }
-          <Route exact path="/system/user" component={routerData['/system/user/list'].component} />
+          <Route exact path="/system/role" component={routerData['/system/role/list'].component} />
         </Switch>
     );
   }

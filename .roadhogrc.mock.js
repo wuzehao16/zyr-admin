@@ -10,9 +10,10 @@ import { getContent, postContent } from './mock/content';
 import { getSystemUser, postSystemUser } from './mock/systemUser';
 import { getInstitution, getSubInstitution } from './mock/register';
 import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary } from './mock/dictionary'
-import { selectUsers, deleteUser, updateUser, saveUser, selectAllRole } from './mock/systemUser'
+import { selectUsers, deleteUser, updateUser, saveUser } from './mock/systemUser'
 import { getMenuData } from './mock/menus'
 import { selectMenuAll, deleteMenu, updateMenu, saveMenu } from './mock/systemMenu'
+import { selectAllRole, deleteRole, updateRole, saveRole } from './mock/systemRole'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -66,7 +67,6 @@ const proxy = {
     $body: postRule,
   },
   'GET /api/sys/selectUsers': selectUsers,
-  'GET /api/sys/selectAllRole': selectAllRole,
   'POST /api/sys/insertUser': saveUser,
   'DELETE /api/sys/deleteUser/*': deleteUser,
   'PUT /api/sys/updateUser': updateUser,
@@ -201,6 +201,10 @@ const proxy = {
     'POST /api/sys/insertMenu': saveMenu,
     'DELETE /api/sys/deleteMenu/*': deleteMenu,
     'PUT /api/sys/updateMenu': updateMenu,
+    'GET /api/sys/selectAllRole': selectAllRole,
+    'POST /api/sys/insertRole': saveRole,
+    'DELETE /api/sys/deleteRoles/*': deleteRole,
+    'PUT /api/sys/updateRole': updateRole,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

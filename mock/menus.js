@@ -156,6 +156,10 @@ const menuData = [{
     path: 'menu',
   },
   {
+    name: '角色管理',
+    path: 'role',
+  },
+  {
     name: '字典管理',
     path: 'dict',
   }],

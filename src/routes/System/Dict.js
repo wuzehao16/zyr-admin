@@ -124,7 +124,6 @@ export default class TableList extends PureComponent {
     e.preventDefault();
     const { dispatch } = this.props
     const { type } = this.state;
-    console.log(type)
     dispatch({
       type: 'systemDict/fetch',
       payload: {
@@ -223,7 +222,6 @@ export default class TableList extends PureComponent {
 
   render() {
     const { systemDict: { data }, loading } = this.props;
-    console.log(data,"data")
     const { selectedRows, modalVisible, type, label, value, isAdd } = this.state;
     const { getFieldDecorator } = this.props.form
     const menu = (

@@ -219,6 +219,15 @@ export const getRouterData = (app) => {
     '/system/menu/add': {
       component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/AddMenu')),
     },
+    '/system/role': {
+      component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/Role')),
+    },
+    '/system/role/list': {
+      component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/RoleList')),
+    },
+    '/system/role/add': {
+      component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/AddRole')),
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },
