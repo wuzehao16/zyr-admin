@@ -59,3 +59,25 @@ export async function addDict(params) {
 export async function queryMenu(params) {
   return request(`/api/sys/selectMenuAll?${stringify(params)}`);
 }
+export async function removeMenu(params) {
+  return request(`/api/sys/deleteMenu/${params.userId}`, {
+    method: 'Delete',
+  });
+}
+export async function updateMenu(params) {
+  return request('/api/sys/updateMenu', {
+    method: 'PUT',
+    body: {
+      ...params,
+    },
+  });
+}
+
+export async function addMenu(params) {
+  return request('/api/sys/insertMenu', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}

@@ -394,4 +394,31 @@ export function selectAllRole(req, res, u, b) {
 
   res.send(result);
 }
-export default { selectMenuAll };
+export function deleteMenu(req, res, u) {
+
+  const result = {
+    "code": 0,
+    "msg": "ok",
+  }
+
+  res.send(result)
+}
+export function updateMenu(req, res, u) {
+
+  const result = {
+    "code": 0,
+    "msg": "ok",
+  }
+
+  res.send(result)
+}
+export function saveMenu(req, res, u) {
+
+  const result = {
+    "code": 0,
+    "msg": "ok",
+  }
+
+  res.send(result)
+}
+export default { selectMenuAll, deleteMenu, updateMenu, saveMenu  };

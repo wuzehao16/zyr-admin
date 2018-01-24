@@ -43,18 +43,10 @@ class StandardTable extends PureComponent {
   render() {
     const { selectedRowKeys } = this.state;
     const { data: { data, count }, loading } = this.props;
-    const data1 = [data];
-    // {
-    // key: 1,
-    // name: 'John Brown sr.',
-    // age: 60,
-    // address: 'New York No. 1 Lake Park',
-    // }, {
-    // key: 2,
-    // name: 'Joe Black',
-    // age: 32,
-    // address: 'Sidney No. 1 Lake Park',
-    // }
+    var data1 = [];
+    if(data) {
+      data1 = [data];
+    }
     const status = ['目录', '菜单', '按钮'];
 
     const columns = [

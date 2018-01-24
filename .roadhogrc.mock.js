@@ -12,7 +12,7 @@ import { getInstitution, getSubInstitution } from './mock/register';
 import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary } from './mock/dictionary'
 import { selectUsers, deleteUser, updateUser, saveUser, selectAllRole } from './mock/systemUser'
 import { getMenuData } from './mock/menus'
-import { selectMenuAll } from './mock/systemMenu'
+import { selectMenuAll, deleteMenu, updateMenu, saveMenu } from './mock/systemMenu'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -198,6 +198,9 @@ const proxy = {
     'PUT /api/sys/updateDictionary': updateDictionary,
     'GET /api/sys/menus': getMenuData,
     'GET /api/sys/selectMenuAll': selectMenuAll,
+    'POST /api/sys/insertMenu': saveMenu,
+    'DELETE /api/sys/deleteMenu/*': deleteMenu,
+    'PUT /api/sys/updateMenu': updateMenu,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

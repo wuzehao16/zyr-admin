@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox
+  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox, Radio
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
@@ -9,10 +9,22 @@ import styles from './style.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 const CheckboxGroup = Checkbox.Group;
+const RadioGroup = Radio.Group;
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 7 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 12 },
+    md: { span: 10 },
+  },
+};
 
-@connect(({ systemUser, loading }) => ({
-  data:systemUser,
-  submitting: loading.effects['systemUser/add'],
+@connect(({ systemMenu, loading }) => ({
+  data:systemMenu,
+  submitting: loading.effects['systemMenu/add'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -31,7 +43,7 @@ export default class BasicForms extends PureComponent {
 
       if (!err) {
         this.props.dispatch({
-          type: 'systemUser/add',
+          type: 'systemMenu/add',
           payload: newValue,
         });
         newValue = {}
@@ -43,8 +55,120 @@ export default class BasicForms extends PureComponent {
   }
   queryAllRole = () => {
     this.props.dispatch({
-      type: 'systemUser/queryAllRole',
+      type: 'systemMenu/queryAllRole',
     });
+  }
+  renderCatalogue() {
+    const { getFieldDecorator } = this.props.form;
+    return (
+      <div>
+        <FormItem
+          {...formItemLayout}
+          label="排序号"
+         >
+          {getFieldDecorator('orderNum', {
+            rules: [{
+              required: true, message: '请输入排序号',
+            }],
+          })(
+            <InputNumber style={{ width: '100%' }} />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="图标"
+          help="获取图标：https://ant.design/components/icon-cn/#header"
+         >
+          {getFieldDecorator('icon', {
+            rules: [{
+              required: true, message: '菜单名称或按钮图标',
+            }],
+          })(
+            <Input placeholder="请输入菜单名称或按钮图标" />
+          )}
+        </FormItem>
+      </div>
+    );
+  }
+  renderMenu() {
+    const { getFieldDecorator } = this.props.form;
+    return (
+      <div>
+        <FormItem
+          {...formItemLayout}
+          label="菜单URL"
+         >
+          {getFieldDecorator('url', {
+            rules: [{
+              required: true, message: '请输入菜单URL',
+            }],
+          })(
+            <Input placeholder="菜单URL" />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="授权标识"
+         >
+          {getFieldDecorator('"perms')(
+            <Input placeholder="多个用逗号分隔，如：user:list,user:create" />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="排序号"
+         >
+          {getFieldDecorator('orderNum', {
+            rules: [{
+              required: true, message: '请输入排序号',
+            }],
+          })(
+            <InputNumber style={{ width: '100%' }} />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="图标"
+          help="获取图标：https://ant.design/components/icon-cn/#header"
+         >
+          {getFieldDecorator('icon', {
+            rules: [{
+              required: true, message: '菜单名称或按钮图标',
+            }],
+          })(
+            <Input placeholder="请输入菜单名称或按钮图标" />
+          )}
+        </FormItem>
+      </div>
+    );
+  }
+  renderBtn() {
+    const { getFieldDecorator } = this.props.form;
+    return (
+      <FormItem
+        {...formItemLayout}
+        label="授权标识"
+       >
+        {getFieldDecorator('"perms')(
+          <Input placeholder="多个用逗号分隔，如：user:list,user:create" />
+        )}
+      </FormItem>
+    );
+  }
+  renderForm() {
+    switch (this.props.form.getFieldValue('type')) {
+      case 0:
+        return  this.renderCatalogue();
+        break;
+      case 1:
+        return  this.renderMenu();
+        break;
+      case 2:
+        return  this.renderBtn();
+        break;
+      default:
+
+    }
   }
   render() {
     const { submitting, data } = this.props;
@@ -52,17 +176,6 @@ export default class BasicForms extends PureComponent {
     if (data.data.roleList) {
       var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
     }
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 10 },
-      },
-    };
 
     const submitFormLayout = {
       wrapperCol: {
@@ -81,67 +194,43 @@ export default class BasicForms extends PureComponent {
           >
             <FormItem
               {...formItemLayout}
+              label="类型"
+              >
+              {getFieldDecorator('type', {
+                initialValue:1
+              })(
+                <RadioGroup name="type">
+                  <Radio value={0}>目录</Radio>
+                  <Radio value={1}>菜单</Radio>
+                  <Radio value={2}>按钮</Radio>
+                </RadioGroup>
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
               label="菜单名称"
              >
-              {getFieldDecorator('loginAccount', {
+              {getFieldDecorator('name', {
                 rules: [{
-                  required: true, message: '请输入用户账号',
+                  required: true, message: '菜单名称或按钮名称',
                 }],
               })(
-                <Input placeholder="请输入用户账号" />
+                <Input placeholder="请输入菜单名称或按钮名称" />
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="用户密码"
+              label="上级菜单"
              >
-              {getFieldDecorator('loginpassord', {
+              {getFieldDecorator('parentId', {
                 rules: [{
-                  required: true, message: '请输入用户密码',
+                  required: true, message: '菜单名称或按钮名称',
                 }],
               })(
-                <Input placeholder="请输入用户密码" />
+                <Input placeholder="请输入菜单名称或按钮名称" />
               )}
             </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="用户姓名"
-             >
-              {getFieldDecorator('userName', {
-                rules: [{
-                  required: true, message: '请输入用户姓名',
-                }],
-              })(
-                <Input placeholder="请输入用户姓名" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="是否锁定"
-              >
-              {getFieldDecorator('islock',{
-                rules: [{
-                  required: true, message: '请选择是否锁定用户',
-                }],
-              })(
-                <Select
-                  placeholder="请选择是否锁定用户"
-                >
-                  <Option value="0">否</Option>
-                  <Option value="1">是</Option>
-                </Select>
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="用户权限"
-              >
-              {getFieldDecorator('sysRoles')(
-                <CheckboxGroup  onChange={this.onChange} >
-                  {RoleOptions}
-                </CheckboxGroup>
-              )}
-            </FormItem>
+            {this.renderForm()}
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
