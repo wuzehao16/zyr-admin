@@ -1,9 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
 import moment from 'moment';
-import { Table, Alert, Badge, Divider, Card, Icon, Input } from 'antd';
+import { Table, Alert, Badge, Divider } from 'antd';
 import styles from './index.less';
-const statusMap = ['default', 'processing', 'success', 'error'];
 
+const statusMap = ['error', 'success'];
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
@@ -26,6 +26,12 @@ class StandardTable extends PureComponent {
     this.setState({ selectedRowKeys });
   }
 
+  handleEdit = (id) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(id);
+    }
+  }
+
   handleTableChange = (pagination, filters, sorter) => {
     this.props.onChange(pagination, filters, sorter);
   }
@@ -33,45 +39,29 @@ class StandardTable extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], []);
   }
-  handleEdit = (id) => {
-    if (this.props.handleEdit) {
-      this.props.handleEdit(id);
-    }
-  }
-  onCellChange = (key, dataIndex) => {
-   return (value) => {
-     const dataSource = [...this.state.dataSource];
-     const target = dataSource.find(item => item.key === key);
-     if (target) {
-       target[dataIndex] = value;
-       this.setState({ dataSource });
-     }
-   };
- }
+
   render() {
     const { selectedRowKeys } = this.state;
     const { data: { data, count }, loading } = this.props;
-    // const { getFieldDecorator } = this.props.form;
+
+    const status = ['是', '否'];
+
     const columns = [
       {
         title: '序号',
-        dataIndex: 'id',
+        dataIndex: 'userId',
       },
       {
-        title: '字典名称',
-        dataIndex: 'label',
+        title: '创建人',
+        dataIndex: 'loginAccount',
       },
       {
-        title: '字典值',
-        dataIndex: 'value',
+        title: '权限名称',
+        dataIndex: 'roleName',
       },
       {
-        title: '字典类型',
-        dataIndex: 'type',
-      },
-      {
-        title: '更新人',
-        dataIndex: 'updateUser',
+        title: '备注',
+        dataIndex: 'remark',
       },
       {
         title: '创建时间',
@@ -80,8 +70,8 @@ class StandardTable extends PureComponent {
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
-        title: '更新时间',
-        dataIndex: 'updateTime',
+        title: '登录时间',
+        dataIndex: 'updatedAt',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
@@ -98,7 +88,7 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      total: count,
+      count,
     };
 
     const rowSelection = {
@@ -125,7 +115,7 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.key}
+          rowKey={record => record.roleId}
           rowSelection={rowSelection}
           dataSource={data}
           columns={columns}

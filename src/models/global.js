@@ -26,7 +26,7 @@ export default {
   effects: {
     *fetchMenus(_, { call, put }) {
       const response = yield call(queryMenus);
-      const menus = formatter(response.data)
+      const menus = formatter(response.data.children)
       yield put({
         type: 'saveMenus',
         payload: menus,

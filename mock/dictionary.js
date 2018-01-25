@@ -6,14 +6,12 @@ for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
     key: i,
     id: `${i}`,
-    title: `一个任务名称 ${i}`,
     updateUser: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
     value: Math.ceil(Math.random() * 100),
     label: '平安银行',
     type: 'bank',
-    updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
-    createdAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
-    progress: Math.ceil(Math.random() * 100),
+    updateTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
+    createTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
   });
 }
 
@@ -88,8 +86,8 @@ export function saveDictionary(req, res, u, b) {
       value: body.value,
       label: body.label,
       type: body.type,
-      updatedAt: new Date,
-      createdAt: new Date,
+      updateTime: new Date,
+      createTime: new Date,
     });
     const result = {
       code: 0,
@@ -138,9 +136,7 @@ export function updateDictionary(req, res, u, b) {
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     tableListDataSource.map((item,index) => {
-      var idSting = id;
-      idSting = idSting.toString();
-      if(idSting.indexOf(item.id) !== -1){
+      if(item.id == id){
       tableListDataSource[index]={
           key: body.id,
           id: `${body.id}`,
@@ -148,8 +144,8 @@ export function updateDictionary(req, res, u, b) {
           value: body.value,
           label: body.label,
           type: body.type,
-          updatedAt: new Date,
-          createdAt: new Date,
+          updateTime: new Date,
+          createTime: new Date,
         }
       }
     });

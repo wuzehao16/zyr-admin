@@ -180,7 +180,7 @@ export const getRouterData = (app) => {
     '/user/reset-password': {
       component: dynamicWrapper(app, ['resetPassword'], () => import('../routes/User/ResetPassword')),
     },
-    '/institution/main': {
+    '/institution': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/Institution/TableList')),
     },
     '/institution/add': {
@@ -198,8 +198,41 @@ export const getRouterData = (app) => {
     '/system/user': {
       component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/User')),
     },
+    '/system/user/list': {
+      component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/UserList')),
+    },
+    '/system/user/add': {
+      component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/AddUser')),
+    },
+    '/system/user/edit': {
+      component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/EditUser')),
+    },
     '/system/dict': {
       component: dynamicWrapper(app, ['systemDict'], () => import('../routes/System/Dict')),
+    },
+    '/system/menu': {
+      component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/Menu')),
+    },
+    '/system/menu/list': {
+      component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/MenuList')),
+    },
+    '/system/menu/add': {
+      component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/AddMenu')),
+    },
+    '/system/menu/edit': {
+      component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/EditMenu')),
+    },
+    '/system/role': {
+      component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/Role')),
+    },
+    '/system/role/list': {
+      component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/RoleList')),
+    },
+    '/system/role/add': {
+      component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/AddRole')),
+    },
+    '/system/role/edit': {
+      component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/EditRole')),
     },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),

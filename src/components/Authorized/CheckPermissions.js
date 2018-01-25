@@ -20,21 +20,35 @@ const checkPermissions = (authority, currentAuthority, target, Exception) => {
   if (!authority) {
     return target;
   }
-  // 数组处理
+  // //  数组处理
+  // if (Array.isArray(authority)) {
+  //   if (authority.indexOf(currentAuthority) >= 0) {
+  //     return target;
+  //   }
+  //   return Exception;
+  // }
   if (Array.isArray(authority)) {
-    if (authority.indexOf(currentAuthority) >= 0) {
-      return target;
-    }
-    return Exception;
-  }
+   // 原本根据获得的字符串来判断，如果是数组需要修改
+   if (currentAuthority.filter(auth => authority.indexOf(auth) >= 0).length > 0) {
+     return target;
+   }
+   return Exception;
+ }
 
   // string 处理
+  // if (typeof authority === 'string') {
+  //   if (authority === currentAuthority) {
+  //     return target;
+  //   }
+  //   return Exception;
+  // }
   if (typeof authority === 'string') {
-    if (authority === currentAuthority) {
-      return target;
-    }
-    return Exception;
-  }
+  // 原本根据获得的字符串来判断，如果是数组需要修改
+   if (currentAuthority.indexOf(authority) > -1) {
+     return target;
+   }
+   return Exception;
+ }
 
   // Promise 处理
   if (isPromise(authority)) {

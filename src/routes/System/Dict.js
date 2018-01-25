@@ -23,7 +23,8 @@ export default class TableList extends PureComponent {
     isAdd: true,
   };
 
-  componentDidMount() {
+  componentWillMount() {
+    console.log(1)
     const { dispatch } = this.props;
     dispatch({
       type: 'systemDict/fetch',
@@ -124,7 +125,6 @@ export default class TableList extends PureComponent {
     e.preventDefault();
     const { dispatch } = this.props
     const { type } = this.state;
-    console.log(type)
     dispatch({
       type: 'systemDict/fetch',
       payload: {
@@ -132,7 +132,7 @@ export default class TableList extends PureComponent {
       },
     });
   }
-  
+
   addDict = () => {
     this.props.form.resetFields();
     this.setState({
@@ -188,7 +188,6 @@ export default class TableList extends PureComponent {
 }
   handleEdit = (item) => {
     const { setFieldsValue } = this.props.form;
-    console.log(item)
     this.setState({
       isAdd: false,
       id: item.id,
@@ -224,7 +223,6 @@ export default class TableList extends PureComponent {
 
   render() {
     const { systemDict: { data }, loading } = this.props;
-    console.log(data,"data")
     const { selectedRows, modalVisible, type, label, value, isAdd } = this.state;
     const { getFieldDecorator } = this.props.form
     const menu = (

@@ -152,6 +152,14 @@ const menuData = [{
     path: 'user',
   },
   {
+    name: '菜单管理',
+    path: 'menu',
+  },
+  {
+    name: '角色管理',
+    path: 'role',
+  },
+  {
     name: '字典管理',
     path: 'dict',
   }],
@@ -160,11 +168,14 @@ const menuData = [{
   icon: 'book',
   path: 'http://pro.ant.design/docs/getting-started',
   target: '_blank',
-}]
+}];
+
 export function getMenuData(req, res, u, b) {
   const result = {
     code: 0,
-    data: menuData,
+    data: {
+      children: menuData
+    },
   };
 
   if (res && res.json) {

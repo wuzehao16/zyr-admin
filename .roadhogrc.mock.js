@@ -9,8 +9,11 @@ import { getNotices } from './mock/notices';
 import { getContent, postContent } from './mock/content';
 import { getSystemUser, postSystemUser } from './mock/systemUser';
 import { getInstitution, getSubInstitution } from './mock/register';
-import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary} from './mock/dictionary'
+import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary } from './mock/dictionary'
+import { selectUsers, deleteUser, updateUser, saveUser } from './mock/systemUser'
 import { getMenuData } from './mock/menus'
+import { selectMenuAll, deleteMenu, updateMenu, saveMenu } from './mock/systemMenu'
+import { selectAllRole, deleteRole, updateRole, saveRole } from './mock/systemRole'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -63,16 +66,10 @@ const proxy = {
     },
     $body: postRule,
   },
-  'GET /api/systemUser': getSystemUser,
-  'POST /api/systemUser': {
-    $params: {
-      pageSize: {
-        desc: '分页',
-        exp: 2,
-      },
-    },
-    $body: postSystemUser,
-  },
+  'GET /api/sys/selectUsers': selectUsers,
+  'POST /api/sys/insertUser': saveUser,
+  'DELETE /api/sys/deleteUser/*': deleteUser,
+  'PUT /api/sys/updateUser': updateUser,
   'POST /api/forms': (req, res) => {
     res.send({ message: 'Ok' });
   },
@@ -200,6 +197,14 @@ const proxy = {
     'DELETE /api/sys/deleteDictionary/*': deleteDictionary,
     'PUT /api/sys/updateDictionary': updateDictionary,
     'GET /api/sys/menus': getMenuData,
+    'GET /api/sys/selectMenuAll': selectMenuAll,
+    'POST /api/sys/saveMenu': saveMenu,
+    'DELETE /api/sys/deleteMenu/*': deleteMenu,
+    'PUT /api/sys/updateMenu': updateMenu,
+    'GET /api/sys/selectAllRole': selectAllRole,
+    'POST /api/sys/insertRole': saveRole,
+    'DELETE /api/sys/deleteRoles/*': deleteRole,
+    'PUT /api/sys/updateRole': updateRole,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

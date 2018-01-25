@@ -22,7 +22,6 @@ export default {
       message.success('提交成功');
     },
     *submitStepForm({ payload }, { call, put }) {
-      console.log(payload)
       yield call(fakeSubmitForm, payload);
       yield put({
         type: 'saveStepFormData',
