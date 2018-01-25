@@ -150,22 +150,18 @@ const menuData = [{
   children: [{
     name: '用户管理',
     path: 'user',
-    authority: 'sys:user',
   },
   {
     name: '菜单管理',
     path: 'menu',
-    authority: 'sys:menu',
   },
   {
     name: '角色管理',
     path: 'role',
-    authority: 'sys:role',
   },
   {
     name: '字典管理',
     path: 'dict',
-    authority: 'sys:distionary',
   }],
 }, {
   name: '使用文档',
