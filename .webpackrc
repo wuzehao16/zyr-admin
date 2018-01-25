@@ -20,9 +20,11 @@
   "disableDynamicImport": true,
   "hash": true,
   "proxy": {
-     "/mapi/*": {
-       "target": "http://192.168.2.101:8080",
-       "pathRewrite": { "^/mapi" : "" }
+     "/sysAnno/*": {
+       "target": "http://192.168.2.101:8080"
+     },
+     "/syss/*": {
+       "target": "http://192.168.2.101:8080"
      }
    }
 }

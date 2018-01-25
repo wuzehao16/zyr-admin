@@ -176,7 +176,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="是否锁定"
+              label="用户权限"
               >
               {getFieldDecorator('sysRoles')(
                 <CheckboxGroup  onChange={this.onChange} >

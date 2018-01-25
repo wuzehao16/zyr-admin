@@ -13,7 +13,8 @@ export default {
     *login({ payload }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload);
       if (response.code === 0) {
-        response.currentAuthority = ["admin","sys:menu","sys:role"];
+        response.data.push('admin')
+        response.currentAuthority = response.data;
       } else {
         message.error(response.msg);
         response.currentAuthority = 'guest';

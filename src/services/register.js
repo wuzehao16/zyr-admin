@@ -2,43 +2,43 @@ import { stringify } from 'qs';
 import request from '../utils/request';
 
 export async function msgPhone(params) {
-  return request('/mapi/sysAnno/sendLoginMessage', {
+  return request('/sysAnno/sendLoginMessage', {
     method: 'POST',
     body: params,
   });
 }
 export async function validataPhone(params) {
-  return request('/mapi/sysAnno/vaLidatacode',{
+  return request('/sysAnno/vaLidatacode',{
     method: 'POST',
     body: params,
   })
 }
 export async function msgEmail(params) {
-  return request('/mapi/sysAnno/sendLoginEmail',{
+  return request('/sysAnno/sendLoginEmail',{
     method: 'POST',
     body: params,
   })
 }
 export async function getInstitutionType(params) {
-  return request('/mapi/sysAnno/queryAllInstitution',{
+  return request('/sysAnno/queryAllInstitution',{
     method: 'POST',
     body: params,
   })
 }
 export async function getInstitution(params) {
-  return request('/mapi/sysAnno/InstitutionManageParent',{
+  return request('/sysAnno/InstitutionManageParent',{
     method: 'POST',
     body: params,
   })
 }
 export async function getSubInstitution(params) {
-  return request('/mapi/sysAnno/InstitutionManageSub',{
+  return request('/sysAnno/InstitutionManageSub',{
     method: 'POST',
     body: params,
   })
 }
 export async function register(params) {
-  return request('/mapi/sysAnno/register',{
+  return request('/sysAnno/register',{
     method: 'POST',
     body: params,
   })
