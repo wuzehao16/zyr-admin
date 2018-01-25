@@ -10,6 +10,7 @@ export default {
       list: [],
       pagination: {},
     },
+    item: {}
   },
 
   effects: {
@@ -22,10 +23,11 @@ export default {
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(removeMenu, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
+      if (response.code === 0 ) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg);
+      }
       if (callback) callback();
     },
     *add({ payload, callback }, { call, put }) {
@@ -34,6 +36,12 @@ export default {
         type: 'save',
         payload: response,
       });
+      if (response.code === 0 ) {
+        message.success('新建成功');
+      } else {
+        message.error(response.msg);
+        return
+      }
       yield put(routerRedux.push('/system/menu'));
       if (callback) callback();
     },
@@ -42,6 +50,20 @@ export default {
       message.success('提交成功');
       yield put(routerRedux.push('/system/menu'));
     },
+    *saveMenu({payload}, { call, put }) {
+      console.log(payload,"payload")
+      yield put({
+        type: 'saveMenuInfo',
+        payload: payload,
+      });
+      // const response = yield call(queryMenu, payload);
+      // yield put({
+      //   type: 'saveMenu',
+      //   payload: response.data,
+      // });
+      yield put(routerRedux.push('/system/menu/edit'));
+
+    },
   },
 
   reducers: {
@@ -49,6 +71,12 @@ export default {
       return {
         ...state,
         data: action.payload,
+      };
+    },
+    saveMenuInfo(state, action) {
+      return {
+        ...state,
+        item: action.payload,
       };
     },
   },

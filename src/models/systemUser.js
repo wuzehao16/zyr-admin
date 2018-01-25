@@ -31,6 +31,13 @@ export default {
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addUser, payload);
+      console.log(response,"user response")
+      if (response.code === 0 ) {
+        message.success('新建成功');
+      } else {
+        message.error(response.msg);
+        return
+      }
       yield put({
         type: 'save',
         payload: response,
@@ -40,6 +47,12 @@ export default {
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(removeUser, payload);
+      if (response.code === 0 ) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg);
+        return
+      }
       yield put({
         type: 'save',
         payload: response,

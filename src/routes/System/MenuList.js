@@ -72,13 +72,13 @@ export default class TableList extends PureComponent {
     const { selectedRows } = this.state;
 
     if (!selectedRows) return;
-
+      selectedRows.map(row => console.log(row.meunId))
     switch (e.key) {
       case 'remove':
         dispatch({
             type: 'systemMenu/remove',
           payload: {
-            userId: selectedRows.map(row => row.userId).join(','),
+            meunId: selectedRows.map(row => row.meunId).join(','),
           },
           callback: () => {
             this.setState({
@@ -123,12 +123,10 @@ export default class TableList extends PureComponent {
   }
 
   handleEdit = (item) => {
-    this.props.dispatch(routerRedux.push({
-      pathname: '/system/menu/edit',
-      state:{
-        item: item
-      }
-    }));
+    this.props.dispatch({
+      type:'systemMenu/saveMenu',
+      payload: item
+    })
   }
 
   render() {

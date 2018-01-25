@@ -60,7 +60,7 @@ export async function queryMenu(params) {
   return request(`/mapi/sys/selectMenuAll?${stringify(params)}`);
 }
 export async function removeMenu(params) {
-  return request(`/mapi/sys/deleteMenu/${params.userId}`, {
+  return request(`/mapi/sys/deleteMenu/${params.meunId}`, {
     method: 'Delete',
   });
 }
@@ -74,7 +74,7 @@ export async function updateMenu(params) {
 }
 
 export async function addMenu(params) {
-  return request('/mapi/sys/insertMenu', {
+  return request('/mapi/sys/saveMenu', {
     method: 'POST',
     body: {
       ...params,

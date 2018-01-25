@@ -23,7 +23,8 @@ export default class TableList extends PureComponent {
     isAdd: true,
   };
 
-  componentDidMount() {
+  componentWillMount() {
+    console.log(1)
     const { dispatch } = this.props;
     dispatch({
       type: 'systemDict/fetch',

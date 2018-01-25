@@ -21,7 +21,7 @@ const CheckboxGroup = Checkbox.Group;
   //   console.log(item.loginAccount)
   //   return {
   //     loginAccount: Form.createFormField(item.loginAccount),
-  //     loginpassord: Form.createFormField(item.loginpassord),
+  //     loginPassord: Form.createFormField(item.loginPassord),
   //     userName: Form.createFormField(item.userNames),
   //     islock: Form.createFormField(item.islock),
   //     userId: Form.createFormField(item.islock),
@@ -57,7 +57,7 @@ export default class BasicForms extends PureComponent {
       }
       setFieldsValue({
         loginAccount: item.loginAccount,
-        loginpassord: item.loginpassord,
+        loginPassord: item.loginPassord,
         userName: item.userName,
         islock: item.islock,
         userId: item.userId,
@@ -130,14 +130,14 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请输入用户账号',
                 }],
               })(
-                <Input placeholder="请输入用户账号" />
+                <Input placeholder="请输入用户账号" disabled/>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
               label="用户密码"
             >
-              {getFieldDecorator('loginpassord', {
+              {getFieldDecorator('loginPassord', {
                 rules: [{
                   required: true, message: '请输入用户密码',
                 }],
@@ -169,8 +169,8 @@ export default class BasicForms extends PureComponent {
                 <Select
                   placeholder="请选择是否锁定用户"
                 >
-                  <Option value="0">否</Option>
-                  <Option value="1">是</Option>
+                  <Option value={0}>是</Option>
+                  <Option value={1}>否</Option>
                 </Select>
               )}
             </FormItem>

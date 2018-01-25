@@ -43,7 +43,6 @@ class StandardTable extends PureComponent {
   render() {
     const { selectedRowKeys } = this.state;
     const { data: { data, count }, loading } = this.props;
-
     const status = ['是', '否'];
 
     const columns = [

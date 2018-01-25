@@ -173,7 +173,9 @@ const menuData = [{
 export function getMenuData(req, res, u, b) {
   const result = {
     code: 0,
-    data: menuData,
+    data: {
+      children: menuData
+    },
   };
 
   if (res && res.json) {

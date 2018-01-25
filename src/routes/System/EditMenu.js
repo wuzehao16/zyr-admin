@@ -44,15 +44,21 @@ export default class BasicForms extends PureComponent {
     console.log(this,"edit")
     if (this.props.data.item) {
       const item = this.props.data.item;
-      var sysMenus = [];
-      if (item.sysMenus) {
-         sysMenus = item.sysMenus.map(item=>{return item.meunId})
+      if (this.props.data.data.data) {
+        let menu = this.props.data.data.data;
+        function d(menu) {
+          if (menu.meunId == item.parentId) {
+            
+          }
+        }
       }
       setFieldsValue({
-        remark: item.remark,
-        roleId: item.roleId,
-        roleName: item.roleName,
-        sysMenus: sysMenus,
+        type: item.type,
+        icon: item.icon,
+        name: item.name,
+        orderNum: item.orderNum,
+        perms: item.authority,
+        url: item.path,
       })
     }
   }
@@ -192,7 +198,7 @@ export default class BasicForms extends PureComponent {
         {...formItemLayout}
         label="授权标识"
        >
-        {getFieldDecorator('"perms')(
+        {getFieldDecorator('perms')(
           <Input placeholder="多个用逗号分隔，如：user:list,user:create" />
         )}
       </FormItem>
@@ -200,13 +206,13 @@ export default class BasicForms extends PureComponent {
   }
   renderForm() {
     switch (this.props.form.getFieldValue('type')) {
-      case 0:
+      case '0':
         return  this.renderCatalogue();
         break;
-      case 1:
+      case '1':
         return  this.renderMenu();
         break;
-      case 2:
+      case '2':
         return  this.renderBtn();
         break;
       default:
@@ -240,12 +246,12 @@ export default class BasicForms extends PureComponent {
               label="类型"
               >
               {getFieldDecorator('type', {
-                initialValue:1
+                initialValue:'1'
               })(
-                <RadioGroup name="type" >
-                  <Radio value={0}>目录</Radio>
-                  <Radio value={1}>菜单</Radio>
-                  <Radio value={2}>按钮</Radio>
+                <RadioGroup name="type" disabled>
+                  <Radio value='0'>目录</Radio>
+                  <Radio value='1'>菜单</Radio>
+                  <Radio value='2'>按钮</Radio>
                 </RadioGroup>
               )}
             </FormItem>

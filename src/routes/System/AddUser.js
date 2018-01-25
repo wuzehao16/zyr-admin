@@ -95,7 +95,7 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="用户密码"
             >
-              {getFieldDecorator('loginpassord', {
+              {getFieldDecorator('loginPassord', {
                 rules: [{
                   required: true, message: '请输入用户密码',
                 }],
@@ -127,8 +127,8 @@ export default class BasicForms extends PureComponent {
                 <Select
                   placeholder="请选择是否锁定用户"
                 >
-                  <Option value="0">否</Option>
-                  <Option value="1">是</Option>
+                  <Option value="0">是</Option>
+                  <Option value="1">否</Option>
                 </Select>
               )}
             </FormItem>

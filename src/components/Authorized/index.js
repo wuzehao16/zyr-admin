@@ -16,10 +16,14 @@ Authorized.check = check;
  */
 const renderAuthorize = (currentAuthority) => {
   if (currentAuthority) {
+    console.log(currentAuthority)
     if (currentAuthority.constructor.name === 'Function') {
       CURRENT = currentAuthority();
     }
     if (currentAuthority.constructor.name === 'String') {
+      CURRENT = currentAuthority;
+    }
+    if (currentAuthority.constructor.name === 'Array') {
       CURRENT = currentAuthority;
     }
   } else {
