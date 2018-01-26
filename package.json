@@ -14,7 +14,7 @@
     "lint:style": "stylelint \"src/**/*.less\" --syntax less",
     "lint": "eslint --ext .js src mock tests && npm run lint:style",
     "lint:fix": "eslint --fix --ext .js src mock tests && npm run lint:style",
-    "fix":"eslint --fix --ext AddRole.js src/routers/System",
+    "fix":"eslint --fix EditRole.js src/routes/System",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js",
     "test": "roadhog test",

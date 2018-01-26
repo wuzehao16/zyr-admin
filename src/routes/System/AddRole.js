@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, Checkbox
+  Form, Input, Select, Button, Card, Checkbox,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import RoleTree from '../../components/RoleTree'
+import RoleTree from '../../components/RoleTree';
 
 const FormItem = Form.Item;
 
 @connect(({ systemRole, loading }) => ({
-  data:systemRole,
+  data: systemRole,
   submitting: loading.effects['systemRole/add'],
 }))
 @Form.create()
@@ -25,9 +25,9 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         if (values.sysMenus) {
-          values.sysMenus.map((item,index,arr) => {
-             arr[index] = {roleId:item}
-          })
+          values.sysMenus.map((item, index, arr) => {
+            arr[index] = { roleId: item };
+          });
         }
         this.props.dispatch({
           type: 'systemRole/add',
@@ -40,7 +40,7 @@ export default class BasicForms extends PureComponent {
     const { setFieldsValue } = this.props.form;
     setFieldsValue({
       sysMenus: value,
-    })
+    });
   }
   render() {
     const { submitting, data } = this.props;
@@ -99,12 +99,12 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="功能权限"
-              >
-                {getFieldDecorator('sysMenus')(
-                  <RoleTree
-                    data={data.menuList}
-                    onCheck={this.onCheck}
-                    />
+            >
+              {getFieldDecorator('sysMenus')(
+                <RoleTree
+                  data={data.menuList}
+                  onCheck={this.onCheck}
+                />
                 )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>

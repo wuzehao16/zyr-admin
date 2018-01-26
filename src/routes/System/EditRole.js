@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, Checkbox,
+  Form, Input, Button, Card, Checkbox,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import RoleTree from '../../components/RoleTree';
@@ -14,20 +14,22 @@ const FormItem = Form.Item;
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  componentDidMount () {
+  componentDidMount() {
     const { setFieldsValue } = this.props.form;
     if (this.props.data.item) {
       const item = this.props.data.item;
-      var sysMenus = [];
+      let sysMenus = [];
       if (item.sysMenus) {
-         sysMenus = item.sysMenus.map(item=>{return item.meunId})
+        sysMenus = item.sysMenus.map((m) => {
+          return m.meunId;
+        });
       }
       setFieldsValue({
         remark: item.remark,
         roleId: item.roleId,
         roleName: item.roleName,
-        sysMenus: sysMenus,
-      })
+        sysMenus,
+      });
     }
   }
   handleSubmit = (e) => {
@@ -35,9 +37,9 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         if (values.sysMenus) {
-          values.sysMenus.map((item,index,arr) => {
-             arr[index] = {meunId:item}
-          })
+          values.sysMenus.map((item, index, arr) => {
+            arr[index] = { meunId: item };
+          });
         }
         this.props.dispatch({
           type: 'systemRole/update',
@@ -50,7 +52,7 @@ export default class BasicForms extends PureComponent {
     const { setFieldsValue } = this.props.form;
     setFieldsValue({
       sysMenus: value,
-    })
+    });
   }
   render() {
     const { submitting, data } = this.props;
@@ -58,7 +60,7 @@ export default class BasicForms extends PureComponent {
     getFieldDecorator('roleId');
     // this.onCheck(getFieldValue('sysMenus'));
     if (data.data.roleList) {
-      var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
+      const RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
     }
     const formItemLayout = {
       labelCol: {
@@ -114,13 +116,13 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="功能权限"
-              >
-                {getFieldDecorator('sysMenus')(
-                  <RoleTree
-                    data={data.menuList}
-                    onCheck={this.onCheck}
-                    defaultCheckedKeys={getFieldValue('sysMenus')}
-                    />
+            >
+              {getFieldDecorator('sysMenus')(
+                <RoleTree
+                  data={data.menuList}
+                  onCheck={this.onCheck}
+                  defaultCheckedKeys={getFieldValue('sysMenus')}
+                />
                 )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>

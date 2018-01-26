@@ -9,8 +9,8 @@ export default class SearchList extends Component {
     const { match, routerData } = this.props;
     const routes = getRoutes(match.path, routerData);
     return (
-        <Switch>
-          {
+      <Switch>
+        {
             routes.map(item =>
               (
                 <Route
@@ -22,9 +22,9 @@ export default class SearchList extends Component {
               )
             )
           }
-          {/* 默认跳转list */}
-          <Route exact path="/system/role" component={routerData['/system/role/list'].component} />
-        </Switch>
+        {/* 默认跳转list */}
+        <Route exact path="/system/role" component={routerData['/system/role/list'].component} />
+      </Switch>
     );
   }
 }

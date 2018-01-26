@@ -1,20 +1,18 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
-import { Row, Col, Card, Form, Input, Icon, Button, Dropdown, Menu, message, Select } from 'antd';
+import { Card, Form, Icon, Button, Dropdown, Menu, Select } from 'antd';
 import StandardTable from '../../components/SystemMenuTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './User.less';
 
-const FormItem = Form.Item;
-const { Option } = Select;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
   @connect(({ systemMenu, loading }) => ({
     systemMenu,
     loading: loading.models.systemMenu,
-}))
+  }))
 @Form.create()
 export default class TableList extends PureComponent {
   state = {
@@ -25,7 +23,7 @@ export default class TableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-        type: 'systemMenu/fetch',
+      type: 'systemMenu/fetch',
     });
   }
 
@@ -72,11 +70,11 @@ export default class TableList extends PureComponent {
     const { selectedRows } = this.state;
 
     if (!selectedRows) return;
-      selectedRows.map(row => console.log(row.meunId))
+    selectedRows.map(row => console.log(row.meunId));
     switch (e.key) {
       case 'remove':
         dispatch({
-            type: 'systemMenu/remove',
+          type: 'systemMenu/remove',
           payload: {
             meunId: selectedRows.map(row => row.meunId).join(','),
           },
@@ -116,7 +114,7 @@ export default class TableList extends PureComponent {
       });
 
       dispatch({
-          type: 'systemMenu/fetch',
+        type: 'systemMenu/fetch',
         payload: values,
       });
     });
@@ -124,14 +122,14 @@ export default class TableList extends PureComponent {
 
   handleEdit = (item) => {
     this.props.dispatch({
-      type:'systemMenu/saveMenu',
-      payload: item
-    })
+      type: 'systemMenu/saveMenu',
+      payload: item,
+    });
   }
 
   render() {
     const { systemMenu: { data }, loading, dispatch } = this.props;
-    const { selectedRows, modalVisible, addInputValue } = this.state;
+    const { selectedRows } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
@@ -144,7 +142,7 @@ export default class TableList extends PureComponent {
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push(`/system/menu/add`))}>
+              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/system/menu/add'))}>
                 新建
               </Button>
               {
@@ -173,4 +171,4 @@ export default class TableList extends PureComponent {
       </PageHeaderLayout>
     );
   }
-}
+  }

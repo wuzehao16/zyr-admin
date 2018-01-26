@@ -24,7 +24,6 @@ export default class TableList extends PureComponent {
   };
 
   componentWillMount() {
-    console.log(1)
     const { dispatch } = this.props;
     dispatch({
       type: 'systemDict/fetch',
@@ -60,7 +59,7 @@ export default class TableList extends PureComponent {
     const { dispatch } = this.props;
     this.setState({
       type: '',
-    })
+    });
     dispatch({
       type: 'systemDict/fetch',
       payload: {},
@@ -123,12 +122,12 @@ export default class TableList extends PureComponent {
   // }
   handleSearch = (e) => {
     e.preventDefault();
-    const { dispatch } = this.props
+    const { dispatch } = this.props;
     const { type } = this.state;
     dispatch({
       type: 'systemDict/fetch',
       payload: {
-        type: type
+        type,
       },
     });
   }
@@ -156,47 +155,47 @@ export default class TableList extends PureComponent {
   }
 
   handleAdd = () => {
-  const {form, dispatch} = this.props;
-  const {isAdd, id} = this.state;
-  form.validateFields({
-    force: true
-  }, (err, values) => {
-    this.setState({formValues: values});
-    if (!err) {
-      if (this.state.isAdd) {
-        dispatch({
-          type: 'systemDict/add',
-          payload: {
-            ...values
-          }
-        });
-      } else {
-        dispatch({
-          type: 'systemDict/update',
-          payload: {
-            ...values,
-            id: id
-          }
-        });
+    const { form, dispatch } = this.props;
+    const { isAdd, id } = this.state;
+    form.validateFields({
+      force: true,
+    }, (err, values) => {
+      this.setState({ formValues: values });
+      if (!err) {
+        if (this.state.isAdd) {
+          dispatch({
+            type: 'systemDict/add',
+            payload: {
+              ...values,
+            },
+          });
+        } else {
+          dispatch({
+            type: 'systemDict/update',
+            payload: {
+              ...values,
+              id,
+            },
+          });
+        }
+        message.success('添加成功');
+        form.resetFields();
+        this.handleModalVisible(false);
+        this.setState({ formValues: {} });
       }
-      message.success('添加成功');
-      form.resetFields();
-      this.handleModalVisible(false);
-      this.setState({formValues: {}});
-    }
-  });
-}
+    });
+  }
   handleEdit = (item) => {
     const { setFieldsValue } = this.props.form;
     this.setState({
       isAdd: false,
       id: item.id,
-    })
+    });
     setFieldsValue({
       label: item.label,
       value: item.value,
       type: item.type,
-    })
+    });
     this.handleModalVisible(true);
   }
   renderSimpleForm() {
@@ -207,7 +206,7 @@ export default class TableList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="字典类型">
-                <Input placeholder="请输入" onChange={this.handleTypeInput} value={type}/>
+              <Input placeholder="请输入" onChange={this.handleTypeInput} value={type} />
             </FormItem>
           </Col>
           <Col md={16} sm={24}>
@@ -224,7 +223,7 @@ export default class TableList extends PureComponent {
   render() {
     const { systemDict: { data }, loading } = this.props;
     const { selectedRows, modalVisible, type, label, value, isAdd } = this.state;
-    const { getFieldDecorator } = this.props.form
+    const { getFieldDecorator } = this.props.form;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
@@ -271,18 +270,18 @@ export default class TableList extends PureComponent {
           </div>
         </Card>
         <Modal
-          title={isAdd ? "新建字典" : '编辑字典'}
+          title={isAdd ? '新建字典' : '编辑字典'}
           visible={modalVisible}
           onOk={this.handleAdd}
           onCancel={() => this.handleModalVisible()}
         >
           <Form>
-          <FormItem
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 15 }}
-            label="字典名称"
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="字典名称"
             >
-            {getFieldDecorator('label', {
+              {getFieldDecorator('label', {
               rules: [
                 {
                   required: true,
@@ -292,8 +291,8 @@ export default class TableList extends PureComponent {
             })(
               <Input placeholder="请输入" />
             )}
-          </FormItem>
-          {/* <FormItem
+            </FormItem>
+            {/* <FormItem
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 15 }}
             label="字典名称"
@@ -301,12 +300,12 @@ export default class TableList extends PureComponent {
           >
             <Input placeholder="请输入" onChange={this.handleLabelInput} value={label} />
           </FormItem> */}
-          <FormItem
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 15 }}
-            label="字典值"
-          >
-            {getFieldDecorator('value', {
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="字典值"
+            >
+              {getFieldDecorator('value', {
               rules: [
                 {
                   required: true,
@@ -316,14 +315,14 @@ export default class TableList extends PureComponent {
             })(
               <Input placeholder="请输入" />
             )}
-          </FormItem>
-          <FormItem
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 15 }}
-            label="字典类型"
-            required="true"
-          >
-            {getFieldDecorator('type', {
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="字典类型"
+              required="true"
+            >
+              {getFieldDecorator('type', {
               rules: [
                 {
                   required: true,
@@ -333,7 +332,7 @@ export default class TableList extends PureComponent {
             })(
               <Input placeholder="请输入" />
             )}
-          </FormItem>
+            </FormItem>
           </Form>
         </Modal>
       </PageHeaderLayout>

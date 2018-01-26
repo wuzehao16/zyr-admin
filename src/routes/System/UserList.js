@@ -1,14 +1,13 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
-import { Row, Col, Card, Form, Input, Icon, Button, Dropdown, Menu, message, Select } from 'antd';
+import { Row, Col, Card, Form, Input, Icon, Button, Dropdown, Menu, Select } from 'antd';
 import StandardTable from '../../components/SystemUserTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './User.less';
 
 const FormItem = Form.Item;
-const { Option } = Select;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 @connect(({ systemUser, loading }) => ({
@@ -123,12 +122,11 @@ export default class TableList extends PureComponent {
   }
 
   handleEdit = (item) => {
-    console.log(item);
     this.props.dispatch(routerRedux.push({
       pathname: '/system/user/edit',
-      state:{
-        item: item
-      }
+      state: {
+        item,
+      },
     }));
   }
   renderSimpleForm() {
@@ -157,7 +155,6 @@ export default class TableList extends PureComponent {
   render() {
     const { systemUser: { data }, loading, dispatch } = this.props;
     const { selectedRows } = this.state;
-    console.log(data)
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
@@ -173,7 +170,7 @@ export default class TableList extends PureComponent {
               {this.renderSimpleForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push(`/system/user/add`))}>
+              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/system/user/add'))}>
                 新建
               </Button>
               {
