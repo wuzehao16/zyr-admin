@@ -22,13 +22,16 @@ export default {
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addDict, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
       if (response.code !== 0) {
         message.error(response.msg);
+        return
       }
+      const list = yield call(queryDict, payload);
+      yield put({
+        type: 'save',
+        payload: list,
+      });
+
       if (callback) callback();
     },
     *update({ payload, callback }, { call, put }) {

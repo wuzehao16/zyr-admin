@@ -68,19 +68,16 @@ export default class BasicForms extends PureComponent {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      let newValue = values;
-      if (newValue.sysRoles) {
-        newValue.sysRoles.map((item,index,arr) => {
-           arr[index] = {roleId:item}
-        })
-      }
-
       if (!err) {
+        if (values.sysRoles) {
+          values.sysRoles.map((item,index,arr) => {
+             arr[index] = {roleId:item}
+          })
+        }
         this.props.dispatch({
           type: 'systemUser/update',
-          payload: newValue,
+          payload: values,
         });
-        newValue = {}
       }
     });
   }
@@ -137,12 +134,8 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="用户密码"
             >
-              {getFieldDecorator('loginPassord', {
-                rules: [{
-                  required: true, message: '请输入用户密码',
-                }],
-              })(
-                <Input placeholder="请输入用户密码" />
+              {getFieldDecorator('loginPassord')(
+                <Input type="password" placeholder="请输入用户密码" />
               )}
             </FormItem>
             <FormItem
@@ -176,7 +169,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="是否锁定"
+              label="用户权限"
               >
               {getFieldDecorator('sysRoles')(
                 <CheckboxGroup  onChange={this.onChange} >

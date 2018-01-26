@@ -35,14 +35,25 @@ export default {
         type: 'save',
         payload: response,
       });
+      const list = yield call(queryRole, payload);
+      yield put({
+        type: 'save',
+        payload: list,
+      });
       if (callback) callback();
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addRole, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
+      // yield put({
+      //   type: 'save',
+      //   payload: response,
+      // });
+      if (response.code === 0) {
+        message.success('新建成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
       yield put(routerRedux.push('/system/role'));
       if (callback) callback();
     },

@@ -174,6 +174,8 @@ export function getMenuData(req, res, u, b) {
   const result = {
     code: 0,
     data: {
+      meunId: "0",
+      name: "一级菜单",
       children: menuData
     },
   };

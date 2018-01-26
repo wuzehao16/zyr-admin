@@ -28,6 +28,11 @@ export default {
       } else {
         message.error(response.msg);
       }
+      const list = yield call(queryMenu, payload);
+      yield put({
+        type: 'save',
+        payload: list,
+      });
       if (callback) callback();
     },
     *add({ payload, callback }, { call, put }) {

@@ -47,14 +47,10 @@ class StandardTable extends PureComponent {
     const status = ['是', '否'];
 
     const columns = [
-      {
-        title: '序号',
-        dataIndex: 'userId',
-      },
-      {
-        title: '创建人',
-        dataIndex: 'loginAccount',
-      },
+      // {
+      //   title: '序号',
+      //   dataIndex: 'userId',
+      // },
       {
         title: '权限名称',
         dataIndex: 'roleName',
@@ -62,6 +58,10 @@ class StandardTable extends PureComponent {
       {
         title: '备注',
         dataIndex: 'remark',
+      },
+      {
+        title: '创建人',
+        dataIndex: 'loginAccount',
       },
       {
         title: '创建时间',

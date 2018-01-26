@@ -66,10 +66,10 @@ const proxy = {
     },
     $body: postRule,
   },
-  'GET /api/sys/selectUsers': selectUsers,
-  'POST /api/sys/insertUser': saveUser,
-  'DELETE /api/sys/deleteUser/*': deleteUser,
-  'PUT /api/sys/updateUser': updateUser,
+  'GET /sys/selectUsers': selectUsers,
+  'POST /sys/insertUser': saveUser,
+  'DELETE /sys/deleteUser/*': deleteUser,
+  'PUT /sys/updateUser': updateUser,
   'POST /api/forms': (req, res) => {
     res.send({ message: 'Ok' });
   },
@@ -80,7 +80,7 @@ const proxy = {
   'GET /api/fake_chart_data': getFakeChartData,
   'GET /api/profile/basic': getProfileBasicData,
   'GET /api/profile/advanced': getProfileAdvancedData,
-  'POST /mapi/sysAnno/login': (req, res) => {
+  'POST /sysAnno/login': (req, res) => {
     const { loginPassord, loginAccount, type } = req.body;
     if(loginPassord === '888888' && loginAccount === 'admin'){
       res.send({
@@ -104,17 +104,17 @@ const proxy = {
       type,
     });
   },
-  // 'POST /api/mapi/sysAnno/login': 'http://192.168.2.101:8080/mapi/sysAnno/login',
+  // 'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
   'POST /api/register': (req, res) => {
     res.send({ msg: 'ok', currentAuthority: 'user' });
   },
-  'POST /mapi/sysAnno/sendLoginMessage': (req, res) => {
+  'POST /sysAnno/sendLoginMessage': (req, res) => {
     res.send({ msg: 'ok', code: 0 });
   },
-  'POST /mapi/sysAnno/sendLoginEmail': (req, res) => {
+  'POST /sysAnno/sendLoginEmail': (req, res) => {
     res.send({ msg: 'ok', code: 0 });
   },
-  'POST /mapi/sysAnno/vaLidatacode': (req, res) => {
+  'POST /sysAnno/vaLidatacode': (req, res) => {
     res.send({ msg: 'ok', code: 0 });
   },
   'GET /api/notices': getNotices,
@@ -155,15 +155,15 @@ const proxy = {
     },
     $body: postContent,
   },
-  'POST /mapi/sysAnno/getInstitutionByCityCode': getInstitution,
-  'POST /mapi/sysAnno/getSubInstitutionByInstitutionCode': getSubInstitution,
-  'POST /mapi/sysAnno/myPwdOrEmail': (req, res) => {
+  'POST /sysAnno/getInstitutionByCityCode': getInstitution,
+  'POST /sysAnno/getSubInstitutionByInstitutionCode': getSubInstitution,
+  'POST /sysAnno/myPwdOrEmail': (req, res) => {
       res.send({ msg: 'ok', code: 0 });
     },
-  'POST /mapi/sysAnno/register': (req, res) => {
+  'POST /sysAnno/register': (req, res) => {
       res.send({ msg: 'ok', code: 0 });
     },
-  'POST /mapi/sysAnno/queryAllInstitution': (req, res) => {
+  'POST /sysAnno/queryAllInstitution': (req, res) => {
       res.send({
           "code": 0,
           "msg": "ok",
@@ -192,23 +192,23 @@ const proxy = {
           ]
       });
     },
-    'GET /api/sys/selectDictionary': selectDictionary,
-    'POST /api/sys/saveDictionary': saveDictionary,
-    'DELETE /api/sys/deleteDictionary/*': deleteDictionary,
-    'PUT /api/sys/updateDictionary': updateDictionary,
-    'GET /api/sys/menus': getMenuData,
-    'GET /api/sys/selectMenuAll': selectMenuAll,
-    'POST /api/sys/saveMenu': saveMenu,
-    'DELETE /api/sys/deleteMenu/*': deleteMenu,
-    'PUT /api/sys/updateMenu': updateMenu,
-    'GET /api/sys/selectAllRole': selectAllRole,
-    'POST /api/sys/insertRole': saveRole,
-    'DELETE /api/sys/deleteRoles/*': deleteRole,
-    'PUT /api/sys/updateRole': updateRole,
+    'GET /sys/selectDictionary': selectDictionary,
+    'POST /sys/saveDictionary': saveDictionary,
+    'DELETE /sys/deleteDictionary/*': deleteDictionary,
+    'PUT /sys/updateDictionary': updateDictionary,
+    'GET /module/selectByUserMenu': getMenuData,
+    'GET /sys/selectMenuAll': selectMenuAll,
+    'POST /sys/saveMenu': saveMenu,
+    'DELETE /sys/deleteMenu/*': deleteMenu,
+    'PUT /sys/updateMenu': updateMenu,
+    'GET /sys/selectAllRole': selectAllRole,
+    'POST /sys/insertRole': saveRole,
+    'DELETE /sys/deleteRoles/*': deleteRole,
+    'PUT /sys/updateRole': updateRole,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);
 // export default noProxy ? {} : {
 //   ...delay(proxy, 1000),
-//   'POST /api/mapi/sysAnno/login': 'http://192.168.2.101:8080/mapi/sysAnno/login',
+//   'POST /api/sysAnno/login': 'http://192.168.2.101:8080/sysAnno/login',
 // };

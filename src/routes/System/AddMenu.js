@@ -42,19 +42,16 @@ export default class BasicForms extends PureComponent {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      let newValue = values;
-      if (newValue.sysRoles) {
-        newValue.sysRoles.map((item,index,arr) => {
-           arr[index] = {roleId:item}
-        })
-      }
-
       if (!err) {
+        if (values.sysRoles) {
+          values.sysRoles.map((item,index,arr) => {
+             arr[index] = {roleId:item}
+          })
+        }
         this.props.dispatch({
           type: 'systemMenu/add',
-          payload: newValue,
+          payload: values,
         });
-        newValue = {}
       }
     });
   }
@@ -88,6 +85,18 @@ export default class BasicForms extends PureComponent {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
+        <FormItem
+          {...formItemLayout}
+          label="菜单URL"
+         >
+          {getFieldDecorator('url', {
+            rules: [{
+              required: true, message: '请输入菜单URL',
+            }],
+          })(
+            <Input placeholder="菜单URL" />
+          )}
+        </FormItem>
         <FormItem
           {...formItemLayout}
           label="排序号"

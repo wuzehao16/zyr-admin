@@ -27,15 +27,14 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        let newValue = values;
-        if (newValue.sysMenus) {
-          newValue.sysMenus.map((item,index,arr) => {
+        if (values.sysMenus) {
+          values.sysMenus.map((item,index,arr) => {
              arr[index] = {roleId:item}
           })
         }
         this.props.dispatch({
           type: 'systemRole/add',
-          payload: newValue,
+          payload: values,
         });
       }
     });
