@@ -31,7 +31,6 @@ export default {
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addUser, payload);
-      console.log(response,"user response")
       if (response.code === 0 ) {
         message.success('新建成功');
       } else {

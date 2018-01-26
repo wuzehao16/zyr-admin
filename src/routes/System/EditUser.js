@@ -68,19 +68,16 @@ export default class BasicForms extends PureComponent {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      let newValue = values;
-      if (newValue.sysRoles) {
-        newValue.sysRoles.map((item,index,arr) => {
-           arr[index] = {roleId:item}
-        })
-      }
-
       if (!err) {
+        if (values.sysRoles) {
+          values.sysRoles.map((item,index,arr) => {
+             arr[index] = {roleId:item}
+          })
+        }
         this.props.dispatch({
           type: 'systemUser/update',
-          payload: newValue,
+          payload: values,
         });
-        newValue = {}
       }
     });
   }
