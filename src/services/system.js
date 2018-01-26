@@ -85,7 +85,7 @@ export async function queryRole(params) {
   return request(`/sys/selectAllRole?${stringify(params)}`);
 }
 export async function removeRole(params) {
-  return request(`/sys/deleteRoles/${params.userId}`, {
+  return request(`/sys/deleteRoles/${params.roleId}`, {
     method: 'Delete',
   });
 }

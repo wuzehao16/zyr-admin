@@ -196,7 +196,7 @@ const proxy = {
     'POST /sys/saveDictionary': saveDictionary,
     'DELETE /sys/deleteDictionary/*': deleteDictionary,
     'PUT /sys/updateDictionary': updateDictionary,
-    'GET /sys/menus': getMenuData,
+    'GET /module/selectByUserMenu': getMenuData,
     'GET /sys/selectMenuAll': selectMenuAll,
     'POST /sys/saveMenu': saveMenu,
     'DELETE /sys/deleteMenu/*': deleteMenu,

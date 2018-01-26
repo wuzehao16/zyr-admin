@@ -90,6 +90,18 @@ export default class BasicForms extends PureComponent {
       <div>
         <FormItem
           {...formItemLayout}
+          label="菜单URL"
+         >
+          {getFieldDecorator('url', {
+            rules: [{
+              required: true, message: '请输入菜单URL',
+            }],
+          })(
+            <Input placeholder="菜单URL" />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
           label="排序号"
          >
           {getFieldDecorator('orderNum', {

@@ -35,6 +35,11 @@ export default {
         type: 'save',
         payload: response,
       });
+      const list = yield call(queryRole, payload);
+      yield put({
+        type: 'save',
+        payload: list,
+      });
       if (callback) callback();
     },
     *add({ payload, callback }, { call, put }) {

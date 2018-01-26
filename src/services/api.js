@@ -78,5 +78,5 @@ export async function queryNotices() {
   return request('/api/notices');
 }
 export async function queryMenus() {
-  return request('/sys/menus');
+  return request('/module/selectByUserMenu');
 }

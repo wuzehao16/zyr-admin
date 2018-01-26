@@ -52,16 +52,16 @@ class StandardTable extends PureComponent {
       //   dataIndex: 'userId',
       // },
       {
-        title: '创建人',
-        dataIndex: 'loginAccount',
-      },
-      {
         title: '权限名称',
         dataIndex: 'roleName',
       },
       {
         title: '备注',
         dataIndex: 'remark',
+      },
+      {
+        title: '创建人',
+        dataIndex: 'loginAccount',
       },
       {
         title: '创建时间',

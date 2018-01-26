@@ -137,12 +137,8 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="用户密码"
             >
-              {getFieldDecorator('loginPassord', {
-                rules: [{
-                  required: true, message: '请输入用户密码',
-                }],
-              })(
-                <Input placeholder="请输入用户密码" />
+              {getFieldDecorator('loginPassord')(
+                <Input type="password" placeholder="请输入用户密码" />
               )}
             </FormItem>
             <FormItem
