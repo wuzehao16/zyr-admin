@@ -234,6 +234,18 @@ export const getRouterData = (app) => {
     '/system/role/edit': {
       component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/EditRole')),
     },
+    '/membership': {
+      component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership')),
+    },
+    '/membership/list': {
+      component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/List')),
+    },
+    '/membership/add': {
+      component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/Add')),
+    },
+    '/membership/edit': {
+      component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/Edit')),
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

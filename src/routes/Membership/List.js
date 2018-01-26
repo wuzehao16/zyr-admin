@@ -2,16 +2,16 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { Card, Form, Icon, Button, Dropdown, Menu } from 'antd';
-import StandardTable from '../../components/SystemRoleTable';
+import StandardTable from '../../components/MembershipTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
-import styles from './User.less';
+import styles from './style.less';
 
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
-@connect(({ systemRole, loading }) => ({
-  systemRole,
-  loading: loading.models.systemRole,
+@connect(({ membership, loading }) => ({
+  membership,
+  loading: loading.models.membership,
 }))
 @Form.create()
 export default class TableList extends PureComponent {
@@ -23,7 +23,7 @@ export default class TableList extends PureComponent {
   componentWillMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'systemRole/fetch',
+      type: 'membership/fetch',
     });
   }
 
@@ -48,7 +48,7 @@ export default class TableList extends PureComponent {
     }
 
     dispatch({
-      type: 'systemRole/fetch',
+      type: 'membership/fetch',
       payload: params,
     });
   }
@@ -60,7 +60,7 @@ export default class TableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'systemRole/fetch',
+      type: 'membership/fetch',
       payload: {},
     });
   }
@@ -74,9 +74,9 @@ export default class TableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'systemRole/remove',
+          type: 'membership/remove',
           payload: {
-            roleId: selectedRows.map(row => row.roleId).join(','),
+            roleId: selectedRows.map(row => row.leveId).join(','),
           },
           callback: () => {
             this.setState({
@@ -114,7 +114,7 @@ export default class TableList extends PureComponent {
       });
 
       dispatch({
-        type: 'systemRole/fetch',
+        type: 'membership/fetch',
         payload: values,
       });
     });
@@ -122,13 +122,13 @@ export default class TableList extends PureComponent {
 
   handleEdit = (item) => {
     this.props.dispatch({
-      type: 'systemRole/saveRole',
+      type: 'membership/saveItem',
       payload: item,
     });
   }
 
   render() {
-    const { systemRole: { data }, loading, dispatch } = this.props;
+    const { membership: { data }, loading, dispatch } = this.props;
     const { selectedRows } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -143,7 +143,7 @@ export default class TableList extends PureComponent {
           <div className={styles.tableList}>
             <div className={styles.tableListForm} />
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/system/role/add'))}>
+              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/membership/add'))}>
                 新建
               </Button>
               {

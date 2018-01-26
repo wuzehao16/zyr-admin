@@ -143,6 +143,12 @@ const menuData = [{
   ],
 },
 {
+  name: '会员等级',
+  icon: 'user',
+  path: 'membership',
+  authority: 'admin',
+},
+{
   name: '系统管理',
   icon: 'user',
   path: 'system',
