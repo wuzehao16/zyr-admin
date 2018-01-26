@@ -1,4 +1,4 @@
-const getInstitution = {
+const institutionList = {
     "code": 0,
     "msg": "ok",
     "data": [
@@ -64,7 +64,7 @@ const getInstitution = {
         }
     ]
 }
-const getSubInstitution = {
+const subInstitutionList = {
     "code": 0,
     "msg": "ok",
     "data": [
@@ -99,5 +99,23 @@ const getSubInstitution = {
             "institutionCode": "1"
         }
     ]
+}
+export function institutionList(req, res, u, b) {
+  const result = institutionList;
+
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
+export function subInstitutionList(req, res, u, b) {
+  const result = subInstitutionList;
+
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
 }
 export default {getInstitution,getSubInstitution};
