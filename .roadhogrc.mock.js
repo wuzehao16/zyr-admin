@@ -8,13 +8,14 @@ import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
 import { getContent, postContent } from './mock/content';
 import { getSystemUser, postSystemUser } from './mock/systemUser';
-import { getInstitution, getSubInstitution } from './mock/register';
+import { getInstitution, getSubInstitution, queryAllInstitution } from './mock/register';
 import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary } from './mock/dictionary'
-import { selectUsers, deleteUser, updateUser, saveUser } from './mock/systemUser'
+import { selectSysUsers, deleteSysUser, updateSysUser, saveSysUser } from './mock/systemUser'
 import { getMenuData } from './mock/menus'
 import { selectMenuAll, deleteMenu, updateMenu, saveMenu } from './mock/systemMenu'
 import { selectAllRole, deleteRole, updateRole, saveRole } from './mock/systemRole'
 import { selectMemberRank, deleteMemberRank, updateMemberRank, saveMemberRank } from './mock/membership'
+import { getUser, updateUser, updatePassword, getUserDetail } from './mock/member.js'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -67,10 +68,10 @@ const proxy = {
     },
     $body: postRule,
   },
-  'GET /sys/selectUsers': selectUsers,
-  'POST /sys/insertUser': saveUser,
-  'DELETE /sys/deleteUser/*': deleteUser,
-  'PUT /sys/updateUser': updateUser,
+  'GET /sys/selectUsers': selectSysUsers,
+  'POST /sys/insertUser': saveSysUser,
+  'DELETE /sys/deleteUser/*': deleteSysUser,
+  'PUT /sys/updateUser': updateSysUser,
   'POST /api/forms': (req, res) => {
     res.send({ message: 'Ok' });
   },
@@ -166,35 +167,7 @@ const proxy = {
   'POST /sysAnno/register': (req, res) => {
       res.send({ msg: 'ok', code: 0 });
     },
-  'POST /sysAnno/queryAllInstitution': (req, res) => {
-      res.send({
-          "code": 0,
-          "msg": "ok",
-          "data": [
-              {
-                  "institutionId": "04d54b7a25f0473f9679096cfab7597c",
-                  "institutionName": "银行",
-                  "createUserId": "admin",
-                  "createTime": 1516184455966,
-                  "institutionCode": "1"
-              },
-              {
-                  "institutionId": "8a411da788c24402a39a7826aae26b8e",
-                  "institutionName": "金融机构",
-                  "createUserId": "admin",
-                  "createTime": 1516186974926,
-                  "institutionCode": "2"
-              },
-              {
-                  "institutionId": "6015ed04cf524ff6a043443a03a87185",
-                  "institutionName": "小额贷款",
-                  "createUserId": "admin",
-                  "createTime": 1516187373343,
-                  "institutionCode": "3"
-              }
-          ]
-      });
-    },
+  'POST /sysAnno/queryAllInstitution': queryAllInstitution,
   'GET /sys/selectDictionary': selectDictionary,
   'POST /sys/saveDictionary': saveDictionary,
   'DELETE /sys/deleteDictionary/*': deleteDictionary,
@@ -212,6 +185,11 @@ const proxy = {
   'POST /sys/insertMemberRank': saveMemberRank,
   'DELETE /sys/deleteMemberRank/*': deleteMemberRank,
   'PUT /sys/updateMemberRank': updateMemberRank,
+  //用户个管理
+  'GET /sys/selectAppUser': getUser,
+  'GET /sys/selectAppUserDetail': getUserDetail,
+  'PUT /sys/updateAppuser': updateUser,
+  'PUT /sys/updatePassword': updatePassword,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

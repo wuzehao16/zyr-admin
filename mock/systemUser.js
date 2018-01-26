@@ -20,7 +20,7 @@ for (let i = 0; i < 46; i += 1) {
   });
 }
 
-export function selectUsers(req, res, u) {
+export function selectSysUsers(req, res, u) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -73,7 +73,7 @@ export function selectUsers(req, res, u) {
   }
 }
 
-export function saveUser(req, res, u, b) {
+export function saveSysUser(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -108,7 +108,7 @@ export function saveUser(req, res, u, b) {
     return result;
   }
 }
-export function deleteUser(req, res, u, b) {
+export function deleteSysUser(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -132,7 +132,7 @@ export function deleteUser(req, res, u, b) {
     return result;
   }
 }
-export function updateUser(req, res, u, b) {
+export function updateSysUser(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -280,4 +280,4 @@ export function selectAllRole(req, res, u, b) {
 
   res.send(result);
 }
-export default { selectAllRole, selectUsers,  deleteUser, updateUser, saveUser};
+export default { selectAllRole, selectSysUsers,  deleteSysUser, updateSysUser, saveSysUser};

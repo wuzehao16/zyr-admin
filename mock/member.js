@@ -1,22 +1,39 @@
 import { getUrlParams } from './utils';
-
+// 用户管理
 // mock tableListDataSource
 let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
-    key: i,
-    leveId: `${i}`,
-    profitRatio: (Math.random() * 1).toFixed(2),
-    levePrice: Math.ceil(Math.random() * 100),
-    leveName: '黄金会员',
-    leveSort: 'bank',
-    updateUser: "瓜娃子",
+    userId: i,
+    userId: `${i}`,
+    leveName: "钻石",
+    manageId: "2e418e56cf444f6c97747eda151bbaed",
+    loginAccount: 18312320204,
+    userHead: "http://xxx/xxx",
+    userSex: 2,
+    registerTime: 1516866894000,
+    userName: "jack",
+    userIdentity: 0,
+    islock: 0,
+    wachatNo: 56984521358,
+    idNumber: 445221199854668459,
+    isCustom: 0,
+    backPictureId: "http;//xxx/xxx",
+    upperPictureId: "http;//xxx/xxx",
+    isMember: 1,
+    realName: "杰克",
+    manageName: "平安-平安南山分行",
+    sublInstitution: "2a8d5bf6958942fba5c67d6b04100f46",
+    buyTime: 1509610590000,
+    expirdTime: 1541146590000,
+    longTime: 12,
+    memberPrice: 12000,
     updateTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
   });
 }
 
-export function selectMemberRank(req, res, u) {
+export function getUser(req, res, u) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -68,56 +85,29 @@ export function selectMemberRank(req, res, u) {
     return result;
   }
 }
-
-export function saveMemberRank(req, res, u, b) {
+export function getUserDetail(req, res, u) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
   }
 
-  const body = (b && b.body) || req.body;
-  const { method, id } = body;
-    /* eslint no-case-declarations:0 */
-    // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
-    const i = Math.ceil(Math.random() * 10000);
-    tableListDataSource.unshift({
-      key: i,
-      leveId: `${ i}`,
-      profitRatio: body.profitRatio,
-      levePrice: body.levePrice,
-      leveName: body.leveName,
-      leveSort: body.leveSort,
-      updateTime: new Date,
-      createTime: new Date,
-    });
-    const result = {
-      code: 0,
-      data: tableListDataSource,
-      count: tableListDataSource.length,
-    };
+  const params = getUrlParams(url);
 
-  if (res && res.json) {
-    res.json(result);
-  } else {
-    return result;
-  }
-}
-export function deleteMemberRank(req, res, u, b) {
-  let url = u;
-  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
-    url = req.url; // eslint-disable-line
+  let dataSource = [...tableListDataSource];
+
+  if (params.userId) {
+    dataSource = dataSource.filter(data => data.userId.indexOf(params.userId) > -1);
   }
 
-  const body = (b && b.body) || req.body;
-  const { method, no } = body;
-    /* eslint no-case-declarations:0 */
-  const idArray = url.split("/")
-  const id = idArray[idArray.length - 1]
-    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
+  let pageSize = 10;
+  if (params.pageSize) {
+    pageSize = params.pageSize * 1;
+  }
+
   const result = {
     code: 0,
-    data: tableListDataSource,
-    count: tableListDataSource.length,
+    data: dataSource,
+    count: dataSource.length,
   };
 
   if (res && res.json) {
@@ -126,7 +116,8 @@ export function deleteMemberRank(req, res, u, b) {
     return result;
   }
 }
-export function updateMemberRank(req, res, u, b) {
+
+export function updateUser(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -162,5 +153,15 @@ export function updateMemberRank(req, res, u, b) {
     return result;
   }
 }
+export function updatePassword(req, res) {
+  const result = {
+    code: 0,
+  };
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
 
-export default { selectMemberRank, deleteMemberRank, updateMemberRank, saveMemberRank};
+export default { getUser, updateUser, updatePassword, getUserDetail };

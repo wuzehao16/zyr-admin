@@ -138,7 +138,7 @@ const menuData = [{
 },{
   name: '用户管理',
   icon: 'user',
-  path: 'user',
+  path: 'member',
   authority: 'admin',
 },{
   name: '会员等级',

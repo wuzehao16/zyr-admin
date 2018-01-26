@@ -251,6 +251,21 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/Edit')),
       name: '编辑会员等级',
     },
+    '/member': {
+      component: dynamicWrapper(app, ['member'], () => import('../routes/Member')),
+      name: '用户管理',
+    },
+    '/member/list': {
+      component: dynamicWrapper(app, ['member'], () => import('../routes/Member/List')),
+    },
+    '/member/edit': {
+      component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Edit')),
+      name: '编辑用户',
+    },
+    '/member/detail': {
+      component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Detail')),
+      name: '查看用户详情',
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },
