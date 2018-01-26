@@ -25,7 +25,7 @@ const formItemLayout = {
 
 @connect(({ systemMenu, loading }) => ({
   data:systemMenu,
-  submitting: loading.effects['systemMenu/add'],
+  submitting: loading.effects['systemMenu/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -72,7 +72,7 @@ export default class BasicForms extends PureComponent {
           })
         }
         this.props.dispatch({
-          type: 'systemMenu/add',
+          type: 'systemMenu/update',
           payload: values,
         });
       }

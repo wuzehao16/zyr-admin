@@ -55,7 +55,7 @@ export default function request(url, options) {
     };
     newOptions.body = JSON.stringify(newOptions.body);
   }
-
+  url = "http://localhost:8000" + url
   return fetch(url, newOptions)
     .then(checkStatus)
     .then((response) => {

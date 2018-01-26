@@ -13,7 +13,7 @@ const CheckboxGroup = Checkbox.Group;
 
 @connect(({ systemRole, loading }) => ({
   data:systemRole,
-  submitting: loading.effects['systemRole/add'],
+  submitting: loading.effects['systemRole/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -45,11 +45,11 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         if (values.sysMenus) {
           values.sysMenus.map((item,index,arr) => {
-             arr[index] = {roleId:item}
+             arr[index] = {meunId:item}
           })
         }
         this.props.dispatch({
-          type: 'systemRole/add',
+          type: 'systemRole/update',
           payload: values,
         });
       }
