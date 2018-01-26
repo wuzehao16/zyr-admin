@@ -14,6 +14,7 @@ import { selectUsers, deleteUser, updateUser, saveUser } from './mock/systemUser
 import { getMenuData } from './mock/menus'
 import { selectMenuAll, deleteMenu, updateMenu, saveMenu } from './mock/systemMenu'
 import { selectAllRole, deleteRole, updateRole, saveRole } from './mock/systemRole'
+import { selectMemberRank, deleteMemberRank, updateMemberRank, saveMemberRank } from './mock/membership'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -86,6 +87,7 @@ const proxy = {
       res.send({
         code: 0,
         msg: 'ok',
+        data:['admin'],
         type,
       });
       return ;
@@ -94,13 +96,14 @@ const proxy = {
       res.send({
         code: 0,
         msg: 'ok',
+        data:['user'],
         type,
       });
       return ;
     }
     res.send({
       code: 1,
-      status: 'error',
+      msg: '密码错误',
       type,
     });
   },
@@ -192,19 +195,23 @@ const proxy = {
           ]
       });
     },
-    'GET /sys/selectDictionary': selectDictionary,
-    'POST /sys/saveDictionary': saveDictionary,
-    'DELETE /sys/deleteDictionary/*': deleteDictionary,
-    'PUT /sys/updateDictionary': updateDictionary,
-    'GET /module/selectByUserMenu': getMenuData,
-    'GET /sys/selectMenuAll': selectMenuAll,
-    'POST /sys/saveMenu': saveMenu,
-    'DELETE /sys/deleteMenu/*': deleteMenu,
-    'PUT /sys/updateMenu': updateMenu,
-    'GET /sys/selectAllRole': selectAllRole,
-    'POST /sys/insertRole': saveRole,
-    'DELETE /sys/deleteRoles/*': deleteRole,
-    'PUT /sys/updateRole': updateRole,
+  'GET /sys/selectDictionary': selectDictionary,
+  'POST /sys/saveDictionary': saveDictionary,
+  'DELETE /sys/deleteDictionary/*': deleteDictionary,
+  'PUT /sys/updateDictionary': updateDictionary,
+  'GET /module/selectByUserMenu': getMenuData,
+  'GET /sys/selectMenuAll': selectMenuAll,
+  'POST /sys/saveMenu': saveMenu,
+  'DELETE /sys/deleteMenu/*': deleteMenu,
+  'PUT /sys/updateMenu': updateMenu,
+  'GET /sys/selectAllRole': selectAllRole,
+  'POST /sys/insertRole': saveRole,
+  'DELETE /sys/deleteRoles/*': deleteRole,
+  'PUT /sys/updateRole': updateRole,
+  'GET /sys/selectMemberRank': selectMemberRank,
+  'POST /sys/insertMemberRank': saveMemberRank,
+  'DELETE /sys/deleteMemberRank/*': deleteMemberRank,
+  'PUT /sys/updateMemberRank': updateMemberRank,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

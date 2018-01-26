@@ -20,10 +20,10 @@
   "disableDynamicImport": true,
   "hash": true,
   "proxy": {
-     "/sysAnno/*": {
+     "/sysAnno1/*": {
        "target": "http://192.168.2.101:8080"
      },
-     "/sys/*": {
+     "/sys1/*": {
        "target": "http://192.168.2.101:8080"
      },
      "/module1/*": {

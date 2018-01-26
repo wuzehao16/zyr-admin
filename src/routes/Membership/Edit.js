@@ -21,7 +21,6 @@ const options = [
 export default class BasicForms extends PureComponent {
   componentDidMount() {
     const { setFieldsValue } = this.props.form;
-    console.log(this.props)
     if (this.props.data.item) {
       const { item } = this.props.data;
       setFieldsValue({

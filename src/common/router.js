@@ -230,21 +230,26 @@ export const getRouterData = (app) => {
     },
     '/system/role/add': {
       component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/AddRole')),
+      name: '新增角色',
     },
     '/system/role/edit': {
       component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/EditRole')),
+      name: '编辑角色',
     },
     '/membership': {
       component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership')),
+      name: '会员等级',
     },
     '/membership/list': {
       component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/List')),
     },
     '/membership/add': {
       component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/Add')),
+      name: '新增会员等级',
     },
     '/membership/edit': {
       component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/Edit')),
+      name: '编辑会员等级',
     },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
