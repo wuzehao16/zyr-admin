@@ -100,7 +100,7 @@ const subInstitutionList = {
         }
     ]
 }
-export function institutionList(req, res, u, b) {
+export function getInstitution(req, res, u, b) {
   const result = institutionList;
 
   if (res && res.json) {
@@ -109,7 +109,7 @@ export function institutionList(req, res, u, b) {
     return result;
   }
 }
-export function subInstitutionList(req, res, u, b) {
+export function getSubInstitution(req, res, u, b) {
   const result = subInstitutionList;
 
   if (res && res.json) {
