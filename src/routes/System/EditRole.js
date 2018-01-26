@@ -1,28 +1,19 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox
+  Form, Input, Select, Button, Card, Checkbox,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import RoleTree from '../../components/RoleTree'
-import styles from './style.less';
+import RoleTree from '../../components/RoleTree';
 
 const FormItem = Form.Item;
-const { Option } = Select;
-const CheckboxGroup = Checkbox.Group;
 
 @connect(({ systemRole, loading }) => ({
-  data:systemRole,
+  data: systemRole,
   submitting: loading.effects['systemRole/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  // componentWillMount() {
-  //   const { dispatch } = this.props;
-  //   dispatch({
-  //     type: 'systemRole/fetchMenu',
-  //   });
-  // }
   componentDidMount () {
     const { setFieldsValue } = this.props.form;
     if (this.props.data.item) {

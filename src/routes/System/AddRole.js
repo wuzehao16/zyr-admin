@@ -1,15 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox
+  Form, Input, Select, Button, Card, Checkbox
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import RoleTree from '../../components/RoleTree'
-import styles from './style.less';
 
 const FormItem = Form.Item;
-const { Option } = Select;
-const CheckboxGroup = Checkbox.Group;
 
 @connect(({ systemRole, loading }) => ({
   data:systemRole,
@@ -48,9 +45,6 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    if (data.data.roleList) {
-      var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
-    }
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -117,7 +111,6 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
             </FormItem>
           </Form>
         </Card>

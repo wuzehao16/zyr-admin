@@ -41,16 +41,10 @@ export default class BasicForms extends PureComponent {
   // }
   componentDidMount () {
     const { setFieldsValue } = this.props.form;
-    console.log(this,"edit")
     if (this.props.data.item) {
       const item = this.props.data.item;
       if (this.props.data.data.data) {
         let menu = this.props.data.data.data;
-        function d(menu) {
-          if (menu.meunId == item.parentId) {
-
-          }
-        }
       }
       setFieldsValue({
         type: item.type,

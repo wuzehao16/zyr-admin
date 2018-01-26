@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import { routerRedux, Route, Switch } from 'dva/router';
+import { Route, Switch } from 'dva/router';
 import { connect } from 'dva';
-import { Input } from 'antd';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import { getRoutes } from '../../utils/utils';
 
 @connect()
 export default class SearchList extends Component {
-
   render() {
-
-    const { match, routerData, location, dispatch } = this.props;
+    const { match, routerData } = this.props;
     const routes = getRoutes(match.path, routerData);
     return (
         <Switch>
@@ -26,6 +22,7 @@ export default class SearchList extends Component {
               )
             )
           }
+          {/* 默认跳转list */}
           <Route exact path="/system/role" component={routerData['/system/role/list'].component} />
         </Switch>
     );
