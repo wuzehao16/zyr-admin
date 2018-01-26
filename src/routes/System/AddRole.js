@@ -1,13 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, Checkbox,
+  Form, Input, Button, Card,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import RoleTree from '../../components/RoleTree';
 
 const FormItem = Form.Item;
-
 @connect(({ systemRole, loading }) => ({
   data: systemRole,
   submitting: loading.effects['systemRole/add'],
@@ -20,14 +19,22 @@ export default class BasicForms extends PureComponent {
       type: 'systemRole/fetchMenu',
     });
   }
+  onCheck = (value) => {
+    const { setFieldsValue } = this.props.form;
+    setFieldsValue({
+      sysMenus: value,
+    });
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         if (values.sysMenus) {
-          values.sysMenus.map((item, index, arr) => {
+          /* eslint-disable no-param-reassign */
+          values.sysMenus.forEach((item, index, arr) => {
             arr[index] = { roleId: item };
           });
+          /* eslint-disable no-param-reassign */
         }
         this.props.dispatch({
           type: 'systemRole/add',
@@ -36,15 +43,9 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  onCheck = (value) => {
-    const { setFieldsValue } = this.props.form;
-    setFieldsValue({
-      sysMenus: value,
-    });
-  }
   render() {
     const { submitting, data } = this.props;
-    const { getFieldDecorator, getFieldValue } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
