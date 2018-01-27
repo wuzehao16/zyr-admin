@@ -83,10 +83,11 @@ export function saveMemberRank(req, res, u, b) {
     tableListDataSource.unshift({
       key: i,
       leveId: `${ i}`,
-      profitRatio: body.profitRatio,
+      profitRatio: body.profitRatio/100,
       levePrice: body.levePrice,
       leveName: body.leveName,
       leveSort: body.leveSort,
+      updateUser: "瓜娃子",
       updateTime: new Date,
       createTime: new Date,
     });
@@ -113,7 +114,7 @@ export function deleteMemberRank(req, res, u, b) {
     /* eslint no-case-declarations:0 */
   const idArray = url.split("/")
   const id = idArray[idArray.length - 1]
-    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
+    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.leveId) === -1);
   const result = {
     code: 0,
     data: tableListDataSource,
@@ -145,6 +146,7 @@ export function updateMemberRank(req, res, u, b) {
           levePrice: body.levePrice,
           leveName: body.leveName,
           leveSort: body.leveSort,
+          updateUser: "瓜娃子",
           updateTime: new Date,
           createTime: new Date,
         }

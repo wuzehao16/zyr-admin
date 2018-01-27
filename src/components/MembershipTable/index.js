@@ -48,6 +48,15 @@ class StandardTable extends PureComponent {
 
     const columns = [
       {
+        title: '序号',
+        dataIndex: 'no',
+        render: (text, record, index) => {
+          return (
+              <span>{index+1}</span>
+          );
+        },
+      },
+      {
         title: '会员等级',
         dataIndex: 'leveName',
       },

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import {
   Form, Input, Button, Card, InputNumber, Checkbox,
 } from 'antd';
@@ -8,7 +9,7 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 const options = [
-  { label: '职能匹配', value: '1' },
+  { label: '智能匹配', value: '1' },
   { label: '高阶课程', value: '2' },
 ];
 
@@ -35,7 +36,7 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { submitting } = this.props;
+    const { submitting, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -73,7 +74,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请输入会员等级',
                 }],
               })(
-                <Input placeholder="请输入会员等级" />
+                <Input type="string" maxLength="10" placeholder="请输入会员等级" />
               )}
             </FormItem>
             <FormItem
@@ -85,7 +86,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请输入分润比例',
                 }],
               })(
-                <Input max={100} addonAfter="%" placeholder="请输入分润比例" />
+                <Input type="number" min={0} max={100} addonAfter="%" placeholder="请输入分润比例" />
               )}
             </FormItem>
             <FormItem
@@ -94,10 +95,10 @@ export default class BasicForms extends PureComponent {
             >
               {getFieldDecorator('levePrice', {
                 rules: [{
-                  required: true, message: '请输入分润比例',
+                  required: true, message: '请输入价格',
                 }],
               })(
-                <Input addonAfter="元" placeholder="请输入分润比例" />
+                <Input type="number" min={0} addonAfter="元" placeholder="请输入价格" />
               )}
             </FormItem>
             <FormItem
@@ -122,6 +123,9 @@ export default class BasicForms extends PureComponent {
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
+              </Button>
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/membership'))}>
+                返回
               </Button>
             </FormItem>
           </Form>

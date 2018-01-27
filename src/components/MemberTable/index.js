@@ -48,11 +48,11 @@ class StandardTable extends PureComponent {
 
     const columns = [
       {
-        title: '编号',
+        title: '序号',
         dataIndex: 'no',
         render: (text, record, index) => {
           return (
-              <span>{index}</span>
+              <span>{index+1}</span>
           );
         },
       },
@@ -66,7 +66,7 @@ class StandardTable extends PureComponent {
       },
       {
         title: '真实姓名',
-        dataIndex: 'loginAccount',
+        dataIndex: '123',
       },
       {
         title: '微信号',
