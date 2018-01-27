@@ -9,7 +9,6 @@ import styles from './index.less';
 const { TabPane } = Tabs;
 
 function getBreadcrumb(breadcrumbNameMap, url) {
-  console.log(breadcrumbNameMap,url)
   let breadcrumb = breadcrumbNameMap[url];
   if (!breadcrumb) {
     Object.keys(breadcrumbNameMap).forEach((item) => {

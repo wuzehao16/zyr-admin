@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Menu, DatePicker, Modal } from 'antd';
 import StandardTable from '../../components/MemberTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -13,16 +13,19 @@ const { RangePicker } = DatePicker;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 const CreateForm = Form.create()((props) => {
-  const { modalVisible, form, handleAdd, handleModalVisible } = props;
+  const { modalVisible, form, handleAdd, handleModalVisible, item } = props;
+  const { getFieldDecorator } = form;
+
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
+      fieldsValue.userId = item.userId;
       handleAdd(fieldsValue);
     });
   };
   return (
     <Modal
-      title="新建规则"
+      title="重置密码"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
@@ -30,21 +33,34 @@ const CreateForm = Form.create()((props) => {
       <FormItem
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 15 }}
-        label="描述"
+        label="旧手机"
       >
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: 'Please input some description...' }],
+        {item.phone}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="手机"
+      >
+        {getFieldDecorator('loginAccount', {
+          rules: [
+            { required: true, message: '请输入用户新手机号...' },
+            {
+              pattern: /^1[3|4|5|8]\d{9}$/,
+              message: '手机号格式错误！',
+            },
+            ],
         })(
-          <Input placeholder="请输入" />
+          <Input type="mobile" placeholder="请输入" />
         )}
       </FormItem>
     </Modal>
   );
 });
 
-@connect(({ rule, loading }) => ({
-  rule,
-  loading: loading.models.rule,
+@connect(({ member, loading }) => ({
+  member,
+  loading: loading.models.member,
 }))
 @Form.create()
 export default class TableList extends PureComponent {
@@ -53,15 +69,40 @@ export default class TableList extends PureComponent {
     expandForm: false,
     selectedRows: [],
     formValues: {},
+    item: {},
   };
 
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'rule/fetch',
+      type: 'member/fetch',
     });
   }
-
+  handleResetPassword = (v) => {
+    this.setState({
+      item: {
+        userId: v.userId,
+        phone: v.loginAccount,
+      },
+    });
+    this.handleModalVisible(true);
+  }
+  handleEdit = (item) => {
+    this.props.dispatch({
+      type: 'member/fetchEdit',
+      payload: {
+        userId: item.userId,
+      },
+    });
+  }
+  handleDetail = (item) => {
+    this.props.dispatch({
+      type: 'member/fetchDetail',
+      payload: {
+        userId: item.userId,
+      },
+    });
+  }
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
     const { formValues } = this.state;
@@ -83,7 +124,7 @@ export default class TableList extends PureComponent {
     }
 
     dispatch({
-      type: 'rule/fetch',
+      type: 'member/fetch',
       payload: params,
     });
   }
@@ -95,7 +136,7 @@ export default class TableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'rule/fetch',
+      type: 'member/fetch',
       payload: {},
     });
   }
@@ -115,7 +156,7 @@ export default class TableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'rule/remove',
+          type: 'member/remove',
           payload: {
             no: selectedRows.map(row => row.no).join(','),
           },
@@ -144,7 +185,6 @@ export default class TableList extends PureComponent {
 
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-      console.log(fieldsValue)
       const values = {
         ...fieldsValue,
         date: [],
@@ -156,7 +196,7 @@ export default class TableList extends PureComponent {
       });
 
       dispatch({
-        type: 'rule/fetch',
+        type: 'member/fetch',
         payload: values,
       });
     });
@@ -170,13 +210,9 @@ export default class TableList extends PureComponent {
 
   handleAdd = (fields) => {
     this.props.dispatch({
-      type: 'rule/add',
-      payload: {
-        description: fields.desc,
-      },
+      type: 'member/updatePassword',
+      payload: fields,
     });
-
-    message.success('添加成功');
     this.setState({
       modalVisible: false,
     });
@@ -190,7 +226,7 @@ export default class TableList extends PureComponent {
           <Col md={8} sm={24}>
             <FormItem>
               {getFieldDecorator('condition')(
-                <Input placeholder="输入用户名称、真实姓名、手机号查询"/>
+                <Input placeholder="输入用户名称、真实姓名、手机号查询" />
               )}
             </FormItem>
           </Col>
@@ -258,14 +294,14 @@ export default class TableList extends PureComponent {
           <Col md={8} sm={24}>
             <FormItem label="注册日期">
               {getFieldDecorator('date')(
-                <RangePicker style={{ width: '100%' }} placeholder={["开始时间","结束时间"]} />
+                <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem>
               {getFieldDecorator('condition')(
-                <Input placeholder="输入用户名称、真实姓名、手机号查询"/>
+                <Input placeholder="输入用户名称、真实姓名、手机号查询" />
               )}
             </FormItem>
           </Col>
@@ -288,15 +324,15 @@ export default class TableList extends PureComponent {
   }
 
   render() {
-    const { rule: { data }, loading } = this.props;
-    const { selectedRows, modalVisible } = this.state;
+    const { member: { data }, loading } = this.props;
+    const { selectedRows, modalVisible, item } = this.state;
 
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
-      </Menu>
-    );
+    // const menu = (
+    //   <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
+    //     <Menu.Item key="remove">删除</Menu.Item>
+    //     <Menu.Item key="approval">批量审批</Menu.Item>
+    //   </Menu>
+    // );
 
     const parentMethods = {
       handleAdd: this.handleAdd,
@@ -310,7 +346,7 @@ export default class TableList extends PureComponent {
             <div className={styles.tableListForm}>
               {this.renderForm()}
             </div>
-            <div className={styles.tableListOperator}>
+            {/* <div className={styles.tableListOperator}>
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                 新建
               </Button>
@@ -326,19 +362,23 @@ export default class TableList extends PureComponent {
                   </span>
                 )
               }
-            </div>
+            </div> */}
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}
               data={data}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
+              handleResetPassword={this.handleResetPassword}
+              handleEdit={this.handleEdit}
+              handleDetail={this.handleDetail}
             />
           </div>
         </Card>
         <CreateForm
           {...parentMethods}
           modalVisible={modalVisible}
+          item={item}
         />
       </PageHeaderLayout>
     );

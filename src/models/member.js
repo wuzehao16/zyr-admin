@@ -26,20 +26,33 @@ export default {
       message.success('提交成功');
       yield put(routerRedux.push('/member'));
     },
-    *updatePassword({ payload }, { call, put }) {
-      yield call(updatePassword, payload);
-      message.success('提交成功');
-      yield put(routerRedux.push('/member'));
+    *updatePassword({ payload, callback }, { call, put }) {
+      const response = yield call(updatePassword, payload);
+      console.log(callback)
+      if(response.code === 0){
+        message.success('重置密码成功');
+        yield put(routerRedux.push('/member'));
+      } else {
+        message.error(response.msg);
+        return
+      }
+      if (callback) callback();
+    },
+    *fetchEdit({payload}, { call, put }) {
+      const response = yield call(queryDetail, payload);
+      yield put({
+        type: 'saveDetail',
+        payload: response.data,
+      });
+      yield put(routerRedux.push('/member/edit'));
     },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
-      console.log(response);
       yield put({
         type: 'saveDetail',
-        payload: response,
+        payload: response.data,
       });
-      yield put(routerRedux.push('/member/edit'));
-
+      yield put(routerRedux.push('/member/Detail'));
     },
   },
 

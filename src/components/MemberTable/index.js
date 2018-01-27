@@ -3,11 +3,10 @@ import moment from 'moment';
 import { Table, Alert, Badge, Divider } from 'antd';
 import styles from './index.less';
 
-const statusMap = ['default', 'processing', 'success', 'error'];
+const statusMap = [ 'error','success'];
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
-    totalCallNo: 0,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -15,21 +14,17 @@ class StandardTable extends PureComponent {
     if (nextProps.selectedRows.length === 0) {
       this.setState({
         selectedRowKeys: [],
-        totalCallNo: 0,
       });
     }
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
-    const totalCallNo = selectedRows.reduce((sum, val) => {
-      return sum + parseFloat(val.callNo, 10);
-    }, 0);
 
     if (this.props.onSelectRow) {
       this.props.onSelectRow(selectedRows);
     }
 
-    this.setState({ selectedRowKeys, totalCallNo });
+    this.setState({ selectedRowKeys });
   }
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -39,13 +34,27 @@ class StandardTable extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], []);
   }
-
+  handleResetPassword = (item) => {
+    if (this.props.handleResetPassword) {
+      this.props.handleResetPassword(item);
+    }
+  }
+  handleEdit = (item) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(item);
+    }
+  }
+  handleDetail = (item) => {
+    if (this.props.handleDetail) {
+      this.props.handleDetail(item);
+    }
+  }
   render() {
-    const { selectedRowKeys, totalCallNo } = this.state;
-    const { data: { list, pagination }, loading } = this.props;
-
+    const { selectedRowKeys } = this.state;
+    const { data: { data, pagination }, loading } = this.props;
     const status = ['否', '是'];
-
+    const lockStatus = ['禁用', '启用'];
+    const membershipStatus = ['会员', '非会员'];
     const columns = [
       {
         title: '序号',
@@ -66,7 +75,7 @@ class StandardTable extends PureComponent {
       },
       {
         title: '真实姓名',
-        dataIndex: '123',
+        dataIndex: 'realName',
       },
       {
         title: '微信号',
@@ -74,7 +83,8 @@ class StandardTable extends PureComponent {
       },
       {
         title: '用户类型',
-        dataIndex: 'userIdentity',
+        dataIndex: 'isMember',
+        render: val => <span>{membershipStatus[val]}</span>
       },
       {
         title: '会员等级',
@@ -93,44 +103,45 @@ class StandardTable extends PureComponent {
             value: 1,
           },
         ],
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
-        },
+        render: val => <span>{status[val]}</span>
       },
       {
         title: '启用状态',
         dataIndex: 'islock',
         filters: [
           {
-            text: status[0],
+            text: lockStatus[0],
             value: 0,
           },
           {
-            text: status[1],
+            text: lockStatus[1],
             value: 1,
           },
         ],
         render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+          return <Badge status={statusMap[val]} text={lockStatus[val]} />;
         },
       },
       {
         title: '更新时间',
-        dataIndex: 'updatedAt',
+        dataIndex: 'registerTime',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '操作',
-        render: () => (
-          <Fragment>
-            <a href="">配置</a>
-            <Divider type="vertical" />
-            <a href="">订阅警报</a>
-            <Divider type="vertical" />
-            <a href="">订阅警报</a>
-          </Fragment>
-        ),
+        align: 'center',
+        render: (text, record) => {
+          return (
+            <Fragment>
+              <a onClick={() => this.handleResetPassword(record)}>重置密码</a>
+              <Divider type="vertical" />
+              <a onClick={() => this.handleEdit(record)}>编辑</a>
+              <Divider type="vertical" />
+              <a onClick={() => this.handleDetail(record)}>详情</a>
+            </Fragment>
+          );
+        },
       },
     ];
 
@@ -155,7 +166,6 @@ class StandardTable extends PureComponent {
             message={(
               <div>
                 已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                服务调用总计 <span style={{ fontWeight: 600 }}>{totalCallNo}</span> 万
                 <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
               </div>
             )}
@@ -165,9 +175,9 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.key}
+          rowKey={record => record.userId}
           rowSelection={rowSelection}
-          dataSource={list}
+          dataSource={data}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}

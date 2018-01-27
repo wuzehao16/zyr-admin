@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import {
-  Form, Input, Button, Card, Checkbox, InputNumber
+  Form, Input, Button, Card, Checkbox, InputNumber,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -27,7 +27,7 @@ export default class BasicForms extends PureComponent {
         leveName: item.leveName,
         levePrice: item.levePrice,
         leveSort: item.leveSort,
-        profitRatio: item.profitRatio,
+        profitRatio: item.profitRatio*100,
         leveId: item.leveId,
       });
     }

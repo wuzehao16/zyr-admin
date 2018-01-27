@@ -1,36 +1,20 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
+import moment from 'moment';
 import {
-  Form, Input, Button, Card, Checkbox, InputNumber
+  Form, Button, Card, Divider,
 } from 'antd';
+import DescriptionList from '../../components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
-const FormItem = Form.Item;
-const CheckboxGroup = Checkbox.Group
-const options = [
-  { label: '职能匹配', value: '1' },
-  { label: '高阶课程', value: '2' },
-];
+const { Description } = DescriptionList;
 
-@connect(({ membership, loading }) => ({
-  data: membership,
-  submitting: loading.effects['membership/update'],
+@connect(({ member }) => ({
+  data: member,
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  componentDidMount() {
-    const { setFieldsValue } = this.props.form;
-    if (this.props.data.item) {
-      const { item } = this.props.data;
-      setFieldsValue({
-        leveName: item.leveName,
-        levePrice: item.levePrice,
-        leveSort: item.leveSort,
-        profitRatio: item.profitRatio,
-        leveId: item.leveId,
-      });
-    }
-  }
   onCheck = (value) => {
     const { setFieldsValue } = this.props.form;
     setFieldsValue({
@@ -42,104 +26,61 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'membership/update',
+          type: 'member/update',
           payload: values,
         });
       }
     });
   }
   render() {
-    const { submitting, data } = this.props;
-    const { getFieldDecorator, getFieldValue } = this.props.form;
-    getFieldDecorator('leveId');
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 10 },
-      },
-    };
-
-    const submitFormLayout = {
-      wrapperCol: {
-        xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
-      },
-    };
+    const { submitting, data: { item }, dispatch } = this.props;
 
     return (
-      <PageHeaderLayout title="编辑会员等级" >
+      <PageHeaderLayout title="会员等级详情" >
         <Card bordered={false}>
-          <Form
-            onSubmit={this.handleSubmit}
-            hideRequiredMark
-            style={{ marginTop: 8 }}
-          >
-            <FormItem
-              {...formItemLayout}
-              label="会员等级"
-            >
-              {getFieldDecorator('leveName', {
-                rules: [{
-                  required: true, message: '请输入会员等级',
-                }],
-              })(
-                <Input placeholder="请输入会员等级" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="分润比例"
-            >
-              {getFieldDecorator('profitRatio', {
-                rules: [{
-                  required: true, message: '请输入分润比例',
-                }],
-              })(
-                <Input addonAfter="%" placeholder="请输入分润比例" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="价格/月"
-            >
-              {getFieldDecorator('levePrice', {
-                rules: [{
-                  required: true, message: '请输入分润比例',
-                }],
-              })(
-                <Input addonAfter="元" placeholder="请输入分润比例" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="等级权限"
-            >
-              <CheckboxGroup options={options} defaultValue={['1','2']} disabled/>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="排序"
-            >
-              {getFieldDecorator('leveSort', {
-                rules: [{
-                  required: true, message: '请输入排序号',
-                }],
-              })(
-                <InputNumber min={1} style={{ width: '100%' }} placeholder="请输入排序号" />
-              )}
-            </FormItem>
-
-            <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit" loading={submitting}>
-                提交
-              </Button>
-            </FormItem>
-          </Form>
+          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
+            <Description term="用户编号">{item.userId}</Description>
+            <Description term="手机号码">{item.loginAccount}</Description>
+            <Description term="用户名称">{item.userName}</Description>
+            <Description term="微信号">{item.wachatNo}</Description>
+            <Description term="用户头像">
+              <img src="https://picsum.photos/80/80?random" alt="" />
+            </Description>
+          </DescriptionList>
+          <Divider style={{ marginBottom: 32 }} />
+          <DescriptionList size="large" title="认证消息" style={{ marginBottom: 32 }} col={2}>
+            <Description term="真实姓名">{item.realName}</Description>
+            <Description term="性别">{item.userSex === 1 ? '女' : '男'}</Description>
+            <Description term="身份证号">{item.idNumber}</Description>
+            <Description term="微信号">{item.wachatNo}</Description>
+            <Description >
+              <img src="https://picsum.photos/400/200?random" alt="" />
+            </Description>
+            <Description >
+              <img src="https://picsum.photos/400/200?random" alt="" />
+            </Description>
+          </DescriptionList>
+          <Divider style={{ marginBottom: 32 }} />
+          <DescriptionList size="large" title="会员信息" style={{ marginBottom: 32 }} col={2}>
+            <Description term="是否为会员">{item.isMember === 1 ? '否' : '是'}</Description>
+            <Description term="会员类型">{item.leveName}</Description>
+            <Description term="购买时间">{moment(item.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+            <Description term="有效时间">{moment(item.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+            <Description term="购买时长">{item.longTime}个月</Description>
+            <Description term="价格">{item.memberPrice}元</Description>
+          </DescriptionList>
+          <Divider style={{ marginBottom: 32 }} />
+          <DescriptionList size="large" title="会员信息" style={{ marginBottom: 32 }} col={2}>
+            <Description term="是否为客服">{item.isCustom === 1 ? '是' : '否'}</Description>
+            <Description term="客服类型">{item.userIdentity === 1 ? '机构客服' : '平台客服'}</Description>
+            <Description term="机构名称">{item.manageName}</Description>
+            <Description term="启用状态">{item.islock === 1 ? '启用' : '禁用'}</Description>
+          </DescriptionList>
+          <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
+            <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/member'))}>
+            返回
+            </Button>
+          </DescriptionList>
         </Card>
       </PageHeaderLayout>
     );

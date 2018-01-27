@@ -13,14 +13,14 @@ for (let i = 0; i < 46; i += 1) {
     userSex: 2,
     registerTime: 1516866894000,
     userName: "jack",
-    userIdentity: 0,
-    islock: 0,
+    userIdentity: Math.floor(Math.random() * 2) + 1,
+    islock: Math.floor(Math.random() * 2),
     wachatNo: 56984521358,
     idNumber: 445221199854668459,
-    isCustom: 0,
+    isCustom: Math.floor(Math.random() * 2),
     backPictureId: "http;//xxx/xxx",
     upperPictureId: "http;//xxx/xxx",
-    isMember: 1,
+    isMember: Math.floor(Math.random() * 2),
     realName: "杰克",
     manageName: "平安-平安南山分行",
     sublInstitution: "2a8d5bf6958942fba5c67d6b04100f46",
@@ -63,9 +63,14 @@ export function getUser(req, res, u) {
     });
     dataSource = filterDataSource;
   }
-
-  if (params.leveSort) {
-    dataSource = dataSource.filter(data => data.leveSort.indexOf(params.leveSort) > -1);
+  if (params.isCustom) {
+    dataSource = dataSource.filter(data => params.isCustom.indexOf(data.isCustom) > -1);
+  }
+  if (params.islock) {
+    dataSource = dataSource.filter(data => params.islock.indexOf(data.islock) > -1);
+  }
+  if (params.isMember) {
+    dataSource = dataSource.filter(data => params.isMember.indexOf(data.isMember) > -1);
   }
 
   let pageSize = 10;
@@ -96,7 +101,7 @@ export function getUserDetail(req, res, u) {
   let dataSource = [...tableListDataSource];
 
   if (params.userId) {
-    dataSource = dataSource.filter(data => data.userId.indexOf(params.userId) > -1);
+    dataSource = dataSource.filter(data => data.userId == params.userId);
   }
 
   let pageSize = 10;
@@ -106,7 +111,7 @@ export function getUserDetail(req, res, u) {
 
   const result = {
     code: 0,
-    data: dataSource,
+    data: dataSource[0],
     count: dataSource.length,
   };
 
@@ -130,12 +135,33 @@ export function updateUser(req, res, u, b) {
     tableListDataSource.map((item,index) => {
       if(item.leveId == leveId){
       tableListDataSource[index]={
-          key: body.leveId,
-          leveId: `${body.leveId}`,
-          profitRatio: body.profitRatio/100,
-          levePrice: body.levePrice,
-          leveName: body.leveName,
-          leveSort: body.leveSort,
+          userId: `${body.leveId}`,
+          isCustom: body.isCustom,
+          islock: body.islock,
+          loginAccount: body.loginAccount,
+          userIdentity:2,
+          leveName: "钻石",
+          manageId: "2e418e56cf444f6c97747eda151bbaed",
+          loginAccount: 18312320204,
+          userHead: "http://xxx/xxx",
+          userSex: 2,
+          registerTime: 1516866894000,
+          userName: "jack",
+          userIdentity: Math.floor(Math.random() * 2) + 1,
+          islock: Math.floor(Math.random() * 2),
+          wachatNo: 56984521358,
+          idNumber: 445221199854668459,
+          isCustom: Math.floor(Math.random() * 2),
+          backPictureId: "http;//xxx/xxx",
+          upperPictureId: "http;//xxx/xxx",
+          isMember: Math.floor(Math.random() * 2),
+          realName: "杰克",
+          manageName: "平安-平安南山分行",
+          sublInstitution: "2a8d5bf6958942fba5c67d6b04100f46",
+          buyTime: 1509610590000,
+          expirdTime: 1541146590000,
+          longTime: 12,
+          memberPrice: 12000,
           updateTime: new Date,
           createTime: new Date,
         }
