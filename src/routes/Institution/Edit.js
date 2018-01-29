@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import {
   Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Row, Col, Upload, Modal,
 } from 'antd';
@@ -22,6 +23,33 @@ export default class BasicForms extends PureComponent {
     previewImage: '',
     fileList: [],
   };
+  componentDidMount() {
+    const { setFieldsValue } = this.props.form;
+    if (this.props.institution.item) {
+      const { item } = this.props.institution;
+      setFieldsValue({
+        institutionCode: item.institutionCode,
+        manageName: item.manageName,
+        userEmail: item.userEmail,
+        userPhone: item.userPhone,
+        loginAccount: item.loginAccount,
+        sort: item.sort,
+        cityCode: item.cityCode,
+        startStatus: item.startStatus,
+        approvalStatus: item.approvalStatus,
+      });
+      if (item.institutionId) {
+        setFieldsValue({
+          institutionId: item.institutionId,
+        });
+      }
+      if (item.manageId) {
+        setFieldsValue({
+          manageId: item.manageId,
+        });
+      }
+    }
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
@@ -47,7 +75,6 @@ export default class BasicForms extends PureComponent {
     });
   }
   handleChange = ({ fileList }) => {
-    console.log(fileList)
     this.setState({ fileList })
   }
   getInstitution = (code) => {
@@ -67,9 +94,10 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { institution: { data, city, institutionType, institutionList, subInstitutionList }, submitting } = this.props;
+    const { institution: { data, city, institutionType, institutionList, subInstitutionList }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { fileList, previewVisible,previewImage } = this.state;
+    getFieldDecorator('manageName')
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
@@ -109,7 +137,7 @@ export default class BasicForms extends PureComponent {
     );
 
     return (
-      <PageHeaderLayout title="新增机构">
+      <PageHeaderLayout title="编辑机构">
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -318,10 +346,12 @@ export default class BasicForms extends PureComponent {
               </Col>
             </Row>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit" loading={submitting}>
+              <Button style={{ marginRight: 50 }} type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
+              <Button onClick={() => dispatch(routerRedux.push('/institution'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

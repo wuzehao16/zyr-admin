@@ -21,17 +21,7 @@ export default class BasicForms extends PureComponent {
       sysMenus: value,
     });
   }
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        this.props.dispatch({
-          type: 'member/update',
-          payload: values,
-        });
-      }
-    });
-  }
+  
   render() {
     const { submitting, data: { item }, dispatch } = this.props;
 

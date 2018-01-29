@@ -4,20 +4,26 @@ import { getUrlParams } from './utils';
 let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
-    key: i,
-    no: ` ${i}`,
-    title: `一个任务名称 ${i}`,
-    name: Math.floor(Math.random() * 2) > 0 ? '知乎' : '骚粉',
-    phone: '13855555555',
-    email: 'cc@gmail.com',
-    status: Math.floor(Math.random() * 10) % 4,
-    updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
-    createdAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
-    progress: Math.ceil(Math.random() * 100),
+    manageId: `${i}`,
+    city: '广州',
+    manageName: '平安银行',
+    updateUser: "瓜娃子",
+    oper: "瓜娃子",
+    cityCode: '30',
+    userPhone: "13812341234",
+    institutionCode: `${Math.floor(Math.random()*2) + 1}`,
+    loginAccount: "jaccc",
+    userEmail: "laonianren@gmail.com",
+    sort: Math.floor(Math.random()*100),
+    startStatus: `${Math.floor(Math.random()*2)}`,
+    approvalStatus: Math.floor(Math.random()*3),
+    approvalUser: '小李子',
+    approvalTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
+    registrationTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
   });
 }
 
-export function getinstitution(req, res, u) {
+export function selectInstitution(req, res, u) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -48,8 +54,12 @@ export function getinstitution(req, res, u) {
     dataSource = filterDataSource;
   }
 
-  if (params.no) {
-    dataSource = dataSource.filter(data => data.no.indexOf(params.no) > -1);
+  if (params.startStatus) {
+    dataSource = dataSource.filter(data => params.startStatus.indexOf(data.startStatus) > -1);
+  }
+
+  if (params.approvalStatus) {
+    dataSource = dataSource.filter(data => params.approvalStatus.indexOf(data.approvalStatus) > -1);
   }
 
   let pageSize = 10;
@@ -58,12 +68,9 @@ export function getinstitution(req, res, u) {
   }
 
   const result = {
-    list: dataSource,
-    pagination: {
-      total: dataSource.length,
-      pageSize,
-      current: parseInt(params.currentPage, 10) || 1,
-    },
+    code: 0,
+    data: dataSource,
+    count: dataSource.length,
   };
 
   if (res && res.json) {
@@ -73,7 +80,76 @@ export function getinstitution(req, res, u) {
   }
 }
 
-export function postinstitution(req, res, u, b) {
+export function saveInstitution(req, res, u, b) {
+  let url = u;
+  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+    url = req.url; // eslint-disable-line
+  }
+
+  const body = (b && b.body) || req.body;
+  const { method, id } = body;
+    /* eslint no-case-declarations:0 */
+    // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
+    const i = Math.ceil(Math.random() * 10000);
+    tableListDataSource.unshift({
+      manageId: `${i}`,
+      city: '广州',
+      cityCode: body.cityCode,
+      userPhone: body.userPhone,
+      userEmail: body.userEmail,
+      sort: body.sort,
+      startStatus: body.startStatus,
+      approvalStatus: body.approvalStatus,
+      loginAccount: body.loginAccount,
+      approvalUser: '小李子',
+      updateUser: "瓜娃子",
+      approvalTime: new Date,
+      registrationTime: new Date,
+    });
+    const result = {
+      code: 0,
+      data: tableListDataSource,
+      count: tableListDataSource.length,
+    };
+
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
+export function getInstitutionDetail(req, res, u) {
+  let url = u;
+  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+    url = req.url; // eslint-disable-line
+  }
+
+  const params = getUrlParams(url);
+
+  let dataSource = [...tableListDataSource];
+
+  if (params.manageId) {
+    dataSource = dataSource.filter(data => data.manageId == params.manageId);
+  }
+
+  let pageSize = 10;
+  if (params.pageSize) {
+    pageSize = params.pageSize * 1;
+  }
+
+  const result = {
+    code: 0,
+    data: dataSource[0],
+    count: dataSource.length,
+  };
+
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
+export function deleteInstitution(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -81,36 +157,56 @@ export function postinstitution(req, res, u, b) {
 
   const body = (b && b.body) || req.body;
   const { method, no } = body;
-
-  switch (method) {
     /* eslint no-case-declarations:0 */
-    case 'delete':
-      tableListDataSource = tableListDataSource.filter(item => no.indexOf(item.no) === -1);
-      break;
-    case 'post':
-      const i = Math.ceil(Math.random() * 10000);
-      tableListDataSource.unshift({
-        key: i,
-        no: ` ${i}`,
-        title: `一个任务名称 ${i}`,
-        name: '曲丽丽',
-        phone: '13855555555',
-        email: 'cc@gmail.com',
-        status: Math.floor(Math.random() * 10) % 4,
-        updatedAt: new Date(),
-        createdAt: new Date(),
-        progress: Math.ceil(Math.random() * 100),
-      });
-      break;
-    default:
-      break;
+  const idArray = url.split("/")
+  const id = idArray[idArray.length - 1]
+    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.manageId) === -1);
+  const result = {
+    code: 0,
+    data: tableListDataSource,
+    count: tableListDataSource.length,
+  };
+
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
+export function updateInstitution(req, res, u, b) {
+  let url = u;
+  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+    url = req.url; // eslint-disable-line
   }
 
+  const body = (b && b.body) || req.body;
+  const { method, manageId } = body;
+    /* eslint no-case-declarations:0 */
+    // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
+    tableListDataSource.map((item,index) => {
+      if(item.manageId == manageId){
+      tableListDataSource[index]={
+          key: body.manageId,
+          manageId: `${body.manageId}`,
+          city: '广州',
+          cityCode: body.cityCode,
+          userPhone: body.userPhone,
+          userEmail: body.userEmail,
+          sort: body.sort,
+          startStatus: body.startStatus,
+          approvalStatus: body.approvalStatus,
+          loginAccount: body.loginAccount,
+          approvalUser: '小李子',
+          updateUser: "瓜娃子",
+          updateTime: new Date,
+          createTime: new Date,
+        }
+      }
+    });
   const result = {
-    list: tableListDataSource,
-    pagination: {
-      total: tableListDataSource.length,
-    },
+    code: 0,
+    data: tableListDataSource,
+    count: tableListDataSource.length,
   };
 
   if (res && res.json) {
@@ -120,7 +216,4 @@ export function postinstitution(req, res, u, b) {
   }
 }
 
-export default {
-  getinstitution,
-  postinstitution,
-};
+export default { selectInstitution, deleteInstitution, updateInstitution, saveInstitution};

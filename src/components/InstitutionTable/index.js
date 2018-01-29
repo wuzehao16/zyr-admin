@@ -3,7 +3,8 @@ import moment from 'moment';
 import { Table, Alert, Badge, Divider } from 'antd';
 import styles from './index.less';
 
-const statusMap = ['default', 'processing', 'success', 'error'];
+const statusMap = [ 'error', 'success'];
+const approvalStatusMap = [ 'error', 'default', 'success'];
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
@@ -33,69 +34,135 @@ class StandardTable extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], []);
   }
-
+  handleResetPassword = (item) => {
+    if (this.props.handleResetPassword) {
+      this.props.handleResetPassword(item);
+    }
+  }
+  handleEdit = (item) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(item);
+    }
+  }
+  handleReview = (item) => {
+    if (this.props.handleReview) {
+      this.props.handleReview(item);
+    }
+  }
+  handleDetail = (item) => {
+    if (this.props.handleDetail) {
+      this.props.handleDetail(item);
+    }
+  }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { list, pagination }, loading } = this.props;
-
-    const status = ['关闭', '运行中', '已上线', '异常'];
-
+    const { data: { data, pagination }, loading } = this.props
+    const approvalStatus = ['未通过', '审核中', '已通过'];
+    const lockStatus = ['禁用', '启用'];
     const columns = [
       {
-        title: '规则编号',
+        title: '序号',
         dataIndex: 'no',
-      },
-      {
-        title: '描述',
-        dataIndex: 'description',
-      },
-      {
-        title: '服务调用次数',
-        dataIndex: 'callNo',
-        sorter: true,
-        align: 'right',
-        render: val => `${val} 万`,
-      },
-      {
-        title: '状态',
-        dataIndex: 'status',
-        filters: [
-          {
-            text: status[0],
-            value: 0,
-          },
-          {
-            text: status[1],
-            value: 1,
-          },
-          {
-            text: status[2],
-            value: 2,
-          },
-          {
-            text: status[3],
-            value: 3,
-          },
-        ],
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        render: (text, record, index) => {
+          return (
+              <span>{index+1}</span>
+          );
         },
       },
       {
-        title: '更新时间',
-        dataIndex: 'updatedAt',
-        sorter: true,
+        title: '城市',
+        dataIndex: 'city',
+      },
+      {
+        title: '机构名称',
+        dataIndex: 'manageName',
+      },
+      {
+        title: '手机号',
+        dataIndex: 'userPhone',
+      },
+      {
+        title: '邮箱',
+        dataIndex: 'userEmail',
+      },
+      {
+        title: '排序',
+        dataIndex: 'sort',
+      },
+      {
+        title: '启用状态',
+        dataIndex: 'startStatus',
+        filters: [
+          {
+            text: lockStatus[0],
+            value: 0,
+          },
+          {
+            text: lockStatus[1],
+            value: 1,
+          },
+        ],
+        render(val) {
+          return <Badge status={statusMap[val]} text={lockStatus[val]} />;
+        },
+      },
+      {
+        title: '审核状态',
+        dataIndex: 'approvalStatus',
+        filters: [
+          {
+            text: approvalStatus[0],
+            value: 0,
+          },
+          {
+            text: approvalStatus[1],
+            value: 1,
+          },
+          {
+            text: approvalStatus[1],
+            value: 2,
+          },
+        ],
+        render(val) {
+          return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
+        },
+      },
+      {
+        title: '审核时间',
+        dataIndex: 'approvalTime',
+        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      },
+      {
+        title: '注册时间',
+        dataIndex: 'registrationTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '操作',
-        render: () => (
-          <Fragment>
-            <a href="">配置</a>
-            <Divider type="vertical" />
-            <a href="">订阅警报</a>
-          </Fragment>
-        ),
+        align: 'center',
+        render: (text, record) => {
+          return (
+            <Fragment>
+              { record.approvalStatus == 2
+                ? <span>
+                    <a onClick={() => this.handleResetPassword(record)}>重置密码</a>
+                    <Divider type="vertical" />
+                  </span>
+                : null
+              }
+              { record.approvalStatus == 1
+                ? <span>
+                    <a onClick={() => this.handleReview(record)}>审核</a>
+                    <Divider type="vertical" />
+                  </span>
+                : null
+              }
+              <a onClick={() => this.handleEdit(record)}>编辑</a>
+              <Divider type="vertical" />
+              <a onClick={() => this.handleDetail(record)}>详情</a>
+            </Fragment>
+          );
+        },
       },
     ];
 
@@ -129,9 +196,9 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.key}
+          rowKey={record => record.manageId}
           rowSelection={rowSelection}
-          dataSource={list}
+          dataSource={data}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}

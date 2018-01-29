@@ -181,10 +181,27 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['resetPassword'], () => import('../routes/User/ResetPassword')),
     },
     '/institution': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/Institution/TableList')),
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution')),
+      name: '机构管理',
+    },
+    '/institution/list': {
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/TableList')),
+    },
+    '/institution/detail': {
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/Detail')),
+      name: '机构详情',
+    },
+    '/institution/Review': {
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/Review')),
+      name: '机构审核',
+    },
+    '/institution/edit': {
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/Edit')),
+      name: '编辑机构',
     },
     '/institution/add': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/Institution/AddInstitution')),
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/AddInstitution')),
+      name: '新增机构',
     },
     '/content/information': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Information')),

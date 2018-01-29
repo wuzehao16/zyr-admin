@@ -1,18 +1,85 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
+import moment from 'moment';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
-import StandardTable from '../../components/StandardTable';
+import StandardTable from '../../components/InstitutionTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './TableList.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;
+const { RangePicker } = DatePicker;
+
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
-@connect(({ rule, loading }) => ({
-  rule,
-  loading: loading.models.rule,
+const CreateForm = Form.create()((props) => {
+  const { modalVisible, form, handleAdd, handleModalVisible, item } = props;
+  const { getFieldDecorator } = form;
+
+  const okHandle = () => {
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+      fieldsValue.loginAccount = item.loginAccount;
+      handleAdd(fieldsValue);
+    });
+  };
+  return (
+    <Modal
+      title="重置密码"
+      visible={modalVisible}
+      onOk={okHandle}
+      onCancel={() => handleModalVisible()}
+    >
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="账号"
+      >
+        {item.loginAccount}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="手机"
+      >
+        {getFieldDecorator('userPhone', {
+          rules: [
+            { required: true, message: '请输入用户新手机号...' },
+            {
+              pattern: /^1[3|4|5|8]\d{9}$/,
+              message: '手机号格式错误！',
+            },
+            ],
+        })(
+          <Input type="mobile" placeholder="请输入" />
+        )}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="邮箱"
+      >
+        {getFieldDecorator('userEmail', {
+          rules: [
+            { required: true, message: '请输入用户邮箱' },
+            {
+              // pattern: /^1[3|4|5|8]\d{9}$/,
+              message: '手机号格式错误！',
+            },
+            ],
+        })(
+          <Input type="mobile" placeholder="请输入" />
+        )}
+      </FormItem>
+    </Modal>
+  );
+});
+
+@connect(({ institution, loading }) => ({
+  institution,
+  loading: loading.models.institution,
 }))
 @Form.create()
 export default class TableList extends PureComponent {
@@ -22,12 +89,66 @@ export default class TableList extends PureComponent {
     expandForm: false,
     selectedRows: [],
     formValues: {},
+    item: {},
   };
 
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'rule/fetch',
+      type: 'institution/fetch',
+    });
+    dispatch({
+      type: 'institution/fetchCity',
+      payload: {
+        type: 'city'
+      }
+    });
+    dispatch({
+      type: 'institution/fetchAudit',
+      payload: {
+        type: 'auditStatus'
+      }
+    });
+    dispatch({
+      type: 'institution/fetchInstitutionType',
+      payload: {
+        type: 'orgType'
+      }
+    });
+  }
+  handleResetPassword = (v) => {
+    console.log(v)
+    this.setState({
+      item: {
+        loginAccount: v.loginAccount,
+        userPhone: v.userPhone,
+        userEmail: v.userEmail,
+      },
+    });
+    this.handleModalVisible(true);
+  }
+  handleEdit = (item) => {
+    this.props.dispatch({
+      type: 'institution/fetchEdit',
+      payload: {
+        manageId: item.manageId,
+      },
+    });
+  }
+  handleDetail = (item) => {
+    this.props.dispatch({
+      type: 'institution/fetchDetail',
+      payload: {
+        manageId: item.manageId,
+      },
+    });
+  }
+  handleReview = (item) => {
+    this.props.dispatch({
+      type: 'institution/fetchReview',
+      payload: {
+        manageId: item.manageId,
+      },
     });
   }
 
@@ -52,7 +173,7 @@ export default class TableList extends PureComponent {
     }
 
     dispatch({
-      type: 'rule/fetch',
+      type: 'institution/fetch',
       payload: params,
     });
   }
@@ -64,7 +185,7 @@ export default class TableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'rule/fetch',
+      type: 'institution/fetch',
       payload: {},
     });
   }
@@ -84,7 +205,7 @@ export default class TableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'rule/remove',
+          type: 'institution/remove',
           payload: {
             no: selectedRows.map(row => row.no).join(','),
           },
@@ -116,7 +237,9 @@ export default class TableList extends PureComponent {
 
       const values = {
         ...fieldsValue,
-        updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+        date: [],
+        startTime: fieldsValue.date && moment(fieldsValue.date[0]).format('YYYY-MM-DD'),
+        endTime: fieldsValue.date && moment(fieldsValue.date[1]).format('YYYY-MM-DD'),
       };
 
       this.setState({
@@ -124,7 +247,7 @@ export default class TableList extends PureComponent {
       });
 
       dispatch({
-        type: 'rule/fetch',
+        type: 'institution/fetch',
         payload: values,
       });
     });
@@ -142,15 +265,11 @@ export default class TableList extends PureComponent {
     });
   }
 
-  handleAdd = () => {
+  handleAdd = (fields) => {
     this.props.dispatch({
-      type: 'rule/add',
-      payload: {
-        description: this.state.addInputValue,
-      },
+      type: 'institution/updatePassword',
+      payload: fields,
     });
-
-    message.success('添加成功');
     this.setState({
       modalVisible: false,
     });
@@ -158,22 +277,25 @@ export default class TableList extends PureComponent {
 
   renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;
+    const { institution: { city }  } = this.props;
+    if (city) {
+      var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="机构名称">
-              {getFieldDecorator('no')(
-                <Input placeholder="请输入" />
+              {getFieldDecorator('manageName')(
+                <Input placeholder="请输入"/>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="所在城市">
-              {getFieldDecorator('status')(
+              {getFieldDecorator('cityCode')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
+                  {cityOptions}
                 </Select>
               )}
             </FormItem>
@@ -194,33 +316,42 @@ export default class TableList extends PureComponent {
 
   renderAdvancedForm() {
     const { getFieldDecorator } = this.props.form;
+    const { institution: { city, audit, institutionType }  } = this.props;
+    if (city) {
+      var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
+    if (audit) {
+      var auditOptions = audit.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
+    if (institutionType) {
+      var institutionTypeOptions = institutionType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="机构名称">
-              {getFieldDecorator('no')(
-                <Input placeholder="请输入" />
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="所在城市">
-              {getFieldDecorator('city')(
+            <FormItem label="机构类型">
+              {getFieldDecorator('institutionCode')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
+                { institutionTypeOptions }
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="机构类别">
-              {getFieldDecorator('institutionType')(
+            <FormItem label="所在城市">
+              {getFieldDecorator('cityCode')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="1">银行</Option>
-                  <Option value="2">消费金融</Option>
-                  <Option value="3">小额贷款</Option>
+                  {cityOptions}
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="审核状态">
+              {getFieldDecorator('approvalStatus')(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  { auditOptions }
                 </Select>
               )}
             </FormItem>
@@ -228,22 +359,26 @@ export default class TableList extends PureComponent {
         </Row>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="所属机构">
-              {getFieldDecorator('institution')(
+            <FormItem label="启用状态">
+              {getFieldDecorator('startStatus')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">华夏银行</Option>
-                  <Option value="1">平安银行</Option>
+                  <Option value="0">禁用</Option>
+                  <Option value="1">启用</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="下属机构">
-              {getFieldDecorator('status3')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">西丽支行</Option>
-                  <Option value="1">民治支行</Option>
-                </Select>
+            <FormItem label="审核时间">
+              {getFieldDecorator('date')(
+                <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
+              )}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="机构名称">
+              {getFieldDecorator('manageName')(
+                  <Input placeholder="请输入"/>
               )}
             </FormItem>
           </Col>
@@ -266,15 +401,18 @@ export default class TableList extends PureComponent {
   }
 
   render() {
-    const { rule: { data }, loading } = this.props;
-    const { selectedRows, modalVisible, addInputValue } = this.state;
-
+    const { institution: { data, city }, loading, dispatch } = this.props;
+    const { selectedRows, modalVisible, addInputValue, item } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
         <Menu.Item key="approval">批量审批</Menu.Item>
       </Menu>
     );
+    const parentMethods = {
+      handleAdd: this.handleAdd,
+      handleModalVisible: this.handleModalVisible,
+    };
 
     return (
       <PageHeaderLayout>
@@ -284,10 +422,10 @@ export default class TableList extends PureComponent {
               {this.renderForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/institution/add'))}>
                 新建
               </Button>
-              {
+              {/* {
                 selectedRows.length > 0 && (
                   <span>
                     <Button>批量操作</Button>
@@ -298,7 +436,7 @@ export default class TableList extends PureComponent {
                     </Dropdown>
                   </span>
                 )
-              }
+              } */}
             </div>
             <StandardTable
               selectedRows={selectedRows}
@@ -306,23 +444,18 @@ export default class TableList extends PureComponent {
               data={data}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
+              handleResetPassword={this.handleResetPassword}
+              handleEdit={this.handleEdit}
+              handleDetail={this.handleDetail}
+              handleReview={this.handleReview}
             />
           </div>
         </Card>
-        <Modal
-          title="新建规则"
-          visible={modalVisible}
-          onOk={this.handleAdd}
-          onCancel={() => this.handleModalVisible()}
-        >
-          <FormItem
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 15 }}
-            label="描述"
-          >
-            <Input placeholder="请输入" onChange={this.handleAddInput} value={addInputValue} />
-          </FormItem>
-        </Modal>
+        <CreateForm
+          {...parentMethods}
+          modalVisible={modalVisible}
+          item={item}
+        />
       </PageHeaderLayout>
     );
   }

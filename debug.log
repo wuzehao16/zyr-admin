@@ -6,3 +6,8 @@
 [0116/164549.821:ERROR:process_info.cc(632)] range at 0x30b3847400000000, size 0x1a3 fully unreadable
 [0116/164549.821:ERROR:process_info.cc(632)] range at 0x0, size 0x1a3 fully unreadable
 [0116/164549.828:ERROR:process_info.cc(380)] UncheckedAllocate
+[0129/173511.605:ERROR:process_reader_win.cc(151)] SuspendThread: ¾Ü¾ø·ÃÎÊ¡£ (0x5)
+[0129/173511.607:ERROR:process_reader_win.cc(151)] SuspendThread: ¾Ü¾ø·ÃÎÊ¡£ (0x5)
+[0129/173511.607:ERROR:process_reader_win.cc(151)] SuspendThread: ¾Ü¾ø·ÃÎÊ¡£ (0x5)
+[0129/173511.607:ERROR:exception_snapshot_win.cc(88)] thread ID 40496 not found in process
+[0129/173511.607:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed

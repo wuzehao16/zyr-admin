@@ -16,6 +16,7 @@ import { selectMenuAll, deleteMenu, updateMenu, saveMenu } from './mock/systemMe
 import { selectAllRole, deleteRole, updateRole, saveRole } from './mock/systemRole'
 import { selectMemberRank, deleteMemberRank, updateMemberRank, saveMemberRank } from './mock/membership'
 import { getUser, updateUser, updatePassword, getUserDetail } from './mock/member.js'
+import { selectInstitution, updateInstitution, saveInstitution, getInstitutionDetail } from './mock/institution'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -159,8 +160,8 @@ const proxy = {
     },
     $body: postContent,
   },
-  'POST /sysAnno/getInstitutionByCityCode': getInstitution,
-  'POST /sysAnno/getSubInstitutionByInstitutionCode': getSubInstitution,
+  'POST /sysAnno/InstitutionManageParent': getInstitution,
+  'POST /sysAnno/InstitutionManageSub': getSubInstitution,
   'POST /sysAnno/myPwdOrEmail': (req, res) => {
       res.send({ msg: 'ok', code: 0 });
     },
@@ -190,6 +191,12 @@ const proxy = {
   'GET /sys/selectAppUserDetail': getUserDetail,
   'PUT /sys/updateAppuser': updateUser,
   'PUT /sys/updatePassword': updatePassword,
+  //机构管理
+  'GET /sys/selectInstitutionManage': selectInstitution,
+  'GET /sys/viewdetailInstitutionManage': getInstitutionDetail,
+  'POST /sys/addInstitutionManage': saveInstitution,
+  'PUT /sys/editInstitutionManage': updateInstitution,
+  'PUT /sys/editPasswordUser': updatePassword,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);
