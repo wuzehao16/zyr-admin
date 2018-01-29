@@ -114,13 +114,7 @@ const menuData = [{
   name: '机构管理',
   icon: 'user',
   path: 'Institution',
-  // authority: 'admin',
-  // children: [{
-  //   name: '用户管理',
-  //   path: 'user',
-  // }],
-},
-{
+},{
   name: '内容管理', // 页面名称，会展示在菜单栏中
   path: 'content', // 匹配的路由
   icon: 'book', // 页面图标，会展示在菜单栏中
@@ -141,8 +135,17 @@ const menuData = [{
       path: 'column',
     },
   ],
-},
-{
+},{
+  name: '用户管理',
+  icon: 'user',
+  path: 'member',
+  authority: 'admin',
+},{
+  name: '会员等级',
+  icon: 'user',
+  path: 'membership',
+  authority: 'admin',
+},{
   name: '系统管理',
   icon: 'user',
   path: 'system',

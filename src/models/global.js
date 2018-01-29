@@ -1,4 +1,5 @@
 import { queryNotices, queryMenus } from '../services/api';
+import store from '../index';
 
 function formatter(data, parentPath = '', parentAuthority) {
   return data.map((item) => {
@@ -26,6 +27,13 @@ export default {
   effects: {
     *fetchMenus(_, { call, put }) {
       const response = yield call(queryMenus);
+      const { dispatch } = store;
+      if (response.code !== 0) {
+        dispatch({
+          type: 'login/logout',
+        });
+        return;
+      }
       const menus = formatter(response.data.children)
       yield put({
         type: 'saveMenus',

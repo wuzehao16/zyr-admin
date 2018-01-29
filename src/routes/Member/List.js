@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
 import moment from 'moment';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
-import StandardTable from '../../components/InstitutionTable';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Menu, DatePicker, Modal } from 'antd';
+import StandardTable from '../../components/MemberTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './TableList.less';
@@ -11,7 +10,6 @@ import styles from './TableList.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 const CreateForm = Form.create()((props) => {
@@ -21,7 +19,7 @@ const CreateForm = Form.create()((props) => {
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-      fieldsValue.loginAccount = item.loginAccount;
+      fieldsValue.userId = item.userId;
       handleAdd(fieldsValue);
     });
   };
@@ -35,16 +33,16 @@ const CreateForm = Form.create()((props) => {
       <FormItem
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 15 }}
-        label="账号"
+        label="旧手机"
       >
-        {item.loginAccount}
+        {item.phone}
       </FormItem>
       <FormItem
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 15 }}
         label="手机"
       >
-        {getFieldDecorator('userPhone', {
+        {getFieldDecorator('loginAccount', {
           rules: [
             { required: true, message: '请输入用户新手机号...' },
             {
@@ -56,35 +54,17 @@ const CreateForm = Form.create()((props) => {
           <Input type="mobile" placeholder="请输入" />
         )}
       </FormItem>
-      <FormItem
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 15 }}
-        label="邮箱"
-      >
-        {getFieldDecorator('userEmail', {
-          rules: [
-            { required: true, message: '请输入用户邮箱' },
-            {
-              // pattern: /^1[3|4|5|8]\d{9}$/,
-              message: '手机号格式错误！',
-            },
-            ],
-        })(
-          <Input type="mobile" placeholder="请输入" />
-        )}
-      </FormItem>
     </Modal>
   );
 });
 
-@connect(({ institution, loading }) => ({
-  institution,
-  loading: loading.models.institution,
+@connect(({ member, loading }) => ({
+  member,
+  loading: loading.models.member,
 }))
 @Form.create()
 export default class TableList extends PureComponent {
   state = {
-    addInputValue: '',
     modalVisible: false,
     expandForm: false,
     selectedRows: [],
@@ -95,63 +75,34 @@ export default class TableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'institution/fetch',
-    });
-    dispatch({
-      type: 'institution/fetchCity',
-      payload: {
-        type: 'city'
-      }
-    });
-    dispatch({
-      type: 'institution/fetchAudit',
-      payload: {
-        type: 'auditStatus'
-      }
-    });
-    dispatch({
-      type: 'institution/fetchInstitutionType',
-      payload: {
-        type: 'orgType'
-      }
+      type: 'member/fetch',
     });
   }
   handleResetPassword = (v) => {
-    console.log(v)
     this.setState({
       item: {
-        loginAccount: v.loginAccount,
-        userPhone: v.userPhone,
-        userEmail: v.userEmail,
+        userId: v.userId,
+        phone: v.loginAccount,
       },
     });
     this.handleModalVisible(true);
   }
   handleEdit = (item) => {
     this.props.dispatch({
-      type: 'institution/fetchEdit',
+      type: 'member/fetchEdit',
       payload: {
-        manageId: item.manageId,
+        userId: item.userId,
       },
     });
   }
   handleDetail = (item) => {
     this.props.dispatch({
-      type: 'institution/fetchDetail',
+      type: 'member/fetchDetail',
       payload: {
-        manageId: item.manageId,
+        userId: item.userId,
       },
     });
   }
-  handleReview = (item) => {
-    this.props.dispatch({
-      type: 'institution/fetchReview',
-      payload: {
-        manageId: item.manageId,
-      },
-    });
-  }
-
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
     const { formValues } = this.state;
@@ -173,7 +124,7 @@ export default class TableList extends PureComponent {
     }
 
     dispatch({
-      type: 'institution/fetch',
+      type: 'member/fetch',
       payload: params,
     });
   }
@@ -185,7 +136,7 @@ export default class TableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'institution/fetch',
+      type: 'member/fetch',
       payload: {},
     });
   }
@@ -205,7 +156,7 @@ export default class TableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'institution/remove',
+          type: 'member/remove',
           payload: {
             no: selectedRows.map(row => row.no).join(','),
           },
@@ -234,20 +185,18 @@ export default class TableList extends PureComponent {
 
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-
       const values = {
         ...fieldsValue,
         date: [],
         startTime: fieldsValue.date && moment(fieldsValue.date[0]).format('YYYY-MM-DD'),
         endTime: fieldsValue.date && moment(fieldsValue.date[1]).format('YYYY-MM-DD'),
       };
-
       this.setState({
         formValues: values,
       });
 
       dispatch({
-        type: 'institution/fetch',
+        type: 'member/fetch',
         payload: values,
       });
     });
@@ -259,15 +208,9 @@ export default class TableList extends PureComponent {
     });
   }
 
-  handleAddInput = (e) => {
-    this.setState({
-      addInputValue: e.target.value,
-    });
-  }
-
   handleAdd = (fields) => {
     this.props.dispatch({
-      type: 'institution/updatePassword',
+      type: 'member/updatePassword',
       payload: fields,
     });
     this.setState({
@@ -277,25 +220,22 @@ export default class TableList extends PureComponent {
 
   renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;
-    const { institution: { city }  } = this.props;
-    if (city) {
-      var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="机构名称">
-              {getFieldDecorator('manageName')(
-                <Input placeholder="请输入"/>
+            <FormItem>
+              {getFieldDecorator('condition')(
+                <Input placeholder="输入用户名称、真实姓名、手机号查询" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="所在城市">
-              {getFieldDecorator('cityCode')(
+            <FormItem label="用户类型">
+              {getFieldDecorator('isMember')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  {cityOptions}
+                  <Option value="0">会员</Option>
+                  <Option value="1">非会员</Option>
                 </Select>
               )}
             </FormItem>
@@ -316,51 +256,32 @@ export default class TableList extends PureComponent {
 
   renderAdvancedForm() {
     const { getFieldDecorator } = this.props.form;
-    const { institution: { city, audit, institutionType }  } = this.props;
-    if (city) {
-      var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    if (audit) {
-      var auditOptions = audit.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    if (institutionType) {
-      var institutionTypeOptions = institutionType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="机构类型">
-              {getFieldDecorator('institutionCode')(
+            <FormItem label="用户类型">
+              {getFieldDecorator('isMember')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                { institutionTypeOptions }
+                  <Option value="0">会员</Option>
+                  <Option value="1">非会员</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="所在城市">
-              {getFieldDecorator('cityCode')(
+            <FormItem label="是否是客服">
+              {getFieldDecorator('isCustom')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  {cityOptions}
+                  <Option value="0">否</Option>
+                  <Option value="1">是</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="审核状态">
-              {getFieldDecorator('approvalStatus')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  { auditOptions }
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="启用状态">
-              {getFieldDecorator('startStatus')(
+              {getFieldDecorator('islock')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="0">禁用</Option>
                   <Option value="1">启用</Option>
@@ -368,17 +289,19 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
+        </Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="审核时间">
+            <FormItem label="注册日期">
               {getFieldDecorator('date')(
                 <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="机构名称">
-              {getFieldDecorator('manageName')(
-                  <Input placeholder="请输入"/>
+            <FormItem>
+              {getFieldDecorator('condition')(
+                <Input placeholder="输入用户名称、真实姓名、手机号查询" />
               )}
             </FormItem>
           </Col>
@@ -401,31 +324,33 @@ export default class TableList extends PureComponent {
   }
 
   render() {
-    const { institution: { data, city }, loading, dispatch } = this.props;
-    const { selectedRows, modalVisible, addInputValue, item } = this.state;
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
-      </Menu>
-    );
+    const { member: { data }, loading } = this.props;
+    const { selectedRows, modalVisible, item } = this.state;
+
+    // const menu = (
+    //   <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
+    //     <Menu.Item key="remove">删除</Menu.Item>
+    //     <Menu.Item key="approval">批量审批</Menu.Item>
+    //   </Menu>
+    // );
+
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
     };
 
     return (
-      <PageHeaderLayout>
+      <PageHeaderLayout title="查询表格">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>
               {this.renderForm()}
             </div>
-            <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/institution/add'))}>
+            {/* <div className={styles.tableListOperator}>
+              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                 新建
               </Button>
-              {/* {
+              {
                 selectedRows.length > 0 && (
                   <span>
                     <Button>批量操作</Button>
@@ -436,8 +361,8 @@ export default class TableList extends PureComponent {
                     </Dropdown>
                   </span>
                 )
-              } */}
-            </div>
+              }
+            </div> */}
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}
@@ -447,7 +372,6 @@ export default class TableList extends PureComponent {
               handleResetPassword={this.handleResetPassword}
               handleEdit={this.handleEdit}
               handleDetail={this.handleDetail}
-              handleReview={this.handleReview}
             />
           </div>
         </Card>

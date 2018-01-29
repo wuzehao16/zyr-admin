@@ -16,7 +16,6 @@ Authorized.check = check;
  */
 const renderAuthorize = (currentAuthority) => {
   if (currentAuthority) {
-    console.log(currentAuthority)
     if (currentAuthority.constructor.name === 'Function') {
       CURRENT = currentAuthority();
     }

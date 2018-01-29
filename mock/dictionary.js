@@ -35,19 +35,89 @@ export function selectDictionary(req, res, u) {
     });
   }
 
-  if (params.status) {
-    const status = params.status.split(',');
-    let filterDataSource = [];
-    status.forEach((s) => {
-      filterDataSource = filterDataSource.concat(
-        [...dataSource].filter(data => parseInt(data.status, 10) === parseInt(s[0], 10))
-      );
-    });
-    dataSource = filterDataSource;
-  }
+  if (params.type === 'orgType') {
+    const result = {
+      code: 0,
+      data: [{
+        label: '银行机构',
+        value: '1'
+      },
+      {
+        label: '金融机构',
+        value: '2'
+      },
+      {
+        label: '小额贷款',
+        value: '3'
+      }],
+    };
 
-  if (params.type) {
-    dataSource = dataSource.filter(data => data.type.indexOf(params.type) > -1);
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+    return
+  }
+  if (params.type === 'city') {
+    const result = {
+      code: 0,
+      data: [{
+        label: '深圳',
+        value: '20'
+      },
+      {
+        label: '广州',
+        value: '30'
+      },
+      {
+        label: '珠海',
+        value: '40'
+      },
+      {
+        label: '东莞',
+        value: '50'
+      },
+      {
+        label: '惠州',
+        value: '60'
+      },
+      {
+        label: '中山',
+        value: '70'
+      }],
+    };
+
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+    return
+  }
+  if (params.type === 'auditStatus') {
+    const result = {
+      code: 0,
+      data: [{
+        label: '未通过',
+        value: '0'
+      },
+      {
+        label: '审核中',
+        value: '1'
+      },
+      {
+        label: '已通过',
+        value: '2'
+      }],
+    };
+
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+    return
   }
 
   let pageSize = 10;

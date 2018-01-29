@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox, Radio, Modal
+  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox, Radio, Modal,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import Treebeard from "../../components/Treebeard"
+import Treebeard from '../../components/Treebeard';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -24,14 +24,14 @@ const formItemLayout = {
 };
 
 @connect(({ systemMenu, loading }) => ({
-  data:systemMenu,
+  data: systemMenu,
   submitting: loading.effects['systemMenu/add'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
   state = {
     modalVisible: false,
-    item: {}
+    item: {},
   }
   componentWillMount() {
     const { dispatch } = this.props;
@@ -44,9 +44,9 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         if (values.sysRoles) {
-          values.sysRoles.map((item,index,arr) => {
-             arr[index] = {roleId:item}
-          })
+          values.sysRoles.map((item, index, arr) => {
+            arr[index] = { roleId: item };
+          });
         }
         this.props.dispatch({
           type: 'systemMenu/add',
@@ -54,9 +54,6 @@ export default class BasicForms extends PureComponent {
         });
       }
     });
-  }
-  onChange = (value) => {
-    console.log(value)
   }
   handleModalVisible = (flag) => {
     const { form } = this.props;
@@ -69,17 +66,17 @@ export default class BasicForms extends PureComponent {
     const { getFieldDecorator, setFieldsValue } = this.props.form;
     const { item } = this.state;
     this.handleModalVisible();
-    getFieldDecorator('parentId')
+    getFieldDecorator('parentId');
     setFieldsValue({
       parentName: item.name,
       parentId: item.meunId,
-    })
+    });
   }
   onToggle = (item) => {
     const { getFieldDecorator } = this.props.form;
     this.setState({
-      item: item,
-    })
+      item,
+    });
   }
   renderCatalogue() {
     const { getFieldDecorator } = this.props.form;
@@ -88,7 +85,7 @@ export default class BasicForms extends PureComponent {
         <FormItem
           {...formItemLayout}
           label="菜单URL"
-         >
+        >
           {getFieldDecorator('url', {
             rules: [{
               required: true, message: '请输入菜单URL',
@@ -100,7 +97,7 @@ export default class BasicForms extends PureComponent {
         <FormItem
           {...formItemLayout}
           label="排序号"
-         >
+        >
           {getFieldDecorator('orderNum', {
             rules: [{
               required: true, message: '请输入排序号',
@@ -113,7 +110,7 @@ export default class BasicForms extends PureComponent {
           {...formItemLayout}
           label="图标"
           help="获取图标：https://ant.design/components/icon-cn/#header"
-         >
+        >
           {getFieldDecorator('icon', {
             rules: [{
               required: true, message: '菜单名称或按钮图标',
@@ -132,7 +129,7 @@ export default class BasicForms extends PureComponent {
         <FormItem
           {...formItemLayout}
           label="菜单URL"
-         >
+        >
           {getFieldDecorator('url', {
             rules: [{
               required: true, message: '请输入菜单URL',
@@ -144,7 +141,7 @@ export default class BasicForms extends PureComponent {
         <FormItem
           {...formItemLayout}
           label="授权标识"
-         >
+        >
           {getFieldDecorator('perms')(
             <Input placeholder="多个用逗号分隔，如：user:list,user:create" />
           )}
@@ -152,7 +149,7 @@ export default class BasicForms extends PureComponent {
         <FormItem
           {...formItemLayout}
           label="排序号"
-         >
+        >
           {getFieldDecorator('orderNum', {
             rules: [{
               required: true, message: '请输入排序号',
@@ -165,7 +162,7 @@ export default class BasicForms extends PureComponent {
           {...formItemLayout}
           label="图标"
           help="获取图标：https://ant.design/components/icon-cn/#header"
-         >
+        >
           {getFieldDecorator('icon', {
             rules: [{
               required: true, message: '菜单名称或按钮图标',
@@ -183,7 +180,7 @@ export default class BasicForms extends PureComponent {
       <FormItem
         {...formItemLayout}
         label="授权标识"
-       >
+      >
         {getFieldDecorator('"perms')(
           <Input placeholder="多个用逗号分隔，如：user:list,user:create" />
         )}
@@ -193,20 +190,16 @@ export default class BasicForms extends PureComponent {
   renderForm() {
     switch (this.props.form.getFieldValue('type')) {
       case 0:
-        return  this.renderCatalogue();
+        return this.renderCatalogue();
         break;
       case 1:
-        return  this.renderMenu();
+        return this.renderMenu();
         break;
       case 2:
-        return  this.renderBtn();
+        return this.renderBtn();
         break;
       default:
-
     }
-  }
-  onClick(v) {
-    console.log(v)
   }
   render() {
     const { submitting, data } = this.props;
@@ -230,9 +223,9 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="类型"
-              >
+            >
               {getFieldDecorator('type', {
-                initialValue:1
+                initialValue: 1,
               })(
                 <RadioGroup name="type">
                   <Radio value={0}>目录</Radio>
@@ -258,7 +251,7 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="菜单名称"
-             >
+            >
               {getFieldDecorator('name', {
                 rules: [{
                   required: true, message: '菜单名称或按钮名称',
@@ -270,13 +263,13 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="上级菜单"
-             >
+            >
               {getFieldDecorator('parentName', {
                 rules: [{
                   required: true, message: '菜单名称或按钮名称',
                 }],
               })(
-                <Input placeholder="请输入菜单名称或按钮名称" onClick={() => this.handleModalVisible(true)}/>
+                <Input placeholder="请输入菜单名称或按钮名称" onClick={() => this.handleModalVisible(true)} />
               )}
             </FormItem>
             {this.renderForm()}

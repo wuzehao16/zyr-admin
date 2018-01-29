@@ -1,52 +1,53 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox
+  Form, Input, Button, Card,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import RoleTree from '../../components/RoleTree'
-import styles from './style.less';
+import RoleTree from '../../components/RoleTree';
 
 const FormItem = Form.Item;
-const { Option } = Select;
-const CheckboxGroup = Checkbox.Group;
 
 @connect(({ systemRole, loading }) => ({
-  data:systemRole,
+  data: systemRole,
   submitting: loading.effects['systemRole/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  // componentWillMount() {
-  //   const { dispatch } = this.props;
-  //   dispatch({
-  //     type: 'systemRole/fetchMenu',
-  //   });
-  // }
-  componentDidMount () {
+  componentDidMount() {
     const { setFieldsValue } = this.props.form;
     if (this.props.data.item) {
-      const item = this.props.data.item;
-      var sysMenus = [];
+      const { item } = this.props.data;
+      let sysMenus = [];
       if (item.sysMenus) {
-         sysMenus = item.sysMenus.map(item=>{return item.meunId})
+        sysMenus = item.sysMenus.forEach((m) => {
+          return m.meunId;
+        });
       }
       setFieldsValue({
         remark: item.remark,
         roleId: item.roleId,
         roleName: item.roleName,
-        sysMenus: sysMenus,
-      })
+        sysMenus,
+      });
     }
+  }
+  onCheck = (value) => {
+    const { setFieldsValue } = this.props.form;
+    setFieldsValue({
+      sysMenus: value,
+    });
   }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         if (values.sysMenus) {
-          values.sysMenus.map((item,index,arr) => {
-             arr[index] = {meunId:item}
-          })
+          /* eslint-disable no-param-reassign */
+          values.sysMenus.forEach((item, index, arr) => {
+            arr[index] = { meunId: item };
+          });
+          /* eslint-disable no-param-reassign */
         }
         this.props.dispatch({
           type: 'systemRole/update',
@@ -55,20 +56,10 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  onCheck = (value) => {
-    const { setFieldsValue } = this.props.form;
-    setFieldsValue({
-      sysMenus: value,
-    })
-  }
   render() {
     const { submitting, data } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     getFieldDecorator('roleId');
-    // this.onCheck(getFieldValue('sysMenus'));
-    if (data.data.roleList) {
-      var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
-    }
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -123,13 +114,13 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="功能权限"
-              >
-                {getFieldDecorator('sysMenus')(
-                  <RoleTree
-                    data={data.menuList}
-                    onCheck={this.onCheck}
-                    defaultCheckedKeys={getFieldValue('sysMenus')}
-                    />
+            >
+              {getFieldDecorator('sysMenus')(
+                <RoleTree
+                  data={data.menuList}
+                  onCheck={this.onCheck}
+                  defaultCheckedKeys={getFieldValue('sysMenus')}
+                />
                 )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>

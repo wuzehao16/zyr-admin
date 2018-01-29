@@ -22,8 +22,8 @@ export default class SearchList extends Component {
               )
             )
           }
-        {/* 默认跳转list1 */}
-        <Route exact path="/system/role" component={routerData['/system/role/list'].component} />
+        {/* 默认跳转list */}
+        <Route exact path="/member" component={routerData['/member/list'].component} />
       </Switch>
     );
   }

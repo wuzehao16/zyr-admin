@@ -4,26 +4,19 @@ import { getUrlParams } from './utils';
 let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
-    manageId: `${i}`,
-    city: '广州',
-    manageName: '平安银行',
+    key: i,
+    leveId: `${i}`,
+    profitRatio: (Math.random() * 1).toFixed(2),
+    levePrice: Math.ceil(Math.random() * 100),
+    leveName: '黄金会员',
+    leveSort: 'bank',
     updateUser: "瓜娃子",
-    oper: "瓜娃子",
-    cityCode: '30',
-    userPhone: "13812341234",
-    institutionCode: `${Math.floor(Math.random()*2) + 1}`,
-    loginAccount: "jaccc",
-    userEmail: "laonianren@gmail.com",
-    sort: Math.floor(Math.random()*100),
-    startStatus: `${Math.floor(Math.random()*2)}`,
-    approvalStatus: Math.floor(Math.random()*3),
-    approvalUser: '小李子',
-    approvalTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
-    registrationTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
+    updateTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
+    createTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
   });
 }
 
-export function selectInstitution(req, res, u) {
+export function selectMemberRank(req, res, u) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -54,12 +47,8 @@ export function selectInstitution(req, res, u) {
     dataSource = filterDataSource;
   }
 
-  if (params.startStatus) {
-    dataSource = dataSource.filter(data => params.startStatus.indexOf(data.startStatus) > -1);
-  }
-
-  if (params.approvalStatus) {
-    dataSource = dataSource.filter(data => params.approvalStatus.indexOf(data.approvalStatus) > -1);
+  if (params.leveSort) {
+    dataSource = dataSource.filter(data => data.leveSort.indexOf(params.leveSort) > -1);
   }
 
   let pageSize = 10;
@@ -80,7 +69,7 @@ export function selectInstitution(req, res, u) {
   }
 }
 
-export function saveInstitution(req, res, u, b) {
+export function saveMemberRank(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -92,19 +81,15 @@ export function saveInstitution(req, res, u, b) {
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     const i = Math.ceil(Math.random() * 10000);
     tableListDataSource.unshift({
-      manageId: `${i}`,
-      city: '广州',
-      cityCode: body.cityCode,
-      userPhone: body.userPhone,
-      userEmail: body.userEmail,
-      sort: body.sort,
-      startStatus: body.startStatus,
-      approvalStatus: body.approvalStatus,
-      loginAccount: body.loginAccount,
-      approvalUser: '小李子',
+      key: i,
+      leveId: `${ i}`,
+      profitRatio: body.profitRatio/100,
+      levePrice: body.levePrice,
+      leveName: body.leveName,
+      leveSort: body.leveSort,
       updateUser: "瓜娃子",
-      approvalTime: new Date,
-      registrationTime: new Date,
+      updateTime: new Date,
+      createTime: new Date,
     });
     const result = {
       code: 0,
@@ -118,38 +103,7 @@ export function saveInstitution(req, res, u, b) {
     return result;
   }
 }
-export function getInstitutionDetail(req, res, u) {
-  let url = u;
-  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
-    url = req.url; // eslint-disable-line
-  }
-
-  const params = getUrlParams(url);
-
-  let dataSource = [...tableListDataSource];
-
-  if (params.manageId) {
-    dataSource = dataSource.filter(data => data.manageId == params.manageId);
-  }
-
-  let pageSize = 10;
-  if (params.pageSize) {
-    pageSize = params.pageSize * 1;
-  }
-
-  const result = {
-    code: 0,
-    data: dataSource[0],
-    count: dataSource.length,
-  };
-
-  if (res && res.json) {
-    res.json(result);
-  } else {
-    return result;
-  }
-}
-export function deleteInstitution(req, res, u, b) {
+export function deleteMemberRank(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -160,7 +114,7 @@ export function deleteInstitution(req, res, u, b) {
     /* eslint no-case-declarations:0 */
   const idArray = url.split("/")
   const id = idArray[idArray.length - 1]
-    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.manageId) === -1);
+    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.leveId) === -1);
   const result = {
     code: 0,
     data: tableListDataSource,
@@ -173,30 +127,25 @@ export function deleteInstitution(req, res, u, b) {
     return result;
   }
 }
-export function updateInstitution(req, res, u, b) {
+export function updateMemberRank(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
   }
 
   const body = (b && b.body) || req.body;
-  const { method, manageId } = body;
+  const { method, leveId } = body;
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     tableListDataSource.map((item,index) => {
-      if(item.manageId == manageId){
+      if(item.leveId == leveId){
       tableListDataSource[index]={
-          key: body.manageId,
-          manageId: `${body.manageId}`,
-          city: '广州',
-          cityCode: body.cityCode,
-          userPhone: body.userPhone,
-          userEmail: body.userEmail,
-          sort: body.sort,
-          startStatus: body.startStatus,
-          approvalStatus: body.approvalStatus,
-          loginAccount: body.loginAccount,
-          approvalUser: '小李子',
+          key: body.leveId,
+          leveId: `${body.leveId}`,
+          profitRatio: body.profitRatio/100,
+          levePrice: body.levePrice,
+          leveName: body.leveName,
+          leveSort: body.leveSort,
           updateUser: "瓜娃子",
           updateTime: new Date,
           createTime: new Date,
@@ -216,4 +165,4 @@ export function updateInstitution(req, res, u, b) {
   }
 }
 
-export default { selectInstitution, deleteInstitution, updateInstitution, saveInstitution};
+export default { selectMemberRank, deleteMemberRank, updateMemberRank, saveMemberRank};

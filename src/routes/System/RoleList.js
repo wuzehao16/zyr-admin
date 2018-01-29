@@ -1,14 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
-import { Row, Col, Card, Form, Input, Icon, Button, Dropdown, Menu, message, Select } from 'antd';
+import { Card, Form, Icon, Button, Dropdown, Menu } from 'antd';
 import StandardTable from '../../components/SystemRoleTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './User.less';
 
-const FormItem = Form.Item;
-const { Option } = Select;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 @connect(({ systemRole, loading }) => ({
@@ -123,16 +121,10 @@ export default class TableList extends PureComponent {
   }
 
   handleEdit = (item) => {
-    // this.props.dispatch(routerRedux.push({
-    //   pathname: '/system/role/edit',
-    //   state:{
-    //     item
-    //   }
-    // }));
     this.props.dispatch({
-      type:'systemRole/saveRole',
-      payload: item
-    })
+      type: 'systemRole/saveRole',
+      payload: item,
+    });
   }
 
   render() {
@@ -149,10 +141,9 @@ export default class TableList extends PureComponent {
       <PageHeaderLayout title="用户列表">
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListForm}>
-            </div>
+            <div className={styles.tableListForm} />
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push(`/system/role/add`))}>
+              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/system/role/add'))}>
                 新建
               </Button>
               {

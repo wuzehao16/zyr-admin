@@ -23,7 +23,7 @@ export default class SearchList extends Component {
             )
           }
         {/* 默认跳转list1 */}
-        <Route exact path="/system/role" component={routerData['/system/role/list'].component} />
+        <Route exact path="/membership" component={routerData['/membership/list'].component} />
       </Switch>
     );
   }

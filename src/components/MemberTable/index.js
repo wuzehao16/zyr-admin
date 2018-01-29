@@ -3,8 +3,7 @@ import moment from 'moment';
 import { Table, Alert, Badge, Divider } from 'antd';
 import styles from './index.less';
 
-const statusMap = [ 'error', 'success'];
-const approvalStatusMap = [ 'error', 'default', 'success'];
+const statusMap = [ 'error','success'];
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
@@ -20,6 +19,7 @@ class StandardTable extends PureComponent {
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
+
     if (this.props.onSelectRow) {
       this.props.onSelectRow(selectedRows);
     }
@@ -44,11 +44,6 @@ class StandardTable extends PureComponent {
       this.props.handleEdit(item);
     }
   }
-  handleReview = (item) => {
-    if (this.props.handleReview) {
-      this.props.handleReview(item);
-    }
-  }
   handleDetail = (item) => {
     if (this.props.handleDetail) {
       this.props.handleDetail(item);
@@ -56,9 +51,10 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, pagination }, loading } = this.props
-    const approvalStatus = ['未通过', '审核中', '已通过'];
+    const { data: { data, pagination }, loading } = this.props;
+    const status = ['否', '是'];
     const lockStatus = ['禁用', '启用'];
+    const membershipStatus = ['会员', '非会员'];
     const columns = [
       {
         title: '序号',
@@ -70,28 +66,48 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title: '城市',
-        dataIndex: 'city',
-      },
-      {
-        title: '机构名称',
-        dataIndex: 'manageName',
+        title: '名称',
+        dataIndex: 'userName',
       },
       {
         title: '手机号',
-        dataIndex: 'userPhone',
+        dataIndex: 'loginAccount',
       },
       {
-        title: '邮箱',
-        dataIndex: 'userEmail',
+        title: '真实姓名',
+        dataIndex: 'realName',
       },
       {
-        title: '排序',
-        dataIndex: 'sort',
+        title: '微信号',
+        dataIndex: 'wachatNo',
+      },
+      {
+        title: '用户类型',
+        dataIndex: 'isMember',
+        render: val => <span>{membershipStatus[val]}</span>
+      },
+      {
+        title: '会员等级',
+        dataIndex: 'leveName',
+      },
+      {
+        title: '是否客服',
+        dataIndex: 'isCustom',
+        filters: [
+          {
+            text: status[0],
+            value: 0,
+          },
+          {
+            text: status[1],
+            value: 1,
+          },
+        ],
+        render: val => <span>{status[val]}</span>
       },
       {
         title: '启用状态',
-        dataIndex: 'startStatus',
+        dataIndex: 'islock',
         filters: [
           {
             text: lockStatus[0],
@@ -107,34 +123,8 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title: '审核状态',
-        dataIndex: 'approvalStatus',
-        filters: [
-          {
-            text: approvalStatus[0],
-            value: 0,
-          },
-          {
-            text: approvalStatus[1],
-            value: 1,
-          },
-          {
-            text: approvalStatus[1],
-            value: 2,
-          },
-        ],
-        render(val) {
-          return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
-        },
-      },
-      {
-        title: '审核时间',
-        dataIndex: 'approvalTime',
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
-      {
-        title: '注册时间',
-        dataIndex: 'registrationTime',
+        title: '更新时间',
+        dataIndex: 'registerTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
@@ -143,20 +133,8 @@ class StandardTable extends PureComponent {
         render: (text, record) => {
           return (
             <Fragment>
-              { record.approvalStatus == 2
-                ? <span>
-                    <a onClick={() => this.handleResetPassword(record)}>重置密码</a>
-                    <Divider type="vertical" />
-                  </span>
-                : null
-              }
-              { record.approvalStatus == 1
-                ? <span>
-                    <a onClick={() => this.handleReview(record)}>审核</a>
-                    <Divider type="vertical" />
-                  </span>
-                : null
-              }
+              <a onClick={() => this.handleResetPassword(record)}>重置密码</a>
+              <Divider type="vertical" />
               <a onClick={() => this.handleEdit(record)}>编辑</a>
               <Divider type="vertical" />
               <a onClick={() => this.handleDetail(record)}>详情</a>
@@ -196,7 +174,7 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.manageId}
+          rowKey={record => record.userId}
           rowSelection={rowSelection}
           dataSource={data}
           columns={columns}

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox
+  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
@@ -10,7 +10,7 @@ const FormItem = Form.Item;
 const { Option } = Select;
 const CheckboxGroup = Checkbox.Group;
 
-@connect(({systemUser, loading }) => ({
+@connect(({ systemUser, loading }) => ({
   data: systemUser,
   submitting: loading.effects['systemUser/update'],
 }))
@@ -39,7 +39,7 @@ const CheckboxGroup = Checkbox.Group;
   // },
 })
 export default class BasicForms extends PureComponent {
-  componentWillMount () {
+  componentWillMount() {
     this.queryAllRole();
   }
   queryAllRole = () => {
@@ -47,13 +47,13 @@ export default class BasicForms extends PureComponent {
       type: 'systemUser/queryAllRole',
     });
   }
-  componentDidMount () {
+  componentDidMount() {
     const { setFieldsValue } = this.props.form;
     if (this.props.data.data.item) {
       const item = this.props.data.data.item;
-      var sysRoles = [];
+      let sysRoles = [];
       if (item.sysRoles) {
-         sysRoles = item.sysRoles.map(item=>{return item.roleId})
+        sysRoles = item.sysRoles.map((item) => { return item.roleId; });
       }
       setFieldsValue({
         loginAccount: item.loginAccount,
@@ -61,8 +61,8 @@ export default class BasicForms extends PureComponent {
         userName: item.userName,
         islock: item.islock,
         userId: item.userId,
-        sysRoles: sysRoles,
-      })
+        sysRoles,
+      });
     }
   }
   handleSubmit = (e) => {
@@ -70,9 +70,9 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         if (values.sysRoles) {
-          values.sysRoles.map((item,index,arr) => {
-             arr[index] = {roleId:item}
-          })
+          values.sysRoles.map((item, index, arr) => {
+            arr[index] = { roleId: item };
+          });
         }
         this.props.dispatch({
           type: 'systemUser/update',
@@ -82,7 +82,7 @@ export default class BasicForms extends PureComponent {
     });
   }
   onChange = (value) => {
-    console.log(value)
+    console.log(value);
   }
   render() {
     const { submitting, data } = this.props;
@@ -90,7 +90,7 @@ export default class BasicForms extends PureComponent {
     if (data.data.roleList) {
       var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
     }
-    getFieldDecorator('userId')
+    getFieldDecorator('userId');
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -127,7 +127,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请输入用户账号',
                 }],
               })(
-                <Input placeholder="请输入用户账号" disabled/>
+                <Input placeholder="请输入用户账号" disabled />
               )}
             </FormItem>
             <FormItem
@@ -153,8 +153,8 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="是否锁定"
-              >
-              {getFieldDecorator('islock',{
+            >
+              {getFieldDecorator('islock', {
                 rules: [{
                   required: true, message: '请选择是否锁定用户',
                 }],
@@ -170,9 +170,9 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="用户权限"
-              >
+            >
               {getFieldDecorator('sysRoles')(
-                <CheckboxGroup  onChange={this.onChange} >
+                <CheckboxGroup onChange={this.onChange} >
                   {RoleOptions}
                 </CheckboxGroup>
 

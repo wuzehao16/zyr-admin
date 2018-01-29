@@ -181,10 +181,27 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['resetPassword'], () => import('../routes/User/ResetPassword')),
     },
     '/institution': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/Institution/TableList')),
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution')),
+      name: '机构管理',
+    },
+    '/institution/list': {
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/TableList')),
+    },
+    '/institution/detail': {
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/Detail')),
+      name: '机构详情',
+    },
+    '/institution/Review': {
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/Review')),
+      name: '机构审核',
+    },
+    '/institution/edit': {
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/Edit')),
+      name: '编辑机构',
     },
     '/institution/add': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/Institution/AddInstitution')),
+      component: dynamicWrapper(app, ['institution'], () => import('../routes/Institution/AddInstitution')),
+      name: '新增机构',
     },
     '/content/information': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Information')),
@@ -230,9 +247,41 @@ export const getRouterData = (app) => {
     },
     '/system/role/add': {
       component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/AddRole')),
+      name: '新增角色',
     },
     '/system/role/edit': {
       component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/EditRole')),
+      name: '编辑角色',
+    },
+    '/membership': {
+      component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership')),
+      name: '会员等级',
+    },
+    '/membership/list': {
+      component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/List')),
+    },
+    '/membership/add': {
+      component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/Add')),
+      name: '新增会员等级',
+    },
+    '/membership/edit': {
+      component: dynamicWrapper(app, ['membership'], () => import('../routes/Membership/Edit')),
+      name: '编辑会员等级',
+    },
+    '/member': {
+      component: dynamicWrapper(app, ['member'], () => import('../routes/Member')),
+      name: '用户管理',
+    },
+    '/member/list': {
+      component: dynamicWrapper(app, ['member'], () => import('../routes/Member/List')),
+    },
+    '/member/edit': {
+      component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Edit')),
+      name: '编辑用户',
+    },
+    '/member/detail': {
+      component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Detail')),
+      name: '查看用户详情',
     },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox
+  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
@@ -11,12 +11,12 @@ const { Option } = Select;
 const CheckboxGroup = Checkbox.Group;
 
 @connect(({ systemUser, loading }) => ({
-  data:systemUser,
+  data: systemUser,
   submitting: loading.effects['systemUser/add'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  componentWillMount () {
+  componentWillMount() {
     this.queryAllRole();
   }
   handleSubmit = (e) => {
@@ -24,9 +24,9 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         if (values.sysRoles) {
-          values.sysRoles.map((item,index,arr) => {
-             arr[index] = {roleId:item}
-          })
+          values.sysRoles.map((item, index, arr) => {
+            arr[index] = { roleId: item };
+          });
         }
         this.props.dispatch({
           type: 'systemUser/add',
@@ -36,7 +36,7 @@ export default class BasicForms extends PureComponent {
     });
   }
   onChange = (value) => {
-    console.log(value)
+    // console.log(value);
   }
   queryAllRole = () => {
     this.props.dispatch({
@@ -115,8 +115,8 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="是否锁定"
-              >
-              {getFieldDecorator('islock',{
+            >
+              {getFieldDecorator('islock', {
                 rules: [{
                   required: true, message: '请选择是否锁定用户',
                 }],
@@ -132,9 +132,9 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="用户权限"
-              >
+            >
               {getFieldDecorator('sysRoles')(
-                <CheckboxGroup  onChange={this.onChange} >
+                <CheckboxGroup onChange={this.onChange} >
                   {RoleOptions}
                 </CheckboxGroup>
               )}

@@ -1,18 +1,14 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox
+  Form, Input, Button, Card,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import RoleTree from '../../components/RoleTree'
-import styles from './style.less';
+import RoleTree from '../../components/RoleTree';
 
 const FormItem = Form.Item;
-const { Option } = Select;
-const CheckboxGroup = Checkbox.Group;
-
 @connect(({ systemRole, loading }) => ({
-  data:systemRole,
+  data: systemRole,
   submitting: loading.effects['systemRole/add'],
 }))
 @Form.create()
@@ -23,14 +19,22 @@ export default class BasicForms extends PureComponent {
       type: 'systemRole/fetchMenu',
     });
   }
+  onCheck = (value) => {
+    const { setFieldsValue } = this.props.form;
+    setFieldsValue({
+      sysMenus: value,
+    });
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         if (values.sysMenus) {
-          values.sysMenus.map((item,index,arr) => {
-             arr[index] = {roleId:item}
-          })
+          /* eslint-disable no-param-reassign */
+          values.sysMenus.forEach((item, index, arr) => {
+            arr[index] = { roleId: item };
+          });
+          /* eslint-disable no-param-reassign */
         }
         this.props.dispatch({
           type: 'systemRole/add',
@@ -39,18 +43,9 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  onCheck = (value) => {
-    const { setFieldsValue } = this.props.form;
-    setFieldsValue({
-      sysMenus: value,
-    })
-  }
   render() {
     const { submitting, data } = this.props;
-    const { getFieldDecorator, getFieldValue } = this.props.form;
-    if (data.data.roleList) {
-      var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
-    }
+    const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -105,19 +100,18 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="功能权限"
-              >
-                {getFieldDecorator('sysMenus')(
-                  <RoleTree
-                    data={data.menuList}
-                    onCheck={this.onCheck}
-                    />
+            >
+              {getFieldDecorator('sysMenus')(
+                <RoleTree
+                  data={data.menuList}
+                  onCheck={this.onCheck}
+                />
                 )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
             </FormItem>
           </Form>
         </Card>
