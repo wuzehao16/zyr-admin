@@ -70,7 +70,7 @@ export default class BasicForms extends PureComponent {
             <Description term="价格">{item.memberPrice}元</Description>
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
-          <DescriptionList size="large" title="会员信息" style={{ marginBottom: 32 }} col={2}>
+          <DescriptionList size="large" title="其他信息" style={{ marginBottom: 32 }} col={2}>
             <Description term="是否为客服">{item.isCustom === 1 ? '是' : '否'}</Description>
             <Description term="客服类型">{item.userIdentity === 1 ? '机构客服' : '平台客服'}</Description>
             <Description term="机构名称">{item.manageName}</Description>

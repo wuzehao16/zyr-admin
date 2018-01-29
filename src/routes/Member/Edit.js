@@ -114,7 +114,7 @@ export default class BasicForms extends PureComponent {
               <Description term="价格">{item.memberPrice}元</Description>
             </DescriptionList>
             <Divider style={{ marginBottom: 32 }} />
-            <DescriptionList size="large" title="会员信息" style={{ marginBottom: 32 }} col={2}>
+            <DescriptionList size="large" title="其他信息" style={{ marginBottom: 32 }} col={2}>
               <Description term="是否为客服">
                 <Col sm={12} xs={24}>
                   <FormItem >
