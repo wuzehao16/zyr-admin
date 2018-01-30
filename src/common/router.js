@@ -283,6 +283,29 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Detail')),
       name: '查看用户详情',
     },
+    '/product': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product')),
+      name: '产品管理',
+    },
+    '/product/list': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/List')),
+    },
+    '/product/detail': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Detail')),
+      name: '产品详情',
+    },
+    '/product/Review': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Review')),
+      name: '产品审核',
+    },
+    '/product/edit': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Edit')),
+      name: '编辑产品',
+    },
+    '/product/add': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Add')),
+      name: '新增产品',
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

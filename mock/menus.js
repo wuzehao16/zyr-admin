@@ -111,9 +111,13 @@ const menuData = [{
     path: 'register-result',
   }],
 }, {
+  name: '产品管理',
+  icon: 'product',
+  path: 'product',
+}, {
   name: '机构管理',
   icon: 'user',
-  path: 'Institution',
+  path: 'institution',
 },{
   name: '内容管理', // 页面名称，会展示在菜单栏中
   path: 'content', // 匹配的路由

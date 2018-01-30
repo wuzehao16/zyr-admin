@@ -59,6 +59,39 @@ export function selectDictionary(req, res, u) {
     }
     return
   }
+
+  if (params.type === 'intRange') {
+    const result = {
+      code: 0,
+      data: [{
+        label: '<=0.5%',
+        value: '14000'
+      },
+      {
+        label: '0.5-1%',
+        value: '14100'
+      },
+      {
+        label: '1-1.5%',
+        value: '14200'
+      },
+      {
+        label: '1.5-2%',
+        value: '14300'
+      },
+      {
+        label: '>2%',
+        value: '14400'
+      }],
+    };
+
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+    return
+  }
   if (params.type === 'city') {
     const result = {
       code: 0,
