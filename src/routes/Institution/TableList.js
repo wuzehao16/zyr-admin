@@ -77,7 +77,8 @@ const CreateForm = Form.create()((props) => {
   );
 });
 
-@connect(({ institution, loading }) => ({
+@connect(({ user, institution, loading }) => ({
+  user,
   institution,
   loading: loading.models.institution,
 }))

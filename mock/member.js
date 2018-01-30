@@ -4,7 +4,6 @@ import { getUrlParams } from './utils';
 let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
-    userId: i,
     userId: `${i}`,
     leveName: "钻石",
     manageId: "2e418e56cf444f6c97747eda151bbaed",
