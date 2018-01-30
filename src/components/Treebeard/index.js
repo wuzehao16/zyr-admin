@@ -84,7 +84,8 @@ class TreeExample extends React.Component {
         }
     }
     render(){
-       const { data:{ data: data } } = this.props;
+       const { data:{ data } } = this.props;
+       console.log(this.props,"sd")
         return (
             <Treebeard
                 data={data.data}

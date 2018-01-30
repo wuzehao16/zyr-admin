@@ -10,7 +10,7 @@ export default {
       list: [],
       pagination: {},
     },
-    menuList:{},
+    menuList:[],
     item: {}
   },
 

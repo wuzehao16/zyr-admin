@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, query, queryDetail, update, updatePassword, queryDict } from '../services/institution';
+import { add, query, queryDetail, update, queryDict, updateAprovalStatus, updateShelvesStatus } from '../services/product';
 import { getInstitution, getSubInstitution } from '../services/register'
 
 export default {

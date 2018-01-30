@@ -58,7 +58,8 @@ class StandardTable extends PureComponent {
     const { selectedRowKeys } = this.state;
     const { data: { data, pagination }, loading } = this.props
     const approvalStatus = ['未通过', '审核中', '已通过'];
-    const lockStatus = ['禁用', '启用'];
+    const institutionType = ['无','银行机构','金融机构','小额贷款'];
+    const isEvaluaStatuts = ['否', '是'];
     const columns = [
       {
         title: '序号',
@@ -70,40 +71,48 @@ class StandardTable extends PureComponent {
         },
       },
       {
+        title: '产品编号',
+        dataIndex: 'productNo',
+      },
+      {
+        title: '产品名称',
+        dataIndex: 'productName',
+      },
+      {
         title: '城市',
         dataIndex: 'city',
+      },
+      {
+        title: '机构类型',
+        dataIndex: 'institutionCode',
+        render(val) {
+          return <span>{institutionType[val]}</span>;
+        },
       },
       {
         title: '机构名称',
         dataIndex: 'manageName',
       },
       {
-        title: '手机号',
-        dataIndex: 'userPhone',
+        title: '月费率',
+        dataIndex: 'monthlyFeeRate',
+        render: val => `${val} 万`,
       },
       {
-        title: '邮箱',
-        dataIndex: 'userEmail',
-      },
-      {
-        title: '排序',
-        dataIndex: 'sort',
-      },
-      {
-        title: '启用状态',
-        dataIndex: 'startStatus',
+        title: '是否纳入评测',
+        dataIndex: 'isEvaluaStatuts',
         filters: [
           {
-            text: lockStatus[0],
+            text: isEvaluaStatuts[0],
             value: 0,
           },
           {
-            text: lockStatus[1],
+            text: isEvaluaStatuts[1],
             value: 1,
           },
         ],
         render(val) {
-          return <Badge status={statusMap[val]} text={lockStatus[val]} />;
+          return <span>{isEvaluaStatuts[val]}</span>;
         },
       },
       {
@@ -128,13 +137,12 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title: '审核时间',
-        dataIndex: 'approvalTime',
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        title: '操作者',
+        dataIndex: 'oper',
       },
       {
-        title: '注册时间',
-        dataIndex: 'registrationTime',
+        title: '更新时间',
+        dataIndex: 'updateTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
