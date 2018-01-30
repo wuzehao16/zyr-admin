@@ -239,7 +239,7 @@ export default class BasicForms extends PureComponent {
                 </RadioGroup>
               )}
             </FormItem>
-            {/* <Modal
+            <Modal
               title="选择上级菜单"
               visible={modalVisible}
               onOk={this.handleAdd}
@@ -251,7 +251,7 @@ export default class BasicForms extends PureComponent {
                   onToggle={this.onToggle}
                 />
               </Form>
-            </Modal> */}
+            </Modal>
 
             <FormItem
               {...formItemLayout}
@@ -274,10 +274,10 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '菜单名称或按钮名称',
                 }],
               })(
-                // <Input placeholder="请输入菜单名称或按钮名称" onClick={() => this.handleModalVisible(true)} />
-                <TreeSelect
-                  data={treeData}
-                  />
+                <Input placeholder="请输入菜单名称或按钮名称" onClick={() => this.handleModalVisible(true)} />
+                // <TreeSelect
+                //   data={treeData}
+                //   />
               )}
             </FormItem>
             {this.renderForm()}
