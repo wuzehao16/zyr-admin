@@ -99,7 +99,7 @@ class StandardTable extends PureComponent {
         render: val => `${val} 万`,
       },
       {
-        title: '是否纳入评测',
+        title: '纳入评测',
         dataIndex: 'isEvaluaStatuts',
         filters: [
           {
@@ -153,7 +153,7 @@ class StandardTable extends PureComponent {
             <Fragment>
               { record.approvalStatus == 2
                 ? <span>
-                    <a onClick={() => this.handleResetPassword(record)}>重置密码</a>
+                    <a onClick={() => this.handleResetPassword(record)}>{record.shelfState==1?'下架':'上架'}</a>
                     <Divider type="vertical" />
                   </span>
                 : null

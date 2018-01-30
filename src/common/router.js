@@ -303,8 +303,14 @@ export const getRouterData = (app) => {
       name: '编辑产品',
     },
     '/product/add': {
-      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Add')),
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/AddStep')),
       name: '新增产品',
+    },
+    '/product/add/step1': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/AddStep/Step1')),
+    },
+    '/product/add/step2': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/AddStep/Step2')),
     },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),

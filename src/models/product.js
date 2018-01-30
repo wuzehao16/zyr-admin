@@ -15,6 +15,7 @@ export default {
     city: [],
     audit: [],
     institutionType: [],
+    step:{}
   },
 
   effects: {
@@ -54,19 +55,19 @@ export default {
         message.error(response.msg)
         return
       }
-      yield put(routerRedux.push('/institution'));
+      yield put(routerRedux.push('/product'));
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
       yield call(update, payload);
       message.success('提交成功');
-      yield put(routerRedux.push('/institution'));
+      yield put(routerRedux.push('/product'));
     },
-    *updatePassword({ payload, callback }, { call, put }) {
-      const response = yield call(updatePassword, payload);
+    *updateShelvesStatus({ payload, callback }, { call, put }) {
+      const response = yield call(updateShelvesStatus, payload);
       if(response.code === 0){
-        message.success('重置密码成功');
-        yield put(routerRedux.push('/institution'));
+        message.success('提交成功');
+        yield put(routerRedux.push('/product'));
       } else {
         message.error(response.msg);
         return
@@ -79,7 +80,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/institution/edit'));
+      yield put(routerRedux.push('/product/edit'));
     },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
@@ -87,7 +88,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/institution/Detail'));
+      yield put(routerRedux.push('/product/Detail'));
     },
     *fetchReview({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
@@ -95,7 +96,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/institution/Review'));
+      yield put(routerRedux.push('/product/Review'));
     },
     *getInstitution({ payload }, { call, put }) {
       const response = yield call(getInstitution, payload);
@@ -115,6 +116,14 @@ export default {
         },
       });
     },
+    *submitStepForm({ payload }, { call, put }) {
+      yield call(add, payload);
+      yield put({
+        type: 'saveStepFormData',
+        payload,
+      });
+      // yield put(routerRedux.push('/form/step-form/result'));
+    },
   },
 
   reducers: {
@@ -122,6 +131,15 @@ export default {
       return {
         ...state,
         data: action.payload,
+      };
+    },
+    saveStepFormData(state, { payload }) {
+      return {
+        ...state,
+        step: {
+          ...state.step,
+          ...payload,
+        },
       };
     },
     saveThing(state, action) {

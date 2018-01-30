@@ -21,57 +21,22 @@ const CreateForm = Form.create()((props) => {
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-      fieldsValue.loginAccount = item.loginAccount;
+      fieldsValue.productId = item.productId;
+      fieldsValue.shelfState = item.shelfState==1 ? 0: 1;
       handleAdd(fieldsValue);
     });
   };
   return (
     <Modal
-      title="重置密码"
+      title={item.shelfState==1?"下架产品":"上架产品"}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
       <FormItem
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 15 }}
-        label="账号"
+        style={{ textAlign: 'center',fontSize:'24px' }}
       >
-        {item.loginAccount}
-      </FormItem>
-      <FormItem
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 15 }}
-        label="手机"
-      >
-        {getFieldDecorator('userPhone', {
-          rules: [
-            { required: true, message: '请输入用户新手机号...' },
-            {
-              pattern: /^1[3|4|5|8]\d{9}$/,
-              message: '手机号格式错误！',
-            },
-            ],
-        })(
-          <Input type="mobile" placeholder="请输入" />
-        )}
-      </FormItem>
-      <FormItem
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 15 }}
-        label="邮箱"
-      >
-        {getFieldDecorator('userEmail', {
-          rules: [
-            { required: true, message: '请输入用户邮箱' },
-            {
-              // pattern: /^1[3|4|5|8]\d{9}$/,
-              message: '手机号格式错误！',
-            },
-            ],
-        })(
-          <Input type="mobile" placeholder="请输入" />
-        )}
+        确认{item.shelfState==1?"下架":"上架"}{item.productName}?
       </FormItem>
     </Modal>
   );
@@ -118,12 +83,11 @@ export default class TableList extends PureComponent {
     });
   }
   handleResetPassword = (v) => {
-    console.log(v)
     this.setState({
       item: {
-        loginAccount: v.loginAccount,
-        userPhone: v.userPhone,
-        userEmail: v.userEmail,
+        productName: v.productName,
+        productId: v.productId,
+        shelfState: v.shelfState
       },
     });
     this.handleModalVisible(true);
@@ -260,15 +224,9 @@ export default class TableList extends PureComponent {
     });
   }
 
-  handleAddInput = (e) => {
-    this.setState({
-      addInputValue: e.target.value,
-    });
-  }
-
   handleAdd = (fields) => {
     this.props.dispatch({
-      type: 'product/updatePassword',
+      type: 'product/updateShelvesStatus',
       payload: fields,
     });
     this.setState({

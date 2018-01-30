@@ -16,7 +16,7 @@ for (let i = 0; i < 46; i += 1) {
     shelfState: `${Math.floor(Math.random()*2)}`,
     approvalStatus: `${Math.floor(Math.random()*3)}`,
     updateTime: "2018-6-15",
-    oper:"chencb",
+    oper:"cc",
     approvalUser: '小李子',
     approvalTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     registrationTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
@@ -60,6 +60,9 @@ export function selectProduct(req, res, u) {
 
   if (params.approvalStatus) {
     dataSource = dataSource.filter(data => params.approvalStatus.indexOf(data.approvalStatus) > -1);
+  }
+  if (params.isEvaluaStatuts) {
+    dataSource = dataSource.filter(data => params.isEvaluaStatuts.indexOf(data.isEvaluaStatuts) > -1);
   }
 
   let pageSize = 10;
