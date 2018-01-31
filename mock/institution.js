@@ -185,22 +185,7 @@ export function updateInstitution(req, res, u, b) {
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     tableListDataSource.map((item,index) => {
       if(item.manageId == manageId){
-      tableListDataSource[index]={
-          key: body.manageId,
-          manageId: `${body.manageId}`,
-          city: '广州',
-          cityCode: body.cityCode,
-          userPhone: body.userPhone,
-          userEmail: body.userEmail,
-          sort: body.sort,
-          startStatus: body.startStatus,
-          approvalStatus: body.approvalStatus,
-          loginAccount: body.loginAccount,
-          approvalUser: '小李子',
-          updateUser: "瓜娃子",
-          updateTime: new Date,
-          createTime: new Date,
-        }
+      tableListDataSource[index]= Object.assign(item,body);
       }
     });
   const result = {

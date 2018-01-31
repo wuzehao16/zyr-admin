@@ -2,17 +2,17 @@ import React from 'react';
 import { connect } from 'dva';
 import { Form, Input, Button, Alert, Divider, notification } from 'antd';
 import { routerRedux } from 'dva/router';
-import ReactQuill from 'react-quill';
+import ReactQuill from '../../../components/Quill';
 import 'react-quill/dist/quill.snow.css';
 import { digitUppercase } from '../../../utils/utils';
 import styles from './style.less';
-
+import quill from './quill.less'
 const formItemLayout = {
   labelCol: {
     span: 5,
   },
   wrapperCol: {
-    span: 19,
+    span: 24,
   },
 };
 
@@ -82,30 +82,49 @@ class Step2 extends React.PureComponent {
         <Form.Item
           {...formItemLayout}
            label="产品介绍">
-           <ReactQuill value={this.state.productIntroduction} onChange={this.productIntroduction} />
+           <ReactQuill
+             value={this.state.productIntroduction}
+             onChange={this.productIntroduction}
+             placeholder='Write something...'
+           />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="基本要求">
-           <ReactQuill value={this.state.basieReq} onChange={this.basieReq} />
+           <ReactQuill
+             value={this.state.basieReq}
+             onChange={this.basieReq}
+             placeholder='Write something...'
+            />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="征信要求">
-           <ReactQuill value={this.state.creditReq} onChange={this.creditReq} />
+           <ReactQuill
+             value={this.state.creditReq}
+             onChange={this.creditReq}
+             placeholder='Write something...'
+            />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="额度计算">
-           <ReactQuill value={this.state.positonCount} onChange={this.positonCount} />
+           <ReactQuill
+             value={this.state.positonCount}
+             onChange={this.positonCount}
+             placeholder='Write something...'
+            />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="其它要求">
-           <ReactQuill value={this.state.otherReq} onChange={this.otherReq} />
+           <ReactQuill
+             value={this.state.otherReq}
+             onChange={this.otherReq}
+             placeholder='Write something...'
+            />
         </Form.Item>
 
-        {/* <Button style={{ marginTop: 16 }} onClick={this.prompt}>Prompt</Button> */}
         <Form.Item
           style={{ marginBottom: 8 }}
           wrapperCol={{
