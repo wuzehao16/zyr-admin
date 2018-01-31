@@ -3,13 +3,14 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import {
-  Form, Button, Card, Divider, Row, Col, Radio, Input
+  Form, Button, Card, Divider, Row, Col, Radio, Input, Select,
 } from 'antd';
 import DescriptionList from '../../components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 const FormItem = Form.Item;
 const { Description } = DescriptionList;
+const Option = Select.Option;
 
 @connect(({ product, loading }) => ({
   product,
@@ -109,6 +110,40 @@ export default class BasicForms extends PureComponent {
                         </FormItem>
                       </Col>
                     </Row>
+                    <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                        <Col md={12} sm={24}>
+                          <FormItem
+                            {...formItemLayout}
+                             label="是否纳入评测"
+                             style={{
+                               display: getFieldValue('approvalStatus') === '2' ? 'block' : 'none',
+                             }}
+                             >
+                             {getFieldDecorator('isEvaluating')(
+                               <Select placeholder="请选择">
+                                 <Option value='0'>否</Option>
+                                 <Option value='1'>是</Option>
+                               </Select>
+                             )}
+                          </FormItem>
+                        </Col>
+                        <Col md={12} sm={24}>
+                          <FormItem
+                            {...formItemLayout}
+                             label="是否为火"
+                             style={{
+                               display: getFieldValue('approvalStatus') === '2' ? 'block' : 'none',
+                             }}
+                             >
+                             {getFieldDecorator('isFire')(
+                               <Select placeholder="请选择">
+                                 <Option value='0'>否</Option>
+                                 <Option value='1'>是</Option>
+                               </Select>
+                             )}
+                          </FormItem>
+                        </Col>
+                      </Row>
                     <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                         <Col md={12} sm={24}>
                           <FormItem

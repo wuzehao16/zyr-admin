@@ -156,6 +156,34 @@ export function selectDictionary(req, res, u) {
     }
     return
   }
+  if (params.type === 'adsType') {
+    const result = {
+      code: 0,
+      data: [{
+        label: '工薪族',
+        value: '11100'
+      },
+      {
+        label: '企业主',
+        value: '11200'
+      },
+      {
+        label: '自由职业',
+        value: '11300'
+      },
+      {
+        label: 'app启动页',
+        value: '11400'
+      }],
+    };
+
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+    return
+  }
   if (params.type === 'repMethod') {
     const result = {
       code: 0,
