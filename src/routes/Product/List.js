@@ -96,7 +96,7 @@ export default class TableList extends PureComponent {
     this.props.dispatch({
       type: 'product/fetchEdit',
       payload: {
-        manageId: item.manageId,
+        productId: item.productId,
       },
     });
   }
@@ -104,7 +104,7 @@ export default class TableList extends PureComponent {
     this.props.dispatch({
       type: 'product/fetchDetail',
       payload: {
-        manageId: item.manageId,
+        productId: item.productId,
       },
     });
   }
@@ -112,7 +112,7 @@ export default class TableList extends PureComponent {
     this.props.dispatch({
       type: 'product/fetchReview',
       payload: {
-        manageId: item.manageId,
+        productId: item.productId,
       },
     });
   }

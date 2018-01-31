@@ -16,6 +16,33 @@ for (let i = 0; i < 46; i += 1) {
     shelfState: `${Math.floor(Math.random()*2)}`,
     approvalStatus: `${Math.floor(Math.random()*3)}`,
     updateTime: "2018-6-15",
+    applyFlow:"1,2,3,4,5,6",
+    approvalAging:"12,12",
+    approvalAgingEnd:"12",
+    approvalAgingStart:"12",
+    basieReq:"<p>123</p>",
+    cityCode:"20",
+    creditReq:"<p>123</p>",
+    customerType:"300",
+    manageName:"123",
+    monthlyFeeRate:"12",
+    otherReq:"<p>123</p>",
+    positonCount:"<p>123</p>",
+    productFeatures:"5000,5100,5200,5300",
+    productIntroduction:"<p>123</p>",
+    productMaxLoad:"12",
+    productName:"123",
+    productNotice:"12",
+    productPayWay:"400",
+    productPoundage:"12321",
+    productRatio:"12",
+    productRecommend:"12",
+    productSort:"12",
+    productTimeLimit:"12,12",
+    productTimeLimitEnd:"12",
+    productTimeLimitStart:"12",
+    productType:"110,100",
+    propertyType:"210",
     oper:"cc",
     approvalUser: '小李子',
     approvalTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
@@ -164,22 +191,7 @@ export function updateProduct(req, res, u, b) {
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     tableListDataSource.map((item,index) => {
       if(item.productId == productId){
-      tableListDataSource[index]={
-          key: body.productId,
-          productId: `${body.productId}`,
-          city: '广州',
-          cityCode: body.cityCode,
-          userPhone: body.userPhone,
-          userEmail: body.userEmail,
-          sort: body.sort,
-          startStatus: body.startStatus,
-          approvalStatus: body.approvalStatus,
-          loginAccount: body.loginAccount,
-          approvalUser: '小李子',
-          updateUser: "瓜娃子",
-          updateTime: new Date,
-          createTime: new Date,
-        }
+      tableListDataSource[index]= Object.assign(item,body)
       }
     });
   const result = {

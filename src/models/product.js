@@ -15,7 +15,12 @@ export default {
     city: [],
     audit: [],
     institutionType: [],
-    step:{}
+    step:{},
+    prodCategory: [],
+    propCategory: [],
+    cusCategory: [],
+    repMethod: [],
+    prodFeatures: [],
   },
 
   effects: {
@@ -116,13 +121,67 @@ export default {
         },
       });
     },
+    *fetchProdCategory({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          prodCategory: response.data
+        },
+      });
+    },
+    *fetchPropCategory({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          propCategory: response.data
+        },
+      });
+    },
+    *fetchCusCategory({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          cusCategory: response.data
+        },
+      });
+    },
+    *fetchRepMethod({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          repMethod: response.data
+        },
+      });
+    },
+    *fetchProdFeatures({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          prodFeatures: response.data
+        },
+      });
+    },
+    *fetchCusCategory({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          cusCategory: response.data
+        },
+      });
+    },
     *submitStepForm({ payload }, { call, put }) {
       yield call(add, payload);
       yield put({
         type: 'saveStepFormData',
         payload,
       });
-      // yield put(routerRedux.push('/form/step-form/result'));
+      yield put(routerRedux.push('/product'));
     },
   },
 

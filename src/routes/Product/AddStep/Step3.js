@@ -1,59 +1,95 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col,Steps, Popover,Input } from 'antd';
 import { routerRedux } from 'dva/router';
 import Result from '../../../components/Result';
 import styles from './style.less';
 
+const Step = Steps.Step;
 class Step3 extends React.PureComponent {
+  state = {
+    step1: '',
+    step2: '',
+    step3: '',
+    step4: undefined,
+    step5: '',
+    step6: '',
+  }
+  onChangeStep1 = (e) =>{
+    this.setState({
+      step1: e.target.value
+    })
+  }
+  onChangeStep2 = (e) =>{
+    this.setState({
+      step2: e.target.value
+    })
+  }
+  onChangeStep3 = (e) =>{
+    this.setState({
+      step3: e.target.value
+    })
+  }
+  onChangeStep4 = (e) =>{
+    this.setState({
+      step4: e.target.value
+    })
+  }
+  onChangeStep5 = (e) =>{
+    this.setState({
+      step5: e.target.value
+    })
+  }
+  onChangeStep6 = (e) =>{
+    this.setState({
+      step6: e.target.value
+    })
+  }
   render() {
-    const { dispatch, data } = this.props;
+    const { dispatch, data, submitting } = this.props;
     const onFinish = () => {
-      dispatch(routerRedux.push('/form/step-form'));
+      const applyFlow = Object.values(this.state).join(",")
+      dispatch({
+        type: 'product/submitStepForm',
+        payload: {
+          ...data,
+          applyFlow
+        },
+      });
     };
-    const information = (
-      <div className={styles.information}>
-        <Row>
-          <Col span={8} className={styles.label}>付款账户：</Col>
-          <Col span={16}>{data.payAccount}</Col>
-        </Row>
-        <Row>
-          <Col span={8} className={styles.label}>收款账户：</Col>
-          <Col span={16}>{data.receiverAccount}</Col>
-        </Row>
-        <Row>
-          <Col span={8} className={styles.label}>收款人姓名：</Col>
-          <Col span={16}>{data.receiverName}</Col>
-        </Row>
-        <Row>
-          <Col span={8} className={styles.label}>转账金额：</Col>
-          <Col span={16}><span className={styles.money}>{data.amount}</span> 元</Col>
-        </Row>
-      </div>
+    const customDot = (dot, { status, index }) => (
+      <Popover content={<span>step {index + 1} status: {status}</span>}>
+        {dot}
+      </Popover>
     );
-    const actions = (
-      <div>
-        <Button type="primary" onClick={onFinish}>
-          再转一笔
-        </Button>
-        <Button>
-          查看账单
-        </Button>
-      </div>
-    );
+    const onPrev = () => {
+      dispatch(routerRedux.push('/product/add/step2'));
+    };
     return (
-      <Result
-        type="success"
-        title="操作成功"
-        description="预计两小时内到账"
-        extra={information}
-        actions={actions}
-        className={styles.result}
-      />
+      <div style={{marginTop:"50px"}}>
+        <h1>申请流程:</h1>
+        <Steps current={6} progressDot style={{marginTop:"50px"}} >
+          <Step title="1" description={<Input  onChange={this.onChangeStep1} placeholder="申请"/>} />
+          <Step title="2" description={<Input value={this.state.step2} onChange={this.onChangeStep2} placeholder="申请"/>} />
+          <Step title="3" description={<Input value={this.state.step3} onChange={this.onChangeStep3} placeholder="申请"/>} />
+          <Step title="4" description={<Input value={this.state.step4} onChange={this.onChangeStep4} placeholder="申请"/>} />
+          <Step title="5" description={<Input value={this.state.step5} onChange={this.onChangeStep5} placeholder="申请"/>} />
+          <Step title="6" description={<Input value={this.state.step6} onChange={this.onChangeStep6} placeholder="申请"/>} />
+        </Steps>
+        <div style={{marginTop:"50px",textAlign:'center'}}>
+          <Button onClick={onPrev} style={{ marginRight: 30 }}>
+            上一步
+          </Button>
+          <Button type="primary" onClick={onFinish} loading={submitting}>
+            下一步
+          </Button>
+        </div>
+      </div>
     );
   }
 }
 
-export default connect(({ form }) => ({
-  data: form.step,
+export default connect(({ product, loading }) => ({
+  data: product.step,
+  submitting: loading.effects['product/submitStepForm'],
 }))(Step3);

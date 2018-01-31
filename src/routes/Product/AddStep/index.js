@@ -16,7 +16,7 @@ export default class StepForm extends PureComponent {
     switch (pathList[pathList.length - 1]) {
       case 'info': return 0;
       case 'step2': return 1;
-      case 'result': return 2;
+      case 'step3': return 2;
       default: return 0;
     }
   }
@@ -29,7 +29,6 @@ export default class StepForm extends PureComponent {
             <Steps current={this.getCurrentStep()} className={styles.steps}>
               <Step title="填写产品信息" />
               <Step title="填写产品详细信息" />
-              <Step title="填写申请流程" />
               <Step title="完成" />
             </Steps>
             <Switch>

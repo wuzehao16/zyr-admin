@@ -11,19 +11,19 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 const FormItem = Form.Item;
 const { Description } = DescriptionList;
 
-@connect(({ institution, loading }) => ({
-  institution,
-  submitting: loading.effects['institution/update'],
+@connect(({ product, loading }) => ({
+  product,
+  submitting: loading.effects['product/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
   componentDidMount() {
     const { setFieldsValue } = this.props.form;
-    if (this.props.institution.item) {
-      const { item } = this.props.institution;
-      if (item.manageId) {
+    if (this.props.product.item) {
+      const { item } = this.props.product;
+      if (item.productId) {
         setFieldsValue({
-          manageId: item.manageId,
+          productId: item.productId,
         });
       }
     }
@@ -39,21 +39,21 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'institution/update',
+          type: 'product/update',
           payload: values,
         });
       }
     });
   }
   render() {
-    const { submitting, institution: { item }, dispatch } = this.props;
+    const { submitting, product: { item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue  } = this.props.form;
-    getFieldDecorator('manageId')
+    getFieldDecorator('productId')
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
         sm: { span: 5 },
-        md: { span: 3 },
+        md: { span: 4 },
       },
       wrapperCol: {
         xs: { span: 24 },
@@ -70,25 +70,29 @@ export default class BasicForms extends PureComponent {
                  hideRequiredMark
                  style={{ marginTop: 8 }}
                >
-          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
-            <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
-            <Description term="所在城市">{item.city}</Description>
-            <Description term="机构名称">{item.manageName}</Description>
-            <Description term="登录账号">{item.loginAccount}</Description>
-            <Description term="邮箱">{item.userEmail}</Description>
-            <Description term="手机">{item.userPhone}</Description>
-            <Description term="机构logo">
-              <img src="https://picsum.photos/80/80?random" alt="" />
-            </Description>
-          </DescriptionList>
-          <DescriptionList size="large" style={{ marginBottom: 32 }} col={2}>
-            <Description term="排序">{item.sort}</Description>
-            <Description term="启用状态">{item.startStatus==1?'启用':'禁用'}</Description>
-            <Description term="操作者">{item.oper}</Description>
-            <Description term="审核时间">{item.approvalTime}</Description>
-            <Description term="注册时间">{item.registrationTime}</Description>
-            <Description term="注册时间">{item.approvalStatus}</Description>
-          </DescriptionList>
+           <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
+             <Description term="所在城市">{item.city}</Description>
+             <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
+             <Description term="机构名称">{item.manageName}</Description>
+             <Description term="产品名称">{item.productName}</Description>
+             <Description term="最高可贷">{item.productMaxLoad}</Description>
+             <Description term="产品分润比例">{item.productRatio}</Description>
+             <Description term="月费率">{item.productMaxLoad}%</Description>
+             <Description term="产品期限">{item.productTimeLimit?item.productTimeLimit.replace(',','-'):''}期</Description>
+             <Description term="手续费">{item.productPoundage}%</Description>
+             <Description term="审批时效">{item.approvalAging?item.approvalAging.replace(',','-'):''}天</Description>
+             <Description term="产品须知">{item.productNotice}</Description>
+             <Description term="推荐语">{item.productRecommend}期</Description>
+             <Description term="排序">{item.productSort}</Description>
+             <Description term="上架状态">{item.shelfState==1?'已上架':'已下架'}</Description>
+           </DescriptionList>
+           <DescriptionList size="large" style={{ marginBottom: 32 }} col={1}>
+             <Description term="产品类别">{item.productFeatures}</Description>
+             <Description term="房产类型">{item.productPayWay}</Description>
+             <Description term="客户类别">{item.customerType}</Description>
+             <Description term="还款方式">{item.productType}</Description>
+             <Description term="产品特点">{item.propertyType}</Description>
+           </DescriptionList>
           {item.approvalStatus == 1
            ?  <div>
                   <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
@@ -98,8 +102,8 @@ export default class BasicForms extends PureComponent {
                            label="审核状态">
                            {getFieldDecorator('approvalStatus')(
                              <Radio.Group style={{ width: '100%' }}>
-                               <Radio value="0">通过</Radio>
-                               <Radio value="1">不通过</Radio>
+                               <Radio value="2">通过</Radio>
+                               <Radio value="0">不通过</Radio>
                              </Radio.Group>
                            )}
                         </FormItem>
@@ -111,7 +115,7 @@ export default class BasicForms extends PureComponent {
                             {...formItemLayout}
                              label="审核备注"
                              style={{
-                               display: getFieldValue('approvalStatus') === '1' ? 'block' : 'none',
+                               display: getFieldValue('approvalStatus') === '0' ? 'block' : 'none',
                              }}
                              >
                              {getFieldDecorator('approvalRemaeks')(
@@ -127,7 +131,7 @@ export default class BasicForms extends PureComponent {
             <Button style={{ marginRight: 50 }} type="primary" htmlType="submit" loading={submitting}>
               保存
             </Button>
-            <Button onClick={() => dispatch(routerRedux.push('/institution'))}>
+            <Button onClick={() => dispatch(routerRedux.push('/product'))}>
               返回
             </Button>
           </DescriptionList>

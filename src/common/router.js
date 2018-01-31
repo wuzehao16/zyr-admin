@@ -312,6 +312,9 @@ export const getRouterData = (app) => {
     '/product/add/step2': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product/AddStep/Step2')),
     },
+    '/product/add/step3': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/AddStep/Step3')),
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

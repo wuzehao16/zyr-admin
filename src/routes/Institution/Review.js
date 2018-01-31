@@ -53,7 +53,7 @@ export default class BasicForms extends PureComponent {
       labelCol: {
         xs: { span: 24 },
         sm: { span: 5 },
-        md: { span: 3 },
+        md: { span: 4 },
       },
       wrapperCol: {
         xs: { span: 24 },
@@ -98,8 +98,8 @@ export default class BasicForms extends PureComponent {
                            label="审核状态">
                            {getFieldDecorator('approvalStatus')(
                              <Radio.Group style={{ width: '100%' }}>
-                               <Radio value="0">通过</Radio>
-                               <Radio value="1">不通过</Radio>
+                               <Radio value="2">通过</Radio>
+                               <Radio value="0">不通过</Radio>
                              </Radio.Group>
                            )}
                         </FormItem>
@@ -111,7 +111,7 @@ export default class BasicForms extends PureComponent {
                             {...formItemLayout}
                              label="审核备注"
                              style={{
-                               display: getFieldValue('approvalStatus') === '1' ? 'block' : 'none',
+                               display: getFieldValue('approvalStatus') === '0' ? 'block' : 'none',
                              }}
                              >
                              {getFieldDecorator('approvalRemaeks')(

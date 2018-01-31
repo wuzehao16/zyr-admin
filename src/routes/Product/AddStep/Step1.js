@@ -15,7 +15,38 @@ for (let i = 10; i < 36; i++) {
 
 @Form.create()
 class Step1 extends React.PureComponent {
-
+  componentDidMount () {
+    this.props.dispatch({
+      type: 'product/fetchProdCategory',
+      payload: {
+        type: "prodCategory"
+      },
+    });
+    this.props.dispatch({
+      type: 'product/fetchPropCategory',
+      payload: {
+        type: "propCategory"
+      },
+    });
+    this.props.dispatch({
+      type: 'product/fetchCusCategory',
+      payload: {
+        type: 'cusCategory'
+      },
+    });
+    this.props.dispatch({
+      type: 'product/fetchRepMethod',
+      payload: {
+        type: 'repMethod'
+      },
+    });
+    this.props.dispatch({
+      type: 'product/fetchProdFeatures',
+      payload: {
+        type: 'prodFeatures'
+      },
+    });
+  }
   getInstitution = (code) => {
     this.props.dispatch({
       type: 'product/getInstitution',
@@ -36,7 +67,22 @@ class Step1 extends React.PureComponent {
     console.log(`selected ${value}`);
   }
   render() {
-    const { product: { data, city, institutionType, institutionList, subInstitutionList }, submitting, dispatch } = this.props;
+    const {
+      product: {
+        data,
+        city,
+        institutionType,
+        institutionList,
+        subInstitutionList,
+        prodCategory,
+        propCategory,
+        cusCategory,
+        repMethod,
+        prodFeatures,
+      },
+      submitting,
+      dispatch
+    } = this.props;
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
@@ -50,6 +96,11 @@ class Step1 extends React.PureComponent {
     if (subInstitutionList) {
       var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
     }
+      var prodCategoryOptions = prodCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      var propCategoryOptions = propCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      var cusCategoryOptions = cusCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      var repMethodOptions = repMethod.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      var prodFeaturesOptions = prodFeatures.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -66,7 +117,7 @@ class Step1 extends React.PureComponent {
       labelCol: {
         xs: { span: 24 },
         sm: { span: 7 },
-        md: { span: 3 },
+        md: { span: 2 },
       },
       wrapperCol: {
         xs: { span: 24 },
@@ -83,13 +134,22 @@ class Step1 extends React.PureComponent {
       },
     };
     const onValidateForm = () => {
-        dispatch(routerRedux.push('/product/add/step2'));
+        // dispatch(routerRedux.push('/product/add/step2'));
       validateFields((err, values) => {
         console.log(values)
         if (!err) {
           dispatch({
             type: 'product/saveStepFormData',
-            payload: values,
+            payload: {
+              ...values,
+              productFeatures: values.productFeatures && values.productFeatures.join(','),
+              productPayWay: values.productPayWay && values.productPayWay.join(','),
+              customerType: values.customerType && values.customerType.join(','),
+              productType: values.productType && values.productType.join(','),
+              propertyType: values.propertyType && values.propertyType.join(','),
+              productTimeLimit: values.productTimeLimitStart + ',' + values.productTimeLimitEnd,
+              approvalAging: values.approvalAgingStart + ',' + values.approvalAgingEnd,
+            },
           });
           dispatch(routerRedux.push('/product/add/step2'));
         }
@@ -189,7 +249,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
-                    addonAfter="元"
+                    addonAfter="万"
                     placeholder="请输入"
                   />
                 )}
@@ -197,7 +257,7 @@ class Step1 extends React.PureComponent {
             </Col>
             <Col md={12} sm={24}>
               <Form.Item
-                label="产品分润比例"
+                label="分润比例"
                 {...formItemLayout}
                >
                 {getFieldDecorator('productRatio',{
@@ -231,7 +291,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
-                    addonAfter="元"
+                    addonAfter="%"
                     placeholder="请输入"
                   />
                 )}
@@ -239,26 +299,20 @@ class Step1 extends React.PureComponent {
             </Col>
             <Col md={12} sm={24}>
               <Form.Item
-                label="产品期限"
+                label="产品期限(期)"
                 {...formItemLayout}
                >
-                {getFieldDecorator('productRatio',{
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入产品分润比例',
-                    },
-                  ],
-                })(
-                  <InputGroup >
-                    <Col span={8}>
-                     <InputNumber />
-                   </Col>
-                    <Col span={8}>
-                     <InputNumber />
-                    </Col>
+                 <InputGroup
+                    compact>
+                   {getFieldDecorator('productTimeLimitStart')(
+                  <Input style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
+                  )}
+                   <Input style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
+                   {getFieldDecorator('productTimeLimitEnd')(
+                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="Maximum" />
+                   )}
                  </InputGroup>
-                )}
+
               </Form.Item>
             </Col>
           </Row>
@@ -277,7 +331,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
-                    addonAfter="元"
+                    addonAfter="%"
                     placeholder="请输入"
                   />
                 )}
@@ -285,26 +339,19 @@ class Step1 extends React.PureComponent {
             </Col>
             <Col md={12} sm={24}>
               <Form.Item
-                label="产品期限"
+                label="审批时效(天)"
                 {...formItemLayout}
                >
-                {getFieldDecorator('productRatio',{
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入产品分润比例',
-                    },
-                  ],
-                })(
-                  <InputGroup >
-                    <Col span={8}>
-                     <InputNumber />
-                   </Col>
-                    <Col span={8}>
-                     <InputNumber />
-                    </Col>
+                 <InputGroup compact>
+                    {getFieldDecorator('approvalAgingStart')(
+                   <Input style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
+                   )}
+                   <Input style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
+                   {getFieldDecorator('approvalAgingEnd')(
+                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
+                   )}
                  </InputGroup>
-                )}
+
               </Form.Item>
             </Col>
           </Row>
@@ -323,6 +370,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
+                    maxLength='25'
                     placeholder="请输入"
                   />
                 )}
@@ -342,7 +390,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
-                    addonAfter="元"
+                    maxLength='25'
                     placeholder="请输入"
                   />
                 )}
@@ -355,14 +403,7 @@ class Step1 extends React.PureComponent {
                 label="排序"
                 {...formItemLayout}
                >
-                {getFieldDecorator('productSort',{
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入排序',
-                    },
-                  ],
-                })(
+                {getFieldDecorator('productSort')(
                   <Input
                     placeholder="请输入"
                   />
@@ -391,7 +432,31 @@ class Step1 extends React.PureComponent {
                     // defaultValue={['a10', 'c12']}
                     onChange={this.handleChange}
                   >
-                    {children}
+                    {prodCategoryOptions}
+                  </Select>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+            <Col md={24} sm={24}>
+              <Form.Item
+                label="房产类型"
+                {...formItemLayout1}
+                // (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'')
+                style={{
+                  display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'') == '1' ? 'block' : 'none',
+                }}
+               >
+                {getFieldDecorator('propertyType')(
+                  <Select
+                    mode="multiple"
+                    style={{ width: '100%' }}
+                    placeholder="Please select"
+                    // defaultValue={['a10', 'c12']}
+                    onChange={this.handleChange}
+                  >
+                    {propCategoryOptions}
                   </Select>
                 )}
               </Form.Item>
@@ -403,11 +468,11 @@ class Step1 extends React.PureComponent {
                 label="客户类型"
                 {...formItemLayout1}
                >
-                {getFieldDecorator('propertyType',{
+                {getFieldDecorator('customerType',{
                   rules: [
                     {
                       required: true,
-                      message: '请输入产品类别',
+                      message: '请输入客户类型',
                     },
                   ],
                 })(
@@ -418,7 +483,7 @@ class Step1 extends React.PureComponent {
                     // defaultValue={['a10', 'c12']}
                     onChange={this.handleChange}
                   >
-                    {children}
+                    {cusCategoryOptions}
                   </Select>
                 )}
               </Form.Item>
@@ -434,7 +499,7 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入产品类别',
+                      message: '请输入还款方式',
                     },
                   ],
                 })(
@@ -445,7 +510,7 @@ class Step1 extends React.PureComponent {
                     // defaultValue={['a10', 'c12']}
                     onChange={this.handleChange}
                   >
-                    {children}
+                    {repMethodOptions}
                   </Select>
                 )}
               </Form.Item>
@@ -461,18 +526,32 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入产品类别',
+                      message: '请输入产品特点',
                     },
+                    {
+                      validator: (rule, value, callback) => {
+                        if (value) {
+                          if (value.length > 5) {
+                            callback("最多只可以选择5个产品特点");
+                          } else if (value.length <= 5) {
+                            callback();
+                          }
+                        }
+                        return;
+                      }
+                    }
                   ],
                 })(
                   <Select
+                    maxTagCount={5}
+                    max={5}
                     mode="multiple"
                     style={{ width: '100%' }}
                     placeholder="Please select"
                     // defaultValue={['a10', 'c12']}
                     onChange={this.handleChange}
                   >
-                    {children}
+                    {prodFeaturesOptions}
                   </Select>
                 )}
               </Form.Item>
@@ -502,9 +581,11 @@ class Step1 extends React.PureComponent {
           </Row>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" onClick={onValidateForm}>
-              提交
+              下一步
             </Button>
-            {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
+            <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/product'))}>
+              返回
+            </Button>
           </FormItem>
         </Form>
 
