@@ -81,7 +81,7 @@ class Step3 extends React.PureComponent {
             上一步
           </Button>
           <Button type="primary" onClick={onFinish} loading={submitting}>
-            下一步
+            提交
           </Button>
         </div>
       </div>
