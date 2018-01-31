@@ -47,7 +47,6 @@ export default class BasicForms extends PureComponent {
     });
   }
   handleChange = ({ fileList }) => {
-    console.log(fileList)
     this.setState({ fileList })
   }
   getInstitution = (code) => {

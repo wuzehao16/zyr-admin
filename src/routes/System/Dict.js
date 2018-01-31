@@ -97,6 +97,29 @@ export default class TableList extends PureComponent {
     });
   }
 
+  // handleSearch = (e) => {
+  //   e.preventDefault();
+  //
+  //   const { dispatch, form } = this.props;
+  //
+  //   form.validateFields((err, fieldsValue) => {
+  //     if (err) return;
+  //
+  //     const values = {
+  //       ...fieldsValue,
+  //       updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+  //     };
+  //
+  //     this.setState({
+  //       formValues: values,
+  //     });
+  //
+  //     dispatch({
+  //       type: 'systemDict/fetch',
+  //       payload: values,
+  //     });
+  //   });
+  // }
   handleSearch = (e) => {
     e.preventDefault();
     const { dispatch } = this.props;

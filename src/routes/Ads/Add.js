@@ -30,6 +30,11 @@ const formItemLayout = {
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
+  state = {
+    previewVisible: false,
+    previewImage: '',
+    fileList: [],
+  };
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
@@ -38,6 +43,7 @@ export default class BasicForms extends PureComponent {
           ...fieldsValue,
           autoUpTime: fieldsValue.time && fieldsValue.time[0],
           autoDownTime: fieldsValue.time && fieldsValue.time[1],
+          adsPic: fieldsValue.adsPic && fieldsValue.adsPic.file.response.data.match(/ima[^\n]*jpeg/)[0],
         };
         this.props.dispatch({
           type: 'ads/add',
@@ -85,6 +91,13 @@ export default class BasicForms extends PureComponent {
   }
   renderBanner = ()=> {
     const { getFieldDecorator } = this.props.form;
+    const { fileList, previewVisible,previewImage } = this.state;
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
     return(
       <div>
         <FormItem
@@ -107,6 +120,24 @@ export default class BasicForms extends PureComponent {
           {getFieldDecorator('adsUrl')(
             <Input placeholder="请输入"/>
           )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+           label="图片">
+           {getFieldDecorator('adsPic')(
+             <Upload
+               action="http://192.168.2.101:8080/sysAnno/uploadImage"
+               listType="picture-card"
+               onPreview={this.handlePreview}
+               onChange={this.handleChange}
+             >
+               {fileList.length >= 1 ? null : uploadButton}
+             </Upload>
+           )}
+
+           <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+             <img alt="example" style={{ width: '100%' }} src={previewImage} />
+           </Modal>
         </FormItem>
       </div>
     );
@@ -138,6 +169,18 @@ export default class BasicForms extends PureComponent {
         </FormItem>
       </div>
     );
+  }
+  handleCancel = () => this.setState({ previewVisible: false })
+
+  handlePreview = (file) => {
+    console.log(file)
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true,
+    });
+  }
+  handleChange = ({ fileList }) => {
+    this.setState({ fileList })
   }
   render() {
     const { ads: { data, adsType }, submitting } = this.props;
