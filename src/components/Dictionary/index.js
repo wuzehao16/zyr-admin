@@ -99,6 +99,7 @@ class StandardTable extends PureComponent {
       showSizeChanger: true,
       showQuickJumper: true,
       total: count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {

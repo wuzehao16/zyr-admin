@@ -315,6 +315,25 @@ export const getRouterData = (app) => {
     '/product/add/step3': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product/AddStep/Step3')),
     },
+    '/ads': {
+      component: dynamicWrapper(app, ['ads'], () => import('../routes/Ads')),
+      name: '产品管理',
+    },
+    '/ads/list': {
+      component: dynamicWrapper(app, ['ads'], () => import('../routes/Ads/List')),
+    },
+    '/ads/detail': {
+      component: dynamicWrapper(app, ['ads'], () => import('../routes/Ads/Detail')),
+      name: '广告详情',
+    },
+    '/ads/edit': {
+      component: dynamicWrapper(app, ['ads'], () => import('../routes/Ads/Edit')),
+      name: '编辑广告',
+    },
+    '/ads/add': {
+      component: dynamicWrapper(app, ['ads'], () => import('../routes/Ads/Add')),
+      name: '新增广告',
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

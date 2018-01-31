@@ -67,7 +67,7 @@ export default {
         type: 'saveRoleInfo',
         payload: payload,
       });
-      const response = yield call(queryMenu, payload);
+      const response = yield call(queryMenu);
       yield put({
         type: 'saveMenu',
         payload: response.data,

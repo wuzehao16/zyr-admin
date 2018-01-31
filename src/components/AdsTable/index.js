@@ -57,7 +57,7 @@ class StandardTable extends PureComponent {
   render() {
     const { selectedRowKeys } = this.state;
     const { data: { data, pagination }, loading } = this.props
-    const approvalStatus = ['未通过', '审核中', '已通过'];
+    const approvalStatus = ['待上架', '已上架', '已下架'];
     const institutionType = ['无','银行机构','金融机构','小额贷款'];
     const isEvaluaStatuts = ['否', '是'];
     const columns = [
@@ -71,53 +71,32 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title: '产品编号',
-        dataIndex: 'productNo',
+        title: '广告类型',
+        dataIndex: 'adsType',
       },
       {
-        title: '产品名称',
-        dataIndex: 'productName',
+        title: '标题',
+        dataIndex: 'adsTitle',
       },
       {
-        title: '城市',
-        dataIndex: 'city',
+        title: '内容',
+        dataIndex: 'adsContent',
       },
       {
-        title: '机构类型',
-        dataIndex: 'institutionCode',
-        render(val) {
-          return <span>{institutionType[val]}</span>;
-        },
+        title: '匹配词',
+        dataIndex: 'adsMatch',
       },
       {
-        title: '机构名称',
-        dataIndex: 'manageName',
+        title: '图片',
+        dataIndex: 'adsPic',
       },
       {
-        title: '月费率',
-        dataIndex: 'monthlyFeeRate',
-        render: val => `${val} 万`,
-      },
-      {
-        title: '纳入评测',
-        dataIndex: 'isEvaluaStatuts',
-        filters: [
-          {
-            text: isEvaluaStatuts[0],
-            value: 0,
-          },
-          {
-            text: isEvaluaStatuts[1],
-            value: 1,
-          },
-        ],
-        render(val) {
-          return <span>{isEvaluaStatuts[val]}</span>;
-        },
+        title: '跳转链接',
+        dataIndex: 'adsUrl',
       },
       {
         title: '审核状态',
-        dataIndex: 'approvalStatus',
+        dataIndex: 'upState',
         filters: [
           {
             text: approvalStatus[0],
@@ -128,13 +107,17 @@ class StandardTable extends PureComponent {
             value: 1,
           },
           {
-            text: approvalStatus[1],
+            text: approvalStatus[2],
             value: 2,
           },
         ],
         render(val) {
           return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
         },
+      },
+      {
+        title: '排序',
+        dataIndex: 'adsSort',
       },
       {
         title: '操作者',
@@ -151,20 +134,10 @@ class StandardTable extends PureComponent {
         render: (text, record) => {
           return (
             <Fragment>
-              { record.approvalStatus == 2
-                ? <span>
-                    <a onClick={() => this.handleResetPassword(record)}>{record.shelfState==1?'下架':'上架'}</a>
-                    <Divider type="vertical" />
-                  </span>
-                : null
-              }
-              { record.approvalStatus == 1
-                ? <span>
-                    <a onClick={() => this.handleReview(record)}>审核</a>
-                    <Divider type="vertical" />
-                  </span>
-                : null
-              }
+              <span>
+                <a onClick={() => this.handleResetPassword(record)}>{record.upState==1?'下架':'上架'}</a>
+                <Divider type="vertical" />
+              </span>
               <a onClick={() => this.handleEdit(record)}>编辑</a>
               <Divider type="vertical" />
               <a onClick={() => this.handleDetail(record)}>详情</a>
@@ -205,7 +178,7 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.manageId}
+          rowKey={record => record.adsId}
           rowSelection={rowSelection}
           dataSource={data}
           columns={columns}

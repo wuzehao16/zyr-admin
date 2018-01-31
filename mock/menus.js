@@ -111,6 +111,10 @@ const menuData = [{
     path: 'register-result',
   }],
 }, {
+ name: '广告管理',
+ icon: 'user',
+ path: 'ads',
+},{
   name: '产品管理',
   icon: 'product',
   path: 'product',

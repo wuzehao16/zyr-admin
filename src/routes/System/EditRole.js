@@ -20,7 +20,7 @@ export default class BasicForms extends PureComponent {
       const { item } = this.props.data;
       let sysMenus = [];
       if (item.sysMenus) {
-        sysMenus = item.sysMenus.forEach((m) => {
+        sysMenus = item.sysMenus.map((m) => {
           return m.meunId;
         });
       }

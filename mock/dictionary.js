@@ -160,15 +160,15 @@ export function selectDictionary(req, res, u) {
     const result = {
       code: 0,
       data: [{
-        label: '工薪族',
+        label: '产品-搜索框广告词',
         value: '11100'
       },
       {
-        label: '企业主',
+        label: 'Banner',
         value: '11200'
       },
       {
-        label: '自由职业',
+        label: '小喇叭',
         value: '11300'
       },
       {

@@ -133,6 +133,7 @@ class StandardTable extends PureComponent {
       showSizeChanger: true,
       showQuickJumper: true,
       ...pagination,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {
