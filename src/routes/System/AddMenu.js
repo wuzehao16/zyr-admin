@@ -56,29 +56,7 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  handleModalVisible = (flag) => {
-    const { form } = this.props;
-    this.setState({
-      modalVisible: !!flag,
-      // isAdd: true,
-    });
-  }
-  handleAdd = () => {
-    const { getFieldDecorator, setFieldsValue } = this.props.form;
-    const { item } = this.state;
-    this.handleModalVisible();
-    getFieldDecorator('parentId');
-    setFieldsValue({
-      parentName: item.name,
-      parentId: item.meunId,
-    });
-  }
-  onToggle = (item) => {
-    const { getFieldDecorator } = this.props.form;
-    this.setState({
-      item,
-    });
-  }
+
   renderCatalogue() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -239,20 +217,6 @@ export default class BasicForms extends PureComponent {
                 </RadioGroup>
               )}
             </FormItem>
-            <Modal
-              title="选择上级菜单"
-              visible={modalVisible}
-              onOk={this.handleAdd}
-              onCancel={() => this.handleModalVisible()}
-            >
-              <Form>
-                <Treebeard
-                  data={data}
-                  onToggle={this.onToggle}
-                />
-              </Form>
-            </Modal>
-
             <FormItem
               {...formItemLayout}
               label="名称"
@@ -269,15 +233,15 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="上级菜单"
             >
-              {getFieldDecorator('parentName', {
+              {getFieldDecorator('parentId', {
                 rules: [{
                   required: true, message: '菜单名称或按钮名称',
                 }],
               })(
-                <Input placeholder="请输入菜单名称或按钮名称" onClick={() => this.handleModalVisible(true)} />
-                // <TreeSelect
-                //   data={treeData}
-                //   />
+                <TreeSelect
+                  data={treeData}
+                  onChange={this.selectTree}
+                  />
               )}
             </FormItem>
             {this.renderForm()}

@@ -79,23 +79,6 @@ const menuData = [{
     path: 'fail',
   }],
 }, {
-  name: '异常页',
-  icon: 'warning',
-  path: 'exception',
-  children: [{
-    name: '403',
-    path: '403',
-  }, {
-    name: '404',
-    path: '404',
-  }, {
-    name: '500',
-    path: '500',
-  }, {
-    name: '触发异常',
-    path: 'trigger',
-  }],
-}, {
   name: '账户',
   icon: 'user',
   path: 'user',
@@ -109,6 +92,16 @@ const menuData = [{
   }, {
     name: '注册结果',
     path: 'register-result',
+  }],
+},{
+  name:'消息管理',
+  path: 'info',
+  children:[{
+    name: '系统通知',
+    path: 'notification',
+  },{
+    name: '系统消息',
+    path: 'sysinfo',
   }],
 }, {
  name: '广告管理',

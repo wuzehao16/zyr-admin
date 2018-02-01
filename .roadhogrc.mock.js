@@ -188,6 +188,8 @@ const proxy = {
   'POST /sys/insertMemberRank': saveMemberRank,
   'DELETE /sys/deleteMemberRank/*': deleteMemberRank,
   'PUT /sys/updateMemberRank': updateMemberRank,
+  // 未登录字典
+  'GET /module/selectByType':selectDictionary,
   //用户个管理
   'GET /sys/selectAppUser': getUser,
   'GET /sys/selectAppUserDetail': getUserDetail,

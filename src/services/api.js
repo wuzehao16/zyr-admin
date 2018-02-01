@@ -1,6 +1,11 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
 
+
+export async function queryDict(params) {
+  return request(`/module/selectByType?${stringify(params)}`);
+}
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }

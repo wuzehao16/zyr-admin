@@ -2,6 +2,7 @@ import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 import { fakeSubmitForm } from '../services/api';
 import { msgPhone, validataPhone, msgEmail, getInstitution, getSubInstitution, getInstitutionType, register } from '../services/register'
+import { queryDict } from '../services/api'
 export default {
   namespace: 'register',
 
@@ -54,6 +55,15 @@ export default {
         });
         message.error(response.msg);
       }
+    },
+    *queryCity({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveStepFormData',
+        payload:{
+          city : response.data
+        },
+      });
     },
     *getInstitutionType({ payload }, { call, put }) {
       const response = yield call(getInstitutionType, payload);

@@ -30,6 +30,12 @@ class Step4 extends React.PureComponent {
     clearInterval(this.interval);
   }
   componentDidMount () {
+    this.props.dispatch({
+      type: 'register/queryCity',
+      payload: {
+        type: 'city'
+      },
+    });
     this.getInstitutionType();
   }
   onGetCaptcha = () => {
@@ -122,7 +128,9 @@ class Step4 extends React.PureComponent {
     const { form, data, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFields, getFieldValue  } = form;
     const { previewVisible, previewImage, count, fileList, userEmail } = this.state;
-    const cityOptions = options.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    if (data.city) {
+      var  cityOptions = data.city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
     if (data.institutionTypeList) {
       var institutionTypeListOptions = data.institutionTypeList.map(item => <Option key={item.institutionCode} value={item.institutionCode}>{item.institutionName}</Option>);
     }
