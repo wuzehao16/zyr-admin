@@ -38,6 +38,15 @@ export default class BasicForms extends PureComponent {
         startStatus: item.startStatus,
         approvalStatus: item.approvalStatus,
       });
+      if (item.manageLogoId) {
+        this.setState({
+          fileList:[{
+            uid:-1,
+            name:"xxx.png",
+            url: item.manageLogoId
+          }]
+        })
+      }
       if (item.institutionId) {
         setFieldsValue({
           institutionId: item.institutionId,

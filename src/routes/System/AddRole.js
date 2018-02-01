@@ -34,6 +34,8 @@ export default class BasicForms extends PureComponent {
           values.sysMenus.forEach((item, index, arr) => {
             arr[index] = { roleId: item };
           });
+        } else {
+          values.sysMenus = [];
           /* eslint-disable no-param-reassign */
         }
         this.props.dispatch({

@@ -40,21 +40,18 @@ export default class BasicForms extends PureComponent {
     const { setFieldsValue, getFieldDecorator } = this.props.form;
     if (this.props.ads.item) {
       const { item } = this.props.ads;
-      getFieldDecorator('adsContent')
-      getFieldDecorator('adsId')
-      getFieldDecorator('adsPic')
-      getFieldDecorator('adsSort')
-      getFieldDecorator('adsUrl')
-      console.log(item);
+      getFieldDecorator('adsContent');
+      getFieldDecorator('adsId');
+      getFieldDecorator('adsPic');
+      getFieldDecorator('adsSort');
+      getFieldDecorator('adsUrl');
       if (item.adsPic) {
         this.setState({
           fileList:[{
             uid:-1,
-            name:"xxx.png",
             url: item.adsPic
           }]
         })
-        console.log(this.state)
       }
       setFieldsValue({
         adsType: item.adsType,
@@ -77,7 +74,7 @@ export default class BasicForms extends PureComponent {
           ...fieldsValue,
           autoUpTime: fieldsValue.time && moment(fieldsValue.time[0]).local(),
           autoDownTime: fieldsValue.time && moment(fieldsValue.time[1]).local(),
-          // adsPic: fieldsValue.adsPic && fieldsValue.adsPic.file.response.data.match(/ima[^\n]*jpeg/)[0],
+          adsPic: fieldsValue.adsPic && fieldsValue.adsPic.file && fieldsValue.adsPic.file.response.data.match(/ima[^\n]*jpeg/)[0],
         };
         this.props.dispatch({
           type: 'ads/add',

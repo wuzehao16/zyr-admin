@@ -121,6 +121,7 @@ export default class TableList extends PureComponent {
   }
 
   handleEdit = (item) => {
+    console.log(item)
     this.props.dispatch({
       type: 'systemRole/saveRole',
       payload: item,
