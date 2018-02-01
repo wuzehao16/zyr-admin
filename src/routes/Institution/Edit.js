@@ -24,9 +24,11 @@ export default class BasicForms extends PureComponent {
     fileList: [],
   };
   componentDidMount() {
-    const { setFieldsValue } = this.props.form;
+    const { getFieldDecorator, setFieldsValue } = this.props.form;
     if (this.props.institution.item) {
       const { item } = this.props.institution;
+      getFieldDecorator('institutionId');
+      getFieldDecorator('manageId');
       setFieldsValue({
         institutionCode: item.institutionCode,
         manageName: item.manageName,
@@ -65,7 +67,9 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         const values = {
           ...fieldsValue,
-          manageLogoId: fieldsValue.manageLogoId && fieldsValue.manageLogoId.file.response.data.match(/ima[^\n]*jpeg/)[0],
+         manageLogoId: fieldsValue.manageLogoId && fieldsValue.manageLogoId.file
+                                        ? fieldsValue.manageLogoId.file.response.data.match(/ima[^\n]*jpeg/)[0]
+                                        : fieldsValue.manageLogoId
         };
         this.props.dispatch({
           type: 'institution/add',
@@ -343,6 +347,7 @@ export default class BasicForms extends PureComponent {
                        listType="picture-card"
                        onPreview={this.handlePreview}
                        onChange={this.handleChange}
+                       fileList={fileList}
                      >
                        {fileList.length >= 1 ? null : uploadButton}
                      </Upload>
