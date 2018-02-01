@@ -52,11 +52,15 @@ export default {
     },
     *update({ payload }, { call, put }) {
       yield call(updateMenu, payload);
-      message.success('提交成功');
+      if (response.code === 0 ) {
+        message.success('修改成功');
+      } else {
+        message.error(response.msg);
+        return
+      }
       yield put(routerRedux.push('/system/menu'));
     },
     *saveMenu({payload}, { call, put }) {
-      console.log(payload,"payload")
       yield put({
         type: 'saveMenuInfo',
         payload: payload,

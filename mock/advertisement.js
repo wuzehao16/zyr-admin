@@ -90,21 +90,10 @@ export function saveAds(req, res, u, b) {
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     const i = Math.ceil(Math.random() * 10000);
-    tableListDataSource.unshift({
+    tableListDataSource.unshift(Object.assign({
       adsId: `${i}`,
-      city: '广州',
-      cityCode: body.cityCode,
-      userPhone: body.userPhone,
-      userEmail: body.userEmail,
-      sort: body.sort,
-      startStatus: body.startStatus,
-      approvalStatus: body.approvalStatus,
-      loginAccount: body.loginAccount,
-      approvalUser: '小李子',
-      updateUser: "瓜娃子",
-      approvalTime: new Date,
-      registrationTime: new Date,
-    });
+      createTime: new Date,
+    },body));
     const result = {
       code: 0,
       data: tableListDataSource,

@@ -60,6 +60,24 @@ class StandardTable extends PureComponent {
     const approvalStatus = ['待上架', '已上架', '已下架'];
     const institutionType = ['无','银行机构','金融机构','小额贷款'];
     const isEvaluaStatuts = ['否', '是'];
+    const adsType = [
+      {
+        text: '产品-搜索框广告词',
+        value: 11100,
+      },
+      {
+        text: 'Banner',
+        value: 11200,
+      },
+      {
+        text: '小喇叭',
+        value: 11300,
+      },
+      {
+        text: 'app启动页',
+        value: 11400,
+      },
+    ]
     const columns = [
       {
         title: '序号',
@@ -73,6 +91,7 @@ class StandardTable extends PureComponent {
       {
         title: '广告类型',
         dataIndex: 'adsType',
+        // render: val => adsType.filter(item => item.value == val?item.text:'')
       },
       {
         title: '标题',
