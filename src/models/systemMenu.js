@@ -51,7 +51,7 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      yield call(updateMenu, payload);
+      const response = yield call(updateMenu, payload);
       if (response.code === 0 ) {
         message.success('修改成功');
       } else {
