@@ -41,8 +41,8 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         const values = {
           ...fieldsValue,
-          autoUpTime: fieldsValue.time && fieldsValue.time[0],
-          autoDownTime: fieldsValue.time && fieldsValue.time[1],
+          autoUpTime: fieldsValue.time && moment(fieldsValue.time[0]).local(),
+          autoDownTime: fieldsValue.time && moment(fieldsValue.time[1]).local(),
           adsPic: fieldsValue.adsPic && fieldsValue.adsPic.file.response.data.match(/ima[^\n]*jpeg/)[0],
         };
         this.props.dispatch({
@@ -246,7 +246,7 @@ export default class BasicForms extends PureComponent {
               label="上架状态"
             >
               <div>
-                {getFieldDecorator('public', {
+                {getFieldDecorator('upState', {
                   initialValue: '0',
                 })(
                   <Radio.Group>
@@ -256,8 +256,9 @@ export default class BasicForms extends PureComponent {
                   </Radio.Group>
                 )}
                 <FormItem
+                  label="自动上架时间"
                   style={{
-                    display: getFieldValue('public') === '1' ? 'block' : 'none',
+                    display: getFieldValue('upState') === '0' ? 'block' : 'none',
                   }}
                   >
                   {getFieldDecorator('time')(
