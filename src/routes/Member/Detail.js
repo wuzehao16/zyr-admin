@@ -21,7 +21,7 @@ export default class BasicForms extends PureComponent {
       sysMenus: value,
     });
   }
-  
+
   render() {
     const { submitting, data: { item }, dispatch } = this.props;
 
@@ -42,7 +42,7 @@ export default class BasicForms extends PureComponent {
             <Description term="真实姓名">{item.realName}</Description>
             <Description term="性别">{item.userSex === 1 ? '女' : '男'}</Description>
             <Description term="身份证号">{item.idNumber}</Description>
-            <Description term="微信号">{item.wachatNo}</Description>
+            <Description>&nbsp;</Description>
             <Description >
               <img src="https://picsum.photos/400/200?random" alt="" />
             </Description>
