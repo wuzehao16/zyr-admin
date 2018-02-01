@@ -182,7 +182,7 @@ export default class BasicForms extends PureComponent {
         {...formItemLayout}
         label="授权标识"
       >
-        {getFieldDecorator('"perms')(
+        {getFieldDecorator('perms')(
           <Input placeholder="多个用逗号分隔，如：user:list,user:create" />
         )}
       </FormItem>
@@ -255,7 +255,7 @@ export default class BasicForms extends PureComponent {
 
             <FormItem
               {...formItemLayout}
-              label="菜单名称"
+              label="名称"
             >
               {getFieldDecorator('name', {
                 rules: [{

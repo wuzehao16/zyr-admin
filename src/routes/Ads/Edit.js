@@ -4,6 +4,7 @@ import { routerRedux } from 'dva/router';
 import {
   Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Row, Col, Upload, Modal,
 } from 'antd';
+import moment from 'moment'
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
 
@@ -11,10 +12,22 @@ const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 7 },
+    md: { span: 5 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 12 },
+    md: { span: 12 },
+  },
+};
 
-@connect(({ institution, loading }) => ({
-  institution,
-  submitting: loading.effects['institution/add'],
+@connect(({ ads, loading }) => ({
+  ads,
+  submitting: loading.effects['ads/add'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -24,46 +37,173 @@ export default class BasicForms extends PureComponent {
     fileList: [],
   };
   componentDidMount() {
-    const { setFieldsValue } = this.props.form;
-    if (this.props.institution.item) {
-      const { item } = this.props.institution;
+    const { setFieldsValue, getFieldDecorator } = this.props.form;
+    if (this.props.ads.item) {
+      const { item } = this.props.ads;
+      getFieldDecorator('adsContent')
+      getFieldDecorator('adsId')
+      getFieldDecorator('adsPic')
+      getFieldDecorator('adsSort')
+      getFieldDecorator('adsUrl')
+      console.log(item);
+      if (item.adsPic) {
+        this.setState({
+          fileList:[{
+            uid:-1,
+            name:"xxx.png",
+            url: item.adsPic
+          }]
+        })
+        console.log(this.state)
+      }
       setFieldsValue({
-        institutionCode: item.institutionCode,
-        manageName: item.manageName,
-        userEmail: item.userEmail,
-        userPhone: item.userPhone,
-        loginAccount: item.loginAccount,
-        sort: item.sort,
-        cityCode: item.cityCode,
-        startStatus: item.startStatus,
-        approvalStatus: item.approvalStatus,
+        adsType: item.adsType,
+        adsContent: item.adsContent,
+        adsId: item.adsId,
+        adsPic: item.adsPic,
+        adsSort: item.adsSort,
+        adsTitle: item.adsTitle,
+        adsUrl: item.adsUrl,
+        time: [moment(item.autoUpTime), moment(item.autoDownTime)],
       });
-      if (item.institutionId) {
-        setFieldsValue({
-          institutionId: item.institutionId,
-        });
-      }
-      if (item.manageId) {
-        setFieldsValue({
-          manageId: item.manageId,
-        });
-      }
     }
   }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
+        console.log(fieldsValue.adsPic)
         const values = {
           ...fieldsValue,
-          manageLogoId: fieldsValue.manageLogoId && fieldsValue.manageLogoId.file.response.data.match(/ima[^\n]*jpeg/)[0],
+          autoUpTime: fieldsValue.time && moment(fieldsValue.time[0]).local(),
+          autoDownTime: fieldsValue.time && moment(fieldsValue.time[1]).local(),
+          // adsPic: fieldsValue.adsPic && fieldsValue.adsPic.file.response.data.match(/ima[^\n]*jpeg/)[0],
         };
         this.props.dispatch({
-          type: 'institution/add',
+          type: 'ads/add',
           payload: values,
         });
       }
     });
+  }
+  renderForm() {
+    switch (this.props.form.getFieldValue('adsType')) {
+      case '11100':
+        return this.renderProduct();
+        break;
+      case '11200':
+        return this.renderBanner();
+        break;
+      case '11300':
+        return this.renderTrumpet();
+        break;
+      case '11400':
+        return this.renderBanner();
+        break;
+      default:
+    }
+  }
+  renderProduct = ()=> {
+    const { getFieldDecorator } = this.props.form;
+    return(
+      <div>
+        <FormItem
+          {...formItemLayout}
+          label="匹配词"
+        >
+          {getFieldDecorator('adsMatch', {
+            rules: [{
+              required: true,
+              message: '请选择匹配词',
+            }],
+          })(
+            <Input placeholder="请输入"/>
+          )}
+        </FormItem>
+      </div>
+    );
+  }
+  renderBanner = ()=> {
+    const { getFieldDecorator } = this.props.form;
+    const { fileList, previewVisible,previewImage } = this.state;
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
+    return(
+      <div>
+        <FormItem
+          {...formItemLayout}
+          label="内容"
+        >
+          {getFieldDecorator('adsContent', {
+            rules: [{
+              required: true,
+              message: '请选择内容',
+            }],
+          })(
+            <Input placeholder="请输入"/>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="跳转链接"
+        >
+          {getFieldDecorator('adsUrl')(
+            <Input placeholder="请输入"/>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+           label="图片">
+           {getFieldDecorator('adsPic')(
+             <Upload
+               action="http://192.168.2.101:8080/sysAnno/uploadImage"
+               listType="picture-card"
+               onPreview={this.handlePreview}
+               onChange={this.handleChange}
+               fileList={fileList}
+             >
+               {fileList.length >= 1 ? null : uploadButton}
+             </Upload>
+           )}
+
+           <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+             <img alt="example" style={{ width: '100%' }} src={previewImage} />
+           </Modal>
+        </FormItem>
+      </div>
+    );
+  }
+  renderTrumpet = ()=> {
+    const { getFieldDecorator } = this.props.form;
+    return(
+      <div>
+        <FormItem
+          {...formItemLayout}
+          label="内容"
+        >
+          {getFieldDecorator('adsContent', {
+            rules: [{
+              required: true,
+              message: '请选择内容',
+            }],
+          })(
+            <Input placeholder="请输入"/>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="跳转链接"
+        >
+          {getFieldDecorator('adsUrl')(
+            <Input placeholder="请输入"/>
+          )}
+        </FormItem>
+      </div>
+    );
   }
   handleCancel = () => this.setState({ previewVisible: false })
 
@@ -77,51 +217,12 @@ export default class BasicForms extends PureComponent {
   handleChange = ({ fileList }) => {
     this.setState({ fileList })
   }
-  getInstitution = (code) => {
-    this.props.dispatch({
-      type: 'institution/getInstitution',
-      payload: {
-        cityCode: code
-      },
-    });
-  }
-  getSubInstitution = (code) => {
-    this.props.dispatch({
-      type: 'institution/getSubInstitution',
-      payload: {
-        parentId: code
-      },
-    });
-  }
   render() {
-    const { institution: { data, city, institutionType, institutionList, subInstitutionList }, submitting, dispatch } = this.props;
+    const { ads: { data, adsType }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    const { fileList, previewVisible,previewImage } = this.state;
-    getFieldDecorator('manageName')
-    if (city) {
-      var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    if (adsType) {
+      var adsTypeOptions = adsType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
-    if (institutionType) {
-      var institutionTypeOptions = institutionType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    if (institutionList) {
-      var institutionListOptions = institutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
-    }
-    if (subInstitutionList) {
-      var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
-    }
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 5 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 12 },
-      },
-    };
 
     const submitFormLayout = {
       wrapperCol: {
@@ -129,227 +230,88 @@ export default class BasicForms extends PureComponent {
         sm: { span: 10, offset: 7 },
       },
     };
-    const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    );
 
     return (
-      <PageHeaderLayout title="编辑机构">
+      <PageHeaderLayout title="编辑广告">
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
             hideRequiredMark
             style={{ marginTop: 8 }}
           >
-            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
-                <FormItem
-                  {...formItemLayout}
-                   label="机构类型">
-                  {getFieldDecorator('institutionCode', {
-                    rules: [{
-                      required: true, message: '请选择机构类型',
-                    }],
-                  })(
-                    <Select placeholder="请选择" style={{ width: '100%' }}>
-                    { institutionTypeOptions }
-                    </Select>
-                  )}
-                </FormItem>
-              </Col>
-              <Col md={12} sm={24}>
-                <FormItem
-                  {...formItemLayout}
-                   label="所在城市">
-                  {getFieldDecorator('cityCode', {
-                    rules: [{
-                      required: true, message: '请选择算在城市',
-                    }],
-                  })(
-                    <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getInstitution}>
-                      {cityOptions}
-                    </Select>
-                  )}
-                </FormItem>
-              </Col>
-            </Row>
-            {
-              ((value = getFieldValue('institutionCode'))=> {
-                switch(value){
-                 case '1':
-                  return <div>
-                          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                            <Col md={12} sm={24}>
-                              <FormItem
-                                {...formItemLayout}
-                                 label="银行名称">
-                                {getFieldDecorator('manageId')(
-                                  <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getSubInstitution}>
-                                  { institutionListOptions }
-                                  </Select>
-                                )}
-                              </FormItem>
-                            </Col>
-                            <Col md={12} sm={24}>
-                              <FormItem
-                                {...formItemLayout}
-                                 label="下属机构">
-                                {getFieldDecorator('institutionId')(
-                                  <Select placeholder="请选择" style={{ width: '100%' }} >
-                                    { subInstitutionListOptions }
-                                  </Select>
-                                )}
-                              </FormItem>
-                            </Col>
-                          </Row>
-                         </div>
-                  case '2':
-                    return <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                            <Col md={12} sm={24}>
-                              <Form.Item
-                                label="机构名称"
-                                {...formItemLayout}
-                               >
-                                {getFieldDecorator('manageName',{
-                                  rules: [
-                                    {
-                                      required: true,
-                                      message: '机构名称',
-                                    },
-                                  ],
-                                })(
-                                  <Input
-                                    placeholder="机构名称"
-                                  />
-                                )}
-                              </Form.Item>
-                            </Col>
-                          </Row>
-                  case '3':
-                  return <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                          <Col md={12} sm={24}>
-                            <Form.Item
-                              label="机构名称"
-                              {...formItemLayout}
-                             >
-                              {getFieldDecorator('manageName',{
-                                rules: [
-                                  {
-                                    required: true,
-                                    message: '机构名称',
-                                  },
-                                ],
-                              })(
-                                <Input
-                                  placeholder="机构名称"
-                                />
-                              )}
-                            </Form.Item>
-                          </Col>
-                        </Row>
-                    default:
-                      return null
-              }
-            })()
-            }
-            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
-                <FormItem
-                  {...formItemLayout}
-                   label="邮箱">
-                  {getFieldDecorator('userEmail',{
-                    rules: [{
-                      required: true, message: '请输入邮箱',
-                    }],
-                  })(
-                    <Input placeholder="请输入" />
-                  )}
-                </FormItem>
-              </Col>
-              <Col md={12} sm={24}>
-                <FormItem
-                  {...formItemLayout}
-                   label="登陆账号">
-                  {getFieldDecorator('loginAccount',{
-                    rules: [{
-                      required: true, message: '请输入登陆账号',
-                    }],
-                  })(
-                    <Input placeholder="请输入" />
-                  )}
-                </FormItem>
-              </Col>
-            </Row>
-            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
-                <FormItem
-                  {...formItemLayout}
-                   label="手机号">
-                  {getFieldDecorator('userPhone',{
-                    rules: [{
-                      required: true, message: '请输入手机号',
-                    }],
-                  })(
-                    <Input placeholder="请输入" />
-                  )}
-                </FormItem>
-              </Col>
-              <Col md={12} sm={24}>
-                <FormItem
-                  {...formItemLayout}
-                   label="排序">
-                  {getFieldDecorator('sort')(
-                    <Input placeholder="请输入" />
-                  )}
-                </FormItem>
-              </Col>
-            </Row>
-            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
-                <FormItem
-                  {...formItemLayout}
-                   label="启用状态">
-                  {getFieldDecorator('startStatus',{
-                    rules: [{
-                      required: true, message: '请选择是否启用',
-                    }],
-                  })(
-                    <Select placeholder="请选择" style={{ width: '100%' }}>
-                      <Option value="0">禁用</Option>
-                      <Option value="1">启用</Option>
-                    </Select>
-                  )}
-                </FormItem>
-              </Col>
-              <Col md={12} sm={24}>
-                <FormItem
-                  {...formItemLayout}
-                   label="机构logo">
-                   {getFieldDecorator('manageLogoId')(
-                     <Upload
-                       action="http://192.168.2.101:8080/sysAnno/uploadImage"
-                       listType="picture-card"
-                       onPreview={this.handlePreview}
-                       onChange={this.handleChange}
-                     >
-                       {fileList.length >= 1 ? null : uploadButton}
-                     </Upload>
-                   )}
-
-                   <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                   </Modal>
-                </FormItem>
-              </Col>
-            </Row>
+            <FormItem
+              {...formItemLayout}
+              label="广告类型"
+            >
+              {getFieldDecorator('adsType', {
+                rules: [{
+                  required: true,
+                  message: '请选择广告类型',
+                }],
+              })(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  {adsTypeOptions}
+                </Select>
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="标题"
+            >
+              {getFieldDecorator('adsTitle', {
+                rules: [{
+                  required: true,
+                  message: '请选择标题',
+                }],
+              })(
+                <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+            {this.renderForm()}
+            <FormItem
+              {...formItemLayout}
+              label="排序"
+            >
+              {getFieldDecorator('adsSort')(
+                <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="上架状态"
+            >
+                {getFieldDecorator('upState', {
+                  initialValue: '0',
+                })(
+                  <Radio.Group>
+                    <Radio value="0">待上架</Radio>
+                    <Radio value="1">上架</Radio>
+                    <Radio value="2">下架</Radio>
+                  </Radio.Group>
+                )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="自动上架时间"
+              style={{
+                display: getFieldValue('upState') === '0' ? 'block' : 'none',
+              }}
+              >
+              {getFieldDecorator('time')(
+                <RangePicker
+                 showTime={{
+                   hideDisabledOptions: true,
+                   defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')],
+                 }}
+                 format="YYYY-MM-DD HH:mm:ss"
+               />
+              )}
+            </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button style={{ marginRight: 50 }} type="primary" htmlType="submit" loading={submitting}>
+              <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button onClick={() => dispatch(routerRedux.push('/institution'))}>
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/ads'))}>
                 返回
               </Button>
             </FormItem>

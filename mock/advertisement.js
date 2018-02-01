@@ -5,12 +5,12 @@ let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
     adsId: `${i}`,
-    adsType:"1",
+    adsType:"11200",
     adsTitle:"Banner1",
     adsMatch:"我是匹配词"	,
     upState: Math.floor(Math.random()*3),
     adsContent:"Banner1的内容",
-    adsPic:"bsbsb.png"	,
+    adsPic:"https://picsum.photos/200/200"	,
     adsUrl	:"http://www.ibankmatch.com",
     adsSort:"2",
     oper:"dsadadsa11",
@@ -92,6 +92,7 @@ export function saveAds(req, res, u, b) {
     const i = Math.ceil(Math.random() * 10000);
     tableListDataSource.unshift(Object.assign({
       adsId: `${i}`,
+      oper: '二花',
       createTime: new Date,
     },body));
     const result = {

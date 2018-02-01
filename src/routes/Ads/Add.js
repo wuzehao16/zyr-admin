@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import {
   Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Row, Col, Upload, Modal,
 } from 'antd';
@@ -39,6 +40,7 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
+        console.log(fieldsValue.adsPic)
         const values = {
           ...fieldsValue,
           autoUpTime: fieldsValue.time && moment(fieldsValue.time[0]).local(),
@@ -173,7 +175,6 @@ export default class BasicForms extends PureComponent {
   handleCancel = () => this.setState({ previewVisible: false })
 
   handlePreview = (file) => {
-    console.log(file)
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true,
@@ -183,7 +184,7 @@ export default class BasicForms extends PureComponent {
     this.setState({ fileList })
   }
   render() {
-    const { ads: { data, adsType }, submitting } = this.props;
+    const { ads: { data, adsType }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     if (adsType) {
       var adsTypeOptions = adsType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
@@ -197,7 +198,7 @@ export default class BasicForms extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="新增产品">
+      <PageHeaderLayout title="新增广告">
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -245,7 +246,6 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="上架状态"
             >
-              <div>
                 {getFieldDecorator('upState', {
                   initialValue: '0',
                 })(
@@ -255,31 +255,31 @@ export default class BasicForms extends PureComponent {
                     <Radio value="2">下架</Radio>
                   </Radio.Group>
                 )}
-                <FormItem
-                  label="自动上架时间"
-                  style={{
-                    display: getFieldValue('upState') === '0' ? 'block' : 'none',
-                  }}
-                  >
-                  {getFieldDecorator('time')(
-                    <RangePicker
-                     // disabledDate={disabledDate}
-                     // disabledTime={disabledRangeTime}
-                     showTime={{
-                       hideDisabledOptions: true,
-                       defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')],
-                     }}
-                     format="YYYY-MM-DD HH:mm:ss"
-                   />
-                  )}
-                </FormItem>
-              </div>
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="自动上架时间"
+              style={{
+                display: getFieldValue('upState') === '0' ? 'block' : 'none',
+              }}
+              >
+              {getFieldDecorator('time')(
+                <RangePicker
+                 showTime={{
+                   hideDisabledOptions: true,
+                   defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')],
+                 }}
+                 format="YYYY-MM-DD HH:mm:ss"
+               />
+              )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 8 }}>保存</Button>
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/ads'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

@@ -52,7 +52,7 @@ class RoleTree extends React.Component {
           </TreeNode>
         );
       }
-      return <TreeNode {...item} />;
+      return <TreeNode title={item.name} key={item.meunId} />;
     });
   }
   render() {
