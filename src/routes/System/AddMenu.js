@@ -4,7 +4,6 @@ import {
   Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox, Radio, Modal,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import Treebeard from '../../components/Treebeard';
 import TreeSelect from '../../components/TreeSelect';
 import styles from './style.less';
 
