@@ -32,7 +32,7 @@ export default class BasicForms extends PureComponent {
         if (values.sysMenus) {
           /* eslint-disable no-param-reassign */
           values.sysMenus.forEach((item, index, arr) => {
-            arr[index] = { roleId: item };
+            arr[index] = { meunId: item };
           });
         } else {
           values.sysMenus = [];
