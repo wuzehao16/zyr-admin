@@ -64,8 +64,13 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      yield call(update, payload);
-      message.success('提交成功');
+      const response = yield call(update, payload);
+      if (response.code === 0) {
+        message.success('提交成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
       yield put(routerRedux.push('/product'));
     },
     *updateShelvesStatus({ payload, callback }, { call, put }) {
