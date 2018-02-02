@@ -56,7 +56,7 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, pagination }, loading } = this.props
+    const { data: { data, count }, loading } = this.props
     const approvalStatus = ['未通过', '审核中', '已通过'];
     const lockStatus = ['禁用', '启用'];
     const columns = [
@@ -169,7 +169,7 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      total: count,
       showTotal:total => `总共 ${total} 条`,
     };
 

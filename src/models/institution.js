@@ -82,7 +82,7 @@ export default {
       const response = yield call(queryDetail, payload);
       yield put({
         type: 'saveDetail',
-        payload: response.data,
+        payload: response.data && response.data[0],
       });
       yield put(routerRedux.push('/institution/edit'));
     },
@@ -90,7 +90,7 @@ export default {
       const response = yield call(queryDetail, payload);
       yield put({
         type: 'saveDetail',
-        payload: response.data,
+        payload: response.data && response.data[0],
       });
       yield put(routerRedux.push('/institution/Detail'));
     },
@@ -98,7 +98,7 @@ export default {
       const response = yield call(queryDetail, payload);
       yield put({
         type: 'saveDetail',
-        payload: response.data,
+        payload: response.data && response.data[0],
       });
       yield put(routerRedux.push('/institution/Review'));
     },
