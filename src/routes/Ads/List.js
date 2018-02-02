@@ -22,7 +22,7 @@ const CreateForm = Form.create()((props) => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       fieldsValue.adsId = item.adsId;
-      fieldsValue.upState = item.upState==1 ? 0: 1;
+      fieldsValue.upState = item.upState==1 ? 2: 1;
       handleAdd(fieldsValue);
     });
   };
