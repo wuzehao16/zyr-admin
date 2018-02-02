@@ -106,12 +106,7 @@ export default class BasicForms extends PureComponent {
           {...formItemLayout}
           label="内容"
         >
-          {getFieldDecorator('adsContent', {
-            rules: [{
-              required: true,
-              message: '请选择内容',
-            }],
-          })(
+          {getFieldDecorator('adsContent')(
             <Input placeholder="请输入"/>
           )}
         </FormItem>
@@ -202,7 +197,7 @@ export default class BasicForms extends PureComponent {
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
-            hideRequiredMark
+            // hideRequiredMark
             style={{ marginTop: 8 }}
           >
             <FormItem
@@ -246,9 +241,12 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="上架状态"
             >
-                {getFieldDecorator('upState', {
-                  initialValue: '0',
-                })(
+              {getFieldDecorator('upState', {
+                rules: [{
+                  required: true,
+                  message: '请选择上架状态',
+                }],
+              })(
                   <Radio.Group>
                     <Radio value="0">待上架</Radio>
                     <Radio value="1">上架</Radio>
@@ -263,11 +261,16 @@ export default class BasicForms extends PureComponent {
                 display: getFieldValue('upState') === '0' ? 'block' : 'none',
               }}
               >
-              {getFieldDecorator('time')(
+              {getFieldDecorator('time', {
+                rules:[{
+                  required: true,
+                  message: '请选择上架时间',
+                }],
+              })(
                 <RangePicker
                  showTime={{
                    hideDisabledOptions: true,
-                   defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')],
+                   defaultValue: [moment(new Date(), 'YYYY-MM-DD HH:mm:ss'), moment(new Date(), 'HH:mm:ss')],
                  }}
                  format="YYYY-MM-DD HH:mm:ss"
                />
