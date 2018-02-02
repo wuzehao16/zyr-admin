@@ -6,12 +6,16 @@ class MenuTreeSelect extends React.Component {
   state = {
     value: undefined,
   }
+  componentWillReceiveProps(nextProps) {
+    if ('default' in nextProps) {
+      this.setState({
+        value: nextProps.default,
+      });
+    }
+  }
   onChange = (value) => {
     console.log(arguments);
     this.setState({ value });
-    if (this.props.onChange) {
-      this.props.onChange(value)
-    }
   }
   renderTreeNodes = (data) => {
     return data.map((item) => {

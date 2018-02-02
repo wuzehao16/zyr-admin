@@ -182,8 +182,8 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data } = this.props;
     var treeData = [];
-    if (data) {
-      treeData = [data.data.data]
+    if (data && data.data && data.data.data) {
+        treeData = [data.data.data]
     }
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { modalVisible } = this.state;
@@ -239,7 +239,7 @@ export default class BasicForms extends PureComponent {
               })(
                 <TreeSelect
                   data={treeData}
-                  onChange={this.selectTree}
+                  // onChange={this.selectTree}
                   />
               )}
             </FormItem>
