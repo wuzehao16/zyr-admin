@@ -13,7 +13,6 @@ for (let i = 0; i < 46; i += 1) {
     institutionCode:"1",
     userPhone: "13812341234",
     institutionId:"5e553724754f4d47b57c45ff6afd53d6",
-    manageId:"1f27c1d8131a4096bd1e659f9cce94e2",
     institutionCode: `${Math.floor(Math.random()*2) + 1}`,
     loginAccount: "jaccc",
     manageLogoId: "https://picsum.photos/200/200",
@@ -138,7 +137,7 @@ export function getInstitutionDetail(req, res, u) {
 
   const result = {
     code: 0,
-    data: dataSource[0],
+    data: [dataSource[0]],
     count: dataSource.length,
   };
 

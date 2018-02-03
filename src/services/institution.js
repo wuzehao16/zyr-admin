@@ -19,6 +19,14 @@ export async function update(params) {
     },
   });
 }
+export async function review(params) {
+  return request('/sys/updateStatusInstitution', {
+    method: 'PUT',
+    body: {
+      ...params,
+    },
+  });
+}
 
 export async function updatePassword(params) {
   return request('/sys/editPasswordUser', {

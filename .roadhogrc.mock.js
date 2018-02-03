@@ -200,6 +200,7 @@ const proxy = {
   'GET /sys/viewdetailInstitutionManage': getInstitutionDetail,
   'POST /sys/addInstitutionManage': saveInstitution,
   'PUT /sys/editInstitutionManage': updateInstitution,
+  'PUT /sys/updateStatusInstitution': updateInstitution,
   'PUT /sys/editPasswordUser': updatePassword,
   //产品管理
   'GET /sys/selectProduct': selectProduct,
