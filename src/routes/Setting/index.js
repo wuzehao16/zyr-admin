@@ -19,23 +19,57 @@ const FormItem = Form.Item;
 @Form.create()
 export default class BasicForms extends PureComponent {
   state = {
-    count: 0,
+    count1: 0,
+    count2: 0,
+    count3: 0,
+    count4: 0,
     expandForm1: false,
     expandForm2: false,
     expandForm3: false,
   }
   setCaptcha = () => {
     let count = 59;
-    this.setState({ count });
+    this.setState({ count1: count });
     this.interval = setInterval(() => {
       count -= 1;
-      this.setState({ count });
+      this.setState({ count1: count });
       if (count === 0) {
         clearInterval(this.interval);
       }
     }, 1000);
   };
-  onGetCaptcha = () => {
+  onGetCaptcha1 = () => {
+    this.props.dispatch({
+      type: 'setting/queryOldPhoneCaptcha',
+    });
+    let count = 59;
+    this.setState({ count1: count });
+    this.interval = setInterval(() => {
+      count -= 1;
+      this.setState({ count1: count });
+      if (count === 0) {
+        clearInterval(this.interval);
+      }
+    }, 1000);
+  };
+  onGetCaptcha2 = () => {
+    this.props.dispatch({
+      type: 'setting/queryNewPhoneCaptcha',
+      payload: {
+        ...this.props.data,
+      },
+    });
+    let count = 59;
+    this.setState({ count2: count });
+    this.interval = setInterval(() => {
+      count -= 1;
+      this.setState({ count2: count });
+      if (count === 0) {
+        clearInterval(this.interval);
+      }
+    }, 1000);
+  };
+  onGetCaptcha3 = () => {
     this.props.dispatch({
       type: 'register/getPhoneCaptcha',
       payload: {
@@ -133,7 +167,7 @@ export default class BasicForms extends PureComponent {
   }
   renderAdvancedForm2() {
     const { submitting } = this.props;
-    const { count } = this.state;
+    const { count1, count2 } = this.state;
     const { getFieldDecorator } = this.props.form;
     const onValidateForm = (e) => {
       e.preventDefault();
@@ -158,8 +192,8 @@ export default class BasicForms extends PureComponent {
           <Description>
             <Form.Item>
               {/* <Row gutter={24}> */}
-                <Col span={8}>
-                  {getFieldDecorator('code', {
+                <Col span={12}>
+                  {getFieldDecorator('codeByoldEMail', {
                     rules: [
                       {
                         required: true,
@@ -171,11 +205,11 @@ export default class BasicForms extends PureComponent {
                 <Col span={8}>
                   <Button
 
-                    disabled={count}
+                    disabled={count1}
                     // className={styles.getCaptcha}
-                    onClick={this.onGetCaptcha}
+                    onClick={this.onGetCaptcha1}
                   >
-                    {count ? `${count} s` : '获取验证码'}
+                    {count1 ? `${count1} s` : '获取验证码'}
                   </Button>
                 </Col>
               {/* </Row> */}
@@ -188,10 +222,13 @@ export default class BasicForms extends PureComponent {
             <Col sm={12} xs={24}>
               <FormItem
                 >
-                {getFieldDecorator('oldPassword',{
+                {getFieldDecorator('newEMail',{
                   rules:[{
+                      type: 'email',
+                      message: '请输入邮箱',
+                    },{
                     required: true,
-                    message: '请输入旧密码'
+                    message: '请输入邮箱'
                   }]
                 })(
                   <Input style={{width:'200px'}} type="password"/>
@@ -202,8 +239,8 @@ export default class BasicForms extends PureComponent {
           <Description>
             <Form.Item>
               {/* <Row gutter={24}> */}
-                <Col span={8}>
-                  {getFieldDecorator('code', {
+                <Col span={12}>
+                  {getFieldDecorator('codeByNewEmail', {
                     rules: [
                       {
                         required: true,
@@ -215,11 +252,11 @@ export default class BasicForms extends PureComponent {
                 <Col span={8}>
                   <Button
 
-                    disabled={count}
+                    disabled={count2}
                     // className={styles.getCaptcha}
-                    onClick={this.onGetCaptcha}
+                    onClick={this.onGetCaptcha2}
                   >
-                    {count ? `${count} s` : '获取验证码'}
+                    {count2 ? `${count2} s` : '获取验证码'}
                   </Button>
                 </Col>
               {/* </Row> */}
@@ -275,7 +312,6 @@ export default class BasicForms extends PureComponent {
   }
   render() {
     const { submitting, data:{ currentUser } , dispatch } = this.props;
-    console.log(currentUser,"currentUser")
     return (
       <PageHeaderLayout title="会员等级详情" >
         <Card bordered={false}>

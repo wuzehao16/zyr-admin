@@ -29,8 +29,10 @@ export default class BasicForms extends PureComponent {
       const { item } = this.props.institution;
       getFieldDecorator('institutionId');
       getFieldDecorator('manageId');
+      getFieldDecorator('sublInstitution');
       setFieldsValue({
         institutionCode: item.institutionCode,
+        sublInstitution: item.sublInstitution,
         manageName: item.manageName,
         userEmail: item.userEmail,
         userPhone: item.userPhone,
@@ -58,6 +60,12 @@ export default class BasicForms extends PureComponent {
         setFieldsValue({
           manageId: item.manageId,
         });
+      }
+      if (item.cityCode) {
+        this.getInstitution(item.cityCode);
+      }
+      if (item.sublInstitution) {
+        this.getSubInstitution(item.sublInstitution)
       }
     }
   }
