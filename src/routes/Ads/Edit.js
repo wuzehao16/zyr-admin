@@ -27,7 +27,7 @@ const formItemLayout = {
 
 @connect(({ ads, loading }) => ({
   ads,
-  submitting: loading.effects['ads/add'],
+  submitting: loading.effects['ads/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -45,6 +45,7 @@ export default class BasicForms extends PureComponent {
       getFieldDecorator('adsPic');
       getFieldDecorator('adsSort');
       getFieldDecorator('adsUrl');
+      getFieldDecorator('adsMatch');
       if (item.adsPic) {
         this.setState({
           fileList:[{
@@ -58,6 +59,7 @@ export default class BasicForms extends PureComponent {
         adsContent: item.adsContent,
         adsId: item.adsId,
         adsPic: item.adsPic,
+        adsMatch: item.adsMatch,
         adsSort: item.adsSort,
         adsTitle: item.adsTitle,
         adsUrl: item.adsUrl,
@@ -79,7 +81,7 @@ export default class BasicForms extends PureComponent {
                                           : fieldsValue.adsPic
         };
         this.props.dispatch({
-          type: 'ads/add',
+          type: 'ads/update',
           payload: values,
         });
       }
