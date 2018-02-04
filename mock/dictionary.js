@@ -393,6 +393,38 @@ export function selectDictionary(req, res, u) {
     }
     return
   }
+  if (params.type === 'pushmesType') {
+    const result = {
+      code: 0,
+      data: [{
+        label: '产品审核消息',
+        value: '15000'
+      },
+      {
+        label: '机构审核消息',
+        value: '15100'
+      },
+      {
+        label: 'app用户重置密码',
+        value: '15200'
+      },
+      {
+        label: '机构用户重置密码消息',
+        value: '15300'
+      },
+      {
+        label: '新增机构消息',
+        value: '15400'
+      }],
+    };
+
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+    return
+  }
   if (params.type === 'auditStatus') {
     const result = {
       code: 0,

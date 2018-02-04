@@ -19,6 +19,7 @@ import { getUser, updateUser, updatePassword, getUserDetail } from './mock/membe
 import { selectInstitution, updateInstitution, saveInstitution, getInstitutionDetail } from './mock/institution'
 import { selectProduct, updateProduct, saveProduct, getProductDetail } from './mock/product'
 import { selectAds, updateAds, saveAds, getAdsDetail, deleteAds } from './mock/advertisement'
+import { selectPMI,selectAllMI, updatePMI, savePMI, getPMIDetail, deletePMI } from './mock/info'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -216,6 +217,14 @@ const proxy = {
   'PUT /sys/updateAds': updateAds,
   'PUT /sys/upStateAds': updatePassword,
   'DELETE /sys/deleteAds/*': deleteAds,
+  //消息管理
+  'GET /sys/selectAds': selectAds,
+  'GET /sys/selectAllMI': selectAllMI,
+  'GET /sys/selectAdsDetail': getAdsDetail,
+  'POST /sys/insertPMI': saveAds,
+  'PUT /sys/updatePMI': updateAds,
+  'PUT /sys/upStateAds': updatePassword,
+  'DELETE /sys/deleteAds/*': deletePMI,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

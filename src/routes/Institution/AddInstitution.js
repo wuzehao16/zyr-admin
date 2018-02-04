@@ -28,7 +28,7 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         const values = {
           ...fieldsValue,
-          manageLogoId: fieldsValue.manageLogoId && fieldsValue.manageLogoId.file.response.data.match(/ima[^\n]*jpeg/)[0],
+          manageLogoId: fieldsValue.manageLogoId && fieldsValue.manageLogoId.file && fieldsValue.manageLogoId.file.response.data.match(/ima[^\n]*jpeg/)[0],
         };
         this.props.dispatch({
           type: 'institution/add',
@@ -301,7 +301,7 @@ export default class BasicForms extends PureComponent {
                    label="机构logo">
                    {getFieldDecorator('manageLogoId')(
                      <Upload
-                       action="http://192.168.2.101:8080/sysAnno/uploadImage"
+                       action="http://47.104.27.184:8000/sysAnno/uploadImage"
                        listType="picture-card"
                        onPreview={this.handlePreview}
                        onChange={this.handleChange}

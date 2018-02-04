@@ -335,7 +335,7 @@ export const getRouterData = (app) => {
       name: '新增广告',
     },
     '/info/sysinfo': {
-      component: dynamicWrapper(app, ['ads'], () => import('../routes/Info/SysinfoList')),
+      component: dynamicWrapper(app, ['info'], () => import('../routes/Info/SysinfoList')),
       name: '系统消息',
     },
     // '/user/:id': {

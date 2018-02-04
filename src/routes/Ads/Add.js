@@ -254,28 +254,28 @@ export default class BasicForms extends PureComponent {
                   </Radio.Group>
                 )}
             </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="自动上架时间"
-              style={{
-                display: getFieldValue('upState') === '0' ? 'block' : 'none',
-              }}
-              >
-              {getFieldDecorator('time', {
-                rules:[{
-                  required: true,
-                  message: '请选择上架时间',
-                }],
-              })(
-                <RangePicker
-                 showTime={{
-                   hideDisabledOptions: true,
-                   defaultValue: [moment(new Date(), 'YYYY-MM-DD HH:mm:ss'), moment(new Date(), 'HH:mm:ss')],
-                 }}
-                 format="YYYY-MM-DD HH:mm:ss"
-               />
-              )}
-            </FormItem>
+            {getFieldValue('upState') ==='0'
+               ?<FormItem
+                {...formItemLayout}
+                label="自动上架时间"
+                >
+                {getFieldDecorator('time', {
+                  rules:[{
+                    required: true,
+                    message: '请选择上架时间',
+                  }],
+                })(
+                  <RangePicker
+                   showTime={{
+                     hideDisabledOptions: true,
+                     defaultValue: [moment(new Date(), 'YYYY-MM-DD HH:mm:ss'), moment(new Date(), 'HH:mm:ss')],
+                   }}
+                   format="YYYY-MM-DD HH:mm:ss"
+                 />
+                )}
+              </FormItem>
+              : null
+            }
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交

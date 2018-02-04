@@ -7,7 +7,6 @@ const statusMap = ['default', 'processing', 'success', 'error'];
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
-    totalCallNo: 0,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -15,21 +14,17 @@ class StandardTable extends PureComponent {
     if (nextProps.selectedRows.length === 0) {
       this.setState({
         selectedRowKeys: [],
-        totalCallNo: 0,
       });
     }
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
-    const totalCallNo = selectedRows.reduce((sum, val) => {
-      return sum + parseFloat(val.callNo, 10);
-    }, 0);
 
     if (this.props.onSelectRow) {
       this.props.onSelectRow(selectedRows);
     }
 
-    this.setState({ selectedRowKeys, totalCallNo });
+    this.setState({ selectedRowKeys });
   }
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -41,74 +36,63 @@ class StandardTable extends PureComponent {
   }
 
   render() {
-    const { selectedRowKeys, totalCallNo } = this.state;
-    const { data: { list, pagination }, loading } = this.props;
+    const { selectedRowKeys } = this.state;
+    const { data: { data, count }, loading } = this.props;
 
     const status = ['关闭', '运行中', '已上线', '异常'];
 
     const columns = [
       {
-        title: '规则编号',
+        title: '序号',
         dataIndex: 'no',
-      },
-      {
-        title: '描述',
-        dataIndex: 'description',
-      },
-      {
-        title: '服务调用次数',
-        dataIndex: 'callNo',
-        sorter: true,
-        align: 'right',
-        render: val => `${val} 万`,
-      },
-      {
-        title: '状态',
-        dataIndex: 'status',
-        filters: [
-          {
-            text: status[0],
-            value: 0,
-          },
-          {
-            text: status[1],
-            value: 1,
-          },
-          {
-            text: status[2],
-            value: 2,
-          },
-          {
-            text: status[3],
-            value: 3,
-          },
-        ],
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        render: (text, record, index) => {
+          return (
+              <span>{index+1}</span>
+          );
         },
       },
       {
-        title: '更新时间',
-        dataIndex: 'updatedAt',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        title: '标题',
+        dataIndex: 'msgTitle',
       },
       {
-        title: '操作',
-        render: () => (
-          <Fragment>
-            <a href="">配置</a>
-            <Divider type="vertical" />
-            <a href="">订阅警报</a>
-          </Fragment>
-        ),
+        title: '内容',
+        width:'10%',
+        dataIndex: 'msgContent',
+        render: (text) => <span className={styles.txt}>{text}</span>,
+      },
+      {
+        title: '消息对象',
+        dataIndex: 'msgType',
+      },
+      {
+        title: '推送对象',
+        dataIndex: 'object',
+      },
+      {
+        title: '手机号码',
+        dataIndex: 'phone',
+      },
+      {
+        title: '邮箱',
+        dataIndex: 'email',
+      },
+      {
+        title: '操作者',
+        dataIndex: 'oper',
+      },
+      {
+        title: '推送时间',
+        dataIndex: 'createTime',
+        sorter: true,
+        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
     ];
 
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      ...count,
       showTotal:total => `总共 ${total} 条`,
     };
 
@@ -127,7 +111,6 @@ class StandardTable extends PureComponent {
             message={(
               <div>
                 已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                服务调用总计 <span style={{ fontWeight: 600 }}>{totalCallNo}</span> 万
                 <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
               </div>
             )}
@@ -137,9 +120,10 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.key}
+          rowKey={record => record.msgId}
+          expandedRowRender={record => <p style={{ margin: 0 }}>{record.msgContent}</p>}
           rowSelection={rowSelection}
-          dataSource={list}
+          dataSource={data}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}
