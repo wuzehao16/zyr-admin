@@ -40,7 +40,7 @@ export default class BasicForms extends PureComponent {
   };
   onGetCaptcha1 = () => {
     this.props.dispatch({
-      type: 'setting/queryOldPhoneCaptcha',
+      type: 'setting/queryOldEmailCaptcha',
     });
     let count = 59;
     this.setState({ count1: count });
@@ -53,10 +53,12 @@ export default class BasicForms extends PureComponent {
     }, 1000);
   };
   onGetCaptcha2 = () => {
+    const { getFieldValue } = this.props.form;
+    console.log(getFieldValue('newEMail'))
     this.props.dispatch({
-      type: 'setting/queryNewPhoneCaptcha',
+      type: 'setting/queryNewEmailCaptcha',
       payload: {
-        ...this.props.data,
+        newEMail:getFieldValue('newEMail'),
       },
     });
     let count = 59;
@@ -196,7 +198,7 @@ export default class BasicForms extends PureComponent {
       });
     };
     return(
-      <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={1}>
+      <DescriptionList size="large" title="修改邮箱" style={{ marginBottom: 32 }} col={1}>
         <Description>为确保是您本人操作，我们将会把验证码发送到您已绑定的邮箱。</Description>
         <Form
           onSubmit={this.handleSubmit2}
@@ -204,7 +206,7 @@ export default class BasicForms extends PureComponent {
           <Description>
             <Form.Item>
               {/* <Row gutter={24}> */}
-                <Col span={12}>
+                <Col span={14}>
                   {getFieldDecorator('codeByoldEMail', {
                     rules: [
                       {
@@ -214,7 +216,7 @@ export default class BasicForms extends PureComponent {
                     ],
                   })(<Input  placeholder="验证码" onPressEnter={onValidateForm}/>)}
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Button
 
                     disabled={count1}
@@ -243,7 +245,7 @@ export default class BasicForms extends PureComponent {
                     message: '请输入邮箱'
                   }]
                 })(
-                  <Input style={{width:'200px'}} type="password"/>
+                  <Input style={{width:'200px'}} />
               )}
               </FormItem>
             </Col>
@@ -251,7 +253,7 @@ export default class BasicForms extends PureComponent {
           <Description>
             <Form.Item>
               {/* <Row gutter={24}> */}
-                <Col span={12}>
+                <Col span={14}>
                   {getFieldDecorator('codeByNewEmail', {
                     rules: [
                       {
@@ -261,7 +263,7 @@ export default class BasicForms extends PureComponent {
                     ],
                   })(<Input  placeholder="验证码" onPressEnter={onValidateForm}/>)}
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Button
 
                     disabled={count2}
@@ -290,9 +292,130 @@ export default class BasicForms extends PureComponent {
   renderSimpleForm2() {
     const { data:{ currentUser } } = this.props;
     return(
-    <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={1}>
+    <DescriptionList size="large" title="修改邮箱" style={{ marginBottom: 32 }} col={1}>
       <Description>{currentUser.userEmail}</Description>
       <a style={{ float:'right' }} onClick={this.toggleForm2}>
+        展开 <Icon type="down" />
+      </a>
+    </DescriptionList>
+    )
+  }
+  renderAdvancedForm3() {
+    const { submitting } = this.props;
+    const { count3, count4 } = this.state;
+    const { getFieldDecorator } = this.props.form;
+    const onValidateForm = (e) => {
+      e.preventDefault();
+      validateFields((err, values) => {
+        if (!err) {
+          dispatch({
+            type: 'register/submitStep2Form',
+            payload: {
+              ...data,
+              ...values,
+            },
+          });
+        }
+      });
+    };
+    return(
+      <DescriptionList size="large" title="修改手机号" style={{ marginBottom: 32 }} col={1}>
+        <Description>为确保是您本人操作，我们将会把验证码发送到您已绑定的邮箱。</Description>
+        <Form
+          onSubmit={this.handleSubmit3}
+          >
+          <Description>
+            <Form.Item>
+              {/* <Row gutter={24}> */}
+                <Col span={14}>
+                  {getFieldDecorator('codeByoldEMail', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入验证码！',
+                      },
+                    ],
+                  })(<Input  placeholder="验证码" onPressEnter={onValidateForm}/>)}
+                </Col>
+                <Col span={10}>
+                  <Button
+
+                    disabled={count3}
+                    // className={styles.getCaptcha}
+                    onClick={this.onGetCaptcha3}
+                  >
+                    {count3 ? `${count3} s` : '获取验证码'}
+                  </Button>
+                </Col>
+              {/* </Row> */}
+            </Form.Item>
+          </Description>
+          <Description>
+            我们已经发送了验证码到您的邮箱
+          </Description>
+          <Description term="新邮箱">
+            <Col sm={12} xs={24}>
+              <FormItem
+                >
+                {getFieldDecorator('newEMail',{
+                  rules:[{
+                      type: 'email',
+                      message: '请输入邮箱',
+                    },{
+                    required: true,
+                    message: '请输入邮箱'
+                  }]
+                })(
+                  <Input style={{width:'200px'}} />
+              )}
+              </FormItem>
+            </Col>
+          </Description>
+          <Description>
+            <Form.Item>
+              {/* <Row gutter={24}> */}
+                <Col span={14}>
+                  {getFieldDecorator('codeByNewEmail', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入验证码！',
+                      },
+                    ],
+                  })(<Input  placeholder="验证码" onPressEnter={onValidateForm}/>)}
+                </Col>
+                <Col span={10}>
+                  <Button
+
+                    disabled={count4}
+                    // className={styles.getCaptcha}
+                    onClick={this.onGetCaptcha4}
+                  >
+                    {count4 ? `${count4} s` : '获取验证码'}
+                  </Button>
+                </Col>
+              {/* </Row> */}
+            </Form.Item>
+          </Description>
+        <Description>
+          <Button  type="primary" htmlType="submit" loading={submitting}>
+            保存
+          </Button>
+        </Description>
+        </Form>
+        <a style={{ float:'right' }} onClick={this.toggleForm2}>
+          收起 <Icon type="up" />
+        </a>
+      </DescriptionList>
+
+    )
+  }
+  renderSimpleForm3() {
+    const { data:{ currentUser } } = this.props;
+    return(
+    <DescriptionList size="large" title="修改手机" style={{ marginBottom: 32 }} col={1}>
+      <Description>{currentUser.userPhone}</Description>
+      <a style={{ float:'right' }} onClick={this.toggleForm3}>
         展开 <Icon type="down" />
       </a>
     </DescriptionList>
@@ -337,9 +460,7 @@ export default class BasicForms extends PureComponent {
                     <Divider style={{ marginBottom: 32 }} />
                     {this.renderForm2()}
                     <Divider style={{ marginBottom: 32 }} />
-                    <DescriptionList size="large" title="修改手机" style={{ marginBottom: 32 }} col={1}>
-                      <Description>{currentUser.userPhone}</Description>
-                    </DescriptionList>
+                    {this.renderForm3()}
                     <Divider style={{ marginBottom: 32 }} />
                   </div>
                 ) : <Spin size="small" style={{ marginLeft: 8 }} />}

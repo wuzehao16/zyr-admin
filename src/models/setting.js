@@ -21,7 +21,7 @@ export default {
     *queryOldEmailCaptcha({ payload }, { call, put }) {
       const response = yield call(queryOldEmailCaptcha, payload);
     },
-    *queryOldEmailCaptcha({ payload }, { call, put }) {
+    *queryNewEmailCaptcha({ payload }, { call, put }) {
       const response = yield call(queryOldEmailCaptcha, payload);
     },
     *updatePassword({ payload, callback }, { call, put }) {
