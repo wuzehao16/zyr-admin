@@ -27,6 +27,17 @@ class StandardTable extends PureComponent {
     this.setState({ selectedRowKeys });
   }
 
+  handleEdit = (item) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(item);
+    }
+  }
+  handleUpdateStatus = (item) => {
+    if (this.props.handleUpdateStatus) {
+      this.props.handleUpdateStatus(item);
+    }
+  }
+
   handleTableChange = (pagination, filters, sorter) => {
     this.props.onChange(pagination, filters, sorter);
   }
@@ -79,6 +90,21 @@ class StandardTable extends PureComponent {
         dataIndex: 'createTime',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      },
+      {
+        title: '操作',
+        align: 'center',
+        render: (text, record) => {
+          return (
+            <Fragment>
+              <span>
+                <a onClick={() => this.handleUpdateStatus(record)}>{record.unlockStatus==1?'下架':'上架'}</a>
+                <Divider type="vertical" />
+              </span>
+              <a onClick={() => this.handleEdit(record)}>编辑</a>
+            </Fragment>
+          );
+        },
       },
     ];
 

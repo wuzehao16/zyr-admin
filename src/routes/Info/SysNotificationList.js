@@ -14,30 +14,28 @@ const { RangePicker } = DatePicker;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 const CreateForm = Form.create()((props) => {
-  const { modalVisible, form, handleAdd, handleModalVisible } = props;
+  const { modalVisible, form, handleAdd, handleModalVisible, item } = props;
+  const { getFieldDecorator } = form;
+
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
+      fieldsValue.paltforMsgId = item.paltforMsgId;
+      fieldsValue.unlockStatus = item.unlockStatus==1 ? 2: 1;
       handleAdd(fieldsValue);
     });
   };
   return (
     <Modal
-      title="新建规则"
+      title={item.unlockStatus==1?"下架产品":"上架产品"}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
       <FormItem
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 15 }}
-        label="描述"
+        style={{ textAlign: 'center',fontSize:'24px' }}
       >
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(
-          <Input placeholder="请输入" />
-        )}
+        确认{item.unlockStatus==1?"下架":"上架"}{item.adsName}?
       </FormItem>
     </Modal>
   );
@@ -54,6 +52,7 @@ export default class TableList extends PureComponent {
     expandForm: false,
     selectedRows: [],
     formValues: {},
+    item: {},
   };
 
   componentDidMount() {
@@ -106,7 +105,23 @@ export default class TableList extends PureComponent {
       payload: {},
     });
   }
-
+  handleUpdateStatus = (v) => {
+    this.setState({
+      item: {
+        paltforMsgId: v.paltforMsgId,
+        unlockStatus: v.unlockStatus
+      },
+    });
+    this.handleModalVisible(true);
+  }
+  handleEdit = (item) => {
+    this.props.dispatch({
+      type: 'info/fetchEdit',
+      payload: {
+        id: item.paltforMsgId,
+      },
+    });
+  }
   toggleForm = () => {
     this.setState({
       expandForm: !this.state.expandForm,
@@ -178,13 +193,9 @@ export default class TableList extends PureComponent {
 
   handleAdd = (fields) => {
     this.props.dispatch({
-      type: 'info/add',
-      payload: {
-        description: fields.desc,
-      },
+      type: 'ads/upPMIState',
+      payload: fields,
     });
-
-    message.success('添加成功');
     this.setState({
       modalVisible: false,
     });
@@ -234,7 +245,7 @@ export default class TableList extends PureComponent {
 
   render() {
     const { info: { data }, loading, dispatch } = this.props;
-    const { selectedRows, modalVisible } = this.state;
+    const { selectedRows, modalVisible, item } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
@@ -276,12 +287,15 @@ export default class TableList extends PureComponent {
               loading={loading}
               data={data}
               onSelectRow={this.handleSelectRows}
+              handleEdit={this.handleEdit}
+              handleUpdateStatus={this.handleUpdateStatus}
               onChange={this.handleStandardTableChange}
             />
           </div>
         </Card>
         <CreateForm
           {...parentMethods}
+          item={item}
           modalVisible={modalVisible}
         />
       </PageHeaderLayout>

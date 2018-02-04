@@ -23,7 +23,7 @@ export async function update(params) {
   });
 }
 export async function upPMIState(params) {
-  return request('/sys/upStatePMI', {
+  return request('/sys/updateStatusPlatforMessageInfo', {
     method: 'PUT',
     body: {
       ...params,

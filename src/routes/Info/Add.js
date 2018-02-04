@@ -25,9 +25,9 @@ const formItemLayout = {
   },
 };
 
-@connect(({ ads, loading }) => ({
-  ads,
-  submitting: loading.effects['ads/add'],
+@connect(({ info, loading }) => ({
+  info,
+  submitting: loading.effects['info/add'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -40,133 +40,19 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
-        console.log(fieldsValue.adsPic)
         const values = {
           ...fieldsValue,
           autoUpTime: fieldsValue.time && moment(fieldsValue.time[0]).local(),
           autoDownTime: fieldsValue.time && moment(fieldsValue.time[1]).local(),
-          adsPic: fieldsValue.adsPic && fieldsValue.adsPic.file.response.data.match(/ima[^\n]*Ex/)[0].slice(0,-3),
         };
         this.props.dispatch({
-          type: 'ads/add',
+          type: 'info/add',
           payload: values,
         });
       }
     });
   }
-  renderForm() {
-    switch (this.props.form.getFieldValue('adsType')) {
-      case '11100':
-        return this.renderProduct();
-        break;
-      case '11200':
-        return this.renderBanner();
-        break;
-      case '11300':
-        return this.renderTrumpet();
-        break;
-      case '11400':
-        return this.renderBanner();
-        break;
-      default:
-    }
-  }
-  renderProduct = ()=> {
-    const { getFieldDecorator } = this.props.form;
-    return(
-      <div>
-        <FormItem
-          {...formItemLayout}
-          label="匹配词"
-        >
-          {getFieldDecorator('adsMatch', {
-            rules: [{
-              required: true,
-              message: '请选择匹配词',
-            }],
-          })(
-            <Input placeholder="请输入"/>
-          )}
-        </FormItem>
-      </div>
-    );
-  }
-  renderBanner = ()=> {
-    const { getFieldDecorator } = this.props.form;
-    const { fileList, previewVisible,previewImage } = this.state;
-    const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    );
-    return(
-      <div>
-        <FormItem
-          {...formItemLayout}
-          label="内容"
-        >
-          {getFieldDecorator('adsContent')(
-            <Input placeholder="请输入"/>
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="跳转链接"
-        >
-          {getFieldDecorator('adsUrl')(
-            <Input placeholder="请输入"/>
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-           label="图片">
-           {getFieldDecorator('adsPic')(
-             <Upload
-               action="http://192.168.2.101:8080/sysAnno/uploadImage"
-               listType="picture-card"
-               onPreview={this.handlePreview}
-               onChange={this.handleChange}
-             >
-               {fileList.length >= 1 ? null : uploadButton}
-             </Upload>
-           )}
 
-           <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-             <img alt="example" style={{ width: '100%' }} src={previewImage} />
-           </Modal>
-        </FormItem>
-      </div>
-    );
-  }
-  renderTrumpet = ()=> {
-    const { getFieldDecorator } = this.props.form;
-    return(
-      <div>
-        <FormItem
-          {...formItemLayout}
-          label="内容"
-        >
-          {getFieldDecorator('adsContent', {
-            rules: [{
-              required: true,
-              message: '请选择内容',
-            }],
-          })(
-            <Input placeholder="请输入"/>
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="跳转链接"
-        >
-          {getFieldDecorator('adsUrl')(
-            <Input placeholder="请输入"/>
-          )}
-        </FormItem>
-      </div>
-    );
-  }
   handleCancel = () => this.setState({ previewVisible: false })
 
   handlePreview = (file) => {
@@ -179,11 +65,9 @@ export default class BasicForms extends PureComponent {
     this.setState({ fileList })
   }
   render() {
-    const { ads: { data, adsType }, submitting, dispatch } = this.props;
+    const { info: { data, mesType }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    if (adsType) {
-      var adsTypeOptions = adsType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
+    var mesTypeOptions = mesType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
 
     const submitFormLayout = {
       wrapperCol: {
@@ -204,14 +88,14 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="广告类型"
             >
-              {getFieldDecorator('adsType', {
+              {getFieldDecorator('paltforMsgType', {
                 rules: [{
                   required: true,
                   message: '请选择广告类型',
                 }],
               })(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  {adsTypeOptions}
+                  {mesTypeOptions}
                 </Select>
               )}
             </FormItem>
@@ -219,68 +103,49 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="标题"
             >
-              {getFieldDecorator('adsTitle', {
+              {getFieldDecorator('paltforMsgTitle', {
                 rules: [{
                   required: true,
-                  message: '请选择标题',
+                  message: '请输入标题',
                 }],
               })(
                 <Input placeholder="请输入"/>
               )}
             </FormItem>
-            {this.renderForm()}
             <FormItem
               {...formItemLayout}
-              label="排序"
+              label="内容"
             >
-              {getFieldDecorator('adsSort')(
-                <Input placeholder="请输入"/>
+              {getFieldDecorator('paltforMsgContent', {
+                rules: [{
+                  required: true,
+                  message: '请输入广告内容',
+                }],
+              })(
+                <Input.TextArea rows={4} placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
               label="上架状态"
             >
-              {getFieldDecorator('upState', {
+              {getFieldDecorator('unlockStatus', {
                 rules: [{
                   required: true,
                   message: '请选择上架状态',
                 }],
               })(
-                  <Radio.Group>
-                    <Radio value="0">待上架</Radio>
-                    <Radio value="1">上架</Radio>
-                    <Radio value="2">下架</Radio>
-                  </Radio.Group>
-                )}
+                <Select  placeholder="请选择">
+                  <Option value={1}>上架</Option>
+                  <Option value={2}>上架</Option>
+                </Select>
+              )}
             </FormItem>
-            {getFieldValue('upState') ==='0'
-               ?<FormItem
-                {...formItemLayout}
-                label="自动上架时间"
-                >
-                {getFieldDecorator('time', {
-                  rules:[{
-                    required: true,
-                    message: '请选择上架时间',
-                  }],
-                })(
-                  <RangePicker
-                   showTime={{
-                     hideDisabledOptions: true,
-                     defaultValue: [moment(new Date(), 'YYYY-MM-DD HH:mm:ss'), moment(new Date(), 'HH:mm:ss')],
-                   }}
-                   format="YYYY-MM-DD HH:mm:ss"
-                 />
-                )}
-              </FormItem>
-              : null
-            }
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/ads'))}>
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/info/notification'))}>
                 返回
               </Button>
             </FormItem>

@@ -57,7 +57,7 @@ export default {
         message.error(response.msg)
         return
       }
-      yield put(routerRedux.push('/ads'));
+      yield put(routerRedux.push('/info/notification'));
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
@@ -68,13 +68,13 @@ export default {
         message.error(response.msg)
         return
       }
-      yield put(routerRedux.push('/ads'));
+      yield put(routerRedux.push('/info/notification'));
     },
     *upPMIState({ payload, callback }, { call, put }) {
       const response = yield call(upPMIState, payload);
       if(response.code === 0){
         message.success('提交成功');
-        yield put(routerRedux.push('/ads'));
+        yield put(routerRedux.push('/info/notification'));
       } else {
         message.error(response.msg);
         return
@@ -87,7 +87,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/ads/edit'));
+      yield put(routerRedux.push('/info/notification/edit'));
     },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
@@ -95,7 +95,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/ads/Detail'));
+      yield put(routerRedux.push('/info/notification/Detail'));
     },
     *fetchReview({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
@@ -103,7 +103,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/ads/Review'));
+      yield put(routerRedux.push('/info/notification/Review'));
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
