@@ -218,11 +218,11 @@ const proxy = {
   'PUT /sys/upStateAds': updatePassword,
   'DELETE /sys/deleteAds/*': deleteAds,
   //消息管理
-  'GET /sys/selectAds': selectAds,
+  'GET /sys/selectAds': selectPMI,
   'GET /sys/selectAllMI': selectAllMI,
-  'GET /sys/selectAdsDetail': getAdsDetail,
-  'POST /sys/insertPMI': saveAds,
-  'PUT /sys/updatePMI': updateAds,
+  'GET /sys/selectAdsDetail': selectPMI,
+  'POST /sys/insertPMI': savePMI,
+  'PUT /sys/updatePMI': updatePMI,
   'PUT /sys/upStateAds': updatePassword,
   'DELETE /sys/deleteAds/*': deletePMI,
 };

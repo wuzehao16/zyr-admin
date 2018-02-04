@@ -4,15 +4,13 @@ import { getUrlParams } from './utils';
 let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
-    adsId: `${i}`,
-    adsType:"11200",
-    adsTitle:"Banner1",
-    adsMatch:"我是匹配词"	,
-    upState: Math.floor(Math.random()*3),
-    adsContent:"Banner1的内容",
-    adsPic:"https://picsum.photos/200/200"	,
-    adsUrl	:"http://www.ibankmatch.com",
-    adsSort:"2",
+    paltforMsgId: `${i}`,
+    "paltforMsgTitle": "标题2",
+    "paltforMsgContent": "标题的内容标题的内容2",
+    "paltforMsgType": "8500",
+    "oper": "小宇宙",
+    "updateTime": 1517298442000,
+    "unlockStatus": 1,
     oper:"dsadadsa11",
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     registrationTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),

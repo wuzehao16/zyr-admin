@@ -24,6 +24,12 @@ export default {
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
       yield put({
         type: 'save',
         payload: response,

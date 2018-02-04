@@ -338,6 +338,10 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['info'], () => import('../routes/Info/SysinfoList')),
       name: '系统消息',
     },
+    '/info/notification': {
+      component: dynamicWrapper(app, ['info'], () => import('../routes/Info/SysNotificationList')),
+      name: '系统通知',
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

@@ -12,7 +12,7 @@ export default {
       pagination: {},
     },
     item: {},
-    adsType:[],
+    infoType:[],
   },
 
   effects: {

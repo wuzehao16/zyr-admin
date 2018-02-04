@@ -27,6 +27,7 @@ export default {
         message.success('删除成功');
       } else {
         message.error(response.msg);
+        return
       }
       const list = yield call(queryMenu, payload);
       yield put({
