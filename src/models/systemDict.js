@@ -50,9 +50,10 @@ export default {
         message.error(response.msg)
         return
       }
+      const list = yield call(query);
       yield put({
         type: 'save',
-        payload: response,
+        payload: list,
       });
       if (callback) callback();
     },

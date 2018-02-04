@@ -449,6 +449,26 @@ export function selectDictionary(req, res, u) {
     }
     return
   }
+  if (params.type === 'mesType') {
+    const result = {
+      code: 0,
+      data: [{
+        label: '系统通知',
+        value: '8000'
+      },
+      {
+        label: '优惠通知',
+        value: '8500'
+      }],
+    };
+
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+    return
+  }
 
   let pageSize = 10;
   if (params.pageSize) {

@@ -29,7 +29,7 @@ export default {
         message.error(response.msg);
         return
       }
-      const list = yield call(queryMenu, payload);
+      const list = yield call(queryMenu);
       yield put({
         type: 'save',
         payload: list,

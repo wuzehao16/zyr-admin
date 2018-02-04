@@ -41,7 +41,7 @@ export default {
         type: 'save',
         payload: response,
       });
-      const list = yield call(queryRole, payload);
+      const list = yield call(queryRole);
       yield put({
         type: 'save',
         payload: list,

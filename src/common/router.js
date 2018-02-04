@@ -339,8 +339,20 @@ export const getRouterData = (app) => {
       name: '系统消息',
     },
     '/info/notification': {
+      component: dynamicWrapper(app, ['info'], () => import('../routes/Info')),
+      name: '系统通知',
+    },
+    '/info/notification/list': {
       component: dynamicWrapper(app, ['info'], () => import('../routes/Info/SysNotificationList')),
       name: '系统通知',
+    },
+    '/info/notification/edit': {
+      component: dynamicWrapper(app, ['info'], () => import('../routes/Info/Edit')),
+      name: '编辑系统通知',
+    },
+    '/info/notification/add': {
+      component: dynamicWrapper(app, ['info'], () => import('../routes/Info/Add')),
+      name: '新增系统通知',
     },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),

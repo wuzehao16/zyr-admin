@@ -113,8 +113,8 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.msgId}
-          expandedRowRender={record => <p style={{ margin: 0 }}>{record.msgContent}</p>}
+          rowKey={record => record.paltforMsgId}
+          expandedRowRender={record => <p style={{ margin: 0 }}>{record.paltforMsgContent}</p>}
           rowSelection={rowSelection}
           dataSource={data}
           columns={columns}

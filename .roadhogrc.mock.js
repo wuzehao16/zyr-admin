@@ -218,13 +218,13 @@ const proxy = {
   'PUT /sys/upStateAds': updatePassword,
   'DELETE /sys/deleteAds/*': deleteAds,
   //消息管理
-  'GET /sys/selectAds': selectPMI,
+  'GET /sys/selectPMI': selectPMI,
   'GET /sys/selectAllMI': selectAllMI,
-  'GET /sys/selectAdsDetail': selectPMI,
+  'GET /sys/selectPMIDetail': selectPMI,
   'POST /sys/insertPMI': savePMI,
   'PUT /sys/updatePMI': updatePMI,
-  'PUT /sys/upStateAds': updatePassword,
-  'DELETE /sys/deleteAds/*': deletePMI,
+  'PUT /sys/upStatePMI': updatePassword,
+  'DELETE /sys/deletePMI/*': deletePMI,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

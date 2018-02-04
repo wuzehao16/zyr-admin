@@ -14,7 +14,7 @@ const { TextArea } = Input;
 
 @connect(({ institution, loading }) => ({
   institution,
-  submitting: loading.effects['institution/add'],
+  submitting: loading.effects['institution/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -72,7 +72,7 @@ export default class BasicForms extends PureComponent {
                                         : fieldsValue.manageLogoId
         };
         this.props.dispatch({
-          type: 'institution/add',
+          type: 'institution/update',
           payload: values,
         });
       }

@@ -52,7 +52,7 @@ export default {
         message.error(response.msg);
         return
       }
-      const list = yield call(queryUser, payload);
+      const list = yield call(queryUser);
       yield put({
         type: 'save',
         payload: list,

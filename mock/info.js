@@ -250,7 +250,7 @@ export function deletePMI(req, res, u, b) {
     /* eslint no-case-declarations:0 */
   const idArray = url.split("/")
   const id = idArray[idArray.length - 1]
-    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.adsId) === -1);
+    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.paltforMsgId) === -1);
   const result = {
     code: 0,
     data: tableListDataSource,

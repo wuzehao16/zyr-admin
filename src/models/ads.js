@@ -88,6 +88,21 @@ export default {
       });
       yield put(routerRedux.push('/ads/Review'));
     },
+    *remove({ payload, callback }, { call, put }) {
+      const response = yield call(remove, payload);
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      const list = yield call(query);
+      yield put({
+        type: 'save',
+        payload: list,
+      });
+      if (callback) callback();
+    },
   },
 
   reducers: {

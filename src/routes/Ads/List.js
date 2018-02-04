@@ -152,7 +152,7 @@ export default class TableList extends PureComponent {
         dispatch({
           type: 'ads/remove',
           payload: {
-            no: selectedRows.map(row => row.no).join(','),
+            adsId: selectedRows.map(row => row.adsId).join(','),
           },
           callback: () => {
             this.setState({

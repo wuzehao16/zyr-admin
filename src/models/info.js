@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, query, querySysInfo, queryDetail, update, queryDict, upAdsState, remove } from '../services/info';
+import { add, query, querySysInfo, queryDetail, update, queryDict, upPMIState, remove } from '../services/info';
 import { getInstitution, getSubInstitution } from '../services/register'
 
 export default {
@@ -13,6 +13,7 @@ export default {
     },
     item: {},
     infoType:[],
+    mesType:[],
   },
 
   effects: {
@@ -39,6 +40,15 @@ export default {
         },
       });
     },
+    *fetchNoticeType({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          mesType: response.data
+        },
+      });
+    },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(add, payload);
       if (response.code === 0) {
@@ -60,8 +70,8 @@ export default {
       }
       yield put(routerRedux.push('/ads'));
     },
-    *upAdsState({ payload, callback }, { call, put }) {
-      const response = yield call(upAdsState, payload);
+    *upPMIState({ payload, callback }, { call, put }) {
+      const response = yield call(upPMIState, payload);
       if(response.code === 0){
         message.success('提交成功');
         yield put(routerRedux.push('/ads'));
@@ -94,6 +104,21 @@ export default {
         payload: response.data,
       });
       yield put(routerRedux.push('/ads/Review'));
+    },
+    *remove({ payload, callback }, { call, put }) {
+      const response = yield call(remove, payload);
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      const list = yield call(query);
+      yield put({
+        type: 'save',
+        payload: list,
+      });
+      if (callback) callback();
     },
   },
 

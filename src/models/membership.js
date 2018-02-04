@@ -30,11 +30,7 @@ export default {
         message.error(response.msg)
         return
       }
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-      const list = yield call(query, payload);
+      const list = yield call(query);
       yield put({
         type: 'save',
         payload: list,

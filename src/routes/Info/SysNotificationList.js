@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
 import moment from 'moment'
+import { routerRedux } from 'dva/router';
 import StandardTable from '../../components/SysNotificationTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -58,12 +59,12 @@ export default class TableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'info/fetchSysInfo',
+      type: 'info/fetch',
     });
     dispatch({
-      type: 'info/fetchInfoType',
+      type: 'info/fetchNoticeType',
       payload:{
-        type: 'pushmesType',
+        type: 'mesType',
       }
     });
   }
@@ -123,7 +124,7 @@ export default class TableList extends PureComponent {
         dispatch({
           type: 'info/remove',
           payload: {
-            no: selectedRows.map(row => row.no).join(','),
+            id: selectedRows.map(row => row.paltforMsgId).join(','),
           },
           callback: () => {
             this.setState({
@@ -190,8 +191,8 @@ export default class TableList extends PureComponent {
   }
 
   renderSimpleForm() {
-    const { infoType } = this.props.info;
-    const infoTypeOptions = infoType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    const { mesType } = this.props.info;
+    const mesTypeOptions = mesType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
@@ -200,13 +201,13 @@ export default class TableList extends PureComponent {
             <FormItem label="消息类型">
               {getFieldDecorator('msgType')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  {infoTypeOptions}
+                  {mesTypeOptions}
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="推送时间">
+            <FormItem label="更新时间">
               {getFieldDecorator('date')(
                 <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
               )}
@@ -232,12 +233,12 @@ export default class TableList extends PureComponent {
 
 
   render() {
-    const { info: { data }, loading } = this.props;
+    const { info: { data }, loading, dispatch } = this.props;
     const { selectedRows, modalVisible } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
+        {/* <Menu.Item key="approval">批量审批</Menu.Item> */}
       </Menu>
     );
 
@@ -253,14 +254,14 @@ export default class TableList extends PureComponent {
             <div className={styles.tableListForm}>
               {this.renderSimpleForm()}
             </div>
-            {/* <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+            <div className={styles.tableListOperator}>
+              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/info/notification/add'))}>
                 新建
               </Button>
               {
                 selectedRows.length > 0 && (
                   <span>
-                    <Button>批量操作</Button>
+                    {/* <Button>批量操作</Button> */}
                     <Dropdown overlay={menu}>
                       <Button>
                         更多操作 <Icon type="down" />
@@ -269,7 +270,7 @@ export default class TableList extends PureComponent {
                   </span>
                 )
               }
-            </div> */}
+            </div>
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}
