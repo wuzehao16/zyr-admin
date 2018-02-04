@@ -233,6 +233,9 @@ export default class BasicForms extends PureComponent {
                    label="邮箱">
                   {getFieldDecorator('userEmail',{
                     rules: [{
+                        type: 'email',
+                        message: '请输入合法的邮箱',
+                    }, {
                       required: true, message: '请输入邮箱',
                     }],
                   })(

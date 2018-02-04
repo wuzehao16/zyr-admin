@@ -104,6 +104,18 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
+  handleSubmit2 = (e) => {
+    e.preventDefault();
+    console.log(1)
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.dispatch({
+          type: 'member/update',
+          payload: values,
+        });
+      }
+    });
+  }
   renderAdvancedForm1() {
     const { submitting } = this.props;
     const { getFieldDecorator } = this.props.form;
@@ -187,7 +199,7 @@ export default class BasicForms extends PureComponent {
       <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={1}>
         <Description>为确保是您本人操作，我们将会把验证码发送到您已绑定的邮箱。</Description>
         <Form
-          onSubmit={this.handleSubmit}
+          onSubmit={this.handleSubmit2}
           >
           <Description>
             <Form.Item>
