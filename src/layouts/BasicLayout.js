@@ -7,6 +7,7 @@ import { Route, Redirect, Switch } from 'dva/router';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import { enquireScreen } from 'enquire-js';
+import { routerRedux } from 'dva/router';
 import GlobalHeader from '../components/GlobalHeader';
 import GlobalFooter from '../components/GlobalFooter';
 import SiderMenu from '../components/SiderMenu';
@@ -117,6 +118,9 @@ class BasicLayout extends React.PureComponent {
       this.props.dispatch({
         type: 'login/logout',
       });
+    }
+    if (key === 'setting') {
+      this.props.dispatch(routerRedux.push('/setting'));
     }
   }
   handleNoticeVisibleChange = (visible) => {

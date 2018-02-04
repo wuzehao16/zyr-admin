@@ -74,7 +74,7 @@ export default {
       const response = yield call(upPMIState, payload);
       if(response.code === 0){
         message.success('提交成功');
-        const response = yield call(query, payload);
+        const response = yield call(query);
         yield put({
           type: 'save',
           payload: response,
@@ -86,10 +86,9 @@ export default {
       if (callback) callback();
     },
     *fetchEdit({payload}, { call, put }) {
-      const response = yield call(queryDetail, payload);
       yield put({
         type: 'saveDetail',
-        payload: response.data,
+        payload: payload,
       });
       yield put(routerRedux.push('/info/notification/edit'));
     },

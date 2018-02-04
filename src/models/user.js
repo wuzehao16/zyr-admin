@@ -17,13 +17,7 @@ export default {
       });
     },
     *fetchCurrent(_, { call, put }) {
-      // const response = yield call(queryCurrent);
-      const response = {
-        name: 'Serati Ma',
-        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-        userid: '00000001',
-        notifyCount: 12,
-      };
+      const response = yield call(queryCurrent);
       yield put({
         type: 'saveCurrentUser',
         payload: response,

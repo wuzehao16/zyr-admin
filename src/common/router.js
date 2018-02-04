@@ -354,6 +354,10 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['info'], () => import('../routes/Info/Add')),
       name: '新增系统通知',
     },
+    '/setting': {
+      component: dynamicWrapper(app, ['user'], () => import('../routes/Setting')),
+      name: '设置',
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

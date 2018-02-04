@@ -10,7 +10,7 @@ for (let i = 0; i < 46; i += 1) {
     "paltforMsgType": "8500",
     "oper": "小宇宙",
     "updateTime": 1517298442000,
-    "unlockStatus": 1,
+    "unlockStatus": Math.floor(Math.random()*2) + 1 ,
     oper:"dsadadsa11",
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     registrationTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),

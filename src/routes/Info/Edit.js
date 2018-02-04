@@ -65,10 +65,9 @@ export default class BasicForms extends PureComponent {
     this.setState({ fileList })
   }
   render() {
-    const { info: { data, mesType }, submitting, dispatch } = this.props;
+    const { info: { data, mesType, item }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     var mesTypeOptions = mesType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
@@ -89,6 +88,7 @@ export default class BasicForms extends PureComponent {
               label="广告类型"
             >
               {getFieldDecorator('paltforMsgType', {
+                initialValue:item.paltforMsgType,
                 rules: [{
                   required: true,
                   message: '请选择广告类型',
@@ -104,6 +104,7 @@ export default class BasicForms extends PureComponent {
               label="标题"
             >
               {getFieldDecorator('paltforMsgTitle', {
+                initialValue: item.paltforMsgTitle,
                 rules: [{
                   required: true,
                   message: '请输入标题',
@@ -117,6 +118,7 @@ export default class BasicForms extends PureComponent {
               label="内容"
             >
               {getFieldDecorator('paltforMsgContent', {
+                initialValue: item.paltforMsgContent,
                 rules: [{
                   required: true,
                   message: '请输入广告内容',
@@ -130,6 +132,7 @@ export default class BasicForms extends PureComponent {
               label="上架状态"
             >
               {getFieldDecorator('unlockStatus', {
+                initialValue: item.unlockStatus,
                 rules: [{
                   required: true,
                   message: '请选择上架状态',

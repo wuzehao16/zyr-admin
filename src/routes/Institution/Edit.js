@@ -199,7 +199,7 @@ export default class BasicForms extends PureComponent {
                               <FormItem
                                 {...formItemLayout}
                                  label="银行名称">
-                                {getFieldDecorator('manageId')(
+                                {getFieldDecorator('sublInstitution')(
                                   <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getSubInstitution}>
                                   { institutionListOptions }
                                   </Select>
@@ -210,7 +210,7 @@ export default class BasicForms extends PureComponent {
                               <FormItem
                                 {...formItemLayout}
                                  label="下属机构">
-                                {getFieldDecorator('institutionId')(
+                                {getFieldDecorator('manageId')(
                                   <Select placeholder="请选择" style={{ width: '100%' }} >
                                     { subInstitutionListOptions }
                                   </Select>

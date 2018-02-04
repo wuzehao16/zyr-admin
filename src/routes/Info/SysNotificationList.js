@@ -118,7 +118,7 @@ export default class TableList extends PureComponent {
     this.props.dispatch({
       type: 'info/fetchEdit',
       payload: {
-        id: item.paltforMsgId,
+        ...item,
       },
     });
   }
