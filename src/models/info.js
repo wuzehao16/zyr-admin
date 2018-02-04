@@ -30,12 +30,12 @@ export default {
         payload: response,
       });
     },
-    *fetchAdsType({ payload }, { call, put }) {
+    *fetchInfoType({ payload }, { call, put }) {
       const response = yield call(queryDict, payload);
       yield put({
         type: 'saveThing',
         payload: {
-          adsType: response.data
+          infoType: response.data
         },
       });
     },

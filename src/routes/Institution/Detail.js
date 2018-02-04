@@ -34,7 +34,7 @@ export default class BasicForms extends PureComponent {
             <Description term="邮箱">{item.userEmail}</Description>
             <Description term="手机">{item.userPhone}</Description>
             <Description term="机构logo">
-              <img src="https://picsum.photos/80/80?random" alt="" />
+              <img src={item.manageLogoId} alt="" width={80} height={80}/>
             </Description>
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32 }} col={2}>

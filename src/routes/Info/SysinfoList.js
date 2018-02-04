@@ -60,6 +60,12 @@ export default class TableList extends PureComponent {
     dispatch({
       type: 'info/fetchSysInfo',
     });
+    dispatch({
+      type: 'info/fetchInfoType',
+      payload:{
+        type: 'pushmesType',
+      }
+    });
   }
 
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
