@@ -223,7 +223,7 @@ const proxy = {
   'GET /sys/selectPMIDetail': selectPMI,
   'POST /sys/insertPMI': savePMI,
   'PUT /sys/updatePMI': updatePMI,
-  'PUT /sys/upStatePMI': updatePassword,
+  'PUT /sys/updateStatusPlatforMessageInfo': updatePassword,
   'DELETE /sys/deletePMI/*': deletePMI,
 };
 

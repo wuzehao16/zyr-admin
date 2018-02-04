@@ -74,7 +74,11 @@ export default {
       const response = yield call(upPMIState, payload);
       if(response.code === 0){
         message.success('提交成功');
-        yield put(routerRedux.push('/info/notification'));
+        const response = yield call(query, payload);
+        yield put({
+          type: 'save',
+          payload: response,
+        });
       } else {
         message.error(response.msg);
         return

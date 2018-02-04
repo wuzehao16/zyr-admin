@@ -13,7 +13,7 @@ const { Description } = DescriptionList;
 
 @connect(({ institution, loading }) => ({
   institution,
-  submitting: loading.effects['institution/update'],
+  submitting: loading.effects['institution/review'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -39,7 +39,7 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'institution/update',
+          type: 'institution/review',
           payload: values,
         });
       }

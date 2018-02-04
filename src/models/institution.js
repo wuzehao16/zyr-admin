@@ -58,7 +58,7 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      const response = yield call(review, payload);
+      const response = yield call(update, payload);
       if (response.code === 0) {
         message.success('提交成功');
       } else {
@@ -68,7 +68,7 @@ export default {
       yield put(routerRedux.push('/institution'));
     },
     *review({ payload }, { call, put }) {
-      const response = yield call(update, payload);
+      const response = yield call(review, payload);
       if (response.code === 0) {
         message.success('提交成功');
       } else {

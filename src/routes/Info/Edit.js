@@ -77,7 +77,7 @@ export default class BasicForms extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="新增广告">
+      <PageHeaderLayout title="编辑系统通知">
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}

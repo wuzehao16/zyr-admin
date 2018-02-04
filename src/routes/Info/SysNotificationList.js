@@ -35,7 +35,7 @@ const CreateForm = Form.create()((props) => {
       <FormItem
         style={{ textAlign: 'center',fontSize:'24px' }}
       >
-        确认{item.unlockStatus==1?"下架":"上架"}{item.adsName}?
+        确认{item.unlockStatus==1?"下架":"上架"}?
       </FormItem>
     </Modal>
   );
@@ -192,8 +192,9 @@ export default class TableList extends PureComponent {
   }
 
   handleAdd = (fields) => {
+    console.log(fields)
     this.props.dispatch({
-      type: 'ads/upPMIState',
+      type: 'info/upPMIState',
       payload: fields,
     });
     this.setState({
