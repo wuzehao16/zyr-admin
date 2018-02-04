@@ -84,7 +84,7 @@ export default class TableList extends PureComponent {
     this.props.dispatch({
       type: 'ads/fetchEdit',
       payload: {
-        adsId: item.adsId,
+        id: item.adsId,
       },
     });
   }
@@ -92,7 +92,7 @@ export default class TableList extends PureComponent {
     this.props.dispatch({
       type: 'ads/fetchDetail',
       payload: {
-        adsId: item.adsId,
+        id: item.adsId,
       },
     });
   }
