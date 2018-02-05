@@ -7,6 +7,9 @@ export async function queryDict(params) {
 export async function query(params) {
   return request(`/sys/selectProduct?${stringify(params)}`);
 }
+export async function queryManage(params) {
+  return request(`/sys/selectMapManageParameter?${stringify(params)}`);
+}
 export async function queryDetail(params) {
   return request(`/sys/detailsProduct?${stringify(params)}`);
 }

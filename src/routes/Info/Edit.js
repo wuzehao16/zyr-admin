@@ -67,6 +67,9 @@ export default class BasicForms extends PureComponent {
   render() {
     const { info: { data, mesType, item }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
+    getFieldDecorator('paltforMsgId', {
+      initialValue: item.paltforMsgId,
+    })
     var mesTypeOptions = mesType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     const submitFormLayout = {
       wrapperCol: {

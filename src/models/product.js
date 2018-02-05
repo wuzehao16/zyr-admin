@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, query, queryDetail, update, queryDict, updateAprovalStatus, updateShelvesStatus } from '../services/product';
+import { add, query, queryDetail, update, queryDict, updateAprovalStatus, updateShelvesStatus, queryManage } from '../services/product';
 import { getInstitution, getSubInstitution } from '../services/register'
 
 export default {
@@ -21,6 +21,7 @@ export default {
     cusCategory: [],
     repMethod: [],
     prodFeatures: [],
+    institutionList:[],
   },
 
   effects: {
@@ -109,7 +110,7 @@ export default {
       yield put(routerRedux.push('/product/Review'));
     },
     *getInstitution({ payload }, { call, put }) {
-      const response = yield call(getInstitution, payload);
+      const response = yield call(queryManage, payload);
       yield put({
         type: 'saveThing',
         payload:{

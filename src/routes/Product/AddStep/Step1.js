@@ -48,18 +48,12 @@ class Step1 extends React.PureComponent {
     });
   }
   getInstitution = (code) => {
+    const { getFieldValue } = this.props.form;
     this.props.dispatch({
       type: 'product/getInstitution',
       payload: {
-        cityCode: code
-      },
-    });
-  }
-  getSubInstitution = (code) => {
-    this.props.dispatch({
-      type: 'product/getSubInstitution',
-      payload: {
-        parentId: code
+        cityCode: code,
+        institutionCode: getFieldValue('institutionCode'),
       },
     });
   }
@@ -200,7 +194,7 @@ class Step1 extends React.PureComponent {
                 label="机构名称"
                 {...formItemLayout}
                >
-                {getFieldDecorator('manageName',{
+                {getFieldDecorator('manageId',{
                   rules: [
                     {
                       required: true,
@@ -208,9 +202,15 @@ class Step1 extends React.PureComponent {
                     },
                   ],
                 })(
-                  <Input
-                    placeholder="请输入"
-                  />
+                  <Select
+                    // mode="multiple"
+                    style={{ width: '100%' }}
+                    placeholder="请选择"
+                    // defaultValue={['a10', 'c12']}
+                    onChange={this.handleChange}
+                  >
+                    {institutionListOptions}
+                  </Select>
                 )}
               </Form.Item>
             </Col>

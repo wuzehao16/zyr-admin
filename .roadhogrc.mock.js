@@ -17,7 +17,7 @@ import { selectAllRole, deleteRole, updateRole, saveRole } from './mock/systemRo
 import { selectMemberRank, deleteMemberRank, updateMemberRank, saveMemberRank } from './mock/membership'
 import { getUser, updateUser, updatePassword, getUserDetail } from './mock/member.js'
 import { selectInstitution, updateInstitution, saveInstitution, getInstitutionDetail } from './mock/institution'
-import { selectProduct, updateProduct, saveProduct, getProductDetail } from './mock/product'
+import { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeName } from './mock/product'
 import { selectAds, updateAds, saveAds, getAdsDetail, deleteAds } from './mock/advertisement'
 import { selectPMI,selectAllMI, updatePMI, savePMI, getPMIDetail, deletePMI } from './mock/info'
 import { format, delay } from 'roadhog-api-doc';
@@ -195,6 +195,8 @@ const proxy = {
   'PUT /sys/updateStatusInstitution': updateInstitution,
   'PUT /sys/editPasswordUser': updatePassword,
   //产品管理
+  //产品管理
+  'GET /sys/selectMapManageParameter': getMangeName,
   'GET /sys/selectProduct': selectProduct,
   'GET /sys/detailsProduct': getProductDetail,
   'POST /sys/addProduct': saveProduct,

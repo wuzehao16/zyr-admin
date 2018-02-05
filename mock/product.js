@@ -206,5 +206,28 @@ export function updateProduct(req, res, u, b) {
     return result;
   }
 }
+export function getMangeName(req, res, u, b) {
+  const result = {
+    code: 0,
+    data: [        {
+            "institutionCode": "1",
+            "cityCode": "200",
+            "manageId": "926a225304c44fa0bdc97b9115a08ca9",
+            "manageName": "平安-福田分行"
+        },
+        {
+            "institutionCode": "1",
+            "cityCode": "200",
+            "manageId": "aebfec7cdb3b4520b491bc6569097cfe",
+            "manageName": "平安-南山分行"
+        }]
+  };
 
-export default { selectProduct, updateProduct, saveProduct, getProductDetail};
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
+
+export default { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeName };
