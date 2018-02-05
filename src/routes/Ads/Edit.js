@@ -161,7 +161,7 @@ export default class BasicForms extends PureComponent {
            label="图片">
            {getFieldDecorator('adsPic')(
              <Upload
-               action="http://192.168.2.101:8080/sysAnno/uploadImage"
+               action="http://47.104.27.184:8000/sysAnno/uploadImage"
                listType="picture-card"
                onPreview={this.handlePreview}
                onChange={this.handleChange}

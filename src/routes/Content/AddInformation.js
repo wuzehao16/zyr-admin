@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, DatePicker, Select, Button, Card, Radio, Icon, Upload,
+  Form, Input, DatePicker, Select, Button, Card, Radio, Icon, Upload, Modal,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './AddInformation.less';
@@ -12,7 +12,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const upLoadProps = {
-  action: '//jsonplaceholder.typicode.com/posts/',
+  action: 'http://47.104.27.184:8000/sysAnno/uploadImage',
   listType: 'picture',
   // defaultFileList: [...fileList],
   // className: 'uploadlist-inline',
@@ -24,7 +24,9 @@ const upLoadProps = {
 @Form.create()
 export default class BasicForms extends PureComponent {
   state = {
-    fileList : [],
+    previewVisible: false,
+    previewImage: '',
+    fileList: [],
   }
   componentDidMount() {
     const { dispatch } = this.props;
@@ -43,24 +45,34 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'form/submitRegularForm',
-          payload: values,
-        });
-        this.props.dispatch({
           type: 'content/add',
           payload: {
             values,
+            contentPic: values.contentPic && values.contentPic.file.response && values.contentPic.file.response.data.match(/ima[^\n]*Ex/)[0].slice(0,-3),
           },
         });
       }
     });
   }
+  handleCancel = () => this.setState({ previewVisible: false })
 
+  handlePreview = (file) => {
+    console.log(file)
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true,
+    });
+  }
+  handleChange = ({ fileList }) => {
+    this.setState({ fileList })
+  }
   render() {
     const { content: { columnType, column }, submitting } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    const { fileList } = this.state
-    const columnNameOptions = column.data.map(item => <Option key={item.channelId} value={item.channelId}>{item.channelName}</Option>);
+    const { fileList, previewVisible,previewImage } = this.state;
+    if (column.data) {
+      var columnNameOptions = column.data.map(item => <Option key={item.channelId} value={item.channelId}>{item.channelName}</Option>);
+    }
     const columnTypeOptions = columnType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     const formItemLayout = {
       labelCol: {
@@ -80,6 +92,12 @@ export default class BasicForms extends PureComponent {
         sm: { span: 10, offset: 7 },
       },
     };
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
 
     return (
       <PageHeaderLayout title="基础表单" >
@@ -168,7 +186,11 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="内容类型"
             >
-              {getFieldDecorator('contentTag')(
+              {getFieldDecorator('contentTag', {
+                rules: [{
+                  required: true, message: '请输入内容类型',
+                }],
+              })(
                 <Select placeholder="请选择">
                   <Option value="0">图文</Option>
                   <Option value="1">视频</Option>
@@ -181,7 +203,7 @@ export default class BasicForms extends PureComponent {
             >
               {getFieldDecorator('contentSort', {
                 rules: [{
-                  required: true, message: '请输入标题',
+                  required: true, message: '请输入排序',
                 }],
               })(
                 <Input placeholder="排序" />
@@ -200,18 +222,23 @@ export default class BasicForms extends PureComponent {
               )}
             </FormItem>
             <FormItem
-              label="栏目图片"
+              label="封面图片"
               {...formItemLayout}
             >
-              <Upload {...upLoadProps} onChange={this.onFileChange}>
-                {fileList.length >= 1 ? null :
-                (
-                  <Button>
-                    <Icon type="upload" /> upload
-                  </Button>
-                )
-                }
-              </Upload>
+              {getFieldDecorator('contentPic')(
+                <Upload
+                  action="http://47.104.27.184:8000/sysAnno/uploadImage"
+                  listType="picture-card"
+                  onPreview={this.handlePreview}
+                  onChange={this.handleChange}
+                >
+                  {fileList.length >= 1 ? null : uploadButton}
+                </Upload>
+              )}
+
+              <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                <img alt="example" style={{ width: '100%' }} src={previewImage} />
+              </Modal>
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -221,7 +248,7 @@ export default class BasicForms extends PureComponent {
               }}
             >
               <div>
-                {getFieldDecorator('type', {
+                {getFieldDecorator('contentTag', {
                   initialValue: '1',
                 })(
                   <Radio.Group>

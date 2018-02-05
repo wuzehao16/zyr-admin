@@ -116,7 +116,7 @@ export default class BasicForms extends PureComponent {
               {getFieldDecorator('adsSort', {
                 rules: [{
                   required: true,
-                  message: '请输入栏目名称',
+                  message: '请输入排序',
                 }],
               })(
                 <Input placeholder="请输入" />

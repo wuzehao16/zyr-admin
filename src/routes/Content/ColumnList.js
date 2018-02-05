@@ -12,7 +12,7 @@ const { Option } = Select;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 const upLoadProps = {
-  action: '//jsonplaceholder.typicode.com/posts/',
+  action: 'http://47.104.27.184:8000/sysAnno/uploadImage',
   listType: 'picture',
   // defaultFileList: [...fileList],
   className: 'uploadlist-inline',

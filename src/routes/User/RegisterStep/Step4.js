@@ -166,7 +166,7 @@ class Step4 extends React.PureComponent {
         <Divider style={{ margin: '10px 0 24px' }} />
         <div className="clearfix">
           <Upload
-            action="//jsonplaceholder.typicode.com/posts/"
+            action="http://47.104.27.184:8000/sysAnno/uploadImage"
             listType="picture-card"
             onPreview={this.handlePreview}
             onChange={this.handleChange}
