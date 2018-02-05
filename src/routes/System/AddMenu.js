@@ -33,10 +33,10 @@ export default class BasicForms extends PureComponent {
     modalVisible: false,
     item: {},
   }
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'systemUser/fetch',
+      type: 'systemMenu/fetch',
     });
   }
   handleSubmit = (e) => {

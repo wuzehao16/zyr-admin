@@ -37,10 +37,6 @@ export default {
         message.error(response.msg);
         return
       }
-      yield put({
-        type: 'save',
-        payload: response,
-      });
       yield put(routerRedux.push('/system/user'));
       if (callback) callback();
     },
