@@ -27,64 +27,67 @@ export default class BasicForms extends PureComponent {
     expandForm2: false,
     expandForm3: false,
   }
-  setCaptcha = () => {
-    let count = 59;
-    this.setState({ count1: count });
-    this.interval = setInterval(() => {
-      count -= 1;
-      this.setState({ count1: count });
-      if (count === 0) {
-        clearInterval(this.interval);
-      }
-    }, 1000);
-  };
   onGetCaptcha1 = () => {
     this.props.dispatch({
       type: 'setting/queryOldEmailCaptcha',
     });
-    let count = 59;
+    let count = 9;
     this.setState({ count1: count });
-    this.interval = setInterval(() => {
+    this.interval1 = setInterval(() => {
       count -= 1;
       this.setState({ count1: count });
       if (count === 0) {
-        clearInterval(this.interval);
+        clearInterval(this.interval1);
       }
     }, 1000);
   };
   onGetCaptcha2 = () => {
     const { getFieldValue } = this.props.form;
-    console.log(getFieldValue('newEMail'))
     this.props.dispatch({
       type: 'setting/queryNewEmailCaptcha',
       payload: {
         newEMail:getFieldValue('newEMail'),
       },
     });
-    let count = 59;
+    let count = 9;
     this.setState({ count2: count });
-    this.interval = setInterval(() => {
+    this.interval2 = setInterval(() => {
       count -= 1;
       this.setState({ count2: count });
       if (count === 0) {
-        clearInterval(this.interval);
+        clearInterval(this.interval2);
       }
     }, 1000);
   };
   onGetCaptcha3 = () => {
     this.props.dispatch({
-      type: 'register/getPhoneCaptcha',
+      type: 'setting/queryOldPhoneCaptcha',
+    });
+    let count = 59;
+    this.setState({ count3: count });
+    this.interval3 = setInterval(() => {
+      count -= 1;
+      this.setState({ count3: count });
+      if (count === 0) {
+        clearInterval(this.interval3);
+      }
+    }, 1000);
+  };
+  onGetCaptcha4 = () => {
+    const { getFieldValue } = this.props.form;
+    this.props.dispatch({
+      type: 'setting/queryNewPhoneCaptcha',
       payload: {
-        ...this.props.data,
+        newPhone:getFieldValue('newPhone'),
       },
     });
     let count = 59;
-    this.setState({ count });
-    this.interval = setInterval(() => {
+    this.setState({ count4: count });
+    this.interval4 = setInterval(() => {
       count -= 1;
-      this.setState({ count });
+      this.setState({ count4: count });
       if (count === 0) {
-        clearInterval(this.interval);
+        clearInterval(this.interval4);
       }
     }, 1000);
   };
@@ -108,11 +111,21 @@ export default class BasicForms extends PureComponent {
   }
   handleSubmit2 = (e) => {
     e.preventDefault();
-    console.log(1)
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'member/update',
+          type: 'setting/updateEmail',
+          payload: values,
+        });
+      }
+    });
+  }
+  handleSubmit3 = (e) => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.dispatch({
+          type: 'setting/updatePhone',
           payload: values,
         });
       }
@@ -320,7 +333,7 @@ export default class BasicForms extends PureComponent {
     };
     return(
       <DescriptionList size="large" title="修改手机号" style={{ marginBottom: 32 }} col={1}>
-        <Description>为确保是您本人操作，我们将会把验证码发送到您已绑定的邮箱。</Description>
+        <Description>为确保是您本人操作，我们将会把验证码发送到您已绑定的手机。</Description>
         <Form
           onSubmit={this.handleSubmit3}
           >
@@ -328,7 +341,7 @@ export default class BasicForms extends PureComponent {
             <Form.Item>
               {/* <Row gutter={24}> */}
                 <Col span={14}>
-                  {getFieldDecorator('codeByoldEMail', {
+                  {getFieldDecorator('codeByoldPhone', {
                     rules: [
                       {
                         required: true,
@@ -351,19 +364,16 @@ export default class BasicForms extends PureComponent {
             </Form.Item>
           </Description>
           <Description>
-            我们已经发送了验证码到您的邮箱
+            {/* 我们已经发送了验证码到您的手机 */}
           </Description>
-          <Description term="新邮箱">
+          <Description term="新手机">
             <Col sm={12} xs={24}>
               <FormItem
                 >
-                {getFieldDecorator('newEMail',{
+                {getFieldDecorator('newPhone',{
                   rules:[{
-                      type: 'email',
-                      message: '请输入邮箱',
-                    },{
                     required: true,
-                    message: '请输入邮箱'
+                    message: '请输入新手机'
                   }]
                 })(
                   <Input style={{width:'200px'}} />
@@ -375,7 +385,7 @@ export default class BasicForms extends PureComponent {
             <Form.Item>
               {/* <Row gutter={24}> */}
                 <Col span={14}>
-                  {getFieldDecorator('codeByNewEmail', {
+                  {getFieldDecorator('codeByNewPhone', {
                     rules: [
                       {
                         required: true,
@@ -403,7 +413,7 @@ export default class BasicForms extends PureComponent {
           </Button>
         </Description>
         </Form>
-        <a style={{ float:'right' }} onClick={this.toggleForm2}>
+        <a style={{ float:'right' }} onClick={this.toggleForm3}>
           收起 <Icon type="up" />
         </a>
       </DescriptionList>

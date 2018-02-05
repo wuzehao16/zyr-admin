@@ -1,6 +1,6 @@
 import mockjs from 'mockjs';
 import { getRule, postRule } from './mock/rule';
-import { getActivities, getNotice, getFakeList } from './mock/api';
+import { getActivities, getNotice, getFakeList, ok } from './mock/api';
 import { getFakeChartData } from './mock/chart';
 import { imgMap } from './mock/utils';
 import { getProfileBasicData } from './mock/profile';
@@ -210,23 +210,31 @@ const proxy = {
   'GET /sys/detailsProduct': getProductDetail,
   'POST /sys/addProduct': saveProduct,
   'PUT /sys/editProduct': updateProduct,
-  'PUT /sys/updateAprovalStatusProduct': updatePassword,
-  'PUT /sys/updateShelfStateProduct': updatePassword,
+  'PUT /sys/updateAprovalStatusProduct': ok,
+  'PUT /sys/updateShelfStateProduct': ok,
   //广告管理
   'GET /sys/selectAds': selectAds,
   'GET /sys/selectAdsDetail': getAdsDetail,
   'POST /sys/insertAds': saveAds,
   'PUT /sys/updateAds': updateAds,
-  'PUT /sys/upStateAds': updatePassword,
+  'PUT /sys/upStateAds': ok,
   'DELETE /sys/deleteAds/*': deleteAds,
   //消息管理
-  'GET /sys/selectPMI': selectPMI,
+  'GET /sys/selectAllPMI': selectPMI,
   'GET /sys/selectAllMI': selectAllMI,
   'GET /sys/selectPMIDetail': selectPMI,
   'POST /sys/insertPMI': savePMI,
   'PUT /sys/updatePMI': updatePMI,
-  'PUT /sys/updateStatusPlatforMessageInfo': updatePassword,
+  'PUT /sys/updatePMIStatus': ok,
   'DELETE /sys/deletePMI/*': deletePMI,
+  //账号设置
+  'GET /sys/getCodeByOldPhone': ok,
+  'GET /sys/getCodeByNewPhone': ok,
+  'GET /sys/getCodeByOldEMail': ok,
+  'GET /sys/getCodeByNewEMail': ok,
+  'PUT /sys/updatePassword': ok,
+  'PUT /sys/bindingPhone': ok,
+  'PUT /sys/bindingEmail': ok,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

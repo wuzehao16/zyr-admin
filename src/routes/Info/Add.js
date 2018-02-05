@@ -77,7 +77,7 @@ export default class BasicForms extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="新增广告">
+      <PageHeaderLayout title="新增系统通知">
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -137,7 +137,7 @@ export default class BasicForms extends PureComponent {
               })(
                 <Select  placeholder="请选择">
                   <Option value={1}>上架</Option>
-                  <Option value={2}>上架</Option>
+                  <Option value={2}>下架</Option>
                 </Select>
               )}
             </FormItem>

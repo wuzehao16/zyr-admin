@@ -5,7 +5,7 @@ export async function queryDict(params) {
   return request(`/sys/selectDictionary?${stringify(params)}`);
 }
 export async function query(params) {
-  return request(`/sys/selectPMI?${stringify(params)}`);
+  return request(`/sys/selectAllPMI?${stringify(params)}`);
 }
 export async function querySysInfo(params) {
   return request(`/sys/selectAllMI?${stringify(params)}`);
@@ -23,7 +23,7 @@ export async function update(params) {
   });
 }
 export async function upPMIState(params) {
-  return request('/sys/updateStatusPlatforMessageInfo', {
+  return request('/sys/updatePMIStatus', {
     method: 'PUT',
     body: {
       ...params,
