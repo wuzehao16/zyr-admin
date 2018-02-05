@@ -88,13 +88,13 @@ export default class BasicForms extends PureComponent {
           >
             <FormItem
               {...formItemLayout}
-              label="广告类型"
+              label="消息类型"
             >
               {getFieldDecorator('paltforMsgType', {
                 initialValue:item.paltforMsgType,
                 rules: [{
                   required: true,
-                  message: '请选择广告类型',
+                  message: '请选择消息类型',
                 }],
               })(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
@@ -124,7 +124,7 @@ export default class BasicForms extends PureComponent {
                 initialValue: item.paltforMsgContent,
                 rules: [{
                   required: true,
-                  message: '请输入广告内容',
+                  message: '请输入内容',
                 }],
               })(
                 <Input.TextArea rows={4} placeholder="请输入"/>

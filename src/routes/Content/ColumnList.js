@@ -226,7 +226,7 @@ export default class TableList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="栏目分类">
-              {getFieldDecorator('status')(
+              {getFieldDecorator('channelType')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                  {columnTypeOptions}
                 </Select>
@@ -258,7 +258,6 @@ export default class TableList extends PureComponent {
   }
 
   render() {
-    console.log(this)
     const { content: { column }, loading, dispatch } = this.props;
     const { selectedRows, modalVisible, parentColumn, columnTitle, sort, columnImg, visible, fileList } = this.state;
 

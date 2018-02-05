@@ -1,13 +1,15 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, DatePicker } from 'antd';
 import PropTypes from 'prop-types';
+import moment  from 'moment'
 import StandardTable from '../../components/InformationTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './TableList.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 @connect(state => ({
@@ -31,6 +33,9 @@ export default class TableList extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'content/fetch',
+    });
+    dispatch({
+      type: 'content/fetchColumn',
     });
   }
 
@@ -119,7 +124,9 @@ export default class TableList extends PureComponent {
 
       const values = {
         ...fieldsValue,
-        updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+        date: [],
+        startTime: fieldsValue.date && moment(fieldsValue.date[0]).format('YYYY-MM-DD'),
+        endTime: fieldsValue.date && moment(fieldsValue.date[1]).format('YYYY-MM-DD'),
       };
 
       this.setState({
@@ -133,31 +140,28 @@ export default class TableList extends PureComponent {
     });
   }
   toAdd = () => {
-    this.context.router.history.push('/content/add-information');
+    this.context.router.history.push('/content/information/add');
   }
 
   renderSimpleForm() {
+    const { content: { columnType } } = this.props;
     const { getFieldDecorator } = this.props.form;
+    const columnTypeOptions = columnType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="栏目名称">
-              {getFieldDecorator('status')(
+            <FormItem label="栏目分类">
+              {getFieldDecorator('channelType')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="">全部</Option>
-                  <Option value="0">金融资讯/国内资讯</Option>
-                  <Option value="1">金融资讯/国际资讯</Option>
-                  <Option value="2">系统消息/平台公告</Option>
-                  <Option value="3">系统消息/个人消息</Option>
-                  <Option value="4">常识讲堂/基础课程</Option>
+                  {columnTypeOptions}
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="内容标题">
-              {getFieldDecorator('status')(
+            <FormItem label="标题">
+              {getFieldDecorator('contentTitle')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
@@ -177,54 +181,51 @@ export default class TableList extends PureComponent {
   }
 
   renderAdvancedForm() {
+    const { content: { columnType, column } } = this.props;
     const { getFieldDecorator } = this.props.form;
+    const columnNameOptions = column.data.map(item => <Option key={item.channelId} value={item.channelId}>{item.channelName}</Option>);
+    const columnTypeOptions = columnType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="栏目名称">
-              {getFieldDecorator('status')(
+            <FormItem label="栏目分类">
+              {getFieldDecorator('channelType')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="">全部</Option>
-                  <Option value="0">金融资讯/国内资讯</Option>
-                  <Option value="1">金融资讯/国际资讯</Option>
-                  <Option value="2">系统消息/平台公告</Option>
-                  <Option value="3">系统消息/个人消息</Option>
-                  <Option value="4">常识讲堂/基础课程</Option>
+                  {columnTypeOptions}
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="内容标题">
-              {getFieldDecorator('status')(
-                <Input placeholder="请输入" />
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="内容标签">
-              {getFieldDecorator('content2')(
-                <Input placeholder="请输入" />
+            <FormItem label="栏目名称">
+              {getFieldDecorator('channelId')(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  {columnNameOptions}
+                </Select>
               )}
             </FormItem>
           </Col>
         </Row>
+
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="是否在线">
-              {getFieldDecorator('status1')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="">全部</Option>
-                  <Option value="0">是</Option>
-                  <Option value="1">否</Option>
-                </Select>
+            <FormItem label="审核时间">
+              {getFieldDecorator('date')(
+                <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
+              )}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="标题">
+              {getFieldDecorator('contentTitle')(
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="创建人">
-              {getFieldDecorator('creator')(
+              {getFieldDecorator('oper')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>

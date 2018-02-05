@@ -36,50 +36,36 @@ class StandardTable extends PureComponent {
 
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { list, pagination }, loading } = this.props;
+    const { data: { data, count }, loading } = this.props;
 
     const columnStatus = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
     const parentColumnStatus = ['金融资讯', '系统消息', '常识讲堂'];
-    const onlineStatus = ['是', '否'];
+    const onlineStatus = ['否', '是'];
     const contentLabelStatus = ['推荐', '热点', '最新', '视频'];
     const columns = [
       {
-        title: '序号',
-        dataIndex: 'no',
+        title: 'ID',
+        dataIndex: 'contentId',
       },
       {
-        title: '内容标题',
-        dataIndex: 'description',
-      },
-      {
-        title: '归属栏目',
-        dataIndex: 'parentColumn',
-        render(val) {
-          return `${parentColumnStatus[val]}`;
-        },
+        title: '标题',
+        dataIndex: 'contentTitle',
       },
       {
         title: '栏目名称',
-        dataIndex: 'columnStatus',
-        render(val) {
-          // return <Badge status={statusMap[val]} text={status[val]} />;
-          return `${columnStatus[val]}`;
-        },
+        dataIndex: 'channelName',
       },
       {
-        title: '内容标签',
-        dataIndex: 'contentLabel',
-        render(val) {
-          return `${contentLabelStatus[val]}`;
-        },
+        title: '栏目分类',
+        dataIndex: 'channelTypeName',
       },
       {
         title: '固顶级别',
-        dataIndex: 'topIndex',
+        dataIndex: 'contentSort',
       },
       {
         title: '是否在线',
-        dataIndex: 'online',
+        dataIndex: 'isDisplay',
         filters: [
           {
             text: onlineStatus[0],
@@ -95,14 +81,8 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title: '固顶截止日期',
-        dataIndex: 'updatedAt',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
-      {
-        title: '创建人',
-        dataIndex: 'creator',
+        title: '发布者',
+        dataIndex: 'oper',
       },
       {
         title: '创建时间',
@@ -132,7 +112,7 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      total:count,
       showTotal:total => `总共 ${total} 条`,
     };
 
@@ -162,7 +142,7 @@ class StandardTable extends PureComponent {
           loading={loading}
           rowKey={record => record.key}
           rowSelection={rowSelection}
-          dataSource={list}
+          dataSource={data}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}
