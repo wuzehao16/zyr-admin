@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import {
   Form, Input, DatePicker, Select, Button, Card, Radio, Icon, Upload, Modal,
 } from 'antd';
+import ReactQuill from '../../components/QuillMore';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './AddInformation.less';
 
@@ -47,7 +49,7 @@ export default class BasicForms extends PureComponent {
         this.props.dispatch({
           type: 'content/add',
           payload: {
-            values,
+            ...values,
             contentPic: values.contentPic && values.contentPic.file.response && values.contentPic.file.response.data.match(/ima[^\n]*Ex/)[0].slice(0,-3),
           },
         });
@@ -67,7 +69,7 @@ export default class BasicForms extends PureComponent {
     this.setState({ fileList })
   }
   render() {
-    const { content: { columnType, column }, submitting } = this.props;
+    const { content: { columnType, column }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { fileList, previewVisible,previewImage } = this.state;
     if (column.data) {
@@ -211,16 +213,33 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="内容简介"
+              label="内容"
             >
-              {getFieldDecorator('goal', {
+              {getFieldDecorator('content', {
                 rules: [{
-                  required: true, message: '请输入内容简介',
+                  required: true, message: '请输入内容',
                 }],
               })(
-                <TextArea style={{ minHeight: 32 }} placeholder="请输入内容简介" rows={4} />
+                <TextArea style={{ minHeight: 32 }} placeholder="请输入内容" rows={4} />
               )}
             </FormItem>
+            <Form.Item
+              labelCol= {{
+                xs: { span: 24 },
+                sm: { span: 7 },
+              }}
+              wrapperCol={{
+                xs: { span: 24, offset: 0 },
+                sm: { span: 24, offset: 7 },
+              }}
+              style={{width:'60%'}}
+               >
+               <ReactQuill
+                 value={this.state.productIntroduction}
+                 onChange={this.productIntroduction}
+                 placeholder='Write something...'
+               />
+            </Form.Item>
             <FormItem
               label="封面图片"
               {...formItemLayout}
@@ -263,7 +282,9 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 8 }}>保存</Button>
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content/information'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>
