@@ -31,7 +31,7 @@ export default class BasicForms extends PureComponent {
     this.props.dispatch({
       type: 'setting/queryOldEmailCaptcha',
     });
-    let count = 9;
+    let count = 59;
     this.setState({ count1: count });
     this.interval1 = setInterval(() => {
       count -= 1;
@@ -49,7 +49,7 @@ export default class BasicForms extends PureComponent {
         newEMail:getFieldValue('newEMail'),
       },
     });
-    let count = 9;
+    let count = 59;
     this.setState({ count2: count });
     this.interval2 = setInterval(() => {
       count -= 1;
@@ -99,7 +99,6 @@ export default class BasicForms extends PureComponent {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(1)
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
@@ -117,6 +116,9 @@ export default class BasicForms extends PureComponent {
           type: 'setting/updateEmail',
           payload: values,
         });
+        this.props.dispatch({
+          type: 'user/fetchCurrent',
+        })
       }
     });
   }
@@ -128,6 +130,9 @@ export default class BasicForms extends PureComponent {
           type: 'setting/updatePhone',
           payload: values,
         });
+        this.props.dispatch({
+          type: 'user/fetchCurrent',
+        })
       }
     });
   }
@@ -196,20 +201,6 @@ export default class BasicForms extends PureComponent {
     const { submitting } = this.props;
     const { count1, count2 } = this.state;
     const { getFieldDecorator } = this.props.form;
-    const onValidateForm = (e) => {
-      e.preventDefault();
-      validateFields((err, values) => {
-        if (!err) {
-          dispatch({
-            type: 'register/submitStep2Form',
-            payload: {
-              ...data,
-              ...values,
-            },
-          });
-        }
-      });
-    };
     return(
       <DescriptionList size="large" title="修改邮箱" style={{ marginBottom: 32 }} col={1}>
         <Description>为确保是您本人操作，我们将会把验证码发送到您已绑定的邮箱。</Description>
@@ -227,7 +218,7 @@ export default class BasicForms extends PureComponent {
                         message: '请输入验证码！',
                       },
                     ],
-                  })(<Input  placeholder="验证码" onPressEnter={onValidateForm}/>)}
+                  })(<Input  placeholder="验证码" />)}
                 </Col>
                 <Col span={10}>
                   <Button
@@ -274,7 +265,7 @@ export default class BasicForms extends PureComponent {
                         message: '请输入验证码！',
                       },
                     ],
-                  })(<Input  placeholder="验证码" onPressEnter={onValidateForm}/>)}
+                  })(<Input  placeholder="验证码" />)}
                 </Col>
                 <Col span={10}>
                   <Button
@@ -317,22 +308,8 @@ export default class BasicForms extends PureComponent {
     const { submitting } = this.props;
     const { count3, count4 } = this.state;
     const { getFieldDecorator } = this.props.form;
-    const onValidateForm = (e) => {
-      e.preventDefault();
-      validateFields((err, values) => {
-        if (!err) {
-          dispatch({
-            type: 'register/submitStep2Form',
-            payload: {
-              ...data,
-              ...values,
-            },
-          });
-        }
-      });
-    };
     return(
-      <DescriptionList size="large" title="修改手机号" style={{ marginBottom: 32 }} col={1}>
+      <DescriptionList size="large" title="修改手机" style={{ marginBottom: 32 }} col={1}>
         <Description>为确保是您本人操作，我们将会把验证码发送到您已绑定的手机。</Description>
         <Form
           onSubmit={this.handleSubmit3}
@@ -348,7 +325,7 @@ export default class BasicForms extends PureComponent {
                         message: '请输入验证码！',
                       },
                     ],
-                  })(<Input  placeholder="验证码" onPressEnter={onValidateForm}/>)}
+                  })(<Input  placeholder="验证码" />)}
                 </Col>
                 <Col span={10}>
                   <Button
@@ -392,7 +369,7 @@ export default class BasicForms extends PureComponent {
                         message: '请输入验证码！',
                       },
                     ],
-                  })(<Input  placeholder="验证码" onPressEnter={onValidateForm}/>)}
+                  })(<Input  placeholder="验证码" />)}
                 </Col>
                 <Col span={10}>
                   <Button
@@ -443,15 +420,21 @@ export default class BasicForms extends PureComponent {
   toggleForm1 = () => {
     this.setState({
       expandForm1: !this.state.expandForm1,
+      expandForm2: false,
+      expandForm3: false,
     });
   }
   toggleForm2 = () => {
     this.setState({
+      expandForm1: false,
+      expandForm3: false,
       expandForm2: !this.state.expandForm2,
     });
   }
   toggleForm3 = () => {
     this.setState({
+      expandForm1: false,
+      expandForm2: false,
       expandForm3: !this.state.expandForm3,
     });
   }

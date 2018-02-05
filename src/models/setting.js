@@ -14,15 +14,35 @@ export default {
   effects: {
     *queryOldPhoneCaptcha({ payload }, { call, put }) {
       const response = yield call(queryOldPhoneCaptcha, payload);
+      if (response.code === 0) {
+        message.success('发送成功');
+      } else{
+        message.error(response.msg);
+      }
     },
     *queryNewPhoneCaptcha({ payload }, { call, put }) {
       const response = yield call(queryNewPhoneCaptcha, payload);
+      if (response.code === 0) {
+        message.success('发送成功');
+      } else{
+        message.error(response.msg);
+      }
     },
     *queryOldEmailCaptcha({ payload }, { call, put }) {
       const response = yield call(queryOldEmailCaptcha, payload);
+      if (response.code === 0) {
+        message.success('发送成功');
+      } else{
+        message.error(response.msg);
+      }
     },
     *queryNewEmailCaptcha({ payload }, { call, put }) {
       const response = yield call(queryOldEmailCaptcha, payload);
+      if (response.code === 0) {
+        message.success('发送成功');
+      } else{
+        message.error(response.msg);
+      }
     },
     *updatePassword({ payload, callback }, { call, put }) {
       const response = yield call(updatePassword, payload);

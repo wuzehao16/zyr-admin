@@ -37,12 +37,11 @@ const proxy = {
       },
     },
     $body: {
-      name: 'Serati Ma',
+      loginAccount: '娃子 瓜',
       avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
       userid: '00000001',
       userPhone:13812341234,
       userEmail:'cc@gmail.com',
-      notifyCount: 12,
     },
   },
   // GET POST 可省略
