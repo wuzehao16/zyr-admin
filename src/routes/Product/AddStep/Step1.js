@@ -203,7 +203,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Select
-                    // mode="multiple"
+                    mode="combobox"
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     // defaultValue={['a10', 'c12']}
