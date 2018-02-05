@@ -24,7 +24,7 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data: { item }, dispatch } = this.props
     return (
-      <PageHeaderLayout title="机构管理详情" >
+      <PageHeaderLayout title="产品管理详情" >
         <Card bordered={false}>
           <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
             <Description term="所在城市">{item.city}</Description>

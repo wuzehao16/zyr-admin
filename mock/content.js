@@ -5,7 +5,7 @@ let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
     channelId: `${i}`,
-    channelType:"1",
+    channelType:"12100",
     channelName:"小额贷款",
     channelTypeName: "金融资讯",
     channelDisplay:"1",
@@ -20,7 +20,7 @@ let tableListDataSource1 = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource1.push({
     contentId: `${i}`,
-    channelType:"1",
+    channelType:"12100",
     channelName:"小额贷款"	,
     contentTitle:"标题",
     contentBrief:"简介",

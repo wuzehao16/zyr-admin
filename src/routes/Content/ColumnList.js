@@ -71,7 +71,7 @@ export default class TableList extends PureComponent {
     }
 
     dispatch({
-      type: 'content/fetch',
+      type: 'content/fetchColumn',
       payload: params,
     });
   }
@@ -83,7 +83,7 @@ export default class TableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'content/fetch',
+      type: 'content/fetchColumn',
       payload: {},
     });
   }
@@ -91,6 +91,14 @@ export default class TableList extends PureComponent {
   toggleForm = () => {
     this.setState({
       expandForm: !this.state.expandForm,
+    });
+  }
+  handleEdit = (item) => {
+    this.props.dispatch({
+      type: 'content/fetchColumnEdit',
+      payload: {
+        ...item,
+      },
     });
   }
 
@@ -105,7 +113,7 @@ export default class TableList extends PureComponent {
         dispatch({
           type: 'content/remove',
           payload: {
-            no: selectedRows.map(row => row.no).join(','),
+            channelId: selectedRows.map(row => row.channelId).join(','),
           },
           callback: () => {
             this.setState({
@@ -143,7 +151,7 @@ export default class TableList extends PureComponent {
       });
 
       dispatch({
-        type: 'content/fetch',
+        type: 'content/fetchColumn',
         payload: values,
       });
     });
@@ -291,6 +299,7 @@ export default class TableList extends PureComponent {
               data={column}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
+              handleEdit={this.handleEdit}
             />
           </div>
         </Card>

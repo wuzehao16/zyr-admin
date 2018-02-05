@@ -11,6 +11,7 @@ export default {
       pagination: {},
     },
     column:{},
+    item:{},
     columnType:[],
   },
 
@@ -21,6 +22,13 @@ export default {
         type: 'save',
         payload: response,
       });
+    },
+    *fetchColumnEdit({payload}, { call, put }) {
+      yield put({
+        type: 'saveDetail',
+        payload: payload,
+      });
+      yield put(routerRedux.push('/content/column/edit'));
     },
     *fetchColumn({ payload }, { call, put }) {
       const response = yield call(queryColumn, payload);
@@ -91,6 +99,12 @@ export default {
       return {
         ...state,
         loading: action.payload,
+      };
+    },
+    saveDetail(state, action) {
+      return {
+        ...state,
+        item: action.payload,
       };
     },
   },

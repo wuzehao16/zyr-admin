@@ -17,6 +17,11 @@ class ColumnTable extends PureComponent {
     }
   }
 
+  handleEdit = (item) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(item);
+    }
+  }
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
     if (this.props.onSelectRow) {
       this.props.onSelectRow(selectedRows);
@@ -77,9 +82,9 @@ class ColumnTable extends PureComponent {
       },
       {
         title: '操作',
-        render: () => (
+        render: (text, record) => (
           <div>
-            <a href="">编辑</a>
+            <a onClick={() => this.handleEdit(record)}>编辑</a>
           </div>
         ),
       },

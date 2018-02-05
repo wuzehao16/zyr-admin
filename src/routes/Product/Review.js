@@ -64,7 +64,7 @@ export default class BasicForms extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="机构审核" >
+      <PageHeaderLayout title="产品审核" >
         <Card bordered={false}>
           <Form
                  onSubmit={this.handleSubmit}

@@ -85,7 +85,7 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="栏目分类"
             >
-              {getFieldDecorator('adsType', {
+              {getFieldDecorator('channelType', {
                 rules: [{
                   required: true,
                   message: '请选择栏目分类',
@@ -140,7 +140,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content'))}>
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content/column'))}>
                 返回
               </Button>
             </FormItem>
