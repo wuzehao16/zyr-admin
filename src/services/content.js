@@ -7,25 +7,56 @@ import request from '../utils/request';
  * @return {[type]}        [description]
  */
 export async function queryContent(params) {
-  return request(`/api/content?${stringify(params)}`);
+  return request(`/sys/selectContent?${stringify(params)}`);
 }
-
+export async function queryContentDetail(params) {
+  return request(`/sys/viewDetailContent?${stringify(params)}`);
+}
 export async function removeContent(params) {
-  return request('/api/content', {
-    method: 'POST',
+  return request('/sys/deleteContent', {
+    method: 'DELETE',
     body: {
       ...params,
-      method: 'delete',
     },
   });
 }
-
 export async function addContent(params) {
-  return request('/api/content', {
+  return request('/sys/addContent', {
     method: 'POST',
     body: {
       ...params,
-      method: 'post',
+    },
+  });
+}
+export async function editContent(params) {
+  return request('/sys/editContent', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function editColumn(params) {
+  return request('/sys/editChannel', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function queryColumn(params) {
+  return request(`/sys/selectChannel?${stringify(params)}`);
+}
+export async function removeColumn(params) {
+  return request(`sys/deleteChannel/${params.roleId}`, {
+    method: 'DELETE',
+  });
+}
+export async function addColumn(params) {
+  return request('/sys/addChannel', {
+    method: 'POST',
+    body: {
+      ...params,
     },
   });
 }

@@ -1,5 +1,7 @@
-import { queryContent, removeContent, addContent } from '../services/content';
-
+import { message } from 'antd';
+import { routerRedux } from 'dva/router';
+import { queryContent,queryContentDetail, removeContent, addContent, queryColumn, removeColumn, addColumn,editContent,editColumn } from '../services/content';
+import { queryDict } from '../services/api'
 export default {
   namespace: 'content',
 
@@ -8,40 +10,43 @@ export default {
       list: [],
       pagination: {},
     },
-    loading: true,
+    column:{},
+    columnType:[],
   },
 
   effects: {
     *fetch({ payload }, { call, put }) {
-      yield put({
-        type: 'changeLoading',
-        payload: true,
-      });
       const response = yield call(queryContent, payload);
       yield put({
         type: 'save',
         payload: response,
       });
+    },
+    *fetchColumn({ payload }, { call, put }) {
+      const response = yield call(queryColumn, payload);
       yield put({
-        type: 'changeLoading',
-        payload: false,
+        type: 'queryColumn',
+        payload: response,
+      });
+    },
+    *fetchColumnType({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          columnType: response.data
+        },
       });
     },
     *add({ payload, callback }, { call, put }) {
-      yield put({
-        type: 'changeLoading',
-        payload: true,
-      });
       const response = yield call(addContent, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-      yield put({
-        type: 'changeLoading',
-        payload: false,
-      });
-
+      if (response.code === 0) {
+        message.success('新建成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/content/column'));
       if (callback) callback();
     },
     *remove({ payload, callback }, { call, put }) {
@@ -68,6 +73,18 @@ export default {
       return {
         ...state,
         data: action.payload,
+      };
+    },
+    saveThing(state, action) {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
+    queryColumn(state, action) {
+      return {
+        ...state,
+        column: action.payload,
       };
     },
     changeLoading(state, action) {

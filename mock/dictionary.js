@@ -469,6 +469,26 @@ export function selectDictionary(req, res, u) {
     }
     return
   }
+  if (params.type === 'chaClassify') {
+    const result = {
+      code: 0,
+      data: [{
+        label: '众银学堂',
+        value: '12100'
+      },
+      {
+        label: '金融资讯',
+        value: '12200'
+      }],
+    };
+
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+    return
+  }
 
   let pageSize = 10;
   if (params.pageSize) {

@@ -206,11 +206,23 @@ export const getRouterData = (app) => {
     '/content/information': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Information')),
     },
-    '/content/add-information': {
+    '/content/information/list': {
+      component: dynamicWrapper(app, ['content'], () => import('../routes/Content/InformationList')),
+    },
+    '/content/information/add': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/AddInformation')),
     },
     '/content/column': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Column')),
+    },
+    '/content/column/list': {
+      component: dynamicWrapper(app, ['content'], () => import('../routes/Content/ColumnList')),
+    },
+    '/content/column/add': {
+      component: dynamicWrapper(app, ['content'], () => import('../routes/Content/AddColumn')),
+    },
+    '/content/column/edit': {
+      component: dynamicWrapper(app, ['content'], () => import('../routes/Content/EditColumn')),
     },
     '/system/user': {
       component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/User')),

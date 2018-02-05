@@ -116,10 +116,14 @@ const menuData = [{
   icon: 'user',
   path: 'institution',
 },{
-  name: '内容管理', // 页面名称，会展示在菜单栏中
+  name: '内容设置', // 页面名称，会展示在菜单栏中
   path: 'content', // 匹配的路由
   icon: 'book', // 页面图标，会展示在菜单栏中
   children: [
+    {
+      name: '栏目管理',
+      path: 'column',
+    },
     {
       name: '信息管理',
       path: 'information',
@@ -130,10 +134,6 @@ const menuData = [{
       //     // hideInMenu: true,
       //   }
       // ]
-    },
-    {
-      name: '栏目管理',
-      path: 'column',
     },
   ],
 },{

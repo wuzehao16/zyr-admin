@@ -6,7 +6,7 @@ import { imgMap } from './mock/utils';
 import { getProfileBasicData } from './mock/profile';
 import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
-import { getContent, postContent } from './mock/content';
+import { queryColumn, saveColumn, deleteColumn, updateColumn, queryContent, queryContentDetail, saveContent ,deleteContent, updateContent } from './mock/content';
 import { getSystemUser, postSystemUser } from './mock/systemUser';
 import { getInstitution, getSubInstitution, queryAllInstitution } from './mock/register';
 import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary } from './mock/dictionary'
@@ -154,16 +154,6 @@ const proxy = {
       "path": "/base/category/list"
     });
   },
-  'GET /api/content': getContent,
-  'POST /api/content': {
-    $params: {
-      pageSize: {
-        desc: '分页',
-        exp: 2,
-      },
-    },
-    $body: postContent,
-  },
   'POST /sysAnno/InstitutionManageParent': getInstitution,
   'POST /sysAnno/InstitutionManageSub': getSubInstitution,
   'POST /sysAnno/myPwdOrEmail': (req, res) => {
@@ -234,6 +224,17 @@ const proxy = {
   'PUT /sys/updatePassword': ok,
   'PUT /sys/bindingPhone': ok,
   'PUT /sys/bindingEmail': ok,
+  //内容管理
+  'GET /sys/selectChannel': queryColumn,
+  'POST /sys/addChannel': saveColumn,
+  'DELETE /sys/deleteChannel/*': deleteColumn,
+  'PUT /sys/editChannel': updateColumn,
+  'GET /sys/selectContent': queryContent,
+  'GET /sys/viewDetailContent': queryContentDetail,
+  'POST /sys/addContent': saveContent,
+  'DELETE /sys/deleteContent/*': deleteContent,
+  'PUT /sys/editContent': updateContent,
+
 };
 
 export default noProxy ? {} : delay(proxy, 1000);
