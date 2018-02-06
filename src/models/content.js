@@ -99,20 +99,34 @@ export default {
       if (callback) callback();
     },
     *remove({ payload, callback }, { call, put }) {
-      yield put({
-        type: 'changeLoading',
-        payload: true,
-      });
       const response = yield call(removeContent, payload);
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      const list = yield call(queryContent);
       yield put({
         type: 'save',
-        payload: response,
+        payload: list,
       });
+      if (callback) callback();
+    },
+    *removeColumn({ payload, callback }, { call, put }) {
+      const response = yield call(removeColumn, payload);
+      console.log(response.code)
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      const list = yield call(queryColumn);
       yield put({
-        type: 'changeLoading',
-        payload: false,
+        type: 'save',
+        payload: list,
       });
-
       if (callback) callback();
     },
   },

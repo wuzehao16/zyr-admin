@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment  } from 'react';
 import moment from 'moment';
 import { Table, Alert, Divider } from 'antd';
 import { Link } from 'react-router-dom';

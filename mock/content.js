@@ -20,7 +20,6 @@ let tableListDataSource1 = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource1.push({
     contentId: `${i}`,
-    "contentId": 4,
     "channelId": "2",
     "channelName": "众银学堂",
     "channelType": 12200,
@@ -223,11 +222,11 @@ export function deleteColumn(req, res, u, b) {
     /* eslint no-case-declarations:0 */
   const idArray = url.split("/")
   const id = idArray[idArray.length - 1]
-    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.paltforMsgId) === -1);
+    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.channelId) === -1);
   const result = {
     code: 0,
-    data: tableListDataSource,
-    count: tableListDataSource.length,
+    // data: tableListDataSource,
+    // count: tableListDataSource.length,
   };
 
   if (res && res.json) {

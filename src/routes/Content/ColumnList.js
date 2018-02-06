@@ -111,9 +111,9 @@ export default class TableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'content/remove',
+          type: 'content/removeColumn',
           payload: {
-            channelId: selectedRows.map(row => row.channelId).join(','),
+            id: selectedRows.map(row => row.channelId).join(','),
           },
           callback: () => {
             this.setState({

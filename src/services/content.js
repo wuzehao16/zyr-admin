@@ -12,12 +12,10 @@ export async function queryContent(params) {
 export async function queryContentDetail(params) {
   return request(`/sys/viewDetailContent?${stringify(params)}`);
 }
+
 export async function removeContent(params) {
-  return request('/sys/deleteContent', {
+  return request(`sys/deleteContent/${params.id}`, {
     method: 'DELETE',
-    body: {
-      ...params,
-    },
   });
 }
 export async function addContent(params) {
@@ -48,7 +46,7 @@ export async function queryColumn(params) {
   return request(`/sys/selectChannel?${stringify(params)}`);
 }
 export async function removeColumn(params) {
-  return request(`sys/deleteChannel/${params.roleId}`, {
+  return request(`sys/deleteChannel/${params.id}`, {
     method: 'DELETE',
   });
 }
