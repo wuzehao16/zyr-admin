@@ -113,7 +113,7 @@ class StandardTable extends PureComponent {
       {
         title: '图片',
         dataIndex: 'adsPic',
-        render: val => val.match(/ima[^\n]*Ex/)?val.match(/ima[^\n]*Ex/)[0].slice(0,-3):val
+        render: val => (val && val.match(/ima[^\n]*Ex/) )?val.match(/ima[^\n]*Ex/)[0].slice(0,-3):val
       },
       {
         title: '跳转链接',
