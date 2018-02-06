@@ -30,6 +30,14 @@ export default {
       });
       yield put(routerRedux.push('/content/column/edit'));
     },
+    *fetchEdit({payload}, { call, put }) {
+      const response = yield call(queryContent, payload);
+      yield put({
+        type: 'saveDetail',
+        payload: response,
+      });
+      yield put(routerRedux.push('/content/information/edit'));
+    },
     *fetchColumn({ payload }, { call, put }) {
       const response = yield call(queryColumn, payload);
       yield put({
@@ -48,6 +56,39 @@ export default {
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addContent, payload);
+      if (response.code === 0) {
+        message.success('新建成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/content/information'));
+      if (callback) callback();
+    },
+    *addColumn({ payload, callback }, { call, put }) {
+      const response = yield call(addColumn, payload);
+      if (response.code === 0) {
+        message.success('新建成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/content/column'));
+      if (callback) callback();
+    },
+    *update({ payload, callback }, { call, put }) {
+      const response = yield call(editContent, payload);
+      if (response.code === 0) {
+        message.success('新建成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/content/information'));
+      if (callback) callback();
+    },
+    *updateColumn({ payload, callback }, { call, put }) {
+      const response = yield call(editColumn, payload);
       if (response.code === 0) {
         message.success('新建成功');
       } else {

@@ -117,7 +117,7 @@ class StandardTable extends PureComponent {
       },
       {
         title: '审核状态',
-        dataIndex: 'approvalStatus',
+        dataIndex: 'approvalStatuts',
         filters: [
           {
             text: approvalStatus[0],

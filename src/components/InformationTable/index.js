@@ -25,7 +25,16 @@ class StandardTable extends PureComponent {
 
     this.setState({ selectedRowKeys });
   }
-
+  handleEdit = (item) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(item);
+    }
+  }
+  handleDetail = (item) => {
+    if (this.props.handleDetail) {
+      this.props.handleDetail(item);
+    }
+  }
   handleTableChange = (pagination, filters, sorter) => {
     this.props.onChange(pagination, filters, sorter);
   }
@@ -92,20 +101,16 @@ class StandardTable extends PureComponent {
       },
       {
         title: '操作',
-        render: () => (
-          <div>
-            <Link to={{
-              pathname: '/content/information/detail',
-              search: '?sort=name',
-              hash: '#the-hash',
-            }}
-            >
-            详情
-            </Link>
-            <Divider type="vertical" />
-            <a href="">编辑</a>
-          </div>
-        ),
+        align: 'center',
+        render: (text, record) => {
+          return (
+            <Fragment>
+              <a onClick={() => this.handleEdit(record)}>编辑</a>
+              <Divider type="vertical" />
+              <a onClick={() => this.handleDetail(record)}>详情</a>
+            </Fragment>
+          );
+        },
       },
     ];
 

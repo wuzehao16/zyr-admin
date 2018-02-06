@@ -30,7 +30,7 @@ export async function addContent(params) {
 }
 export async function editContent(params) {
   return request('/sys/editContent', {
-    method: 'POST',
+    method: 'PUT',
     body: {
       ...params,
     },
@@ -38,7 +38,7 @@ export async function editContent(params) {
 }
 export async function editColumn(params) {
   return request('/sys/editChannel', {
-    method: 'POST',
+    method: 'PUT',
     body: {
       ...params,
     },

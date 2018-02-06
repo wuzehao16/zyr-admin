@@ -27,7 +27,7 @@ const formItemLayout = {
 
 @connect(({ content, loading }) => ({
   content,
-  submitting: loading.effects['content/add'],
+  submitting: loading.effects['content/updateColumn'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -54,7 +54,7 @@ export default class BasicForms extends PureComponent {
           ...fieldsValue,
         };
         this.props.dispatch({
-          type: 'content/add',
+          type: 'content/updateColumn',
           payload: values,
         });
       }
@@ -65,7 +65,9 @@ export default class BasicForms extends PureComponent {
     const { content: { item, columnType }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const columnTypeOptions = columnType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-
+    getFieldDecorator('channelId', {
+      initialValue: item.channelId,
+    })
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },

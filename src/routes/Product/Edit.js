@@ -36,7 +36,7 @@ export default class BasicForms extends PureComponent {
         sort: item.sort,
         cityCode: item.cityCode,
         startStatus: item.startStatus,
-        approvalStatus: item.approvalStatus,
+        approvalStatuts: item.approvalStatuts,
       });
       if (item.institutionId) {
         setFieldsValue({

@@ -94,14 +94,14 @@ export default class BasicForms extends PureComponent {
              <Description term="还款方式">{item.productType}</Description>
              <Description term="产品特点">{item.propertyType}</Description>
            </DescriptionList>
-          {item.approvalStatus == 1
+          {item.approvalStatuts == 1
            ?  <div>
                   <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                       <Col md={12} sm={24}>
                         <FormItem
                           {...formItemLayout}
                            label="审核状态">
-                           {getFieldDecorator('approvalStatus')(
+                           {getFieldDecorator('approvalStatuts')(
                              <Radio.Group style={{ width: '100%' }}>
                                <Radio value="2">通过</Radio>
                                <Radio value="0">不通过</Radio>
@@ -116,7 +116,7 @@ export default class BasicForms extends PureComponent {
                             {...formItemLayout}
                              label="是否纳入评测"
                              style={{
-                               display: getFieldValue('approvalStatus') === '2' ? 'block' : 'none',
+                               display: getFieldValue('approvalStatuts') === '2' ? 'block' : 'none',
                              }}
                              >
                              {getFieldDecorator('isEvaluating')(
@@ -132,7 +132,7 @@ export default class BasicForms extends PureComponent {
                             {...formItemLayout}
                              label="是否为火"
                              style={{
-                               display: getFieldValue('approvalStatus') === '2' ? 'block' : 'none',
+                               display: getFieldValue('approvalStatuts') === '2' ? 'block' : 'none',
                              }}
                              >
                              {getFieldDecorator('isFire')(
@@ -150,7 +150,7 @@ export default class BasicForms extends PureComponent {
                             {...formItemLayout}
                              label="审核备注"
                              style={{
-                               display: getFieldValue('approvalStatus') === '0' ? 'block' : 'none',
+                               display: getFieldValue('approvalStatuts') === '0' ? 'block' : 'none',
                              }}
                              >
                              {getFieldDecorator('approvalRemaeks')(

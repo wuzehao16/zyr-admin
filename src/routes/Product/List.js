@@ -337,7 +337,7 @@ export default class TableList extends PureComponent {
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="审核状态">
-              {getFieldDecorator('approvalStatus')(
+              {getFieldDecorator('approvalStatuts')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   { auditOptions }
                 </Select>

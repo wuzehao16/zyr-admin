@@ -247,15 +247,15 @@ export function saveContent(req, res, u, b) {
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     const i = Math.ceil(Math.random() * 10000);
-    tableListDataSource.unshift(Object.assign({
+    tableListDataSource1.unshift(Object.assign({
       adsId: `${i}`,
       oper: '二花',
       createTime: new Date,
     },body));
     const result = {
       code: 0,
-      data: tableListDataSource,
-      count: tableListDataSource.length,
+      data: tableListDataSource1,
+      count: tableListDataSource1.length,
     };
 
   if (res && res.json) {
@@ -274,15 +274,15 @@ export function updateContent(req, res, u, b) {
   const { method, adsId } = body;
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
-    tableListDataSource.map((item,index) => {
-      if(item.adsId == adsId){
-      tableListDataSource[index]= Object.assign(item,body)
+    tableListDataSource1.map((item,index) => {
+      if(item.contentId == contentId){
+      tableListDataSource1[index]= Object.assign(item,body)
       }
     });
   const result = {
     code: 0,
-    data: tableListDataSource,
-    count: tableListDataSource.length,
+    data: tableListDataSource1,
+    count: tableListDataSource1.length,
   };
 
   if (res && res.json) {
@@ -302,11 +302,11 @@ export function deleteContent(req, res, u, b) {
     /* eslint no-case-declarations:0 */
   const idArray = url.split("/")
   const id = idArray[idArray.length - 1]
-    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.paltforMsgId) === -1);
+    tableListDataSource1 = tableListDataSource1.filter(item => id.indexOf(item.contentId) === -1);
   const result = {
     code: 0,
-    data: tableListDataSource,
-    count: tableListDataSource.length,
+    data: tableListDataSource1,
+    count: tableListDataSource1.length,
   };
 
   if (res && res.json) {
@@ -323,7 +323,7 @@ export function queryContentDetail(req, res, u) {
 
   const params = getUrlParams(url);
 
-  let dataSource = [...tableListDataSource];
+  let dataSource = [...tableListDataSource1];
 
   if (params.adsId) {
     dataSource = dataSource.filter(data => data.adsId == params.adsId);

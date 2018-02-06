@@ -113,6 +113,22 @@ export default class TableList extends PureComponent {
       selectedRows: rows,
     });
   }
+  handleEdit = (item) => {
+    this.props.dispatch({
+      type: 'content/fetchEdit',
+      payload: {
+        id: item.contentId,
+      },
+    });
+  }
+  handleDetail = (item) => {
+    this.props.dispatch({
+      type: 'content/fetchDetail',
+      payload: {
+        id: item.contentId,
+      },
+    });
+  }
 
   handleSearch = (e) => {
     e.preventDefault();
@@ -289,6 +305,8 @@ export default class TableList extends PureComponent {
               data={data}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
+              handleEdit={this.handleEdit}
+              handleDetail={this.handleDetail}
             />
           </div>
         </Card>

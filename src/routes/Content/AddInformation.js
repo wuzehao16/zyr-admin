@@ -169,7 +169,7 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="来源网址"
             >
-              {getFieldDecorator('sourceSitel')(
+              {getFieldDecorator('sourceSite')(
                 <Input placeholder="请输入"/>
               )}
             </FormItem>

@@ -27,7 +27,7 @@ const formItemLayout = {
 
 @connect(({ content, loading }) => ({
   content,
-  submitting: loading.effects['content/add'],
+  submitting: loading.effects['content/addColumn'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -54,7 +54,7 @@ export default class BasicForms extends PureComponent {
           ...fieldsValue,
         };
         this.props.dispatch({
-          type: 'content/add',
+          type: 'content/addColumn',
           payload: values,
         });
       }
