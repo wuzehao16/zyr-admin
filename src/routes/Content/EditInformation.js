@@ -21,7 +21,7 @@ const upLoadProps = {
 };
 @connect(({ content, loading }) => ({
   content,
-  submitting: loading.effects['content/add'],
+  submitting: loading.effects['content/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -54,7 +54,7 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'content/add',
+          type: 'content/update',
           payload: {
             ...values,
             content: this.state.productIntroduction,
@@ -77,9 +77,10 @@ export default class BasicForms extends PureComponent {
     this.setState({ fileList })
   }
   render() {
-    const { content: { columnType, column }, submitting, dispatch } = this.props;
+    const { content: { columnType, column, item }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { fileList, previewVisible,previewImage } = this.state;
+    console.log(item)
     if (column.data) {
       var columnNameOptions = column.data.map(item => <Option key={item.channelId} value={item.channelId}>{item.channelName}</Option>);
     }
@@ -122,6 +123,7 @@ export default class BasicForms extends PureComponent {
               label="栏目分类"
             >
               {getFieldDecorator('channelType', {
+                initialValue: item.channelType,
                 rules: [{
                   required: true, message: '请选择内容名称',
                 }],
@@ -136,6 +138,7 @@ export default class BasicForms extends PureComponent {
               label="栏目名称"
             >
               {getFieldDecorator('channelId', {
+                initialValue: item.channelId,
                 rules: [{
                   required: true, message: '请选择栏目名称',
                 }],

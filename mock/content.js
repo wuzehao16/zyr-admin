@@ -20,7 +20,6 @@ let tableListDataSource1 = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource1.push({
     contentId: `${i}`,
-    "channelId": "2",
     "channelName": "众银学堂",
     "channelType": 12200,
     "channelTypeName": "金融资讯",
@@ -37,7 +36,7 @@ for (let i = 0; i < 46; i += 1) {
     contentTag: '0',
     "updateTime": null,
     "contentSort": "1",
-    content:"众银学堂csafcsadfcaczxc asdcdcaes",
+    content:"<p>众银学堂csafcsadfcaczxc asdcdcaes</p><img src='https://picsum.photos/200/200'  /><p>众银学堂csafcsadfcaczxc asdcdcaes</p><p>众银学堂csafcsadfcaczxc asdcdcaes</p><p>众银学堂csafcsadfcaczxc asdcdcaes</p>",
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     registrationTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
   });

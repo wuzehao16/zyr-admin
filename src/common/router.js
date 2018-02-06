@@ -212,6 +212,9 @@ export const getRouterData = (app) => {
     '/content/information/add': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/AddInformation')),
     },
+    '/content/information/edit': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Content/EditInformation')),
+    },
     '/content/information/detail': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/Detail')),
     },

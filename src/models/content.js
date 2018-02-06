@@ -114,7 +114,6 @@ export default {
     },
     *removeColumn({ payload, callback }, { call, put }) {
       const response = yield call(removeColumn, payload);
-      console.log(response.code)
       if (response.code === 0) {
         message.success('删除成功');
       } else {
@@ -123,7 +122,7 @@ export default {
       }
       const list = yield call(queryColumn);
       yield put({
-        type: 'save',
+        type: 'queryColumn',
         payload: list,
       });
       if (callback) callback();
