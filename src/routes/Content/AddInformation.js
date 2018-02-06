@@ -29,7 +29,9 @@ export default class BasicForms extends PureComponent {
     previewVisible: false,
     previewImage: '',
     fileList: [],
+    productIntroduction: '',
   }
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -42,6 +44,11 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
+  productIntroduction = (value) => {
+     this.setState({
+       productIntroduction: value,
+     })
+   };
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -50,6 +57,7 @@ export default class BasicForms extends PureComponent {
           type: 'content/add',
           payload: {
             ...values,
+            content: this.state.productIntroduction,
             contentPic: values.contentPic && values.contentPic.file.response && values.contentPic.file.response.data.match(/ima[^\n]*Ex/)[0].slice(0,-3),
           },
         });
@@ -203,24 +211,8 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="排序"
             >
-              {getFieldDecorator('contentSort', {
-                rules: [{
-                  required: true, message: '请输入排序',
-                }],
-              })(
+              {getFieldDecorator('contentSort')(
                 <Input placeholder="排序" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="内容"
-            >
-              {getFieldDecorator('content', {
-                rules: [{
-                  required: true, message: '请输入内容',
-                }],
-              })(
-                <TextArea style={{ minHeight: 32 }} placeholder="请输入内容" rows={4} />
               )}
             </FormItem>
             <Form.Item

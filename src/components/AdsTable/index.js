@@ -56,7 +56,7 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, pagination }, loading } = this.props
+    const { data: { data, count }, loading } = this.props
     const approvalStatus = ['待上架', '已上架', '已下架'];
     const institutionType = ['无','银行机构','金融机构','小额贷款'];
     const isEvaluaStatuts = ['否', '是'];
@@ -113,6 +113,7 @@ class StandardTable extends PureComponent {
       {
         title: '图片',
         dataIndex: 'adsPic',
+        render: val => val.match(/ima[^\n]*Ex/)?val.match(/ima[^\n]*Ex/)[0].slice(0,-3):val
       },
       {
         title: '跳转链接',
@@ -174,7 +175,7 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      total: count,
       showTotal:total => `总共 ${total} 条`,
     };
 

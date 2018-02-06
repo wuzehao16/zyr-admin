@@ -30,13 +30,12 @@ export default {
       });
       yield put(routerRedux.push('/content/column/edit'));
     },
-    *fetchEdit({payload}, { call, put }) {
-      const response = yield call(queryContent, payload);
+    *fetchDetail({payload}, { call, put }) {
+      const response = yield call(queryContentDetail, payload);
       yield put({
         type: 'saveDetail',
-        payload: response,
+        payload: response.data,
       });
-      yield put(routerRedux.push('/content/information/edit'));
     },
     *fetchColumn({ payload }, { call, put }) {
       const response = yield call(queryColumn, payload);

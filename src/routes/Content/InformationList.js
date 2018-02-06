@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, DatePicker } from 'antd';
 import PropTypes from 'prop-types';
 import moment  from 'moment'
@@ -114,20 +115,24 @@ export default class TableList extends PureComponent {
     });
   }
   handleEdit = (item) => {
-    this.props.dispatch({
-      type: 'content/fetchEdit',
-      payload: {
-        id: item.contentId,
-      },
-    });
-  }
-  handleDetail = (item) => {
-    this.props.dispatch({
+    const { dispatch } = this.props;
+    dispatch({
       type: 'content/fetchDetail',
       payload: {
-        id: item.contentId,
+        contentId: item.contentId,
       },
     });
+    dispatch(routerRedux.push('/content/information/edit'))
+  }
+  handleDetail = (item) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'content/fetchDetail',
+      payload: {
+        contentId: item.contentId,
+      },
+    });
+    dispatch(routerRedux.push('/content/information/detail'))
   }
 
   handleSearch = (e) => {

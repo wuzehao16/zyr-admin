@@ -22,8 +22,19 @@ export default class BasicForms extends PureComponent {
     return (
       <PageHeaderLayout title="产品管理详情" >
         <Card bordered={false}>
-          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
-            {/* <Description term="所在城市">{item.city}</Description> */}
+          <DescriptionList size="large" title="内容详情" style={{ marginBottom: 32 }} col={2}>
+            <Description term="ID">{item.channelId}</Description>
+            <Description term="栏目分类">{item.channelTypeName}</Description>
+            <Description term="栏目名称">{item.channelName}</Description>
+            <Description term="标题">{item.contentTitle}</Description>
+            <Description term="简介">{item.contentBrief}</Description>
+            <Description term="封面图">{item.contentPic}</Description>
+            <Description term="排序">{item.contentSort}</Description>
+            <Description term="来源">{item.source}</Description>
+            <Description term="来源网址">{item.sourceSite}</Description>
+            <Description term="内容类型">{item.contentTypeName}</Description>
+            <Description term="是否显示">{item.isDisplay==1?'是':'否'}</Description>
+            <Description term="标签选择">{item.contentTag==0?'荐':item.contentTag==1?'热':'无'}</Description>
 
           </DescriptionList>
           <Divider style={{ marginBottom: 12 }} />

@@ -73,7 +73,7 @@ class StandardTable extends PureComponent {
         dataIndex: 'contentSort',
       },
       {
-        title: '是否在线',
+        title: '是否显示',
         dataIndex: 'isDisplay',
         filters: [
           {
