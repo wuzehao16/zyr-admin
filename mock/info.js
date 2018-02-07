@@ -27,7 +27,7 @@ for (let i = 0; i < 46; i += 1) {
     email:"Banner1的内容",
     object:"https://picsum.photos/200/200"	,
     oper:"http://www.ibankmatch.com",
-    status:"2",
+    status:"1",
     oper:"dsadadsa11",
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     registrationTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),

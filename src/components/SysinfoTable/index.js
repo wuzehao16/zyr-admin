@@ -39,7 +39,7 @@ class StandardTable extends PureComponent {
     const { selectedRowKeys } = this.state;
     const { data: { data, count }, loading } = this.props;
 
-    const status = ['关闭', '运行中', '已上线', '异常'];
+    const status = ['失败', '成功'];
 
     const columns = [
       {
@@ -50,10 +50,6 @@ class StandardTable extends PureComponent {
               <span>{index+1}</span>
           );
         },
-      },
-      {
-        title: '标题',
-        dataIndex: 'msgTitle',
       },
       {
         title: '内容',
@@ -76,6 +72,11 @@ class StandardTable extends PureComponent {
       {
         title: '邮箱',
         dataIndex: 'email',
+      },
+      {
+        title: '是否成功',
+        dataIndex: 'status',
+        render: val => `${status[val]}`,
       },
       {
         title: '操作者',

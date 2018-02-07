@@ -20,6 +20,7 @@ const CreateForm = Form.create()((props) => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       fieldsValue.userId = item.userId;
+      fieldsValue.userName = item.userName;
       handleAdd(fieldsValue);
     });
   };
@@ -83,6 +84,7 @@ export default class TableList extends PureComponent {
       item: {
         userId: v.userId,
         phone: v.loginAccount,
+        userName: v.userName,
       },
     });
     this.handleModalVisible(true);

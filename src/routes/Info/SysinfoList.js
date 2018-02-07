@@ -89,7 +89,7 @@ export default class TableList extends PureComponent {
     }
 
     dispatch({
-      type: 'info/fetch',
+      type: 'info/fetchSysInfo',
       payload: params,
     });
   }
@@ -101,7 +101,7 @@ export default class TableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'info/fetch',
+      type: 'info/fetchSysInfo',
       payload: {},
     });
   }
@@ -163,7 +163,7 @@ export default class TableList extends PureComponent {
       });
 
       dispatch({
-        type: 'info/fetch',
+        type: 'info/fetchSysInfo',
         payload: values,
       });
     });
