@@ -385,6 +385,17 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['setting'], () => import('../routes/Setting')),
       name: '设置',
     },
+    '/order': {
+      component: dynamicWrapper(app, ['order'], () => import('../routes/Order')),
+      name: '订单管理',
+    },
+    '/order/list': {
+      component: dynamicWrapper(app, ['order'], () => import('../routes/Order/List')),
+    },
+    '/order/detail': {
+      component: dynamicWrapper(app, ['order'], () => import('../routes/Order/Detail')),
+      name: '订单详情',
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },

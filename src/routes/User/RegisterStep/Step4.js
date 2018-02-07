@@ -135,10 +135,10 @@ class Step4 extends React.PureComponent {
       var institutionTypeListOptions = data.institutionTypeList.map(item => <Option key={item.institutionCode} value={item.institutionCode}>{item.institutionName}</Option>);
     }
     if (data.institutionList) {
-      var institutionListOptions = data.institutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
+      var institutionListOptions = data.institutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
     }
     if (data.subInstitutionList) {
-      var subInstitutionListOptions = data.subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
+      var subInstitutionListOptions = data.subInstitutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
     }
     const onValidateForm = (e) => {
       e.preventDefault();

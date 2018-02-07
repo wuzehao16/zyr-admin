@@ -107,6 +107,10 @@ const menuData = [{
  name: '广告管理',
  icon: 'user',
  path: 'ads',
+}, {
+ name: '订单订单',
+ icon: 'user',
+ path: 'order',
 },{
   name: '产品管理',
   icon: 'product',
