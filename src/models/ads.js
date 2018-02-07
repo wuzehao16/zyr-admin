@@ -57,6 +57,11 @@ export default {
       const response = yield call(upAdsState, payload);
       if(response.code === 0){
         message.success('提交成功');
+        const list = yield call(query);
+        yield put({
+          type: 'save',
+          payload: list,
+        });
         yield put(routerRedux.push('/ads'));
       } else {
         message.error(response.msg);

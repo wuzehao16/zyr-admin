@@ -231,7 +231,7 @@ export function deleteColumn(req, res, u, b) {
     tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.channelId) === -1);
   const result = {
     code: 0,
-    // data: tableListDataSource,
+    data: tableListDataSource,
     // count: tableListDataSource.length,
   };
 

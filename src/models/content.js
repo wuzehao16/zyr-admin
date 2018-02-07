@@ -114,6 +114,7 @@ export default {
     },
     *removeColumn({ payload, callback }, { call, put }) {
       const response = yield call(removeColumn, payload);
+      console.log(response,response.code)
       if (response.code === 0) {
         message.success('删除成功');
       } else {

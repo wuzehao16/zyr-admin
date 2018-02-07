@@ -15,7 +15,7 @@ export async function queryContentDetail(params) {
 
 export async function removeContent(params) {
   return request(`sys/deleteContent/${params.id}`, {
-    method: 'DELETE',
+    method: 'Delete',
   });
 }
 export async function addContent(params) {
@@ -47,7 +47,7 @@ export async function queryColumn(params) {
 }
 export async function removeColumn(params) {
   return request(`sys/deleteChannel/${params.id}`, {
-    method: 'DELETE',
+    method: 'Delete',
   });
 }
 export async function addColumn(params) {
