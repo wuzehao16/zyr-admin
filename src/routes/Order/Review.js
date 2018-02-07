@@ -25,7 +25,7 @@ export default class BasicForms extends PureComponent {
   renderForm() {
     const { submitting, data: { item }, dispatch } = this.props
     switch (item.orderStauts) {
-      case 5:
+      case 4:
         return this.renderloan();
         break;
       case 6:
@@ -64,9 +64,6 @@ export default class BasicForms extends PureComponent {
         <Step title="已面签" />
         <Step title="已放款" />
       </Steps>
-      <DescriptionList size="large" style={{ marginBottom: 32 }} col={2}>
-        <Description term="拒绝原因">{item.cancelReason}</Description>
-      </DescriptionList>
       </div>
     )
   }
@@ -96,13 +93,6 @@ export default class BasicForms extends PureComponent {
           <Step title="已面签" />
           <Step title="已放款" />
         </Steps>
-        <DescriptionList size="large" title="申请贷款信息" style={{ marginBottom: 32 }} col={2}>
-          <Description term="贷款金额">{item.realLoanMoney}万</Description>
-          <Description term="贷款期限">{item.loanLimit}期</Description>
-          <Description term="还款方式">{item.realLoanTypeName}</Description>
-          <Description term="平台收益">{item.platformIncome}</Description>
-          <Description term="提单人佣金">{item.soleCommission}</Description>
-        </DescriptionList>
       </div>
     )
   }

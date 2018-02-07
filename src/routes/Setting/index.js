@@ -441,11 +441,11 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data:{ currentUser } , dispatch } = this.props;
     return (
-      <PageHeaderLayout title="会员等级详情" >
+      <PageHeaderLayout title="账号设置" >
         <Card bordered={false}>
           <Tabs defaultActiveKey="1">
             <TabPane tab="Tab 1" key="1">
-                {currentUser.name ? (
+                {currentUser.loginAccount ? (
                   <div>
 
 

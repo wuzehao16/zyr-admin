@@ -80,11 +80,11 @@ export default class TableList extends PureComponent {
     });
     this.handleModalVisible(true);
   }
-  handleEdit = (item) => {
+  handleReview = (item) => {
     this.props.dispatch({
-      type: 'order/fetchEdit',
+      type: 'order/fetchReview',
       payload: {
-        id: item.orderId,
+        orderId: item.orderId,
       },
     });
   }
@@ -92,7 +92,7 @@ export default class TableList extends PureComponent {
     this.props.dispatch({
       type: 'order/fetchDetail',
       payload: {
-        id: item.orderId,
+        orderId: item.orderId,
       },
     });
   }
@@ -283,9 +283,6 @@ export default class TableList extends PureComponent {
               {this.renderSimpleForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/order/add'))}>
-                新建
-              </Button>
               {
                 selectedRows.length > 0 && (
                   <span>

@@ -144,10 +144,11 @@ class Step4 extends React.PureComponent {
       e.preventDefault();
       validateFields((err, values) => {
         if (!err) {
+          const ndata = Object.assign(data,{city:''})
           dispatch({
             type: 'register/submitStep4Form',
             payload: {
-              ...data,
+              ...ndata,
               ...values,
             },
           });

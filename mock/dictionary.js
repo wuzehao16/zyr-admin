@@ -489,6 +489,47 @@ export function selectDictionary(req, res, u) {
     }
     return
   }
+  if (params.type === 'ordStatus') {
+    const result = {
+      code: 0,
+      data: [{
+        label: '申请中',
+        value: '0'
+      },
+      {
+        label: '已申请',
+        value: '1'
+      },{
+        label: '已初审',
+        value: '2'
+      },
+      {
+        label: '已终审',
+        value: '3'
+      },{
+        label: '已面签',
+        value: '4'
+      },
+      {
+        label: '已放款',
+        value: '5'
+      },{
+        label: '已拒绝',
+        value: '6'
+      },
+      {
+        label: '已取消',
+        value: '7'
+      }],
+    };
+
+    if (res && res.json) {
+      res.json(result);
+    } else {
+      return result;
+    }
+    return
+  }
 
   let pageSize = 10;
   if (params.pageSize) {

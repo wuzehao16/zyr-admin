@@ -16,7 +16,7 @@ for (let i = 0; i < 46; i += 1) {
     userName: 'zzc',
     userEmail: 'fsdjfksdjfk@gmail.com',
     userPhone: '12345678911',
-    orderStauts: "9000",
+    orderStauts: Math.floor(Math.random()*8),
     updateTime: null,
     orderStautsName: "申请中",
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
@@ -153,8 +153,8 @@ export function selectOrderDetail(req, res, u) {
 
   let dataSource = [...tableListDataSource];
 
-  if (params.adsId) {
-    dataSource = dataSource.filter(data => data.adsId == params.adsId);
+  if (params.orderId) {
+    dataSource = dataSource.filter(data => data.orderId == params.orderId);
   }
 
   let pageSize = 10;
