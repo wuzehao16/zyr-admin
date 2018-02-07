@@ -202,8 +202,8 @@ export default class BasicForms extends PureComponent {
                 }],
               })(
                 <Select placeholder="请选择">
-                  <Option value="0">图文</Option>
-                  <Option value="1">视频</Option>
+                  <Option value="60000">图文</Option>
+                  <Option value="61000">视频</Option>
                 </Select>
               )}
             </FormItem>
