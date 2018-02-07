@@ -38,12 +38,14 @@ const proxy = {
       },
     },
     $body: {
-      loginAccount: '娃子 瓜',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-      userid: '00000001',
-      userPhone:13812341234,
-      userIdentity: 0,
-      userEmail:'cc@gmail.com',
+      data:{
+        loginAccount: '娃子 瓜',
+        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+        userid: '00000001',
+        userPhone:13812341234,
+        userIdentity: 0,
+        userEmail:'cc@gmail.com',
+      }
     },
   },
   // GET POST 可省略

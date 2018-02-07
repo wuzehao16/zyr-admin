@@ -215,12 +215,15 @@ export default class TableList extends PureComponent {
   }
 
   renderSimpleForm() {
+    const { user:{ currentUser }  } = this.props;
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="机构名称">
+            <FormItem label="机构名称"
+              style={{display: currentUser.userIdentity==0?'block':'none'}}
+              >
               {getFieldDecorator('manageName')(
                 <Input placeholder="请输入"/>
               )}
