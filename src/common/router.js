@@ -317,8 +317,17 @@ export const getRouterData = (app) => {
       name: '产品审核',
     },
     '/product/edit': {
-      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Edit')),
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/EditStep')),
       name: '编辑产品',
+    },
+    '/product/edit/step1': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/EditStep/Step1')),
+    },
+    '/product/edit/step2': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/EditStep/Step2')),
+    },
+    '/product/edit/step3': {
+      component: dynamicWrapper(app, ['product'], () => import('../routes/Product/EditStep/Step3')),
     },
     '/product/add': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product/AddStep')),

@@ -149,7 +149,7 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="标题"
             >
-              {getFieldDecorator('informationTitle',{
+              {getFieldDecorator('contentTitle',{
                 rules: [{
                   required: true, message: '请输入标题',
                 }],

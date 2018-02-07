@@ -33,7 +33,7 @@ export default class BasicForms extends PureComponent {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { content: { item }, dispatch } = this.props;
     dispatch({
       type: 'content/fetchColumn',
     });
@@ -43,6 +43,20 @@ export default class BasicForms extends PureComponent {
         type: 'chaClassify'
       }
     });
+    if (item.content) {
+      this.setState({
+        productIntroduction: item.content,
+      })
+    }
+    if (item.contentPic) {
+      this.setState({
+        fileList:[{
+          uid:-1,
+          name:"xxx.png",
+          url: item.contentPic
+        }]
+      })
+    }
   }
   productIntroduction = (value) => {
      this.setState({
@@ -152,7 +166,8 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="标题"
             >
-              {getFieldDecorator('informationTitle',{
+              {getFieldDecorator('contentTitle',{
+                initialValue: item.contentTitle,
                 rules: [{
                   required: true, message: '请输入标题',
                 }],
@@ -164,7 +179,9 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="简介"
             >
-              {getFieldDecorator('contentBrief')(
+              {getFieldDecorator('contentBrief',{
+                initialValue: item.contentBrief,
+              })(
                 <Input placeholder="请输入"/>
               )}
             </FormItem>
@@ -172,7 +189,9 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="来源"
             >
-              {getFieldDecorator('source')(
+              {getFieldDecorator('source',{
+                initialValue: item.source,
+              })(
                 <Input placeholder="请输入"/>
               )}
             </FormItem>
@@ -180,7 +199,9 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="来源网址"
             >
-              {getFieldDecorator('sourceSite')(
+              {getFieldDecorator('sourceSite',{
+                initialValue: item.sourceSite,
+              })(
                 <Input placeholder="请输入"/>
               )}
             </FormItem>
@@ -188,7 +209,9 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="是否启用"
             >
-              {getFieldDecorator('isDisplay')(
+              {getFieldDecorator('isDisplay',{
+                initialValue: item.isDisplay,
+              })(
                 <Select placeholder="请选择">
                   <Option value="1">是</Option>
                   <Option value="0">否</Option>
@@ -200,6 +223,7 @@ export default class BasicForms extends PureComponent {
               label="内容类型"
             >
               {getFieldDecorator('contentType', {
+                initialValue: item.contentType,
                 rules: [{
                   required: true, message: '请输入内容类型',
                 }],
@@ -214,7 +238,9 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="排序"
             >
-              {getFieldDecorator('contentSort')(
+              {getFieldDecorator('contentSort',{
+                initialValue: item.contentSort,
+              })(
                 <Input placeholder="排序" />
               )}
             </FormItem>
@@ -245,6 +271,7 @@ export default class BasicForms extends PureComponent {
                   listType="picture-card"
                   onPreview={this.handlePreview}
                   onChange={this.handleChange}
+                  fileList={fileList}
                 >
                   {fileList.length >= 1 ? null : uploadButton}
                 </Upload>
