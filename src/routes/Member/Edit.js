@@ -72,7 +72,7 @@ export default class BasicForms extends PureComponent {
                 <Col sm={12} xs={24}>
                   <FormItem >
                     {getFieldDecorator('loginAccount', {
-                  rules: [
+                      rules: [
                     { required: true, message: '请输入用户手机号...' },
                     {
                       pattern: /^1[3|4|5|8]\d{9}$/,

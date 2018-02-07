@@ -181,11 +181,11 @@ export function updateOrder(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, adsId } = body;
+  const { method, orderId } = body;
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     tableListDataSource.map((item,index) => {
-      if(item.adsId == adsId){
+      if(item.orderId == orderId){
       tableListDataSource[index]= Object.assign(item,body)
       }
     });
@@ -212,7 +212,7 @@ export function deleteOrder(req, res, u, b) {
     /* eslint no-case-declarations:0 */
   const idArray = url.split("/")
   const id = idArray[idArray.length - 1]
-    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.adsId) === -1);
+    tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.orderId) === -1);
   const result = {
     code: 0,
     data: tableListDataSource,

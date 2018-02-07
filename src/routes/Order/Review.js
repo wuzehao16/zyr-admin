@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import {
-  Form, Button, Card, Divider, Steps, Col , Select, Input
+  Form, Button, Card, Divider, Steps, Col , Select, Input, InputNumber,
 } from 'antd';
 import DescriptionList from '../../components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -68,9 +68,17 @@ export default class BasicForms extends PureComponent {
       <Description term="更新状态">
         <Col sm={12} xs={24}>
           <FormItem >
-            {getFieldDecorator('orderStatus')(
+            {getFieldDecorator('orderStauts', {
+              rules: [{
+                 required: true,
+                 message: '请选择更新状态'
+               }],
+             })(
               <Select placeholder="请选择" style={{ width: '100%' }}>
-                <Option value={item.orderStauts}>下一步</Option>
+
+                <Option
+                  style={{display:(item.orderStauts < 5)?'block':'none'}}
+                  value={item.orderStauts+1}>下一步</Option>
                 <Option value={6}>拒绝</Option>
               </Select>
           )}
@@ -113,6 +121,7 @@ export default class BasicForms extends PureComponent {
   }
   renderloan = ()=> {
     const { submitting, data: { item }, dispatch } = this.props
+    const { getFieldDecorator, getFieldValue } = this.props.form;
     return (
       <div>
         <Steps progressDot  current={item.orderStauts} style={{ marginBottom: 80 }}>
@@ -123,13 +132,80 @@ export default class BasicForms extends PureComponent {
           <Step title="已面签" />
           <Step title="已放款" />
         </Steps>
+        <DescriptionList size="large" title="" style={{ marginBottom: 32 }} col={2}>
+        <Description term="更新状态">
+          <Col sm={12} xs={24}>
+            <FormItem >
+              {getFieldDecorator('orderStauts', {
+                rules: [{
+                   required: true,
+                   message: '请选择更新状态'
+                 }],
+               })(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  <Option
+                    style={{display:(item.orderStauts < 5)?'block':'none'}}
+                    value={item.orderStauts+1}>下一步</Option>
+                  <Option value={6}>拒绝</Option>
+                </Select>
+            )}
+            </FormItem>
+          </Col>
+        </Description>
+        </DescriptionList>
+        <DescriptionList size="large" title="" style={{ marginBottom: 32 }} col={2}>
+        <Description term="贷款金额">
+          <Col sm={12} xs={24}>
+            <FormItem >
+              {getFieldDecorator('realLoanMoney', {
+                rules: [{
+                   required: true,
+                   message: '请输入贷款金额'
+                 }],
+          })(
+                  <Input type="number" min={0} max={10000} addonAfter="万" placeholder="请输入"/>
+            )}
+            </FormItem>
+          </Col>
+        </Description>
+        <Description term="贷款期限">
+          <Col sm={12} xs={24}>
+            <FormItem >
+              {getFieldDecorator('loanLimit', {
+                rules: [{
+                   required: true,
+                   message: '请输入贷款期限'
+                 }],
+               })(
+                  <Input type="number" min={0} max={100} addonAfter="期" placeholder="请输入"/>
+            )}
+            </FormItem>
+          </Col>
+        </Description>
+        <Description term="还款方式">
+          <Col sm={12} xs={24}>
+            <FormItem >
+              {getFieldDecorator('realLoanType', {
+                rules: [{
+                   required: true,
+                   message: '请选择还款方式'
+                 }],
+               })(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  <Option value={6}>拒绝</Option>
+                </Select>
+            )}
+            </FormItem>
+          </Col>
+        </Description>
+        </DescriptionList>
       </div>
     )
   }
   render() {
     const { submitting, data: { item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-
+    getFieldDecorator('orderId',{initialValue: item.orderId})
     return (
       <PageHeaderLayout title="订单详情" >
         <Card bordered={false}>
@@ -169,7 +245,7 @@ export default class BasicForms extends PureComponent {
           <Description
             term="拒绝原因"
             style={{
-            display: getFieldValue('orderStatus') === 6 ? 'block' : 'none',
+            display: getFieldValue('orderStauts') === 6 ? 'block' : 'none',
           }}
           >
             <Col sm={12} xs={24}>
