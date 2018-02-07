@@ -15,6 +15,17 @@ class Step3 extends React.PureComponent {
     step5: '',
     step6: '',
   }
+  componentDidMount() {
+    const { product:{ item } } = this.props;
+    this.setState({
+      step1: item.applyFlow && item.applyFlow.split(',')[0],
+      step2: item.applyFlow && item.applyFlow.split(',')[1],
+      step3: item.applyFlow && item.applyFlow.split(',')[2],
+      step4: item.applyFlow && item.applyFlow.split(',')[3],
+      step5: item.applyFlow && item.applyFlow.split(',')[4],
+      step6: item.applyFlow && item.applyFlow.split(',')[5],
+    })
+  }
   onChangeStep1 = (e) =>{
     this.setState({
       step1: e.target.value
@@ -50,7 +61,7 @@ class Step3 extends React.PureComponent {
     const onFinish = () => {
       const applyFlow = Object.values(this.state).join(",")
       dispatch({
-        type: 'product/submitStepForm',
+        type: 'product/update',
         payload: {
           ...data,
           applyFlow
@@ -63,13 +74,13 @@ class Step3 extends React.PureComponent {
       </Popover>
     );
     const onPrev = () => {
-      dispatch(routerRedux.push('/product/add/step2'));
+      dispatch(routerRedux.push('/product/edit/step2'));
     };
     return (
       <div style={{marginTop:"50px"}}>
         <h1>申请流程:</h1>
         <Steps current={6} progressDot style={{marginTop:"50px"}} >
-          <Step title="1" description={<Input  onChange={this.onChangeStep1} placeholder="申请"/>} />
+          <Step title="1" description={<Input value={this.state.step1} onChange={this.onChangeStep1} placeholder="申请"/>} />
           <Step title="2" description={<Input value={this.state.step2} onChange={this.onChangeStep2} placeholder="申请"/>} />
           <Step title="3" description={<Input value={this.state.step3} onChange={this.onChangeStep3} placeholder="申请"/>} />
           <Step title="4" description={<Input value={this.state.step4} onChange={this.onChangeStep4} placeholder="申请"/>} />
@@ -90,6 +101,7 @@ class Step3 extends React.PureComponent {
 }
 
 export default connect(({ product, loading }) => ({
+  product,
   data: product.step,
-  submitting: loading.effects['product/submitStepForm'],
+  submitting: loading.effects['product/update'],
 }))(Step3);

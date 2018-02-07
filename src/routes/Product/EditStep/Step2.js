@@ -19,12 +19,22 @@ const formItemLayout = {
 @Form.create()
 class Step2 extends React.PureComponent {
   state = {
-   productIntroduction: '',
-   basieReq: '',
+   productIntroduction: '1',
+   basieReq: '1',
    creditReq: '',
    positonCount: '',
    otherReq: '',
  };
+ componentDidMount() {
+   const { product:{ item } } = this.props;
+   this.setState({
+     productIntroduction: item.productIntroduction,
+     basieReq: item.basieReq,
+     creditReq: item.creditReq,
+     positonCount: item.positonCount,
+     otherReq: item.otherReq
+   })
+ }
  productIntroduction = (value) => {
     this.setState({
       productIntroduction: value,
@@ -57,13 +67,14 @@ class Step2 extends React.PureComponent {
   //   });
   // };
   render() {
-    const { form, data, dispatch, submitting } = this.props;
+    const { form, data, dispatch, submitting, product:{ item } } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const onPrev = () => {
-      dispatch(routerRedux.push('/product/add/step1'));
+      dispatch(routerRedux.push('/product/edit/step1'));
     };
+    console.log(item)
     const onValidateForm = (e) => {
-      dispatch(routerRedux.push('/product/add/step3'));
+      dispatch(routerRedux.push('/product/edit/step3'));
       e.preventDefault();
       // validateFields((err, values) => {
         // if (!err) {
@@ -149,4 +160,5 @@ class Step2 extends React.PureComponent {
 export default connect(({ product, loading }) => ({
   submitting: loading.effects['product/submitStepForm'],
   data: product.step,
+  product,
 }))(Step2);

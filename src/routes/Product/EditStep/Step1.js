@@ -96,6 +96,8 @@ class Step1 extends React.PureComponent {
       var cusCategoryOptions = cusCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var repMethodOptions = repMethod.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var prodFeaturesOptions = prodFeatures.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      getFieldDecorator('productId',{
+        initialValue: item.productId,})
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -146,7 +148,7 @@ class Step1 extends React.PureComponent {
               approvalAging: values.approvalAgingStart + ',' + values.approvalAgingEnd,
             },
           });
-          dispatch(routerRedux.push('/product/add/step2'));
+          dispatch(routerRedux.push('/product/edit/step2'));
         }
       });
     };
@@ -312,11 +314,15 @@ class Step1 extends React.PureComponent {
                >
                  <InputGroup
                     compact>
-                   {getFieldDecorator('productTimeLimitStart')(
+                   {getFieldDecorator('productTimeLimitStart',{
+                     initialValue:item.productTimeLimit?item.productTimeLimit.split(',')[0]:''
+                   })(
                   <Input style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
                   )}
                    <Input style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
-                   {getFieldDecorator('productTimeLimitEnd')(
+                   {getFieldDecorator('productTimeLimitEnd',{
+                     initialValue:item.productTimeLimit?item.productTimeLimit.split(',')[1]:''
+                   })(
                    <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="Maximum" />
                    )}
                  </InputGroup>
@@ -331,6 +337,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productPoundage',{
+                  initialValue: item.productPoundage,
                   rules: [
                     {
                       required: true,
@@ -351,11 +358,15 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                  <InputGroup compact>
-                    {getFieldDecorator('approvalAgingStart')(
+                    {getFieldDecorator('approvalAgingStart',{
+                      initialValue:item.approvalAging?item.approvalAging.split(',')[0]:''
+                    })(
                    <Input style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
                    )}
                    <Input style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
-                   {getFieldDecorator('approvalAgingEnd')(
+                   {getFieldDecorator('approvalAgingEnd',{
+                     initialValue:item.approvalAging?item.approvalAging.split(',')[0]:''
+                   })(
                    <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
                    )}
                  </InputGroup>
@@ -370,6 +381,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productNotice',{
+                  initialValue: item.productNotice,
                   rules: [
                     {
                       required: true,
@@ -390,6 +402,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productRecommend',{
+                  initialValue: item.productRecommend,
                   rules: [
                     {
                       required: true,
@@ -411,7 +424,9 @@ class Step1 extends React.PureComponent {
                 label="排序"
                 {...formItemLayout}
                >
-                {getFieldDecorator('productSort')(
+                {getFieldDecorator('productSort',{
+                  initialValue: item.productSort,
+                })(
                   <Input
                     placeholder="请输入"
                   />
@@ -426,6 +441,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout1}
                >
                 {getFieldDecorator('productType',{
+                  initialValue:item.productType?item.productType.split(','):[],
                   rules: [
                     {
                       required: true,
@@ -456,7 +472,9 @@ class Step1 extends React.PureComponent {
                   display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'') == '1' ? 'block' : 'none',
                 }}
                >
-                {getFieldDecorator('propertyType')(
+                {getFieldDecorator('propertyType',{
+                  initialValue:item.propertyType?item.propertyType.split(','):[],
+                })(
                   <Select
                     mode="multiple"
                     style={{ width: '100%' }}
@@ -477,6 +495,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout1}
                >
                 {getFieldDecorator('customerType',{
+                  initialValue:item.customerType?item.customerType.split(','):[],
                   rules: [
                     {
                       required: true,
@@ -504,6 +523,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout1}
                >
                 {getFieldDecorator('productPayWay',{
+                  initialValue:item.productPayWay?item.productPayWay.split(','):[],
                   rules: [
                     {
                       required: true,
@@ -531,6 +551,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout1}
                >
                 {getFieldDecorator('productFeatures',{
+                  initialValue:item.productFeatures?item.productFeatures.split(','):[],
                   rules: [
                     {
                       required: true,
@@ -572,6 +593,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('shelfState',{
+                  initialValue: item.shelfState,
                   rules: [
                     {
                       required: true,
