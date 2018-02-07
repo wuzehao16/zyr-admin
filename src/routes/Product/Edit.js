@@ -293,7 +293,10 @@ export default class BasicForms extends PureComponent {
                   {getFieldDecorator('userPhone',{
                     rules: [{
                       required: true, message: '请输入手机号',
-                    }],
+                    }, {
+                      pattern: /^1[3|4|5|8]\d{9}$/,
+                      message: '手机号格式错误！',
+                    },],
                   })(
                     <Input placeholder="请输入" />
                   )}

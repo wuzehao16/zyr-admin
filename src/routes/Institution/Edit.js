@@ -293,10 +293,10 @@ export default class BasicForms extends PureComponent {
               <Col md={12} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="登陆账号">
+                   label="用户名">
                   {getFieldDecorator('loginAccount',{
                     rules: [{
-                      required: true, message: '请输入登陆账号',
+                      required: true, message: '请输入用户名',
                     }],
                   })(
                     <Input placeholder="请输入" />
@@ -312,7 +312,10 @@ export default class BasicForms extends PureComponent {
                   {getFieldDecorator('userPhone',{
                     rules: [{
                       required: true, message: '请输入手机号',
-                    }],
+                    },{
+                      pattern: /^1[3|4|5|8]\d{9}$/,
+                      message: '手机号格式错误！',
+                    },],
                   })(
                     <Input placeholder="请输入" />
                   )}

@@ -246,11 +246,14 @@ export default class BasicForms extends PureComponent {
               <Col md={12} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="登陆账号">
-                  {getFieldDecorator('loginAccount',{
+                   label="手机号">
+                  {getFieldDecorator('userPhone',{
                     rules: [{
-                      required: true, message: '请输入登陆账号',
-                    }],
+                      required: true, message: '请输入手机号',
+                    },{
+                      pattern: /^1[3|4|5|8]\d{9}$/,
+                      message: '手机号格式错误！',
+                    },],
                   })(
                     <Input placeholder="请输入" />
                   )}
@@ -258,19 +261,7 @@ export default class BasicForms extends PureComponent {
               </Col>
             </Row>
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
-                <FormItem
-                  {...formItemLayout}
-                   label="手机号">
-                  {getFieldDecorator('userPhone',{
-                    rules: [{
-                      required: true, message: '请输入手机号',
-                    }],
-                  })(
-                    <Input placeholder="请输入" />
-                  )}
-                </FormItem>
-              </Col>
+
               <Col md={12} sm={24}>
                 <FormItem
                   {...formItemLayout}
@@ -280,8 +271,6 @@ export default class BasicForms extends PureComponent {
                   )}
                 </FormItem>
               </Col>
-            </Row>
-            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <Col md={12} sm={24}>
                 <FormItem
                   {...formItemLayout}
@@ -298,6 +287,8 @@ export default class BasicForms extends PureComponent {
                   )}
                 </FormItem>
               </Col>
+            </Row>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <Col md={12} sm={24}>
                 <FormItem
                   {...formItemLayout}
