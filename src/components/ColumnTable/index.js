@@ -77,7 +77,6 @@ class ColumnTable extends PureComponent {
       {
         title: '创建时间',
         dataIndex: 'updateTime',
-        sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {

@@ -85,7 +85,6 @@ class StandardTable extends PureComponent {
       {
         title: '推送时间',
         dataIndex: 'createTime',
-        sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
     ];
