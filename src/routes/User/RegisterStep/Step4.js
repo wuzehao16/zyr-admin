@@ -237,7 +237,7 @@ class Step4 extends React.PureComponent {
                           label="银行名称"
                           {...formItemLayout}
                          >
-                          {getFieldDecorator('manageId', {
+                          {getFieldDecorator('sublInstitution', {
                             rules: [
                               {
                                 required: true,
@@ -256,7 +256,7 @@ class Step4 extends React.PureComponent {
                           label="下属机构"
                           {...formItemLayout}
                           >
-                          {getFieldDecorator('sublInstitution')(
+                          {getFieldDecorator('manageId')(
                             <Select placeholder="下属机构">
                               {data.subInstitutionList
                                 ? subInstitutionListOptions

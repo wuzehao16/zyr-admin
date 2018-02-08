@@ -105,7 +105,7 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="等级权限"
             >
-              <CheckboxGroup options={options} defaultValue={['1','2']} disabled/>
+              <CheckboxGroup options={ options } defaultValue={ ['1', '2'] } disabled/>
             </FormItem>
             <FormItem
               {...formItemLayout}
