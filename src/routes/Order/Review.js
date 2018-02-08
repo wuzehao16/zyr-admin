@@ -37,7 +37,7 @@ export default class BasicForms extends PureComponent {
   }
   renderForm() {
     const { submitting, data: { item }, dispatch } = this.props
-    switch (item.orderStauts) {
+    switch (item.orderStatus) {
       case 4:
         return this.renderloan();
         break;
@@ -56,7 +56,7 @@ export default class BasicForms extends PureComponent {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     return (
       <div>
-      <Steps progressDot  current={item.orderStauts} style={{ marginBottom: 80 }}>
+      <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
         <Step title="申请中" />
         <Step title="已申请" />
         <Step title="已初审" />
@@ -68,7 +68,7 @@ export default class BasicForms extends PureComponent {
       <Description term="更新状态">
         <Col sm={12} xs={24}>
           <FormItem >
-            {getFieldDecorator('orderStauts', {
+            {getFieldDecorator('orderStatus', {
               rules: [{
                  required: true,
                  message: '请选择更新状态'
@@ -77,8 +77,8 @@ export default class BasicForms extends PureComponent {
               <Select placeholder="请选择" style={{ width: '100%' }}>
 
                 <Option
-                  style={{display:(item.orderStauts < 5)?'block':'none'}}
-                  value={item.orderStauts+1}>下一步</Option>
+                  style={{display:(item.orderStatus < 5)?'block':'none'}}
+                  value={item.orderStatus+1}>下一步</Option>
                 <Option value={6}>拒绝</Option>
               </Select>
           )}
@@ -124,7 +124,7 @@ export default class BasicForms extends PureComponent {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     return (
       <div>
-        <Steps progressDot  current={item.orderStauts} style={{ marginBottom: 80 }}>
+        <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
           <Step title="申请中" />
           <Step title="已申请" />
           <Step title="已初审" />
@@ -136,7 +136,7 @@ export default class BasicForms extends PureComponent {
         <Description term="更新状态">
           <Col sm={12} xs={24}>
             <FormItem >
-              {getFieldDecorator('orderStauts', {
+              {getFieldDecorator('orderStatus', {
                 rules: [{
                    required: true,
                    message: '请选择更新状态'
@@ -144,8 +144,8 @@ export default class BasicForms extends PureComponent {
                })(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option
-                    style={{display:(item.orderStauts < 5)?'block':'none'}}
-                    value={item.orderStauts+1}>下一步</Option>
+                    style={{display:(item.orderStatus < 5)?'block':'none'}}
+                    value={item.orderStatus+1}>下一步</Option>
                   <Option value={6}>拒绝</Option>
                 </Select>
             )}
@@ -245,7 +245,7 @@ export default class BasicForms extends PureComponent {
           <Description
             term="拒绝原因"
             style={{
-            display: getFieldValue('orderStauts') === 6 ? 'block' : 'none',
+            display: getFieldValue('orderStatus') === 6 ? 'block' : 'none',
           }}
           >
             <Col sm={12} xs={24}>

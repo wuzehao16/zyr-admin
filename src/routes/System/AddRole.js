@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import {
   Form, Input, Button, Card,
 } from 'antd';
+import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import RoleTree from '../../components/RoleTree';
 
@@ -46,7 +47,7 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting, data, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -113,6 +114,9 @@ export default class BasicForms extends PureComponent {
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
+              </Button>
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/role'))}>
+                返回
               </Button>
             </FormItem>
           </Form>

@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import {
   Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox, Radio, Modal,
 } from 'antd';
+import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import TreeSelect from '../../components/TreeSelect';
 import styles from './style.less';
@@ -85,6 +86,18 @@ export default class BasicForms extends PureComponent {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
+        <FormItem
+          {...formItemLayout}
+          label="菜单URL"
+        >
+          {getFieldDecorator('url', {
+            rules: [{
+              required: true, message: '请输入菜单URL',
+            }],
+          })(
+            <Input placeholder="菜单URL" />
+          )}
+        </FormItem>
         <FormItem
           {...formItemLayout}
           label="排序号"
@@ -193,7 +206,7 @@ export default class BasicForms extends PureComponent {
     }
   }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting, data, dispatch } = this.props;
     var treeData = [];
     if (data && data.data && data.data.data) {
         treeData = [data.data.data]
@@ -263,7 +276,9 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/menu'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

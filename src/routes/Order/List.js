@@ -298,7 +298,7 @@ export default class TableList extends PureComponent {
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="订单状态">
-              {getFieldDecorator('orderStauts')(
+              {getFieldDecorator('orderStatus')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   {orderTypeOptions}
                 </Select>

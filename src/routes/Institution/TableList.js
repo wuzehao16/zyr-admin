@@ -35,7 +35,7 @@ const CreateForm = Form.create()((props) => {
       <FormItem
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 15 }}
-        label="账号"
+        label="用户名"
       >
         {item.loginAccount}
       </FormItem>

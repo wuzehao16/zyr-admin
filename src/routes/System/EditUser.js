@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import {
   Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox,
 } from 'antd';
+import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
 
@@ -85,7 +86,7 @@ export default class BasicForms extends PureComponent {
     console.log(value);
   }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting, data, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     if (data.data.roleList) {
       var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
@@ -182,7 +183,9 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/user'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

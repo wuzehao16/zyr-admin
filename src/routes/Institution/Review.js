@@ -74,7 +74,7 @@ export default class BasicForms extends PureComponent {
             <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
             <Description term="所在城市">{item.city}</Description>
             <Description term="机构名称">{item.manageName}</Description>
-            <Description term="登录账号">{item.loginAccount}</Description>
+            <Description term="用户名">{item.loginAccount}</Description>
             <Description term="邮箱">{item.userEmail}</Description>
             <Description term="手机">{item.userPhone}</Description>
             <Description term="机构logo">

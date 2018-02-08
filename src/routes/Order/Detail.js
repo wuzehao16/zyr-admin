@@ -24,7 +24,7 @@ export default class BasicForms extends PureComponent {
   }
   renderForm() {
     const { submitting, data: { item }, dispatch } = this.props
-    switch (item.orderStauts) {
+    switch (item.orderStatus) {
       case 5:
         return this.renderloan();
         break;
@@ -41,7 +41,7 @@ export default class BasicForms extends PureComponent {
   renderDefault = ()=> {
     const { submitting, data: { item }, dispatch } = this.props
     return (
-      <Steps progressDot  current={item.orderStauts} style={{ marginBottom: 80 }}>
+      <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
         <Step title="申请中" />
         <Step title="已申请" />
         <Step title="已初审" />
@@ -88,7 +88,7 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <div>
-        <Steps progressDot  current={item.orderStauts} style={{ marginBottom: 80 }}>
+        <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
           <Step title="申请中" />
           <Step title="已申请" />
           <Step title="已初审" />
