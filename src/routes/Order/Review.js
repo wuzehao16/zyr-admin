@@ -38,13 +38,13 @@ export default class BasicForms extends PureComponent {
   renderForm() {
     const { submitting, data: { item }, dispatch } = this.props
     switch (item.orderStatus) {
-      case 4:
+      case '4':
         return this.renderloan();
         break;
-      case 6:
+      case '6':
         return this.renderReject();
         break;
-      case 7:
+      case '7':
         return this.renderCancel();
         break;
       default:
@@ -78,7 +78,7 @@ export default class BasicForms extends PureComponent {
 
                 <Option
                   style={{display:(item.orderStatus < 5)?'block':'none'}}
-                  value={item.orderStatus+1}>下一步</Option>
+                  value={item.orderStatus-1+2}>下一步</Option>
                 <Option value={6}>拒绝</Option>
               </Select>
           )}

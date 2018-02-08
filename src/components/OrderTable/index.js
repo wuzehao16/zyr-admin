@@ -56,10 +56,8 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, count }, loading } = this.props
-    const approvalStatus = ['待上架', '已上架', '已下架'];
-    const institutionType = ['无','银行机构','金融机构','小额贷款'];
-    const isEvaluaStatuts = ['否', '是'];
+    const { data: { data, count }, loading } = this.props;
+    const orderStatus = ['申请中', '已申请','已初审','已终审','已面签','已放款','已拒绝','已取消'];
     const columns = [
       {
         title: '序号',
@@ -107,24 +105,8 @@ class StandardTable extends PureComponent {
       },
       {
         title: '订单状态',
-        dataIndex: 'upState',
-        filters: [
-          {
-            text: approvalStatus[0],
-            value: 0,
-          },
-          {
-            text: approvalStatus[1],
-            value: 1,
-          },
-          {
-            text: approvalStatus[2],
-            value: 2,
-          },
-        ],
-        render(val) {
-          return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
-        },
+        dataIndex: 'orderStatus',
+        render: val => `${orderStatus[val]}`,
       },
       {
         title: '更新时间',
