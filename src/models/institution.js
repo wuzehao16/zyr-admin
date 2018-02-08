@@ -15,6 +15,8 @@ export default {
     city: [],
     audit: [],
     institutionType: [],
+    institutionList:[],
+    subInstitutionList:[]
   },
 
   effects: {
