@@ -59,7 +59,7 @@ export default class BasicForms extends PureComponent {
     getFieldDecorator('userId');
 
     return (
-      <PageHeaderLayout title="编辑会员等级" >
+      <PageHeaderLayout title="编辑用户详请" >
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -88,7 +88,7 @@ export default class BasicForms extends PureComponent {
               <Description term="用户名称">{item.userName}</Description>
               <Description term="微信号">{item.wachatNo}</Description>
               <Description term="用户头像">
-                <img src="https://picsum.photos/80/80?random" alt="" />
+                <img src={item.userHead} alt="" height={80} width={80}/>
               </Description>
             </DescriptionList>
             <Divider style={{ marginBottom: 32 }} />
@@ -98,10 +98,10 @@ export default class BasicForms extends PureComponent {
               <Description term="身份证号">{item.idNumber}</Description>
               <Description term="微信号">{item.wachatNo}</Description>
               <Description >
-                <img src="https://picsum.photos/400/200?random" alt="" />
+                <img src={item.upperPictureId} alt="" height={200} width={400}/>
               </Description>
               <Description >
-                <img src="https://picsum.photos/400/200?random" alt="" />
+                <img src={item.backPictureId} alt="" height={200} width={400}/>
               </Description>
             </DescriptionList>
             <Divider style={{ marginBottom: 32 }} />
