@@ -341,7 +341,7 @@ export const getRouterData = (app) => {
     },
     '/ads': {
       component: dynamicWrapper(app, ['ads'], () => import('../routes/Ads')),
-      name: '产品管理',
+      name: '广告管理',
     },
     '/ads/list': {
       component: dynamicWrapper(app, ['ads'], () => import('../routes/Ads/List')),

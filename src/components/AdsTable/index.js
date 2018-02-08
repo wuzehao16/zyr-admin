@@ -120,22 +120,22 @@ class StandardTable extends PureComponent {
         dataIndex: 'adsUrl',
       },
       {
-        title: '审核状态',
+        title: '上架状态',
         dataIndex: 'upState',
-        filters: [
-          {
-            text: approvalStatus[0],
-            value: 0,
-          },
-          {
-            text: approvalStatus[1],
-            value: 1,
-          },
-          {
-            text: approvalStatus[2],
-            value: 2,
-          },
-        ],
+        // filters: [
+        //   {
+        //     text: approvalStatus[0],
+        //     value: 0,
+        //   },
+        //   {
+        //     text: approvalStatus[1],
+        //     value: 1,
+        //   },
+        //   {
+        //     text: approvalStatus[2],
+        //     value: 2,
+        //   },
+        // ],
         render(val) {
           return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
         },

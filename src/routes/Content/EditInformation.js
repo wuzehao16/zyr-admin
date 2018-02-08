@@ -34,9 +34,13 @@ export default class BasicForms extends PureComponent {
 
   componentDidMount() {
     const { content: { item }, dispatch } = this.props;
+    const { getFieldDecorator } = this.props.form;
     dispatch({
       type: 'content/fetchColumn',
     });
+    getFieldDecorator('contentId', {
+      initialValue: item.contentId,
+    })
     dispatch({
       type: 'content/fetchColumnType',
       payload: {

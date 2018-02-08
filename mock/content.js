@@ -276,7 +276,7 @@ export function updateContent(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, adsId } = body;
+  const { method, contentId } = body;
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     tableListDataSource1.map((item,index) => {
