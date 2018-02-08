@@ -10,10 +10,12 @@ for (let i = 0; i < 46; i += 1) {
     adsMatch:"我是匹配词"	,
     upState: Math.floor(Math.random()*3),
     adsContent:"Banner1的内容",
-    // adsPic:"http://cloudbank.oss-cn-shenzhen.aliyuncs.com/image/7074325425835476.jpeg?Expires=1517890745&OSSAccessKeyId=LTAIKLBKZVJPb6ig&Signature=JO%2F40uAlTjeIIFE3R4HWRG%2FaJJ0%3D"	,
-    adsPic:"https://picsum.photos/200/200"	,
+    adsPic:"http://cloudbank.oss-cn-shenzhen.aliyuncs.com/image/7250601989831574.jpeg?Expires=1518067320&OSSAccessKeyId=LTAIKLBKZVJPb6ig&Signature=wlLs7CGeggluvD7FXLwFKn5DEmQ%3D",
+    // adsPic:"https://picsum.photos/200/200"	,
     adsUrl	:"http://www.ibankmatch.com",
     adsSort:"2",
+    autoDownTime:1518149822000,
+    autoUpTime:1518063666000,
     oper:"dsadadsa11",
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     registrationTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
@@ -118,8 +120,8 @@ export function getAdsDetail(req, res, u) {
 
   let dataSource = [...tableListDataSource];
 
-  if (params.adsId) {
-    dataSource = dataSource.filter(data => data.adsId == params.adsId);
+  if (params.id) {
+    dataSource = dataSource.filter(data => data.adsId == params.id);
   }
 
   let pageSize = 10;

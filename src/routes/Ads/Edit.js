@@ -40,12 +40,7 @@ export default class BasicForms extends PureComponent {
     const { setFieldsValue, getFieldDecorator } = this.props.form;
     if (this.props.ads.item) {
       const { item } = this.props.ads;
-      getFieldDecorator('adsContent');
-      getFieldDecorator('adsId');
       getFieldDecorator('adsPic');
-      getFieldDecorator('adsSort');
-      getFieldDecorator('adsUrl');
-      getFieldDecorator('adsMatch');
       if (item.adsPic) {
         this.setState({
           fileList:[{
@@ -54,17 +49,6 @@ export default class BasicForms extends PureComponent {
           }]
         })
       }
-      setFieldsValue({
-        adsType: item.adsType,
-        adsContent: item.adsContent,
-        adsId: item.adsId,
-        adsPic: item.adsPic,
-        adsMatch: item.adsMatch,
-        adsSort: item.adsSort,
-        adsTitle: item.adsTitle,
-        adsUrl: item.adsUrl,
-        time: [moment(item.autoUpTime), moment(item.autoDownTime)],
-      });
     }
   }
   handleSubmit = (e) => {
@@ -78,7 +62,7 @@ export default class BasicForms extends PureComponent {
           autoDownTime: fieldsValue.time && moment(fieldsValue.time[1]).local(),
           adsPic: fieldsValue.adsPic && fieldsValue.adsPic.file
                                           ? fieldsValue.adsPic.file.response.data.match(/ima[^\n]*Ex/)[0].slice(0,-3)
-                                          : fieldsValue.adsPic
+                                          : fieldsValue.adsPic && fieldsValue.adsPic.match(/ima[^\n]*Ex/)[0].slice(0,-3)
         };
         this.props.dispatch({
           type: 'ads/update',
@@ -105,6 +89,7 @@ export default class BasicForms extends PureComponent {
     }
   }
   renderProduct = ()=> {
+    const { ads: { item } } = this.props;
     const { getFieldDecorator } = this.props.form;
     return(
       <div>
@@ -113,6 +98,7 @@ export default class BasicForms extends PureComponent {
           label="匹配词"
         >
           {getFieldDecorator('adsMatch', {
+            initialValue: item.adsMatch,
             rules: [{
               required: true,
               message: '请选择匹配词',
@@ -125,6 +111,7 @@ export default class BasicForms extends PureComponent {
     );
   }
   renderBanner = ()=> {
+    const { ads: { item } } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { fileList, previewVisible,previewImage } = this.state;
     const uploadButton = (
@@ -140,6 +127,7 @@ export default class BasicForms extends PureComponent {
           label="内容"
         >
           {getFieldDecorator('adsContent', {
+            initialValue: item.adsContent,
             rules: [{
               required: true,
               message: '请选择内容',
@@ -152,14 +140,18 @@ export default class BasicForms extends PureComponent {
           {...formItemLayout}
           label="跳转链接"
         >
-          {getFieldDecorator('adsUrl')(
+          {getFieldDecorator('adsUrl', {
+            initialValue: item.adsUrl,
+          })(
             <Input placeholder="请输入"/>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
            label="图片">
-           {getFieldDecorator('adsPic')(
+           {getFieldDecorator('adsPic',{
+             initialValue: item.adsPic,
+           })(
              <Upload
                action="http://47.104.27.184:8000/sysAnno/uploadImage"
                listType="picture-card"
@@ -179,6 +171,7 @@ export default class BasicForms extends PureComponent {
     );
   }
   renderTrumpet = ()=> {
+    const { ads: { item } } = this.props;
     const { getFieldDecorator } = this.props.form;
     return(
       <div>
@@ -187,6 +180,7 @@ export default class BasicForms extends PureComponent {
           label="内容"
         >
           {getFieldDecorator('adsContent', {
+            initialValue: item.adsContent,
             rules: [{
               required: true,
               message: '请选择内容',
@@ -199,7 +193,9 @@ export default class BasicForms extends PureComponent {
           {...formItemLayout}
           label="跳转链接"
         >
-          {getFieldDecorator('adsUrl')(
+          {getFieldDecorator('adsUrl', {
+            initialValue: item.adsUrl,
+          })(
             <Input placeholder="请输入"/>
           )}
         </FormItem>
@@ -219,12 +215,11 @@ export default class BasicForms extends PureComponent {
     this.setState({ fileList })
   }
   render() {
-    const { ads: { data, adsType }, submitting, dispatch } = this.props;
+    const { ads: { data, adsType, item }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     if (adsType) {
       var adsTypeOptions = adsType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
-
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
@@ -245,6 +240,7 @@ export default class BasicForms extends PureComponent {
               label="广告类型"
             >
               {getFieldDecorator('adsType', {
+                initialValue: item.adsType,
                 rules: [{
                   required: true,
                   message: '请选择广告类型',
@@ -260,6 +256,7 @@ export default class BasicForms extends PureComponent {
               label="标题"
             >
               {getFieldDecorator('adsTitle', {
+                initialValue: item.adsTitle,
                 rules: [{
                   required: true,
                   message: '请选择标题',
@@ -273,7 +270,9 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="排序"
             >
-              {getFieldDecorator('adsSort')(
+              {getFieldDecorator('adsSort',{
+                initialValue: item.adsSort,
+              })(
                 <Input placeholder="请输入"/>
               )}
             </FormItem>
@@ -282,12 +281,12 @@ export default class BasicForms extends PureComponent {
               label="上架状态"
             >
                 {getFieldDecorator('upState', {
-                  initialValue: '0',
+                  initialValue: item.upState,
                 })(
                   <Radio.Group>
-                    <Radio value="0">待上架</Radio>
-                    <Radio value="1">上架</Radio>
-                    <Radio value="2">下架</Radio>
+                    <Radio value={0}>待上架</Radio>
+                    <Radio value={1}>上架</Radio>
+                    <Radio value={2}>下架</Radio>
                   </Radio.Group>
                 )}
             </FormItem>
@@ -295,10 +294,12 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="自动上架时间"
               style={{
-                display: getFieldValue('upState') === '0' ? 'block' : 'none',
+                display: getFieldValue('upState') === 0 ? 'block' : 'none',
               }}
               >
-              {getFieldDecorator('time')(
+              {getFieldDecorator('time',{
+                initialValue: [moment(item.autoUpTime), moment(item.autoDownTime)],
+              })(
                 <RangePicker
                  showTime={{
                    hideDisabledOptions: true,

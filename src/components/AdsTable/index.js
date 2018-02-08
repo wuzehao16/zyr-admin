@@ -4,7 +4,7 @@ import { Table, Alert, Badge, Divider } from 'antd';
 import styles from './index.less';
 
 const statusMap = [ 'error', 'success'];
-const approvalStatusMap = [ 'error', 'default', 'success'];
+const approvalStatusMap = [ 'default', 'success', 'error'];
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
