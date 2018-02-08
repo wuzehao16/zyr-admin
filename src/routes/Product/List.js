@@ -70,6 +70,12 @@ export default class TableList extends PureComponent {
       }
     });
     dispatch({
+      type: 'product/fetchIntRange',
+      payload: {
+        type: 'intRange'
+      }
+    });
+    dispatch({
       type: 'product/fetchAudit',
       payload: {
         type: 'auditStatus'
@@ -275,7 +281,7 @@ export default class TableList extends PureComponent {
 
   renderAdvancedForm() {
     const { getFieldDecorator } = this.props.form;
-    const { product: { city, audit, institutionType,  }  } = this.props;
+    const { product: { city, audit, institutionType, intRange }  } = this.props;
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
@@ -284,6 +290,9 @@ export default class TableList extends PureComponent {
     }
     if (institutionType) {
       var institutionTypeOptions = institutionType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
+    if (intRange) {
+      var intRangeOptions = intRange.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
@@ -319,8 +328,7 @@ export default class TableList extends PureComponent {
             <FormItem label="利息区间">
               {getFieldDecorator('monthlyFeeRate')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">禁用</Option>
-                  <Option value="1">启用</Option>
+                  { intRangeOptions }
                 </Select>
               )}
             </FormItem>

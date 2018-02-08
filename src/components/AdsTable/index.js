@@ -90,13 +90,7 @@ class StandardTable extends PureComponent {
       },
       {
         title: '广告类型',
-        dataIndex: 'adsType',
-        render: val => adsType.map(item => {
-                  if(item.value == val){
-                   return item.text
-                    }
-                  }
-                )
+        dataIndex: 'adsTypeName',
       },
       {
         title: '标题',

@@ -13,6 +13,7 @@ export default {
     },
     item: {},
     city: [],
+    intRange: [],
     audit: [],
     institutionType: [],
     step:{},
@@ -133,6 +134,15 @@ export default {
         type: 'saveThing',
         payload: {
           prodCategory: response.data
+        },
+      });
+    },
+    *fetchIntRange({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          intRange: response.data
         },
       });
     },

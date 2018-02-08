@@ -27,7 +27,9 @@ export default {
       });
       // Login successfully
       if (response.msg === 'ok') {
+        console.log(1)
         reloadAuthorized();
+        console.log(2)
         yield put(routerRedux.push('/'));
       }
     },

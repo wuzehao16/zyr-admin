@@ -96,7 +96,7 @@ class StandardTable extends PureComponent {
       {
         title: '月费率',
         dataIndex: 'monthlyFeeRate',
-        render: val => `${val} 万`,
+        render: val => `${val} %`,
       },
       {
         title: '纳入评测',

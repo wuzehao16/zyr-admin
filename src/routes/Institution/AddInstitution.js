@@ -5,6 +5,7 @@ import {
 } from 'antd';
 import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import UploadPicture from '../../components/UploadPicture'
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -295,19 +296,12 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="机构logo">
                    {getFieldDecorator('manageLogoId')(
-                     <Upload
-                       action="http://47.104.27.184:8000/sysAnno/uploadImage"
-                       listType="picture-card"
-                       onPreview={this.handlePreview}
-                       onChange={this.handleChange}
-                     >
-                       {fileList.length >= 1 ? null : uploadButton}
-                     </Upload>
+                     <UploadPicture/>
                    )}
 
-                   <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                   {/* <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                      <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                   </Modal>
+                   </Modal> */}
                 </FormItem>
               </Col>
             </Row>

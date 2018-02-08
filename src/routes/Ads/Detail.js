@@ -35,7 +35,7 @@ export default class BasicForms extends PureComponent {
             <Description term="上架状态">{item.upState==0?'待上架':item.upState==1?'已上架':'已下架'}</Description>
             <Description term="自动上架时间">{moment(item.autoUpTime).format('llll')}</Description>
             <Description term="自动下架时间">{moment(item.autoDownTime).format('llll')}</Description>
-            <Description term="广告类型">{item.upState==11100?'产品-搜索框广告词':item.upState==11200?'Banner':item.upState==11300?'小喇叭':'App启动页'}</Description>
+            <Description term="广告类型">{item.adsTypeName}</Description>
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
             <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/ads'))}>
