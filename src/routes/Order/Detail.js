@@ -113,7 +113,7 @@ export default class BasicForms extends PureComponent {
         <Card bordered={false}>
           <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
             <Description term="订单号">{item.orderNo}</Description>
-            <Description term="更新时间">{item.updateTime}</Description>
+            <Description term="更新时间">{moment(item.updateTime).format('llll')}</Description>
             <Description term="城市">{item.city}</Description>
             <Description term="机构名称">{item.manageName}</Description>
             <Description term="产品名称">{item.productName}</Description>
@@ -124,7 +124,7 @@ export default class BasicForms extends PureComponent {
           </DescriptionList>
           <DescriptionList size="large" title="贷款人信息" style={{ marginBottom: 32 }} col={2}>
             <Description term="姓名">{item.loanName}</Description>
-            <Description term="年龄">{item.age}</Description>
+            <Description term="年龄">{item.loanAge}</Description>
             <Description term="名族">{item.nationality}</Description>
             <Description term="身份证">{item.idNumber}</Description>
             <Description term="发证机关">{item.issuingOrgan}</Description>
@@ -134,7 +134,7 @@ export default class BasicForms extends PureComponent {
           <DescriptionList size="large" title="申请贷款信息" style={{ marginBottom: 32 }} col={2}>
             <Description term="贷款金额">{item.loanMoney}万</Description>
             <Description term="贷款期限">{item.loanLimit}期</Description>
-            <Description term="还款方式">{item.loanPayTypeName}</Description>
+            <Description term="还款方式">{item.payTypeName}</Description>
             <Description term="申请备注">{item.applicationNotes}</Description>
           </DescriptionList>
           {this.renderForm()}
