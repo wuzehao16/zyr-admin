@@ -41,6 +41,9 @@ export default class BasicForms extends PureComponent {
     if (this.props.ads.item) {
       const { item } = this.props.ads;
       getFieldDecorator('adsPic');
+      getFieldDecorator('adsId', {
+        initialValue: item.adsId,
+      })
       if (item.adsPic) {
         this.setState({
           fileList:[{
@@ -151,6 +154,10 @@ export default class BasicForms extends PureComponent {
            label="图片">
            {getFieldDecorator('adsPic',{
              initialValue: item.adsPic,
+               rules:[{
+                 required:true,
+                 message:'请选择图片'
+               }]
            })(
              <Upload
                action="http://47.104.27.184:8000/sysAnno/uploadImage"
@@ -195,6 +202,10 @@ export default class BasicForms extends PureComponent {
         >
           {getFieldDecorator('adsUrl', {
             initialValue: item.adsUrl,
+            rules: [{
+              required: true,
+              message: '请输入跳转链接',
+            }],
           })(
             <Input placeholder="请输入"/>
           )}
@@ -262,7 +273,7 @@ export default class BasicForms extends PureComponent {
                   message: '请选择标题',
                 }],
               })(
-                <Input placeholder="请输入"/>
+                <Input type="text" maxLength='20' placeholder="请输入"/>
               )}
             </FormItem>
             {this.renderForm()}
@@ -273,7 +284,7 @@ export default class BasicForms extends PureComponent {
               {getFieldDecorator('adsSort',{
                 initialValue: item.adsSort,
               })(
-                <Input placeholder="请输入"/>
+                <Input min={0} max={10000} type="number" placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem

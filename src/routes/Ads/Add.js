@@ -121,7 +121,12 @@ export default class BasicForms extends PureComponent {
         <FormItem
           {...formItemLayout}
            label="图片">
-           {getFieldDecorator('adsPic')(
+           {getFieldDecorator('adsPic',{
+             rules:[{
+               required:true,
+               message:'请选择图片'
+             }]
+           })(
              <Upload
                action="http://47.104.27.184:8000/sysAnno/uploadImage"
                listType="picture-card"
@@ -160,7 +165,12 @@ export default class BasicForms extends PureComponent {
           {...formItemLayout}
           label="跳转链接"
         >
-          {getFieldDecorator('adsUrl')(
+          {getFieldDecorator('adsUrl',{
+            rules: [{
+              required: true,
+              message: '请输入跳转链接',
+            }],
+          })(
             <Input placeholder="请输入"/>
           )}
         </FormItem>
@@ -197,7 +207,7 @@ export default class BasicForms extends PureComponent {
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
-            // hideRequiredMark
+            hideRequiredMark
             style={{ marginTop: 8 }}
           >
             <FormItem
@@ -225,7 +235,7 @@ export default class BasicForms extends PureComponent {
                   message: '请选择标题',
                 }],
               })(
-                <Input placeholder="请输入"/>
+                <Input type="text" maxLength='20' placeholder="请输入"/>
               )}
             </FormItem>
             {this.renderForm()}
@@ -234,7 +244,7 @@ export default class BasicForms extends PureComponent {
               label="排序"
             >
               {getFieldDecorator('adsSort')(
-                <Input placeholder="请输入"/>
+                <Input min={0} max={10000} type="number" placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem
