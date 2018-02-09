@@ -74,7 +74,7 @@ class StandardTable extends PureComponent {
       },
       {
         title: '通知类型',
-        dataIndex: 'paltforMsgType',
+        dataIndex: 'paltforMsgTypeName',
       },
       {
         title: '上下架',

@@ -342,8 +342,8 @@ export default class BasicForms extends PureComponent {
                     }],
                   })(
                     <Select placeholder="请选择" style={{ width: '100%' }}>
-                      <Option value="0">禁用</Option>
-                      <Option value="1">启用</Option>
+                      <Option value={0}>禁用</Option>
+                      <Option value={1}>启用</Option>
                     </Select>
                   )}
                 </FormItem>
