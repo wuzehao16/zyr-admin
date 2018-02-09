@@ -51,7 +51,7 @@ export default class BasicForms extends PureComponent {
     getFieldDecorator('manageId')
     getFieldDecorator('orderId',{initialValue: item.orderId})
     getFieldDecorator('userEmail',{initialValue: item.userEmail})
-    getFieldDecorator('userName',{initialValue: item.userName})
+    getFieldDecorator('loginAccount',{initialValue: item.loginAccount})
     getFieldDecorator('userPhone',{initialValue: item.userPhone})
     const formItemLayout = {
       labelCol: {
