@@ -49,6 +49,10 @@ export default class BasicForms extends PureComponent {
     const { submitting, institution: { item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue  } = this.props.form;
     getFieldDecorator('manageId')
+    getFieldDecorator('orderId',{initialValue: item.orderId})
+    getFieldDecorator('userEmail',{initialValue: item.userEmail})
+    getFieldDecorator('userName',{initialValue: item.userName})
+    getFieldDecorator('userPhone',{initialValue: item.userPhone})
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
