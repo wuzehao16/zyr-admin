@@ -10,7 +10,7 @@ export default {
     step: {
       userPhone: '',
       prefix: '86',
-      isEmailRegister: 0
+      isEmailRegister: '',
     },
   },
 
@@ -46,6 +46,12 @@ export default {
       const response = yield call(msgEmail, payload);
       if(response.code == 0){
         message.success('发送成功');
+        yield put({
+          type: 'saveStepFormData',
+          payload:{
+            isEmailRegister : 0
+          },
+        });
       } else{
         yield put({
           type: 'saveStepFormData',

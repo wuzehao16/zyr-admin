@@ -58,12 +58,17 @@ class Step4 extends React.PureComponent {
         userEmail,
       }
     })
-    console.log(this.props)
-    if(this.props.data.isEmailRegister === 1){
-      console.log(1)
-      this.setState({ count: 0 });
-      return
-    }
+    setTimeout(()=>{
+      if(this.props.data.isEmailRegister === 1){
+        this.setState({ count: 0 });
+        return
+      } else {
+        this.captcha();
+      }
+    },1000)
+
+  };
+  captcha = () => {
     let count = 9;
     this.setState({ count });
     this.interval = setInterval(() => {
@@ -73,7 +78,7 @@ class Step4 extends React.PureComponent {
         clearInterval(this.interval);
       }
     }, 1000);
-  };
+  }
   getPasswordStatus = () => {
     const { form } = this.props;
     const value = form.getFieldValue('password');
