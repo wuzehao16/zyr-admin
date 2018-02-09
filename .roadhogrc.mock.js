@@ -125,7 +125,7 @@ const proxy = {
     res.send({ msg: 'ok', code: 0 });
   },
   'POST /sysAnno/sendLoginEmail': (req, res) => {
-    res.send({ msg: 'ok', code: 0 });
+    res.send({ msg: 'ok', code: 1 });
   },
   'POST /sysAnno/vaLidatacode': (req, res) => {
     res.send({ msg: 'ok', code: 0 });

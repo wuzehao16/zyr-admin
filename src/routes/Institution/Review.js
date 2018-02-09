@@ -85,7 +85,6 @@ export default class BasicForms extends PureComponent {
             <Description term="排序">{item.sort}</Description>
             <Description term="启用状态">{item.startStatus==1?'启用':'禁用'}</Description>
             <Description term="操作者">{item.oper}</Description>
-            <Description term="审核时间">{item.approvalTime}</Description>
             <Description term="审核时间">{moment(item.approvalTime).format('llll')}</Description>
             <Description term="注册时间">{moment(item.registrationTime).format('llll')}</Description>
           </DescriptionList>

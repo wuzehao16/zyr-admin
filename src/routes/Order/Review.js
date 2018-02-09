@@ -206,6 +206,9 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     getFieldDecorator('orderId',{initialValue: item.orderId})
+    getFieldDecorator('userEmail',{initialValue: item.userEmail})
+    getFieldDecorator('userName',{initialValue: item.userName})
+    getFieldDecorator('userPhone',{initialValue: item.userPhone})
     return (
       <PageHeaderLayout title="订单详情" >
         <Card bordered={false}>

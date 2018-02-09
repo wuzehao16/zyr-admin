@@ -58,7 +58,13 @@ class Step4 extends React.PureComponent {
         userEmail,
       }
     })
-    let count = 59;
+    console.log(this.props)
+    if(this.props.data.isEmailRegister === 1){
+      console.log(1)
+      this.setState({ count: 0 });
+      return
+    }
+    let count = 9;
     this.setState({ count });
     this.interval = setInterval(() => {
       count -= 1;
@@ -185,21 +191,6 @@ class Step4 extends React.PureComponent {
           </Modal>
         </div>
         <Form layout="horizontal" className={styles.stepForm}>
-          {/* <Form.Item>
-            <Upload
-              action="//192.168.2.101:8080/sysAnno/uploadImage"
-              // action="https://jsonplaceholder.typicode.com/posts/"
-              listType="picture-card"
-              fileList={fileList}
-              onPreview={this.handlePreview}
-              onChange={this.handleChange}
-            >
-              {fileList.length >= 1 ? null : uploadButton}
-            </Upload>
-            <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-              <img alt="example" style={{ width: '100%' }} src={previewImage} />
-            </Modal>
-          </Form.Item> */}
           <Form.Item
             label="所在城市"
             {...formItemLayout}
