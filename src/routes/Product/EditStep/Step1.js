@@ -46,6 +46,17 @@ class Step1 extends React.PureComponent {
         type: 'prodFeatures'
       },
     });
+    if (this.props.product && this.props.product.item) {
+      const { item } = this.props.product;
+      const { getFieldValue } = this.props.form;
+      this.props.dispatch({
+        type: 'product/getInstitution',
+        payload: {
+          cityCode: item.cityCode,
+          institutionCode: item.institutionCode,
+        },
+      });
+    }
   }
   getInstitution = (code) => {
     const { getFieldValue } = this.props.form;
@@ -209,7 +220,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Select
-                    mode="combobox"
+                    // mode="combobox"
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     // defaultValue={['a10', 'c12']}
