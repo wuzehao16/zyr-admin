@@ -150,6 +150,7 @@ class StandardTable extends PureComponent {
       {
         title: '操作',
         align: 'center',
+        fixed: 'right',
         render: (text, record) => {
           return (
             <Fragment>
@@ -200,6 +201,7 @@ class StandardTable extends PureComponent {
           rowKey={record => record.adsId}
           rowSelection={rowSelection}
           dataSource={data}
+          scroll={{ x: 1800}}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}
