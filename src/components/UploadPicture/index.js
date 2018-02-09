@@ -1,4 +1,4 @@
-import { Upload, Icon, Modal } from 'antd';
+import { Upload, Icon, Modal, message } from 'antd';
 
 class PicturesWall extends React.Component {
   state = {
@@ -17,7 +17,19 @@ class PicturesWall extends React.Component {
   }
 
   handleChange = ({ fileList }) => {
+    console.log(fileList)
     this.setState({ fileList })
+    if (fileList[0] && fileList[0].response) {
+      const res = fileList[0].response;
+      console.log(res)
+      if ( res.code === 0) {
+        // this.setState({ fileList })
+      } else {
+        message.error(res.msg)
+        this.setState({ fileList: [] })
+      }
+    }
+
     if (this.props.onChange) {
       this.props.onChange(fileList)
     }

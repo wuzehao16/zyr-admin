@@ -246,7 +246,7 @@ export default class TableList extends PureComponent {
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="创建人">
-              {getFieldDecorator('oper')(
+              {getFieldDecorator('operName')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
@@ -281,7 +281,7 @@ export default class TableList extends PureComponent {
     );
 
     return (
-      <PageHeaderLayout title="查询表格">
+      <PageHeaderLayout title="内容管理">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>

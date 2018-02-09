@@ -28,7 +28,7 @@ export default class BasicForms extends PureComponent {
             <Description term="栏目名称">{item.channelName}</Description>
             <Description term="标题">{item.contentTitle}</Description>
             <Description term="简介">{item.contentBrief}</Description>
-            <Description term="封面图">{item.contentPic}</Description>
+            <Description term="封面图"><img src={item.contentPic} alt="" height={80} width={80}/></Description>
             <Description term="排序">{item.contentSort}</Description>
             <Description term="来源">{item.source}</Description>
             <Description term="来源网址">{item.sourceSite}</Description>

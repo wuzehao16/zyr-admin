@@ -4,6 +4,7 @@ import { Form, Input, Button, Alert, Divider, Row, Col, Popover, Progress, Uploa
 import { routerRedux } from 'dva/router';
 import options from '../../../common/addressOptions';
 import { digitUppercase } from '../../../utils/utils';
+import UploadPicture from '../../../components/UploadPicture'
 import styles from './style.less';
 
 const formItemLayout = {
@@ -124,6 +125,18 @@ class Step4 extends React.PureComponent {
       },
     });
   }
+  handleUpload = v => {
+    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    getFieldDecorator('manageLogoId')
+    if (v[0] && v[0].response) {
+      const res = v[0].response;
+      if ( res.code === 0) {
+        setFieldsValue({
+          manageLogoId: res.data.match(/ima[^\n]*Ex/)[0].slice(0,-3)
+        })
+      }
+    }
+  }
   render() {
     const { form, data, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFields, getFieldValue  } = form;
@@ -166,14 +179,7 @@ class Step4 extends React.PureComponent {
         <h2 className={styles.title}>机构信息</h2>
         <Divider style={{ margin: '10px 0 24px' }} />
         <div className="clearfix">
-          <Upload
-            action="http://47.104.27.184:8000/sysAnno/uploadImage"
-            listType="picture-card"
-            onPreview={this.handlePreview}
-            onChange={this.handleChange}
-          >
-            {fileList.length >= 1 ? null : uploadButton}
-          </Upload>
+          <UploadPicture onChange={this.handleUpload}/>
           <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
             <img alt="example" style={{ width: '100%' }} src={previewImage} />
           </Modal>

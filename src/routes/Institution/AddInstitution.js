@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Row, Col, Upload, Modal,
+  Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Row, Col, Upload, Modal, message
 } from 'antd';
 import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import UploadPicture from '../../components/UploadPicture'
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -23,13 +24,27 @@ export default class BasicForms extends PureComponent {
     previewImage: '',
     fileList: [],
   };
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'institution/fetchCity',
+      payload: {
+        type: 'city'
+      }
+    });
+    dispatch({
+      type: 'institution/fetchInstitutionType',
+      payload: {
+        type: 'orgType'
+      }
+    });
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
         const values = {
           ...fieldsValue,
-          manageLogoId: fieldsValue.manageLogoId && fieldsValue.manageLogoId.file.response && fieldsValue.manageLogoId.file.response.data.match(/ima[^\n]*Ex/)[0].slice(0,-3),
         };
         this.props.dispatch({
           type: 'institution/add',
@@ -37,18 +52,6 @@ export default class BasicForms extends PureComponent {
         });
       }
     });
-  }
-  handleCancel = () => this.setState({ previewVisible: false })
-
-  handlePreview = (file) => {
-    console.log(file)
-    this.setState({
-      previewImage: file.url || file.thumbUrl,
-      previewVisible: true,
-    });
-  }
-  handleChange = ({ fileList }) => {
-    this.setState({ fileList })
   }
   getInstitution = (code) => {
     this.props.dispatch({
@@ -66,22 +69,26 @@ export default class BasicForms extends PureComponent {
       },
     });
   }
+  handleUpload = v => {
+    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    getFieldDecorator('manageLogoId')
+    if (v[0] && v[0].response) {
+      const res = v[0].response;
+      if ( res.code === 0) {
+        setFieldsValue({
+          manageLogoId: res.data.match(/ima[^\n]*Ex/)[0].slice(0,-3)
+        })
+      }
+    }
+  }
   render() {
     const { institution: { data, city, institutionType, institutionList, subInstitutionList }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { fileList, previewVisible,previewImage } = this.state;
-    if (city) {
-      var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    if (institutionType) {
-      var institutionTypeOptions = institutionType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    if (institutionList) {
-      var institutionListOptions = institutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
-    }
-    if (subInstitutionList) {
-      var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
-    }
+    const cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    const institutionTypeOptions = institutionType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    const institutionListOptions = institutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
+    const subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -294,20 +301,11 @@ export default class BasicForms extends PureComponent {
                 <FormItem
                   {...formItemLayout}
                    label="机构logo">
-                   {getFieldDecorator('manageLogoId')(
-                     <Upload
-                       action="http://47.104.27.184:8000/sysAnno/uploadImage"
-                       listType="picture-card"
-                       onPreview={this.handlePreview}
-                       onChange={this.handleChange}
-                     >
-                       {fileList.length >= 1 ? null : uploadButton}
-                     </Upload>
-                   )}
+                     <UploadPicture onChange={this.handleUpload}/>
 
-                   <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                   {/* <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                      <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                   </Modal>
+                   </Modal> */}
                 </FormItem>
               </Col>
             </Row>
