@@ -427,9 +427,7 @@ class Step1 extends React.PureComponent {
                 {getFieldDecorator('productSort',{
                   initialValue: item.productSort,
                 })(
-                  <Input
-                    placeholder="请输入"
-                  />
+                  <Input min={1} max={10000} type="number" placeholder="请输入"/>
                 )}
               </Form.Item>
             </Col>

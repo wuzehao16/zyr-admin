@@ -307,7 +307,7 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="排序">
                   {getFieldDecorator('sort')(
-                    <Input placeholder="请输入" />
+                    <Input min={1} max={10000} type="number" placeholder="请输入"/>
                   )}
                 </FormItem>
               </Col>

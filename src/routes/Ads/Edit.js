@@ -284,7 +284,7 @@ export default class BasicForms extends PureComponent {
               {getFieldDecorator('adsSort',{
                 initialValue: item.adsSort,
               })(
-                <Input min={0} max={10000} type="number" placeholder="请输入"/>
+                <Input min={1} max={10000} type="number" placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem

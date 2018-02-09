@@ -107,7 +107,7 @@ export default class BasicForms extends PureComponent {
               required: true, message: '请输入排序号',
             }],
           })(
-            <InputNumber style={{ width: '100%' }} />
+            <Input min={1} max={10000} type="number" placeholder="请输入"/>
           )}
         </FormItem>
         <FormItem
@@ -159,7 +159,7 @@ export default class BasicForms extends PureComponent {
               required: true, message: '请输入排序号',
             }],
           })(
-            <InputNumber style={{ width: '100%' }} />
+            <Input min={1} max={10000} type="number" placeholder="请输入"/>
           )}
         </FormItem>
         <FormItem

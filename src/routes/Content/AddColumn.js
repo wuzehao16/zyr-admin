@@ -119,7 +119,7 @@ export default class BasicForms extends PureComponent {
                   message: '请输入排序',
                 }],
               })(
-                <Input placeholder="请输入" />
+                <Input min={1} max={10000} type="number" placeholder="请输入"/>
               )}
             </FormItem>
 
