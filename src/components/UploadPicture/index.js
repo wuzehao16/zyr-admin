@@ -7,6 +7,18 @@ class PicturesWall extends React.Component {
     fileList: [],
   };
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if ((typeof nextProps.value === "string") && 'initialValue' in nextProps["data-__meta"] ) {
+      this.setState({
+        fileList:[{
+          uid:-1,
+          url: nextProps.value
+        }],
+      });
+    }
+  }
+
   handleCancel = () => this.setState({ previewVisible: false })
 
   handlePreview = (file) => {

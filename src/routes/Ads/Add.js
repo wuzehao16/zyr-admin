@@ -121,26 +121,16 @@ export default class BasicForms extends PureComponent {
         <FormItem
           {...formItemLayout}
            label="图片">
-           <UploadPicture onChange={this.handleUpload}/>
-           {/* {getFieldDecorator('adsPic',{
+           {/* <UploadPicture onChange={this.handleUpload}/> */}
+           {getFieldDecorator('adsPic',{
              rules:[{
                required:true,
                message:'请选择图片'
              }]
            })(
-             <Upload
-               action="http://47.104.27.184:8000/sysAnno/uploadImage"
-               listType="picture-card"
-               onPreview={this.handlePreview}
-               onChange={this.handleChange}
-             >
-               {fileList.length >= 1 ? null : uploadButton}
-             </Upload>
+             <UploadPicture onChange={this.handleUpload}/>
            )}
 
-           <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-             <img alt="example" style={{ width: '100%' }} src={previewImage} />
-           </Modal> */}
         </FormItem>
       </div>
     );

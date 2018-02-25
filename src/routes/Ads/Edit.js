@@ -6,6 +6,8 @@ import {
 } from 'antd';
 import moment from 'moment'
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import UploadPicture from '../../components/UploadPicture';
+
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -54,6 +56,20 @@ export default class BasicForms extends PureComponent {
       }
     }
   }
+
+  handleUpload = v => {
+    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    getFieldDecorator('adsPic')
+    if (v[0] && v[0].response) {
+      const res = v[0].response;
+      if ( res.code === 0) {
+        setFieldsValue({
+          adsPic: res.data.match(/ima[^\n]*Ex/)[0].slice(0,-3)
+        })
+      }
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
@@ -63,9 +79,6 @@ export default class BasicForms extends PureComponent {
           ...fieldsValue,
           autoUpTime: fieldsValue.time && moment(fieldsValue.time[0]).local(),
           autoDownTime: fieldsValue.time && moment(fieldsValue.time[1]).local(),
-          adsPic: fieldsValue.adsPic && fieldsValue.adsPic.file
-                                          ? fieldsValue.adsPic.file.response.data.match(/ima[^\n]*Ex/)[0].slice(0,-3)
-                                          : fieldsValue.adsPic && fieldsValue.adsPic.match(/ima[^\n]*Ex/)[0].slice(0,-3)
         };
         this.props.dispatch({
           type: 'ads/update',
@@ -155,20 +168,21 @@ export default class BasicForms extends PureComponent {
                  message:'请选择图片'
                }]
            })(
-             <Upload
-               action="http://47.104.27.184:8000/sysAnno/uploadImage"
-               listType="picture-card"
-               onPreview={this.handlePreview}
-               onChange={this.handleChange}
-               fileList={fileList}
-             >
-               {fileList.length >= 1 ? null : uploadButton}
-             </Upload>
+             <UploadPicture  onChange={this.handleUpload}/>
+           //   <Upload
+           //     action="http://47.104.27.184:8000/sysAnno/uploadImage"
+           //     listType="picture-card"
+           //     onPreview={this.handlePreview}
+           //     onChange={this.handleChange}
+           //     fileList={fileList}
+           //   >
+           //     {fileList.length >= 1 ? null : uploadButton}
+           //   </Upload>
            )}
-
-           <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-             <img alt="example" style={{ width: '100%' }} src={previewImage} />
-           </Modal>
+           {/* //
+           // <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+           //   <img alt="example" style={{ width: '100%' }} src={previewImage} />
+           // </Modal> */}
         </FormItem>
       </div>
     );

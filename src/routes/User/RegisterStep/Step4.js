@@ -56,20 +56,15 @@ class Step4 extends React.PureComponent {
       type:'register/getEmailCaptcha',
       payload:{
         userEmail,
-      }
-    })
-    setTimeout(()=>{
-      if(this.props.data.isEmailRegister === 1){
-        this.setState({ count: 0 });
-        return
-      } else {
+      },
+      callback: () => {
         this.captcha();
-      }
-    },1000)
+      },
+    })
 
   };
   captcha = () => {
-    let count = 9;
+    let count = 59;
     this.setState({ count });
     this.interval = setInterval(() => {
       count -= 1;

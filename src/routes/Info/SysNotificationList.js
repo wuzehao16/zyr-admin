@@ -210,7 +210,7 @@ export default class TableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="消息类型">
+            <FormItem label="通知类型">
               {getFieldDecorator('paltforMsgType')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   {mesTypeOptions}

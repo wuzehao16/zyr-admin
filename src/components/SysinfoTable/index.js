@@ -58,7 +58,7 @@ class StandardTable extends PureComponent {
         render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
-        title: '消息对象',
+        title: '消息类型',
         dataIndex: 'msgType',
       },
       {

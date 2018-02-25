@@ -77,7 +77,7 @@ class StandardTable extends PureComponent {
         dataIndex: 'paltforMsgTypeName',
       },
       {
-        title: '上下架',
+        title: '上架状态',
         dataIndex: 'unlockStatus',
         render: val => <span>{upStatus[val]}</span>
       },

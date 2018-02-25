@@ -42,23 +42,12 @@ export default {
         message.error(response.msg);
       }
     },
-    *getEmailCaptcha({ payload }, { call, put }) {
+    *getEmailCaptcha({ payload, callback }, { call, put }) {
       const response = yield call(msgEmail, payload);
       if(response.code == 0){
         message.success('发送成功');
-        yield put({
-          type: 'saveStepFormData',
-          payload:{
-            isEmailRegister : 0
-          },
-        });
+        if (callback) callback();
       } else{
-        yield put({
-          type: 'saveStepFormData',
-          payload:{
-            isEmailRegister : 1
-          },
-        });
         message.error(response.msg);
       }
     },

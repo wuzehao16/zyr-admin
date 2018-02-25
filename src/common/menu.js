@@ -114,11 +114,6 @@ const menuData = [{
   name: '机构管理',
   icon: 'user',
   path: 'Institution',
-  // authority: 'admin',
-  // children: [{
-  //   name: '用户管理',
-  //   path: 'user',
-  // }],
 },
 {
   name: '内容管理', // 页面名称，会展示在菜单栏中
@@ -128,13 +123,6 @@ const menuData = [{
     {
       name: '内容管理',
       path: 'information',
-      // children:[
-      //   {
-      //     name:'新增',
-      //     path:'add',
-      //     // hideInMenu: true,
-      //   }
-      // ]
     },
     {
       name: '栏目管理',
