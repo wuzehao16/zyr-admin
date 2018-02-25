@@ -231,7 +231,7 @@ export default class TableList extends PureComponent {
 
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="审核时间">
+            <FormItem label="更新时间">
               {getFieldDecorator('date')(
                 <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
               )}
@@ -245,7 +245,7 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="创建人">
+            <FormItem label="发布者">
               {getFieldDecorator('operName')(
                 <Input placeholder="请输入" />
               )}

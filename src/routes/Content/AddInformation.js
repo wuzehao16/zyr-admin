@@ -183,7 +183,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="是否启用"
+              label="是否显示"
             >
               {getFieldDecorator('isDisplay')(
                 <Select placeholder="请选择">

@@ -69,22 +69,12 @@ class StandardTable extends PureComponent {
         dataIndex: 'channelTypeName',
       },
       {
-        title: '固顶级别',
+        title: '排序',
         dataIndex: 'contentSort',
       },
       {
         title: '是否显示',
         dataIndex: 'isDisplay',
-        filters: [
-          {
-            text: onlineStatus[0],
-            value: 0,
-          },
-          {
-            text: onlineStatus[1],
-            value: 1,
-          },
-        ],
         render(val) {
           return `${onlineStatus[val]}`;
         },
@@ -94,7 +84,7 @@ class StandardTable extends PureComponent {
         dataIndex: 'oper',
       },
       {
-        title: '创建时间',
+        title: '更新时间',
         dataIndex: 'updateTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
