@@ -73,6 +73,10 @@ class StandardTable extends PureComponent {
         dataIndex: 'orderNo',
       },
       {
+        title: '机构名称',
+        dataIndex: 'manageName',
+      },
+      {
         title: '产品名称',
         dataIndex: 'productName',
       },
