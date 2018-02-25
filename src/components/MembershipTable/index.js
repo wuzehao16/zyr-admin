@@ -79,18 +79,12 @@ class StandardTable extends PureComponent {
         dataIndex: 'levePrice',
       },
       {
-        title: '创建人',
+        title: '更新人',
         dataIndex: 'updateUser',
       },
       {
-        title: '创建时间',
-        dataIndex: 'createTime',
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
-      {
-        title: '登录时间',
-        dataIndex: 'updatedAt',
-
+        title: '更新时间',
+        dataIndex: 'uodateTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
