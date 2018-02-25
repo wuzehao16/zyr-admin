@@ -106,7 +106,7 @@ export default class BasicForms extends PureComponent {
                   message: '请输入栏目名称',
                 }],
               })(
-                <Input maxLength={10} placeholder="请输入" />
+                <Input maxLength='10' placeholder="请输入" />
               )}
             </FormItem>
             <FormItem

@@ -6,6 +6,7 @@ import {
 } from 'antd';
 import moment from 'moment'
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import UploadPicture from '../../components/UploadPicture';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -121,7 +122,8 @@ export default class BasicForms extends PureComponent {
         <FormItem
           {...formItemLayout}
            label="图片">
-           {getFieldDecorator('adsPic',{
+           <UploadPicture onChange={this.handleUpload}/>
+           {/* {getFieldDecorator('adsPic',{
              rules:[{
                required:true,
                message:'请选择图片'
@@ -139,7 +141,7 @@ export default class BasicForms extends PureComponent {
 
            <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
              <img alt="example" style={{ width: '100%' }} src={previewImage} />
-           </Modal>
+           </Modal> */}
         </FormItem>
       </div>
     );
@@ -185,6 +187,20 @@ export default class BasicForms extends PureComponent {
       previewVisible: true,
     });
   }
+
+  handleUpload = v => {
+    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    getFieldDecorator('adsPic')
+    if (v[0] && v[0].response) {
+      const res = v[0].response;
+      if ( res.code === 0) {
+        setFieldsValue({
+          adsPic: res.data.match(/ima[^\n]*Ex/)[0].slice(0,-3)
+        })
+      }
+    }
+  }
+
   handleChange = ({ fileList }) => {
     this.setState({ fileList })
   }

@@ -109,7 +109,7 @@ export default class BasicForms extends PureComponent {
                   message: '请输入标题',
                 }],
               })(
-                <Input placeholder="请输入"/>
+                <Input maxLength="30" placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem
@@ -122,7 +122,7 @@ export default class BasicForms extends PureComponent {
                   message: '请输入内容',
                 }],
               })(
-                <Input.TextArea rows={4} placeholder="请输入"/>
+                <Input.TextArea rows={4} maxLength="200" placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem

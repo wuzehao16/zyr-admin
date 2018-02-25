@@ -17,11 +17,9 @@ class PicturesWall extends React.Component {
   }
 
   handleChange = ({ fileList }) => {
-    console.log(fileList)
     this.setState({ fileList })
     if (fileList[0] && fileList[0].response) {
       const res = fileList[0].response;
-      console.log(res)
       if ( res.code === 0) {
         // this.setState({ fileList })
       } else {

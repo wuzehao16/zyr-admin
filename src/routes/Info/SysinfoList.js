@@ -12,36 +12,6 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
-const CreateForm = Form.create()((props) => {
-  const { modalVisible, form, handleAdd, handleModalVisible } = props;
-  const okHandle = () => {
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
-      handleAdd(fieldsValue);
-    });
-  };
-  return (
-    <Modal
-      title="新建规则"
-      visible={modalVisible}
-      onOk={okHandle}
-      onCancel={() => handleModalVisible()}
-    >
-      <FormItem
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 15 }}
-        label="描述"
-      >
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(
-          <Input placeholder="请输入" />
-        )}
-      </FormItem>
-    </Modal>
-  );
-});
-
 @connect(({ info, loading }) => ({
   info,
   loading: loading.models.info,
@@ -169,25 +139,6 @@ export default class TableList extends PureComponent {
     });
   }
 
-  handleModalVisible = (flag) => {
-    this.setState({
-      modalVisible: !!flag,
-    });
-  }
-
-  handleAdd = (fields) => {
-    this.props.dispatch({
-      type: 'info/add',
-      payload: {
-        description: fields.desc,
-      },
-    });
-
-    message.success('添加成功');
-    this.setState({
-      modalVisible: false,
-    });
-  }
 
   renderSimpleForm() {
     const { infoType } = this.props.info;
@@ -253,9 +204,6 @@ export default class TableList extends PureComponent {
               {this.renderSimpleForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
-              </Button>
               {
                 selectedRows.length > 0 && (
                   <span>
@@ -278,10 +226,6 @@ export default class TableList extends PureComponent {
             />
           </div>
         </Card>
-        <CreateForm
-          {...parentMethods}
-          modalVisible={modalVisible}
-        />
       </PageHeaderLayout>
     );
   }

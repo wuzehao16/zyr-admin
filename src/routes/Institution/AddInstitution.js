@@ -5,7 +5,7 @@ import {
 } from 'antd';
 import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import UploadPicture from '../../components/UploadPicture'
+import UploadPicture from '../../components/UploadPicture';
 import styles from './style.less';
 
 const FormItem = Form.Item;
