@@ -94,25 +94,29 @@ class StandardTable extends PureComponent {
       },
       {
         title: '标题',
+        width:'10%',
         dataIndex: 'adsTitle',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '内容',
+        width:'10%',
         dataIndex: 'adsContent',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '匹配词',
         dataIndex: 'adsMatch',
       },
-      {
-        title: '图片',
-        dataIndex: 'adsPic',
-        render: val => (val && val.match(/ima[^\n]*Ex/) )?val.match(/ima[^\n]*Ex/)[0].slice(0,-3):val
-      },
-      {
-        title: '跳转链接',
-        dataIndex: 'adsUrl',
-      },
+      // {
+      //   title: '图片',
+      //   dataIndex: 'adsPic',
+      //   render: val => (val && val.match(/ima[^\n]*Ex/) )?val.match(/ima[^\n]*Ex/)[0].slice(0,-3):val
+      // },
+      // {
+      //   title: '跳转链接',
+      //   dataIndex: 'adsUrl',
+      // },
       {
         title: '上架状态',
         dataIndex: 'upState',
@@ -150,7 +154,6 @@ class StandardTable extends PureComponent {
       {
         title: '操作',
         align: 'center',
-        fixed: 'right',
         render: (text, record) => {
           return (
             <Fragment>
@@ -201,7 +204,7 @@ class StandardTable extends PureComponent {
           rowKey={record => record.adsId}
           rowSelection={rowSelection}
           dataSource={data}
-          scroll={{ x: 1800}}
+          // scroll={{ x: 1800}}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}
