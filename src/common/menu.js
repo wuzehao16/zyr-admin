@@ -126,7 +126,7 @@ const menuData = [{
   icon: 'book', // 页面图标，会展示在菜单栏中
   children: [
     {
-      name: '信息管理',
+      name: '内容管理',
       path: 'information',
       // children:[
       //   {
