@@ -20,7 +20,7 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     console.log(item)
     return (
-      <PageHeaderLayout title="产品管理详情" >
+      <PageHeaderLayout title="内容管理详情" >
         <Card bordered={false}>
           <DescriptionList size="large" title="内容详情" style={{ marginBottom: 32 }} col={2}>
             <Description term="ID">{item.channelId}</Description>
@@ -43,6 +43,8 @@ export default class BasicForms extends PureComponent {
             <div dangerouslySetInnerHTML={{
              __html: item.content
            }}/>
+           <Description term="发布者">{item.oper}</Description>
+           <Description term="更新时间">{item.updateTime}</Description>
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
             <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/content'))}>

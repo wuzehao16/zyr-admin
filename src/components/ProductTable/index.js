@@ -100,17 +100,7 @@ class StandardTable extends PureComponent {
       },
       {
         title: '纳入评测',
-        dataIndex: 'isEvaluaStatuts',
-        filters: [
-          {
-            text: isEvaluaStatuts[0],
-            value: 0,
-          },
-          {
-            text: isEvaluaStatuts[1],
-            value: 1,
-          },
-        ],
+        dataIndex: 'isEvaluating',
         render(val) {
           return <span>{isEvaluaStatuts[val]}</span>;
         },
@@ -118,20 +108,6 @@ class StandardTable extends PureComponent {
       {
         title: '审核状态',
         dataIndex: 'approvalStatuts',
-        filters: [
-          {
-            text: approvalStatus[0],
-            value: 0,
-          },
-          {
-            text: approvalStatus[1],
-            value: 1,
-          },
-          {
-            text: approvalStatus[1],
-            value: 2,
-          },
-        ],
         render(val) {
           return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
         },

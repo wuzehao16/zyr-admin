@@ -62,6 +62,7 @@ export default class BasicForms extends PureComponent {
         userName: item.userName,
         islock: item.islock,
         userId: item.userId,
+        userIdentity: item.userIdentity,
         sysRoles,
       });
     }
@@ -134,6 +135,9 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="用户密码"
+              style={{
+                display: getFieldValue('userIdentity') === 0 ? 'block' : 'none',
+              }}
             >
               {getFieldDecorator('loginPassord')(
                 <Input type="password" placeholder="请输入用户密码" />
@@ -142,6 +146,9 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="用户姓名"
+              style={{
+                display: getFieldValue('userIdentity') === 0 ? 'block' : 'none',
+              }}
             >
               {getFieldDecorator('userName', {
                 rules: [{
@@ -154,6 +161,9 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="是否锁定"
+              style={{
+                display: getFieldValue('userIdentity') === 0 ? 'block' : 'none',
+              }}
             >
               {getFieldDecorator('islock', {
                 rules: [{

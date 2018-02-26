@@ -13,6 +13,7 @@ for (let i = 0; i < 46; i += 1) {
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
     islock: '1',
+    userIdentity: Math.floor(Math.random() * 2),
     sysRoles: [{
       roleId: "575eb9a313794afaac82265afe9ab49a",
       roleName: "运维人员"

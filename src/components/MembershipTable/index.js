@@ -75,7 +75,7 @@ class StandardTable extends PureComponent {
         dataIndex: 'leveSort',
       },
       {
-        title: '价格',
+        title: '价格/月',
         dataIndex: 'levePrice',
       },
       {

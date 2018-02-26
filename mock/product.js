@@ -24,6 +24,7 @@ for (let i = 0; i < 46; i += 1) {
     cityCode:"20",
     creditReq:"<p>123</p>",
     customerType:"300",
+    isEvaluating:"1",
     manageName:"123",
     monthlyFeeRate:"12",
     otherReq:"<p>123</p>",

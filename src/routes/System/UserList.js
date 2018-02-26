@@ -8,6 +8,7 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './User.less';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 @connect(({ systemUser, loading }) => ({
@@ -141,7 +142,17 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
-          <Col md={16} sm={24}>
+          <Col md={8} sm={24}>
+            <FormItem label="用户类型">
+              {getFieldDecorator('userIdentity')(
+                <Select placeholder="请选择">
+                  <Option value={0}>系统用户</Option>
+                  <Option value={1}>机构用户</Option>
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">查询</Button>
               <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
