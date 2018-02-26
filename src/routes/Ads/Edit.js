@@ -145,7 +145,7 @@ export default class BasicForms extends PureComponent {
           {getFieldDecorator('adsContent', {
             initialValue: item.adsContent,
           })(
-            <Input placeholder="请输入"/>
+            <Input.TextArea rows={4} maxLength="50" placeholder="请输入"/>
           )}
         </FormItem>
         <FormItem
@@ -203,7 +203,7 @@ export default class BasicForms extends PureComponent {
               message: '请选择内容',
             }],
           })(
-            <Input placeholder="请输入"/>
+            <Input.TextArea rows={4} maxLength="50" placeholder="请输入"/>
           )}
         </FormItem>
         <FormItem
