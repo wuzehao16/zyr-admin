@@ -49,24 +49,25 @@ class PicturesWall extends React.Component {
       this.setState({ fileList })
     }
 
-      if (fileList[0] && fileList[0].response) {
-        const res = fileList[0].response;
-        if ( res.code === 0) {
-          // this.setState({ fileList })
-        } else {
-          message.error(res.msg)
-          this.setState({ fileList: [] })
-        }
+    if (fileList[0] && fileList[0].response) {
+      const res = fileList[0].response;
+      if ( res.code === 0) {
+        // this.setState({ fileList })
+      } else {
+        message.error(res.msg)
+        this.setState({ fileList: [] })
       }
+    }
     console.log(fileList)
 
     if (fileList[0] && fileList[0].status) {
         this.setState({ fileList })
+        if (this.props.onChange) {
+          this.props.onChange(fileList)
+        }
     }
 
-    if (this.props.onChange) {
-      this.props.onChange(fileList)
-    }
+
   }
 
   render() {

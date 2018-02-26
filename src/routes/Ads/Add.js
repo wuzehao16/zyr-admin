@@ -103,15 +103,16 @@ export default class BasicForms extends PureComponent {
     );
   }
   normalize = (v, prevValue = []) => {
+    console.log(v)
     if (v && v[0] && v[0].response) {
       const res = v[0].response;
       if ( res.code === 0) {
         return res.data.match(/ima[^\n]*Ex/)[0].slice(0,-3);
       }
     }
-    if (v && v[0]) {
-      return "";
-    }
+    // if (v && v[0]) {
+    //   return "";
+    // }
     return v
   };
   renderBanner = ()=> {
