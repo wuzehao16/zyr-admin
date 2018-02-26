@@ -246,7 +246,7 @@ export default class TableList extends PureComponent {
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="发布者">
-              {getFieldDecorator('operName')(
+              {getFieldDecorator('oper')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>

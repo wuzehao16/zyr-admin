@@ -102,6 +102,18 @@ export default class BasicForms extends PureComponent {
       </div>
     );
   }
+  normalize = (v, prevValue = []) => {
+    if (v[0] && v[0].response) {
+      const res = v[0].response;
+      if ( res.code === 0) {
+        return res.data.match(/ima[^\n]*Ex/)[0].slice(0,-3);
+      }
+    }
+    if (v[0]) {
+      return "";
+    }
+    return v
+  };
   renderBanner = ()=> {
     const { getFieldDecorator } = this.props.form;
     const { fileList, previewVisible,previewImage } = this.state;
@@ -137,9 +149,10 @@ export default class BasicForms extends PureComponent {
              rules:[{
                required:true,
                message:'请选择图片'
-             }]
+             }],
+             normalize: this.normalize,
            })(
-             <UploadPicture onChange={this.handleUpload}/>
+             <UploadPicture />
            )}
 
         </FormItem>

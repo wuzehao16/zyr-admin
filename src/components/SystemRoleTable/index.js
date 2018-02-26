@@ -66,13 +66,13 @@ class StandardTable extends PureComponent {
       {
         title: '创建时间',
         dataIndex: 'createTime',
-        
+
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '登录时间',
         dataIndex: 'updatedAt',
-        
+
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
@@ -96,7 +96,7 @@ class StandardTable extends PureComponent {
       selectedRowKeys,
       onChange: this.handleRowSelectChange,
       getCheckboxProps: record => ({
-        disabled: record.disabled,
+        disabled: record.roleId=='28d4c3a66ffa4e0d973c8177c611f109',
       }),
     };
 

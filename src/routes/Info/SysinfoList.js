@@ -142,7 +142,7 @@ export default class TableList extends PureComponent {
 
   renderSimpleForm() {
     const { infoType } = this.props.info;
-    const infoTypeOptions = infoType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    const infoTypeOptions = infoType.map(item => <Option key={item.label} value={item.label}>{item.label}</Option>);
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
