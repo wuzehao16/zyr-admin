@@ -49,6 +49,11 @@ class StandardTable extends PureComponent {
       {
         title: '序号',
         dataIndex: 'userId',
+        render: (text, record, index) => {
+          return (
+              <span>{index+1}</span>
+          );
+        },
       },
       {
         title: '账号',
@@ -103,7 +108,7 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      count,
+      total: count,
       showTotal:total => `总共 ${total} 条`,
     };
 

@@ -92,7 +92,7 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...count,
+      total: count,
       showTotal:total => `总共 ${total} 条`,
     };
 

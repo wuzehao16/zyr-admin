@@ -51,7 +51,7 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, pagination }, loading } = this.props;
+    const { data: { data, count }, loading } = this.props;
     const status = ['否', '是'];
     const lockStatus = ['禁用', '启用'];
     const membershipStatus = ['会员', '非会员'];
@@ -147,7 +147,7 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      total: count,
       showTotal:total => `总共 ${total} 条`,
     };
 
