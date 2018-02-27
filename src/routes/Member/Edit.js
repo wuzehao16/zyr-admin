@@ -96,7 +96,6 @@ export default class BasicForms extends PureComponent {
               <Description term="真实姓名">{item.realName}</Description>
               <Description term="性别">{item.userSex === 1 ? '女' : '男'}</Description>
               <Description term="身份证号">{item.idNumber}</Description>
-              <Description term="微信号">{item.wachatNo}</Description>
               <Description >
                 <img src={item.upperPictureId} alt="" height={200} width={400}/>
               </Description>
