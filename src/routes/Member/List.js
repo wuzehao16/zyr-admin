@@ -342,16 +342,13 @@ export default class TableList extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="查询表格">
+      <PageHeaderLayout title="用户管理">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>
               {this.renderForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
-              </Button>
               {
                 selectedRows.length > 0 && (
                   <span>

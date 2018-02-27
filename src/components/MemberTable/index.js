@@ -93,31 +93,11 @@ class StandardTable extends PureComponent {
       {
         title: '是否客服',
         dataIndex: 'isCustom',
-        filters: [
-          {
-            text: status[0],
-            value: 0,
-          },
-          {
-            text: status[1],
-            value: 1,
-          },
-        ],
         render: val => <span>{status[val]}</span>
       },
       {
         title: '启用状态',
         dataIndex: 'islock',
-        filters: [
-          {
-            text: lockStatus[0],
-            value: 0,
-          },
-          {
-            text: lockStatus[1],
-            value: 1,
-          },
-        ],
         render(val) {
           return <Badge status={statusMap[val]} text={lockStatus[val]} />;
         },
