@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { query, queryDetail, update, updatePassword } from '../services/member';
+import { query, queryDetail, update, updatePassword, queryInstitution } from '../services/member';
 import { routerRedux } from 'dva/router';
 
 export default {
@@ -10,7 +10,8 @@ export default {
       list: [],
       pagination: {},
     },
-    item: {}
+    item: {},
+    institutionList: [],
   },
 
   effects: {
@@ -59,6 +60,15 @@ export default {
       });
       yield put(routerRedux.push('/member/Detail'));
     },
+    *getInstitution({ payload }, { call, put }) {
+      const response = yield call(queryInstitution, payload);
+      yield put({
+        type: 'saveThing',
+        payload:{
+          institutionList : response.data
+        },
+      });
+    },
   },
 
   reducers: {
@@ -66,6 +76,12 @@ export default {
       return {
         ...state,
         data: action.payload,
+      };
+    },
+    saveThing(state, action) {
+      return {
+        ...state,
+        ...action.payload,
       };
     },
     saveDetail(state, action) {

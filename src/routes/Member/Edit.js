@@ -19,6 +19,9 @@ const { Description } = DescriptionList;
 @Form.create()
 export default class BasicForms extends PureComponent {
   componentDidMount() {
+    this.props.dispatch({
+      type: 'member/getInstitution',
+    });
     const { setFieldsValue } = this.props.form;
     if (this.props.data.item) {
       const { item } = this.props.data;
@@ -29,9 +32,9 @@ export default class BasicForms extends PureComponent {
         userIdentity: item.userIdentity,
         userId: item.userId,
       });
-      if (item.manageName) {
+      if (item.manageId) {
         setFieldsValue({
-          manageName: item.manageName,
+          manageId: item.manageId,
         });
       }
     }
@@ -40,6 +43,14 @@ export default class BasicForms extends PureComponent {
     const { setFieldsValue } = this.props.form;
     setFieldsValue({
       sysMenus: value,
+    });
+  }
+  handleChange = (value) => {
+    this.props.dispatch({
+      type: 'member/getInstitution',
+      payload: {
+        manageName: value,
+      },
     });
   }
   handleSubmit = (e) => {
@@ -54,18 +65,12 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { submitting, data: { item }, dispatch } = this.props;
+    const { submitting, data: { item, institutionList }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     getFieldDecorator('userId');
-    const memberInfo = (
-      <div>
-        <Description term="会员等级">{item.leveName}</Description>
-        <Description term="购买时间">{moment(item.appMemberInfo.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
-        <Description term="有效时间">{moment(item.appMemberInfo.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
-        <Description term="购买时长">{item.appMemberInfo.longTime}个月</Description>
-        <Description term="价格">{item.appMemberInfo.memberPrice}元</Description>
-      </div>
-    );
+    if (institutionList) {
+      var institutionListOptions = institutionList.map(item => <Option key={item.manageId} title={item.manageName} >{item.manageName}</Option>);
+    }
     return (
       <PageHeaderLayout title="编辑用户详请" >
         <Card bordered={false}>
@@ -115,7 +120,15 @@ export default class BasicForms extends PureComponent {
             <Divider style={{ marginBottom: 32 }} />
             <DescriptionList size="large" title="会员信息" style={{ marginBottom: 32 }} col={2}>
               <Description term="是否为会员">{item.isMember === 1 ? '否' : '是'}</Description>
-              { item.isMember === 1 ? <Description>&nbsp;</Description> : memberInfo }
+              { item.isMember === 1 ? <Description>&nbsp;</Description> : (
+                <div>
+                  <Description term="会员等级">{item.leveName}</Description>
+                  <Description term="购买时间">{moment(item.appMemberInfo.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+                  <Description term="有效时间">{moment(item.appMemberInfo.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+                  <Description term="购买时长">{item.appMemberInfo.longTime}个月</Description>
+                  <Description term="价格">{item.appMemberInfo.memberPrice}元</Description>
+                </div>  )
+             }
             </DescriptionList>
             <Divider style={{ marginBottom: 32 }} />
             <DescriptionList size="large" title="其他信息" style={{ marginBottom: 32 }} col={2}>
@@ -156,8 +169,20 @@ export default class BasicForms extends PureComponent {
               >
                 <Col sm={12} xs={24}>
                   <FormItem >
-                    {getFieldDecorator('manageName')(
-                      <Input />
+                    {getFieldDecorator('manageId')(
+                      <Select
+                        // mode="tags"
+                        // value={this.state.value}
+                        placeholder={this.props.placeholder}
+                        style={this.props.style}
+                        defaultActiveFirstOption={false}
+                        showArrow={false}
+                        showSearch={true}
+                        filterOption={false}
+                        onSearch={this.handleChange}
+                      >
+                        {institutionListOptions}
+                      </Select>
                   )}
                   </FormItem>
                 </Col>

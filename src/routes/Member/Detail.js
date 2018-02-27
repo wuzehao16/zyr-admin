@@ -25,23 +25,6 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data: { item }, dispatch } = this.props;
 
-    const memberInfo = (
-      <DescriptionList style={{ marginBottom: 32 }} col={2}>
-        <Description term="会员等级">{item.leveName}</Description>
-        <Description term="购买时间">{moment(item.appMemberInfo.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
-        <Description term="有效时间">{moment(item.appMemberInfo.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
-        <Description term="购买时长">{item.appMemberInfo.longTime}个月</Description>
-        <Description term="价格">{item.appMemberInfo.memberPrice}元</Description>
-      </DescriptionList>
-    );
-    const customInfo = (
-      <div>
-        <Description term="客服类型">{item.userIdentity === 1 ? '机构客服' : '平台客服'}</Description>
-        { item.userIdentity === 1 ? <Description term="机构名称">{item.manageName}</Description> : null}
-        <Description term="启用状态">{item.islock === 1 ? '启用' : '禁用'}</Description>
-      </div>
-    );
-
     return (
       <PageHeaderLayout title="用户详情" >
         <Card bordered={false}>
@@ -71,11 +54,25 @@ export default class BasicForms extends PureComponent {
           <DescriptionList size="large" title="会员信息" style={{ marginBottom: 18 }} col={2}>
             <Description term="是否为会员">{item.isMember === 1 ? '否' : '是'}</Description>
           </DescriptionList>
-          { item.isMember === 1 ? <Description>&nbsp;</Description> : memberInfo }
+          { item.isMember === 1 ? <Description>&nbsp;</Description> : (
+            <DescriptionList style={{ marginBottom: 32 }} col={2}>
+              <Description term="会员等级">{item.leveName}</Description>
+              <Description term="购买时间">{moment(item.appMemberInfo.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+              <Description term="有效时间">{moment(item.appMemberInfo.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+              <Description term="购买时长">{item.appMemberInfo.longTime}个月</Description>
+              <Description term="价格">{item.appMemberInfo.memberPrice}元</Description>
+            </DescriptionList>
+          ) }
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="其他信息" style={{ marginBottom: 18 }} col={2}>
             <Description term="是否为客服">{item.isCustom === 1 ? '是' : '否'}</Description>
-              { item.isCustom === 1 ? customInfo : <Description>&nbsp;</Description> }
+              { item.isCustom === 1 ? (
+                <div>
+                  <Description term="客服类型">{item.userIdentity === 1 ? '机构客服' : '平台客服'}</Description>
+                  { item.userIdentity === 1 ? <Description term="机构名称">{item.manageName}</Description> : null}
+                  <Description term="启用状态">{item.islock === 1 ? '启用' : '禁用'}</Description>
+                </div>
+              ) : null }
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
             <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/member'))}>
