@@ -19,6 +19,7 @@ for (let i = 0; i < 46; i += 1) {
     applyFlow:"1,2,3,4,5,6",
     approvalAging:"12,12",
     approvalAgingEnd:"12",
+    approvalStatuts: Math.floor(Math.random() * 3),
     approvalAgingStart:"12",
     basieReq:"<p>123</p>",
     cityCode:"20",

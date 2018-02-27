@@ -60,11 +60,12 @@ Editor.modules = {
  * Quill editor formats
  * See https://quilljs.com/docs/formats/
  */
-Editor.formats = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-]
+ Editor.formats = [
+   'header', 'font', 'size',
+   'bold', 'italic', 'underline', 'strike', 'blockquote',
+   'list', 'bullet', 'indent',
+   'link', 'image', 'video'
+ ]
 
 /*
  * PropType validation

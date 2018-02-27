@@ -154,7 +154,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请输入标题',
                 }],
               })(
-                <Input placeholder="请输入"/>
+                <Input type="text" maxLength="20" placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem
@@ -185,7 +185,12 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="是否显示"
             >
-              {getFieldDecorator('isDisplay')(
+              {getFieldDecorator('isDisplay',{
+                rules:[{
+                  required: true,
+                  message: "请选择是否显示"
+                }]
+              })(
                 <Select placeholder="请选择">
                   <Option value="1">是</Option>
                   <Option value="0">否</Option>
