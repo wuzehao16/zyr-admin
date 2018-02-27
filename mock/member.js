@@ -23,10 +23,12 @@ for (let i = 0; i < 46; i += 1) {
     realName: "杰克",
     manageName: "平安-平安南山分行",
     sublInstitution: "2a8d5bf6958942fba5c67d6b04100f46",
-    buyTime: 1509610590000,
-    expirdTime: 1541146590000,
-    longTime: 12,
-    memberPrice: 12000,
+    appMemberInfo: {
+      buyTime: 1509610590000,
+      expirdTime: 1541146590000,
+      longTime: 12,
+      memberPrice: 12000,
+    },
     updateTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
     createTime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
   });

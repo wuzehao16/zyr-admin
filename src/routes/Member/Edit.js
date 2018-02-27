@@ -57,7 +57,15 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     getFieldDecorator('userId');
-
+    const memberInfo = (
+      <div>
+        <Description term="会员等级">{item.leveName}</Description>
+        <Description term="购买时间">{moment(item.appMemberInfo.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+        <Description term="有效时间">{moment(item.appMemberInfo.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+        <Description term="购买时长">{item.appMemberInfo.longTime}个月</Description>
+        <Description term="价格">{item.appMemberInfo.memberPrice}元</Description>
+      </div>
+    );
     return (
       <PageHeaderLayout title="编辑用户详请" >
         <Card bordered={false}>
@@ -96,6 +104,7 @@ export default class BasicForms extends PureComponent {
               <Description term="真实姓名">{item.realName}</Description>
               <Description term="性别">{item.userSex === 1 ? '女' : '男'}</Description>
               <Description term="身份证号">{item.idNumber}</Description>
+              <Description>&nbsp;</Description>
               <Description >
                 <img src={item.upperPictureId} alt="" height={200} width={400}/>
               </Description>
@@ -106,11 +115,7 @@ export default class BasicForms extends PureComponent {
             <Divider style={{ marginBottom: 32 }} />
             <DescriptionList size="large" title="会员信息" style={{ marginBottom: 32 }} col={2}>
               <Description term="是否为会员">{item.isMember === 1 ? '否' : '是'}</Description>
-              <Description term="会员类型">{item.leveName}</Description>
-              <Description term="购买时间">{moment(item.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
-              <Description term="有效时间">{moment(item.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
-              <Description term="购买时长">{item.longTime}个月</Description>
-              <Description term="价格">{item.memberPrice}元</Description>
+              { item.isMember === 1 ? <Description>&nbsp;</Description> : memberInfo }
             </DescriptionList>
             <Divider style={{ marginBottom: 32 }} />
             <DescriptionList size="large" title="其他信息" style={{ marginBottom: 32 }} col={2}>
