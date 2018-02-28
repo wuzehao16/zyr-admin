@@ -241,7 +241,6 @@ export default class BasicForms extends PureComponent {
             >
               <div>
                 {getFieldDecorator('contentTag', {
-                  initialValue: '1',
                 })(
                   <Radio.Group>
                     <Radio value="0">荐</Radio>
