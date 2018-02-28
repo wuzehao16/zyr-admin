@@ -11,7 +11,7 @@ for (let i = 0; i < 46; i += 1) {
     adsTypeName:'typename1',
     upState: Math.floor(Math.random()*3),
     adsContent:"Banner1的内容Banner1的内容Banner1的内容Banner1的内容Banner1的内容Banner1的内容Banner1的内容Banner1的内容Banner1的内容",
-    adsPic:"http://cloudbank.oss-cn-shenzhen.aliyuncs.com/image/8827390329185084.jpeg?Expires=1519643810&OSSAccessKeyId=LTAIKLBKZVJPb6ig&Signature=HIsOVHhJVYRSGabloeka8823mdc%3D",
+    adsPic:"http://cloudbank.oss-cn-shenzhen.aliyuncs.com/image/8985315295708725.jpeg?Expires=1519801735&OSSAccessKeyId=LTAIKLBKZVJPb6ig&Signature=q1V92kRqE1rNXpoQCE70ZL2juRY%3D",
     // adsPic:"https://picsum.photos/200/200"	,
     adsUrl	:"http://www.ibankmatch.com",
     adsSort:"2",

@@ -5,6 +5,7 @@ import {
   Form, Input, DatePicker, Select, Button, Card, Radio, Icon, Upload, Modal,
 } from 'antd';
 import ReactQuill from '../../components/QuillMore';
+import UploadPicture from '../../components/UploadPicture';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './AddInformation.less';
 
@@ -13,12 +14,6 @@ const { Option } = Select;
 // const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
-const upLoadProps = {
-  action: 'http://47.104.27.184:8000/sysAnno/uploadImage',
-  listType: 'picture',
-  // defaultFileList: [...fileList],
-  // className: 'uploadlist-inline',
-};
 @connect(({ content, loading }) => ({
   content,
   submitting: loading.effects['content/add'],
@@ -26,9 +21,6 @@ const upLoadProps = {
 @Form.create()
 export default class BasicForms extends PureComponent {
   state = {
-    previewVisible: false,
-    previewImage: '',
-    fileList: [],
     productIntroduction: '',
   }
 
@@ -58,28 +50,16 @@ export default class BasicForms extends PureComponent {
           payload: {
             ...values,
             content: this.state.productIntroduction,
-            contentPic: values.contentPic && values.contentPic.file.response && values.contentPic.file.response.data.match(/ima[^\n]*Ex/)[0].slice(0,-3),
+            contentPic: values.match(/ima[^\n]*Ex/)[0].slice(0,-3),
           },
         });
       }
     });
   }
-  handleCancel = () => this.setState({ previewVisible: false })
 
-  handlePreview = (file) => {
-    console.log(file)
-    this.setState({
-      previewImage: file.url || file.thumbUrl,
-      previewVisible: true,
-    });
-  }
-  handleChange = ({ fileList }) => {
-    this.setState({ fileList })
-  }
   render() {
     const { content: { columnType, column }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    const { fileList, previewVisible,previewImage } = this.state;
     if (column.data) {
       var columnNameOptions = column.data.map(item => <Option key={item.channelId} value={item.channelId}>{item.channelName}</Option>);
     }
@@ -241,20 +221,16 @@ export default class BasicForms extends PureComponent {
               label="封面图片"
               {...formItemLayout}
             >
-              {getFieldDecorator('contentPic')(
-                <Upload
-                  action="http://47.104.27.184:8000/sysAnno/uploadImage"
-                  listType="picture-card"
-                  onPreview={this.handlePreview}
-                  onChange={this.handleChange}
-                >
-                  {fileList.length >= 1 ? null : uploadButton}
-                </Upload>
+              {getFieldDecorator('contentPic', {
+                rules:[{
+                  required:true,
+                  message:'请选择图片'
+                },
+               ],
+              })(
+                 <UploadPicture />
               )}
 
-              <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                <img alt="example" style={{ width: '100%' }} src={previewImage} />
-              </Modal>
             </FormItem>
             <FormItem
               {...formItemLayout}

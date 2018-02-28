@@ -137,7 +137,7 @@ class Step3 extends React.PureComponent {
           form.setFields({
             confirm: {
               value: values.confirm,
-              errors: [new Error('傻逼两次输入的密码不一致!')],
+              errors: [new Error('两次输入的密码不一致!')],
             },
           });
           return

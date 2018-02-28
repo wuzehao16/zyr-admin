@@ -9,12 +9,13 @@ class PicturesWall extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    if ((typeof nextProps.value === "string") && 'initialValue' in nextProps["data-__meta"] ) {
+    if (this.state.fileList.length > 0 ) return
+    if ('fileList' in nextProps && nextProps.fileList != "") {
       this.setState({
         fileList:[{
           uid:-1,
-          url: nextProps.value
+          status: 'done',
+          url: nextProps.fileList
         }],
       });
     }
@@ -47,24 +48,31 @@ class PicturesWall extends React.Component {
     const f = fileList[0];
     if (!f) {
       this.setState({ fileList })
+      if (this.props.onChange) {
+        this.props.onChange("");
+      }
     }
 
+    console.log(fileList)
+
+    if (fileList[0] && fileList[0].status) {
+      const file = fileList[0];
+        this.setState({ fileList })
+        if (this.props.onChange) {
+          this.props.onChange("");
+        }
+    }
+    // 处理返回参数并且格式化参数
     if (fileList[0] && fileList[0].response) {
       const res = fileList[0].response;
       if ( res.code === 0) {
-        // this.setState({ fileList })
+        if (this.props.onChange) {
+          this.props.onChange(res.data);
+        }
       } else {
         message.error(res.msg)
         this.setState({ fileList: [] })
       }
-    }
-    console.log(fileList)
-
-    if (fileList[0] && fileList[0].status) {
-        this.setState({ fileList })
-        if (this.props.onChange) {
-          this.props.onChange(fileList)
-        }
     }
 
 
