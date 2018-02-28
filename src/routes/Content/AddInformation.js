@@ -50,7 +50,7 @@ export default class BasicForms extends PureComponent {
           payload: {
             ...values,
             content: this.state.productIntroduction,
-            contentPic: values.match(/ima[^\n]*Ex/)[0].slice(0,-3),
+            contentPic: values.contentPic.match(/ima[^\n]*Ex/)?values.contentPic.match(/ima[^\n]*Ex/)[0].slice(0,-3):values.contentPic,
           },
         });
       }
@@ -236,7 +236,7 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="标签选择"
               style={{
-                display: getFieldValue('contentType') === '0' ? 'block' : 'none',
+                display: getFieldValue('contentType') === '60000' ? 'block' : 'none',
               }}
             >
               <div>

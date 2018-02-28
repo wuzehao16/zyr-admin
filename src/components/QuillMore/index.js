@@ -13,6 +13,15 @@ class Editor extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.editorHtml !== '') return
+    if ('defaultValue' in nextProps) {
+      this.setState({
+        editorHtml: nextProps.defaultValue,
+      });
+    }
+  }
+
   handleChange (html) {
     this.setState({ editorHtml: html });
     if (this.props.onChange) {
