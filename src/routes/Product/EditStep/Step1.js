@@ -86,6 +86,9 @@ class Step1 extends React.PureComponent {
         prodFeatures,
         item,
       },
+      user:{
+        currentUser
+      }
       submitting,
       dispatch
     } = this.props;
