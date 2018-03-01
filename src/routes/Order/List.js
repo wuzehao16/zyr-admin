@@ -237,6 +237,15 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
+          <Col md={8} sm={24}
+            style={{display: currentUser.data.userIdentity==1?'block':'none'}}
+            >
+            <FormItem label="订单号">
+              {getFieldDecorator('orderNo')(
+                  <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+          </Col>
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">查询</Button>
@@ -253,14 +262,16 @@ export default class TableList extends PureComponent {
 
   renderAdvancedForm() {
     const { getFieldDecorator } = this.props.form;
-    const { order: { orderType }  } = this.props;
+    const { order: { orderType }, user:{ currentUser }  } = this.props;
     if (orderType) {
       var orderTypeOptions = orderType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
+          <Col md={8} sm={24}
+            style={{display: currentUser.data.userIdentity==0?'block':'none'}}
+            >
             <FormItem label="机构名称">
               {getFieldDecorator('manageName')(
                   <Input placeholder="请输入"/>
@@ -278,6 +289,15 @@ export default class TableList extends PureComponent {
             <FormItem label="订单号">
               {getFieldDecorator('orderNo')(
                   <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}
+            style={{display: currentUser.data.userIdentity==1?'block':'none'}}
+            >
+            <FormItem label="更新时间">
+              {getFieldDecorator('date')(
+                <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
               )}
             </FormItem>
           </Col>
@@ -310,7 +330,9 @@ export default class TableList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
 
           <Col md={8} sm={24}>
-            <FormItem label="更新时间">
+            <FormItem label="更新时间"
+              style={{display: currentUser.data.userIdentity==0?'block':'none'}}
+              >
               {getFieldDecorator('date')(
                 <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
               )}

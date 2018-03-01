@@ -242,13 +242,18 @@ export default class TableList extends PureComponent {
 
   renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;
-    const { product: { city }  } = this.props;
+    const { product: { city, audit }, user:{ currentUser }  } = this.props;
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
+    if (audit) {
+      var auditOptions = audit.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}
+          style={{display:currentUser.data.userIdentity==0?'block':'none'}}
+          >
           <Col md={8} sm={24}>
             <FormItem label="机构名称">
               {getFieldDecorator('manageName')(
@@ -275,13 +280,42 @@ export default class TableList extends PureComponent {
             </span>
           </Col>
         </Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}
+          style={{display:currentUser.data.userIdentity==1?'block':'none'}}
+          >
+          <Col md={8} sm={24}>
+            <FormItem label="产品名称">
+              {getFieldDecorator('productName')(
+                  <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="审核状态">
+              {getFieldDecorator('approvalStatuts')(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  { auditOptions }
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <span className={styles.submitButtons}>
+              <Button type="primary" htmlType="submit">查询</Button>
+              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
+              <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
+                展开 <Icon type="down" />
+              </a>
+            </span>
+          </Col>
+        </Row>
       </Form>
     );
   }
 
   renderAdvancedForm() {
     const { getFieldDecorator } = this.props.form;
-    const { product: { city, audit, institutionType, intRange }  } = this.props;
+    const { product: { city, audit, institutionType, intRange }, user:{ currentUser }  } = this.props;
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
@@ -296,7 +330,16 @@ export default class TableList extends PureComponent {
     }
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}
+          style={{display:currentUser.data.userIdentity==0?'block':'none'}}
+          >
+          <Col md={8} sm={24}>
+            <FormItem label="机构名称">
+              {getFieldDecorator('manageName')(
+                  <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+          </Col>
           <Col md={8} sm={24}>
             <FormItem label="所在城市">
               {getFieldDecorator('cityCode')(
@@ -315,20 +358,20 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
+        </Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="机构名称">
-              {getFieldDecorator('manageName')(
+            <FormItem label="产品名称">
+              {getFieldDecorator('productName')(
                   <Input placeholder="请输入"/>
               )}
             </FormItem>
           </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="利息区间">
-              {getFieldDecorator('monthlyFeeRate')(
+            <FormItem label="审核状态">
+              {getFieldDecorator('approvalStatuts')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  { intRangeOptions }
+                  { auditOptions }
                 </Select>
               )}
             </FormItem>
@@ -339,15 +382,6 @@ export default class TableList extends PureComponent {
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="0">否</Option>
                   <Option value="1">是</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="审核状态">
-              {getFieldDecorator('approvalStatuts')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  { auditOptions }
                 </Select>
               )}
             </FormItem>
@@ -372,9 +406,11 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="产品名称">
-              {getFieldDecorator('productName')(
-                  <Input placeholder="请输入"/>
+            <FormItem label="利息区间">
+              {getFieldDecorator('monthlyFeeRate')(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  { intRangeOptions }
+                </Select>
               )}
             </FormItem>
           </Col>
