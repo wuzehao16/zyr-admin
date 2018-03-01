@@ -49,13 +49,15 @@ export default class BasicForms extends PureComponent {
     });
   }
   componentDidMount() {
-    const { setFieldsValue } = this.props.form;
+    const { getFieldDecorator,setFieldsValue } = this.props.form;
     if (this.props.data.data.item) {
       const item = this.props.data.data.item;
       let sysRoles = [];
       if (item.sysRoles) {
         sysRoles = item.sysRoles.map((item) => { return item.roleId; });
       }
+      getFieldDecorator('userName')
+      getFieldDecorator('islock')
       setFieldsValue({
         loginAccount: item.loginAccount,
         loginPassord: item.loginPassord,
@@ -87,10 +89,10 @@ export default class BasicForms extends PureComponent {
     console.log(value);
   }
   render() {
-    const { submitting, data, dispatch } = this.props;
+    const { submitting, data:{ data}, data:{ data: { item } },  dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    if (data.data.roleList) {
-      var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
+    if (data.roleList) {
+      var RoleOptions = data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
     }
     getFieldDecorator('userId');
     const formItemLayout = {
@@ -132,52 +134,50 @@ export default class BasicForms extends PureComponent {
                 <Input placeholder="请输入用户账号" disabled />
               )}
             </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="用户密码"
-              style={{
-                display: getFieldValue('userIdentity') === 0 ? 'block' : 'none',
-              }}
-            >
-              {getFieldDecorator('loginPassord')(
-                <Input type="password" placeholder="请输入用户密码" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="用户姓名"
-              style={{
-                display: getFieldValue('userIdentity') === 0 ? 'block' : 'none',
-              }}
-            >
-              {getFieldDecorator('userName', {
-                rules: [{
-                  required: true, message: '请输入用户姓名',
-                }],
-              })(
-                <Input placeholder="请输入用户姓名" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="是否锁定"
-              style={{
-                display: getFieldValue('userIdentity') === 0 ? 'block' : 'none',
-              }}
-            >
-              {getFieldDecorator('islock', {
-                rules: [{
-                  required: true, message: '请选择是否锁定用户',
-                }],
-              })(
-                <Select
-                  placeholder="请选择是否锁定用户"
-                >
-                  <Option value={0}>是</Option>
-                  <Option value={1}>否</Option>
-                </Select>
-              )}
-            </FormItem>
+            {
+              getFieldValue('userIdentity') === 0
+                ? <div>
+                  <FormItem
+                    {...formItemLayout}
+                    label="用户密码"
+                  >
+                    {getFieldDecorator('loginPassord')(
+                      <Input type="password" placeholder="请输入用户密码" />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label="用户姓名"
+                  >
+                    {getFieldDecorator('userName', {
+                      // initialValue: item.userName,
+                      rules: [{
+                        required: true, message: '请输入用户姓名',
+                      }],
+                    })(
+                      <Input placeholder="请输入用户姓名" />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label="是否锁定"
+                  >
+                    {getFieldDecorator('islock', {
+                      // initialValue: item.islock,
+                      rules: [{
+                        required: true, message: '请选择是否锁定用户',
+                      }],
+                    })(
+                      <Select
+                        placeholder="请选择是否锁定用户"
+                      >
+                        <Option value={0}>是</Option>
+                        <Option value={1}>否</Option>
+                      </Select>
+                    )}
+                  </FormItem>
+                </div> : null
+            }
             <FormItem
               {...formItemLayout}
               label="用户权限"

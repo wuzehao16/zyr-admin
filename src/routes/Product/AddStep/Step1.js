@@ -133,8 +133,9 @@ class Step1 extends React.PureComponent {
     const onValidateForm = () => {
         // dispatch(routerRedux.push('/product/add/step2'));
       validateFields((err, values) => {
-        console.log(values)
+        console.log(values,err)
         if (!err) {
+          console.log(1)
           dispatch({
             type: 'product/saveStepFormData',
             payload: {
@@ -146,6 +147,7 @@ class Step1 extends React.PureComponent {
               propertyType: values.propertyType && values.propertyType.join(','),
               productTimeLimit: values.productTimeLimitStart + ',' + values.productTimeLimitEnd,
               approvalAging: values.approvalAgingStart + ',' + values.approvalAgingEnd,
+              productPoundage: values.productPoundage ? values.productPoundage : 0,
             },
           });
           dispatch(routerRedux.push('/product/add/step2'));
@@ -159,72 +161,72 @@ class Step1 extends React.PureComponent {
           hideRequiredMark
           style={{ marginTop: 8 }}
         >
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}
-            style={{
-              display: currentUser.data.userIdentity == 0 ? 'block' :'none'
-            }}
-            >
-            <Col md={12} sm={24}>
-              <FormItem
-                {...formItemLayout}
-                 label="机构类型">
-                {getFieldDecorator('institutionCode', {
-                  rules: [{
-                    required: true, message: '请选择机构类型',
-                  }],
-                })(
-                  <Select placeholder="请选择" style={{ width: '100%' }}>
-                  { institutionTypeOptions }
-                  </Select>
-                )}
-              </FormItem>
-            </Col>
-            <Col md={12} sm={24}>
-              <FormItem
-                {...formItemLayout}
-                 label="所在城市">
-                {getFieldDecorator('cityCode', {
-                  rules: [{
-                    required: true, message: '请选择算在城市',
-                  }],
-                })(
-                  <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getInstitution}>
-                    {cityOptions}
-                  </Select>
-                )}
-              </FormItem>
-            </Col>
-          </Row>
+          {
+            currentUser.data.userIdentity == 0
+            ?  <Row gutter={{ md: 8, lg: 24, xl: 48 }}
+                        >
+                        <Col md={12} sm={24}>
+                          <FormItem
+                            {...formItemLayout}
+                             label="机构类型">
+                            {getFieldDecorator('institutionCode', {
+                              rules: [{
+                                required: true, message: '请选择机构类型',
+                              }],
+                            })(
+                              <Select placeholder="请选择" style={{ width: '100%' }}>
+                              { institutionTypeOptions }
+                              </Select>
+                            )}
+                          </FormItem>
+                        </Col>
+                        <Col md={12} sm={24}>
+                          <FormItem
+                            {...formItemLayout}
+                             label="所在城市">
+                            {getFieldDecorator('cityCode', {
+                              rules: [{
+                                required: true, message: '请选择算在城市',
+                              }],
+                            })(
+                              <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getInstitution}>
+                                {cityOptions}
+                              </Select>
+                            )}
+                          </FormItem>
+                        </Col>
+                      </Row> : null
+          }
          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={12} sm={24}
-              style={{
-                display: currentUser.data.userIdentity == 0 ? 'block' :'none'
-              }}
-              >
-              <Form.Item
-                label="机构名称"
-                {...formItemLayout}
-               >
-                {getFieldDecorator('manageId',{
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入机构名称',
-                    },
-                  ],
-                })(
-                  <Select
-                    // mode="combobox"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {institutionListOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
+           {
+             currentUser.data.userIdentity == 0
+                ?             <Col md={12} sm={24}
+                              >
+                              <Form.Item
+                                label="机构名称"
+                                {...formItemLayout}
+                               >
+                                {getFieldDecorator('manageId',{
+                                  rules: [
+                                    {
+                                      required: true,
+                                      message: '请输入机构名称',
+                                    },
+                                  ],
+                                })(
+                                  <Select
+                                    // mode="combobox"
+                                    style={{ width: '100%' }}
+                                    placeholder="请选择"
+                                    // defaultValue={['a10', 'c12']}
+                                    onChange={this.handleChange}
+                                  >
+                                    {institutionListOptions}
+                                  </Select>
+                                )}
+                              </Form.Item>
+                            </Col> : null
+           }
             <Col md={12} sm={24}>
               <Form.Item
                 label="产品名称"
@@ -334,12 +336,6 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productPoundage',{
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入手续费',
-                    },
-                  ],
                 })(
                   <Input
                     addonAfter="%"
@@ -548,7 +544,7 @@ class Step1 extends React.PureComponent {
                             callback();
                           }
                         }
-                        return;
+                        callback("最多只可以选择5个产品特点");
                       }
                     }
                   ],

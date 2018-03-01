@@ -8,7 +8,9 @@ export default {
     data: {
       list: [],
       pagination: {},
-      roleList: []
+      roleList: [],
+      item:{},
+      data:[]
     },
   },
 

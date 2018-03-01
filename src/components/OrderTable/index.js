@@ -56,7 +56,7 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, count }, loading } = this.props;
+    const { data: { data, count }, userIdentity,  loading } = this.props;
     const orderStatus = ['申请中', '已申请','已初审','已终审','已面签','已放款','已拒绝','已取消'];
     const columns = [
       {
@@ -123,8 +123,15 @@ class StandardTable extends PureComponent {
         render: (text, record) => {
           return (
             <Fragment>
-              <a onClick={() => this.handleReview(record)}>审批</a>
-              <Divider type="vertical" />
+              {
+                userIdentity===1
+                  ? <span>
+                      <a onClick={() => this.handleReview(record)}>审批</a>
+                      <Divider type="vertical" />
+                    </span>
+                  : null
+              }
+
               <a onClick={() => this.handleDetail(record)}>详情</a>
             </Fragment>
           );
@@ -165,6 +172,7 @@ class StandardTable extends PureComponent {
           loading={loading}
           rowKey={record => record.orderId}
           rowSelection={rowSelection}
+          userIdentity={userIdentity}
           dataSource={data}
           columns={columns}
           pagination={paginationProps}

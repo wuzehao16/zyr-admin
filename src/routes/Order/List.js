@@ -357,7 +357,7 @@ export default class TableList extends PureComponent {
     return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
   }
   render() {
-    const { order: { data, city }, loading, dispatch } = this.props;
+    const { order: { data, city }, user:{ currentUser }, loading, dispatch } = this.props;
     const { selectedRows, modalVisible, addInputValue, item } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -368,7 +368,6 @@ export default class TableList extends PureComponent {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
     };
-
     return (
       <PageHeaderLayout>
         <Card bordered={false}>
@@ -394,6 +393,7 @@ export default class TableList extends PureComponent {
               selectedRows={selectedRows}
               loading={loading}
               data={data}
+              userIdentity={currentUser.data.userIdentity}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
               handleResetPassword={this.handleResetPassword}
