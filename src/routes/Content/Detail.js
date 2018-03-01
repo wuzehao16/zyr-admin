@@ -44,7 +44,7 @@ export default class BasicForms extends PureComponent {
              __html: item.content
            }}/>
            <Description term="发布者">{item.oper}</Description>
-           <Description term="更新时间">{item.updateTime}</Description>
+           <Description term="更新时间">{moment(item.updateTime).format('llll')}</Description>
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
             <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/content/information'))}>

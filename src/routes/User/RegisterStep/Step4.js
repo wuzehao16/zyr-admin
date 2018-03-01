@@ -350,7 +350,7 @@ class Step4 extends React.PureComponent {
           <Form.Item
             >
             {getFieldDecorator('userName')(
-              <Input size="large" type="text" maxLength="15" placeholder="请输入账号" />
+              <Input size="large" type="text" maxLength="15" placeholder="请输入用户名" />
             )}
           </Form.Item>
           <Form.Item

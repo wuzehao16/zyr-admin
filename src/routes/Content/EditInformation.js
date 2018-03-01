@@ -273,10 +273,10 @@ export default class BasicForms extends PureComponent {
                 {getFieldDecorator('contentTag', {
                   initialValue: item.contentTag,
                 })(
-                  <Radio.Group>
-                    <Radio value="0">荐</Radio>
-                    <Radio value="1">热</Radio>
-                  </Radio.Group>
+                  <Select allowClear placeholder="请选择">
+                    <Option value="0">荐</Option>
+                    <Option value="1">热</Option>
+                  </Select>
                 )}
               </div>
             </FormItem>

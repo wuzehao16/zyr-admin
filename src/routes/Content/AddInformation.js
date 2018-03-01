@@ -26,13 +26,19 @@ export default class BasicForms extends PureComponent {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'content/fetchColumn',
-    });
+
     dispatch({
       type: 'content/fetchColumnType',
       payload: {
         type: 'chaClassify'
+      }
+    });
+  }
+  onChange = (value) =>{
+    this.props.dispatch({
+      type: 'content/fetchColumn',
+      payload: {
+        channelType: value
       }
     });
   }
@@ -106,7 +112,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请选择内容名称',
                 }],
               })(
-                <Select placeholder="请选择">
+                <Select placeholder="请选择" onChange={this.onChange}>
                   {columnTypeOptions}
                 </Select>
               )}
@@ -242,10 +248,10 @@ export default class BasicForms extends PureComponent {
               <div>
                 {getFieldDecorator('contentTag', {
                 })(
-                  <Radio.Group>
-                    <Radio value="0">荐</Radio>
-                    <Radio value="1">热</Radio>
-                  </Radio.Group>
+                  <Select allowClear placeholder="请选择">
+                    <Option value="0">荐</Option>
+                    <Option value="1">热</Option>
+                  </Select>
                 )}
               </div>
             </FormItem>
