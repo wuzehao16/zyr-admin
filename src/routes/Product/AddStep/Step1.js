@@ -74,6 +74,9 @@ class Step1 extends React.PureComponent {
         repMethod,
         prodFeatures,
       },
+      user: {
+        currentUser
+      },
       submitting,
       dispatch
     } = this.props;
@@ -156,7 +159,11 @@ class Step1 extends React.PureComponent {
           hideRequiredMark
           style={{ marginTop: 8 }}
         >
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}
+            style={{
+              display: currentUser.data.userIdentity == 0 ? 'block' :'none'
+            }}
+            >
             <Col md={12} sm={24}>
               <FormItem
                 {...formItemLayout}
@@ -189,7 +196,11 @@ class Step1 extends React.PureComponent {
             </Col>
           </Row>
          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={12} sm={24}>
+            <Col md={12} sm={24}
+              style={{
+                display: currentUser.data.userIdentity == 0 ? 'block' :'none'
+              }}
+              >
               <Form.Item
                 label="机构名称"
                 {...formItemLayout}
@@ -594,7 +605,8 @@ class Step1 extends React.PureComponent {
   }
 }
 
-export default connect(({ product }) => ({
+export default connect(({ user, product }) => ({
+  user,
   product,
   data: product.step,
 }))(Step1);

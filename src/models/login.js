@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { fakeAccountLogin } from '../services/api';
+import { login, logout } from '../services/api';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 
@@ -13,7 +13,7 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const response = yield call(login, payload);
       if (response.code === 0) {
         response.data.push('admin')
         response.currentAuthority = response.data;
@@ -27,15 +27,14 @@ export default {
       });
       // Login successfully
       if (response.msg === 'ok') {
-        console.log(1)
         reloadAuthorized();
-        console.log(2)
         yield put(routerRedux.push('/'));
       }
     },
-    *logout(_, { put, select }) {
+    *logout(_, { call, put, select }) {
       try {
         // get location pathname
+        const response = yield call(logout);
         const urlParams = new URL(window.location.href);
         const pathname = yield select(state => state.routing.location.pathname);
         // add the parameters in the url
