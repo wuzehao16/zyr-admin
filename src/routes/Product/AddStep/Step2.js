@@ -85,7 +85,7 @@ class Step2 extends React.PureComponent {
            <ReactQuill
              value={this.state.productIntroduction}
              onChange={this.productIntroduction}
-             placeholder='Write something...'
+             placeholder='请输入...'
            />
         </Form.Item>
         <Form.Item
@@ -94,7 +94,7 @@ class Step2 extends React.PureComponent {
            <ReactQuill
              value={this.state.basieReq}
              onChange={this.basieReq}
-             placeholder='Write something...'
+             placeholder='请输入...'
             />
         </Form.Item>
         <Form.Item
@@ -103,7 +103,7 @@ class Step2 extends React.PureComponent {
            <ReactQuill
              value={this.state.creditReq}
              onChange={this.creditReq}
-             placeholder='Write something...'
+             placeholder='请输入...'
             />
         </Form.Item>
         <Form.Item
@@ -112,7 +112,7 @@ class Step2 extends React.PureComponent {
            <ReactQuill
              value={this.state.positonCount}
              onChange={this.positonCount}
-             placeholder='Write something...'
+             placeholder='请输入...'
             />
         </Form.Item>
         <Form.Item
@@ -121,7 +121,7 @@ class Step2 extends React.PureComponent {
            <ReactQuill
              value={this.state.otherReq}
              onChange={this.otherReq}
-             placeholder='Write something...'
+             placeholder='请输入...'
             />
         </Form.Item>
 

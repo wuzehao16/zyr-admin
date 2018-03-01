@@ -220,9 +220,10 @@ export default class TableList extends PureComponent {
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
+          <Col md={8} sm={24}
+            style={{display: currentUser.data.userIdentity==0?'block':'none'}}
+            >
             <FormItem label="机构名称"
-              style={{display: currentUser.userIdentity==0?'block':'none'}}
               >
               {getFieldDecorator('manageName')(
                 <Input placeholder="请输入"/>

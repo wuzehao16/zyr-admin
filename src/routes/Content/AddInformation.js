@@ -220,7 +220,7 @@ export default class BasicForms extends PureComponent {
                <ReactQuill
                  value={this.state.productIntroduction}
                  onChange={this.productIntroduction}
-                 placeholder='Write something...'
+                 placeholder='请输入...'
                />
             </Form.Item>
             <FormItem

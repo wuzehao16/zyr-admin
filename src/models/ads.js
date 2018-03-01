@@ -9,7 +9,7 @@ export default {
 
   state: {
     data: {
-      list: [],
+      data: [],
       pagination: {},
     },
     item: {},
@@ -58,12 +58,10 @@ export default {
       const response = yield call(upAdsState, payload);
       if(response.code === 0){
         message.success('提交成功');
-        const list = yield call(query);
         yield put({
-          type: 'save',
-          payload: list,
+          type: 'updateShelves',
+          payload: payload,
         });
-        yield put(routerRedux.push('/ads'));
       } else {
         message.error(response.msg);
         return
@@ -117,6 +115,16 @@ export default {
         ...state,
         data: action.payload,
       };
+    },
+    updateShelves(state, action) {
+      const updateAds = action.payload;
+      const newList = state.data.data.map(item => item.adsId == updateAds.adsId ? {...item,...updateAds} : item);
+      return {
+        ...state,
+        data:{
+          data: newList
+        }
+      }
     },
     saveStepFormData(state, { payload }) {
       return {

@@ -9,7 +9,7 @@ export default {
 
   state: {
     data: {
-      list: [],
+      data: [],
       pagination: {},
     },
     item: {},
@@ -80,7 +80,10 @@ export default {
       const response = yield call(updateShelvesStatus, payload);
       if(response.code === 0){
         message.success('提交成功');
-        yield put(routerRedux.push('/product'));
+        yield put({
+          type: 'updateShelves',
+          payload: payload,
+        });
       } else {
         message.error(response.msg);
         return
@@ -222,6 +225,16 @@ export default {
       return {
         ...state,
         ...action.payload,
+      };
+    },
+    updateShelves(state, action) {
+      const updateProduct = action.payload;
+      const newList = state.data.data.map(product => product.productId == updateProduct.productId ? {...product, ...updateProduct} : product);
+      return {
+        ...state,
+        data:{
+          data: newList
+        },
       };
     },
     saveCity(state, action) {

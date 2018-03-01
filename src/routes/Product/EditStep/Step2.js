@@ -19,8 +19,8 @@ const formItemLayout = {
 @Form.create()
 class Step2 extends React.PureComponent {
   state = {
-   productIntroduction: '1',
-   basieReq: '1',
+   productIntroduction: '',
+   basieReq: '',
    creditReq: '',
    positonCount: '',
    otherReq: '',
@@ -94,45 +94,50 @@ class Step2 extends React.PureComponent {
           {...formItemLayout}
            label="产品介绍">
            <ReactQuill
+             defaultValue={item.productIntroduction}
              value={this.state.productIntroduction}
              onChange={this.productIntroduction}
-             placeholder='Write something...'
+             placeholder='请输入...'
            />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="基本要求">
            <ReactQuill
+             defaultValue={item.basieReq}
              value={this.state.basieReq}
              onChange={this.basieReq}
-             placeholder='Write something...'
+             placeholder='请输入...'
             />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="征信要求">
            <ReactQuill
+             defaultValue={item.creditReq}
              value={this.state.creditReq}
              onChange={this.creditReq}
-             placeholder='Write something...'
+             placeholder='请输入...'
             />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="额度计算">
            <ReactQuill
+             defaultValue={item.positonCount}
              value={this.state.positonCount}
              onChange={this.positonCount}
-             placeholder='Write something...'
+             placeholder='请输入...'
             />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="其它要求">
            <ReactQuill
+             defaultValue={item.otherReq}
              value={this.state.otherReq}
              onChange={this.otherReq}
-             placeholder='Write something...'
+             placeholder='请输入...'
             />
         </Form.Item>
 

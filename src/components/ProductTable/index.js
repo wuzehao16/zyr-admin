@@ -127,14 +127,14 @@ class StandardTable extends PureComponent {
         render: (text, record) => {
           return (
             <Fragment>
-              { record.approvalStatus == 2
+              { record.approvalStatuts == 2
                 ? <span>
                     <a onClick={() => this.handleResetPassword(record)}>{record.shelfState==1?'下架':'上架'}</a>
                     <Divider type="vertical" />
                   </span>
                 : null
               }
-              { record.approvalStatus == 1
+              { record.approvalStatuts == 1
                 ? <span>
                     <a onClick={() => this.handleReview(record)}>审核</a>
                     <Divider type="vertical" />
@@ -181,7 +181,7 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.manageId}
+          rowKey={record => record.productId}
           rowSelection={rowSelection}
           dataSource={data}
           columns={columns}

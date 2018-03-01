@@ -92,16 +92,6 @@ class StandardTable extends PureComponent {
       {
         title: '启用状态',
         dataIndex: 'startStatus',
-        filters: [
-          {
-            text: lockStatus[0],
-            value: 0,
-          },
-          {
-            text: lockStatus[1],
-            value: 1,
-          },
-        ],
         render(val) {
           return <Badge status={statusMap[val]} text={lockStatus[val]} />;
         },
@@ -109,20 +99,6 @@ class StandardTable extends PureComponent {
       {
         title: '审核状态',
         dataIndex: 'approvalStatus',
-        filters: [
-          {
-            text: approvalStatus[0],
-            value: 0,
-          },
-          {
-            text: approvalStatus[1],
-            value: 1,
-          },
-          {
-            text: approvalStatus[1],
-            value: 2,
-          },
-        ],
         render(val) {
           return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
         },

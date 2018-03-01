@@ -27,9 +27,6 @@ export default class BasicForms extends PureComponent {
   componentDidMount() {
     const { content: { item }, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
-    dispatch({
-      type: 'content/fetchColumn',
-    });
     getFieldDecorator('contentId', {
       initialValue: item.contentId,
     })
@@ -53,6 +50,14 @@ export default class BasicForms extends PureComponent {
         }]
       })
     }
+  }
+  onChange = (value) =>{
+    this.props.dispatch({
+      type: 'content/fetchColumn',
+      payload: {
+        channelType: value
+      }
+    });
   }
   productIntroduction = (value) => {
      this.setState({
@@ -126,7 +131,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请选择内容名称',
                 }],
               })(
-                <Select placeholder="请选择">
+                <Select placeholder="请选择" onChange={this.onChange}>
                   {columnTypeOptions}
                 </Select>
               )}
@@ -243,7 +248,7 @@ export default class BasicForms extends PureComponent {
                  defaultValue={item.content}
                  value={this.state.productIntroduction}
                  onChange={this.productIntroduction}
-                 placeholder='Write something...'
+                 placeholder='请输入...'
                />
             </Form.Item>
             <FormItem
