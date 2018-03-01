@@ -88,7 +88,7 @@ class Step1 extends React.PureComponent {
       },
       user:{
         currentUser
-      }
+      },
       submitting,
       dispatch
     } = this.props;
@@ -636,7 +636,8 @@ class Step1 extends React.PureComponent {
   }
 }
 
-export default connect(({ product }) => ({
+export default connect(({ product, user }) => ({
+  user,
   product,
   data: product.step,
 }))(Step1);
