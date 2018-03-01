@@ -118,6 +118,9 @@ class BasicLayout extends React.PureComponent {
       this.props.dispatch({
         type: 'login/logout',
       });
+      this.props.dispatch({
+        type: 'global/clearMenus',
+      });
     }
     if (key === 'setting') {
       this.props.dispatch(routerRedux.push('/setting'));
