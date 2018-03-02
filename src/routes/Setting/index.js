@@ -371,7 +371,7 @@ export default class BasicForms extends PureComponent {
             <Form.Item>
               {/* <Row gutter={24}> */}
                 <Col span={14}>
-                  {getFieldDecorator('codeByoldPhone', {
+                  {getFieldDecorator('codeByOldPhone', {
                     rules: [
                       {
                         required: true,

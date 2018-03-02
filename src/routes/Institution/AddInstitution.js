@@ -45,6 +45,7 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         const values = {
           ...fieldsValue,
+          adsPic: fieldsValue.manageLogoId?fieldsValue.manageLogoId.match(/ima[^\n]*Ex/)[0].slice(0,-3):fieldsValue.manageLogoId,
         };
         this.props.dispatch({
           type: 'institution/add',
@@ -68,18 +69,6 @@ export default class BasicForms extends PureComponent {
         parentId: code
       },
     });
-  }
-  handleUpload = v => {
-    const { getFieldDecorator, setFieldsValue } = this.props.form;
-    getFieldDecorator('manageLogoId')
-    if (v[0] && v[0].response) {
-      const res = v[0].response;
-      if ( res.code === 0) {
-        setFieldsValue({
-          manageLogoId: res.data.match(/ima[^\n]*Ex/)[0].slice(0,-3)
-        })
-      }
-    }
   }
   render() {
     const { institution: { data, city, institutionType, institutionList, subInstitutionList }, submitting, dispatch } = this.props;
@@ -301,11 +290,16 @@ export default class BasicForms extends PureComponent {
                 <FormItem
                   {...formItemLayout}
                    label="机构logo">
-                     <UploadPicture onChange={this.handleUpload}/>
+                   {getFieldDecorator('manageLogoId',{
+                     rules:[{
+                       required:true,
+                       message:'请选择图片'
+                     },
+                    ],
+                   })(
+                     <UploadPicture />
+                   )}
 
-                   {/* <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                   </Modal> */}
                 </FormItem>
               </Col>
             </Row>
