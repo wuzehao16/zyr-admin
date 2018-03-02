@@ -183,6 +183,7 @@ class Step1 extends React.PureComponent {
                             {...formItemLayout}
                              label="机构类型">
                             {getFieldDecorator('institutionCode', {
+                              initialValue: item.institutionCode,
                               rules: [{
                                 required: true, message: '请选择机构类型',
                               }],
@@ -198,8 +199,9 @@ class Step1 extends React.PureComponent {
                             {...formItemLayout}
                              label="所在城市">
                             {getFieldDecorator('cityCode', {
+                              initialValue: item.cityCode,
                               rules: [{
-                                required: true, message: '请选择算在城市',
+                                required: true, message: '请选择所在城市',
                               }],
                             })(
                               <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getInstitution}>
@@ -220,6 +222,7 @@ class Step1 extends React.PureComponent {
                                 {...formItemLayout}
                                >
                                 {getFieldDecorator('manageId',{
+                                  initialValue: item.manageId,
                                   rules: [
                                     {
                                       required: true,
@@ -277,6 +280,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
+                    type="number"
                     addonAfter="万"
                     placeholder="请输入"
                   />
@@ -298,6 +302,9 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
+                    type="number"
+                    max={100}
+                    min={0}
                     addonAfter="%"
                     placeholder="请输入"
                   />
@@ -321,6 +328,9 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
+                    type="number"
+                    max={100}
+                    min={0}
                     addonAfter="%"
                     placeholder="请输入"
                   />
@@ -337,9 +347,13 @@ class Step1 extends React.PureComponent {
                    {getFieldDecorator('productTimeLimitStart',{
                      initialValue:item.productTimeLimit?item.productTimeLimit.split(',')[0]:''
                    })(
-                  <Input style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
+                  <Input
+                    type="number"
+                    style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
                   )}
-                   <Input style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
+                   <Input
+                     type="number"
+                     style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
                    {getFieldDecorator('productTimeLimitEnd',{
                      initialValue:item.productTimeLimit?item.productTimeLimit.split(',')[1]:''
                    })(
@@ -360,6 +374,9 @@ class Step1 extends React.PureComponent {
                   initialValue: item.productPoundage,
                 })(
                   <Input
+                    type="number"
+                    max={100}
+                    min={0}
                     addonAfter="%"
                     placeholder="请输入"
                   />
@@ -373,13 +390,23 @@ class Step1 extends React.PureComponent {
                >
                  <InputGroup compact>
                     {getFieldDecorator('approvalAgingStart',{
-                      initialValue:item.approvalAging?item.approvalAging.split(',')[0]:''
+                      rules:[{
+                        required: true,
+                        message: '请输入审批时效'
+                      }]
                     })(
-                   <Input style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
+                   <Input
+                     type="number"
+                     style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
                    )}
-                   <Input style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
+                   <Input
+                     type="number"
+                     style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
                    {getFieldDecorator('approvalAgingEnd',{
-                     initialValue:item.approvalAging?item.approvalAging.split(',')[0]:''
+                     rules:[{
+                       required: true,
+                       message: '请输入审批时效'
+                     }]
                    })(
                    <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
                    )}
@@ -457,14 +484,14 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入产品类别',
+                      message: '请选择产品类别',
                     },
                   ],
                 })(
                   <Select
                     mode="multiple"
                     style={{ width: '100%' }}
-                    placeholder="Please select"
+                    placeholder="请选择"
                     // defaultValue={['a10', 'c12']}
                     onChange={this.handleChange}
                   >
@@ -490,7 +517,7 @@ class Step1 extends React.PureComponent {
                   <Select
                     mode="multiple"
                     style={{ width: '100%' }}
-                    placeholder="Please select"
+                    placeholder="请选择"
                     // defaultValue={['a10', 'c12']}
                     onChange={this.handleChange}
                   >
@@ -511,14 +538,14 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入客户类型',
+                      message: '请选择客户类型',
                     },
                   ],
                 })(
                   <Select
                     mode="multiple"
                     style={{ width: '100%' }}
-                    placeholder="Please select"
+                    placeholder="请选择"
                     // defaultValue={['a10', 'c12']}
                     onChange={this.handleChange}
                   >
@@ -539,14 +566,14 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入还款方式',
+                      message: '请选择还款方式',
                     },
                   ],
                 })(
                   <Select
                     mode="multiple"
                     style={{ width: '100%' }}
-                    placeholder="Please select"
+                    placeholder="请选择"
                     // defaultValue={['a10', 'c12']}
                     onChange={this.handleChange}
                   >
@@ -567,7 +594,7 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入产品特点',
+                      message: '请选择产品特点',
                     },
                     {
                       validator: (rule, value, callback) => {
@@ -588,7 +615,7 @@ class Step1 extends React.PureComponent {
                     max={5}
                     mode="multiple"
                     style={{ width: '100%' }}
-                    placeholder="Please select"
+                    placeholder="请选择"
                     // defaultValue={['a10', 'c12']}
                     onChange={this.handleChange}
                   >
@@ -609,7 +636,7 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入上架',
+                      message: '请输入上架状态',
                     },
                   ],
                 })(
