@@ -25,7 +25,7 @@ const {
 const passwordStatusMap = {
   ok: <div className={styles.success}>强度：强</div>,
   pass: <div className={styles.warning}>强度：中</div>,
-  pool: <div className={styles.error}>强度：短</div>
+  pool: <div className={styles.error}>强度：弱</div>
 };
 
 const passwordProgressMap = {
