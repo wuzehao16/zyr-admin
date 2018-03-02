@@ -103,7 +103,7 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title: '更新时间',
+        title: '注册时间',
         dataIndex: 'registerTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },

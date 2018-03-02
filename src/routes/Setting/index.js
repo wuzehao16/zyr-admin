@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import {
-  Form, Button, Card, Divider,Tabs, Spin, Icon, Input, Col, Row
+  Form, Button, Card, Divider,Tabs, Spin, Icon, Input, Col, Row,
 } from 'antd';
 import DescriptionList from '../../components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -12,8 +12,9 @@ const { Description } = DescriptionList;
 const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
 
-@connect(({ user,loading }) => ({
+@connect(({ setting, user, loading }) => ({
   data: user,
+  setting,
   submitting: loading.effects['member/update'],
 }))
 @Form.create()
@@ -27,69 +28,111 @@ export default class BasicForms extends PureComponent {
     expandForm2: false,
     expandForm3: false,
   }
+
+  componentDidMount() {
+    const { data:{ currentUser } } = this.props;
+    const manageId = currentUser.data.manageId;
+    this.props.dispatch({
+      type: 'setting/fetchDetail',
+      payload: {
+        manageId: manageId,
+      },
+    });
+  }
+
   onGetCaptcha1 = () => {
     this.props.dispatch({
       type: 'setting/queryOldEmailCaptcha',
-    });
-    let count = 59;
-    this.setState({ count1: count });
-    this.interval1 = setInterval(() => {
-      count -= 1;
-      this.setState({ count1: count });
-      if (count === 0) {
-        clearInterval(this.interval1);
+      callback:()=>{
+        let count = 59;
+        this.setState({ count1: count });
+        this.interval1 = setInterval(() => {
+          count -= 1;
+          this.setState({ count1: count });
+          if (count === 0) {
+            clearInterval(this.interval1);
+          }
+        }, 1000);
       }
-    }, 1000);
+    });
   };
   onGetCaptcha2 = () => {
     const { getFieldValue } = this.props.form;
+    const newEMail = getFieldValue('newEMail');
+    if (!newEMail) {
+      this.props.form.setFields({
+        newEMail:{
+          // value:newEMail,
+          errors:[new Error('请输入新邮箱')],
+        }
+      })
+      return
+    }
     this.props.dispatch({
       type: 'setting/queryNewEmailCaptcha',
       payload: {
-        newEMail:getFieldValue('newEMail'),
+        newEMail:newEMail,
       },
-    });
-    let count = 59;
-    this.setState({ count2: count });
-    this.interval2 = setInterval(() => {
-      count -= 1;
-      this.setState({ count2: count });
-      if (count === 0) {
-        clearInterval(this.interval2);
+      callback: () => {
+        let count = 59;
+        this.setState({ count2: count });
+        this.interval2 = setInterval(() => {
+          count -= 1;
+          this.setState({ count2: count });
+          if (count === 0) {
+            clearInterval(this.interval2);
+          }
+        }, 1000);
       }
-    }, 1000);
+    });
   };
   onGetCaptcha3 = () => {
     this.props.dispatch({
       type: 'setting/queryOldPhoneCaptcha',
-    });
-    let count = 59;
-    this.setState({ count3: count });
-    this.interval3 = setInterval(() => {
-      count -= 1;
-      this.setState({ count3: count });
-      if (count === 0) {
-        clearInterval(this.interval3);
+      callback:()=>{
+        let count = 59;
+        this.setState({ count3: count });
+        this.interval3 = setInterval(() => {
+          count -= 1;
+          this.setState({ count3: count });
+          if (count === 0) {
+            clearInterval(this.interval3);
+          }
+        }, 1000);
       }
-    }, 1000);
+    });
+
   };
   onGetCaptcha4 = () => {
     const { getFieldValue } = this.props.form;
+    const newPhone = getFieldValue('newPhone');
+    if (!newPhone) {
+      this.props.form.setFields({
+        newPhone:{
+          // value:newPhone,
+          errors:[new Error('请输入新手机号')],
+        }
+      })
+      return
+    }
     this.props.dispatch({
       type: 'setting/queryNewPhoneCaptcha',
       payload: {
         newPhone:getFieldValue('newPhone'),
       },
-    });
-    let count = 59;
-    this.setState({ count4: count });
-    this.interval4 = setInterval(() => {
-      count -= 1;
-      this.setState({ count4: count });
-      if (count === 0) {
-        clearInterval(this.interval4);
+      callback: () =>{
+        let count = 59;
+        this.setState({ count4: count });
+        this.interval4 = setInterval(() => {
+          count -= 1;
+          this.setState({ count4: count });
+          if (count === 0) {
+            clearInterval(this.interval4);
+          }
+        }, 1000);
       }
-    }, 1000);
+    });
+
   };
   onCheck = (value) => {
     const { setFieldsValue } = this.props.form;
@@ -102,9 +145,18 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'member/update',
+          type: 'setting/updatePassword',
           payload: values,
-        });
+          callback:() => {
+            this.props.dispatch({
+              type: 'login/logout',
+            });
+            this.props.dispatch({
+              type: 'global/clearMenus',
+            });
+          },
+        },
+      );
       }
     });
   }
@@ -137,11 +189,11 @@ export default class BasicForms extends PureComponent {
     });
   }
   renderAdvancedForm1() {
-    const { submitting } = this.props;
+    const { submitting, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
     return(
       <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={1}>
-        <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过手机号重置或通过邮箱重置您的密码。</Description>
+        <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过<a  onClick={()=> dispatch(routerRedux.push('/user/reset-password'))}>手机号重置</a>或通过<a onClick={() => dispatch(routerRedux.push('/user/reset-password'))}>邮箱重置</a>您的密码。</Description>
         <Form
           onSubmit={this.handleSubmit}
           >
@@ -188,9 +240,10 @@ export default class BasicForms extends PureComponent {
     )
   }
   renderSimpleForm1() {
+    const {  dispatch } = this.props;
     return(
     <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={1}>
-      <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过手机号重置或通过邮箱重置您的密码。</Description>
+      <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过<a  onClick={()=> dispatch(routerRedux.push('/user/reset-password'))}>手机号重置</a>或通过<a onClick={() => dispatch(routerRedux.push('/user/reset-password'))}>邮箱重置</a>您的密码。</Description>
       <a style={{ float:'right' }} onClick={this.toggleForm1}>
         展开 <Icon type="down" />
       </a>
@@ -297,7 +350,7 @@ export default class BasicForms extends PureComponent {
     const { data:{ currentUser } } = this.props;
     return(
     <DescriptionList size="large" title="修改邮箱" style={{ marginBottom: 32 }} col={1}>
-      <Description>{currentUser.userEmail}</Description>
+      <Description>{currentUser.data.userEmail}</Description>
       <a style={{ float:'right' }} onClick={this.toggleForm2}>
         展开 <Icon type="down" />
       </a>
@@ -401,7 +454,7 @@ export default class BasicForms extends PureComponent {
     const { data:{ currentUser } } = this.props;
     return(
     <DescriptionList size="large" title="修改手机" style={{ marginBottom: 32 }} col={1}>
-      <Description>{currentUser.userPhone}</Description>
+      <Description>{currentUser.data.userPhone}</Description>
       <a style={{ float:'right' }} onClick={this.toggleForm3}>
         展开 <Icon type="down" />
       </a>
@@ -439,13 +492,13 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { submitting, data:{ currentUser } , dispatch } = this.props;
+    const { submitting, data:{ currentUser } , setting:{ item }, dispatch } = this.props;
     return (
       <PageHeaderLayout title="账号设置" >
         <Card bordered={false}>
           <Tabs defaultActiveKey="1">
-            <TabPane tab="Tab 1" key="1">
-                {currentUser.loginAccount ? (
+            <TabPane tab="个人信息" key="1">
+                {currentUser.data.loginAccount ? (
                   <div>
 
 
@@ -460,7 +513,22 @@ export default class BasicForms extends PureComponent {
 
 
             </TabPane>
-            <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
+            <TabPane tab="机构信息" key="2">
+              <DescriptionList size="large" title="设置LOGO" style={{ marginBottom: 32 }} col={2}>
+
+                <Description term="机构logo">
+                  <img src={item.manageLogoId} alt="" width={80} height={80}/>
+                </Description>
+              </DescriptionList>
+              <Divider style={{ marginBottom: 32 }} />
+              <DescriptionList size="large" title="其他信息" style={{ marginBottom: 32 }} col={1}>
+                <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
+                <Description term="所在城市">{item.city}</Description>
+                <Description term="机构名称">{item.manageName}</Description>
+                <p>如需修改基本信息联系客服</p>
+              </DescriptionList>
+            </TabPane>
+
           </Tabs>
         </Card>
       </PageHeaderLayout>

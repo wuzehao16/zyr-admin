@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import { queryOldPhoneCaptcha, queryNewPhoneCaptcha, queryOldEmailCaptcha, queryNewEmailCaptcha, updatePassword, updatePhone, updateEmail  } from '../services/setting';
+import { queryDetail } from '../services/institution';
 
 export default {
   namespace: 'setting',
@@ -9,40 +10,49 @@ export default {
       list: [],
       pagination: {},
     },
+    item:{}
   },
 
   effects: {
-    *queryOldPhoneCaptcha({ payload }, { call, put }) {
+    *queryOldPhoneCaptcha({ payload, callback }, { call, put }) {
       const response = yield call(queryOldPhoneCaptcha, payload);
       if (response.code === 0) {
         message.success('发送成功');
       } else{
         message.error(response.msg);
+        return
       }
+      if (callback) callback();
     },
-    *queryNewPhoneCaptcha({ payload }, { call, put }) {
+    *queryNewPhoneCaptcha({ payload, callback }, { call, put }) {
       const response = yield call(queryNewPhoneCaptcha, payload);
       if (response.code === 0) {
         message.success('发送成功');
       } else{
         message.error(response.msg);
+        return
       }
+      if (callback) callback();
     },
-    *queryOldEmailCaptcha({ payload }, { call, put }) {
+    *queryOldEmailCaptcha({ payload, callback }, { call, put }) {
       const response = yield call(queryOldEmailCaptcha, payload);
       if (response.code === 0) {
         message.success('发送成功');
       } else{
         message.error(response.msg);
+        return
       }
+      if (callback) callback();
     },
-    *queryNewEmailCaptcha({ payload }, { call, put }) {
-      const response = yield call(queryOldEmailCaptcha, payload);
+    *queryNewEmailCaptcha({ payload, callback }, { call, put }) {
+      const response = yield call(queryNewEmailCaptcha, payload);
       if (response.code === 0) {
         message.success('发送成功');
       } else{
         message.error(response.msg);
+        return
       }
+      if (callback) callback();
     },
     *updatePassword({ payload, callback }, { call, put }) {
       const response = yield call(updatePassword, payload);
@@ -74,5 +84,20 @@ export default {
       }
       if (callback) callback();
     },
+    *fetchDetail({payload}, { call, put }) {
+      const response = yield call(queryDetail, payload);
+      yield put({
+        type: 'saveDetail',
+        payload: response.data && response.data[0],
+      });
+    },
   },
+  reducers:{
+    saveDetail(state, action) {
+      return {
+        ...state,
+        item: action.payload,
+      };
+    },
+  }
 };

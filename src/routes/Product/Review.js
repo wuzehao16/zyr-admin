@@ -78,7 +78,7 @@ export default class BasicForms extends PureComponent {
              <Description term="产品名称">{item.productName}</Description>
              <Description term="最高可贷">{item.productMaxLoad}</Description>
              <Description term="产品分润比例">{item.productRatio}</Description>
-             <Description term="月费率">{item.productMaxLoad}%</Description>
+             <Description term="月费率">{item.monthlyFeeRate}%</Description>
              <Description term="产品期限">{item.productTimeLimit?item.productTimeLimit.replace(',','-'):''}期</Description>
              <Description term="手续费">{item.productPoundage}%</Description>
              <Description term="审批时效">{item.approvalAging?item.approvalAging.replace(',','-'):''}天</Description>
