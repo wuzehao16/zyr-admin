@@ -390,6 +390,7 @@ class Step1 extends React.PureComponent {
                >
                  <InputGroup compact>
                     {getFieldDecorator('approvalAgingStart',{
+                      initialValue: item.approvalAging?item.approvalAging.split(',')[0]:'',
                       rules:[{
                         required: true,
                         message: '请输入审批时效'
@@ -403,6 +404,7 @@ class Step1 extends React.PureComponent {
                      type="number"
                      style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
                    {getFieldDecorator('approvalAgingEnd',{
+                     initialValue: item.approvalAging?item.approvalAging.split(',')[1]:'',
                      rules:[{
                        required: true,
                        message: '请输入审批时效'
