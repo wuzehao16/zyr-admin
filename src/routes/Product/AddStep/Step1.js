@@ -225,7 +225,7 @@ class Step1 extends React.PureComponent {
                                   </Select>
                                 )}
                               </Form.Item>
-                            </Col> : null
+                            </Col> : <div>{getFieldDecorator('manageId',{initialValue: currentUser.data.manageId})}</div>
            }
             <Col md={12} sm={24}>
               <Form.Item
