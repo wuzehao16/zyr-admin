@@ -56,7 +56,7 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, count }, loading } = this.props
+    const { data: { data, count },userIdentity , loading } = this.props
     const approvalStatus = ['未通过', '审核中', '已通过'];
     const institutionType = ['无','银行机构','金融机构','小额贷款'];
     const isEvaluaStatuts = ['否', '是'];
@@ -134,7 +134,7 @@ class StandardTable extends PureComponent {
                   </span>
                 : null
               }
-              { record.approvalStatuts == 1
+              { record.approvalStatuts == 1 && userIdentity===0
                 ? <span>
                     <a onClick={() => this.handleReview(record)}>审核</a>
                     <Divider type="vertical" />
@@ -184,6 +184,7 @@ class StandardTable extends PureComponent {
           rowKey={record => record.productId}
           rowSelection={rowSelection}
           dataSource={data}
+          userIdentity={userIdentity}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}

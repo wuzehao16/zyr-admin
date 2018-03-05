@@ -23,7 +23,6 @@ export default class BasicForms extends PureComponent {
   state = {
     productIntroduction: '',
   }
-
   componentDidMount() {
     const { content: { item }, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
@@ -36,11 +35,11 @@ export default class BasicForms extends PureComponent {
         type: 'chaClassify'
       }
     });
-    if (item.content) {
-      this.setState({
-        productIntroduction: item.content,
-      })
-    }
+    // if (item.content) {
+    //   this.setState({
+    //     productIntroduction: item.content,
+    //   })
+    // }
     if (item.contentPic) {
       this.setState({
         fileList:[{
@@ -59,11 +58,11 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  productIntroduction = (value) => {
-     this.setState({
-       productIntroduction: value,
-     })
-   };
+  // productIntroduction = (value) => {
+  //    this.setState({
+  //      productIntroduction: value,
+  //    })
+  //  };
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -72,7 +71,7 @@ export default class BasicForms extends PureComponent {
           type: 'content/update',
           payload: {
             ...values,
-            content: this.state.productIntroduction,
+            // content: this.state.productIntroduction,
             contentPic: values.contentPic.match(/ima[^\n]*Ex/)?values.contentPic.match(/ima[^\n]*Ex/)[0].slice(0,-3):values.contentPic,
           },
         });
@@ -225,50 +224,6 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="排序"
-            >
-              {getFieldDecorator('contentSort',{
-                initialValue: item.contentSort,
-              })(
-                <Input min={1} max={10000} type="number" placeholder="请输入"/>
-              )}
-            </FormItem>
-            <Form.Item
-              labelCol= {{
-                xs: { span: 24 },
-                sm: { span: 7 },
-              }}
-              wrapperCol={{
-                xs: { span: 24, offset: 0 },
-                sm: { span: 24, offset: 7 },
-              }}
-              style={{width:'60%'}}
-               >
-               <ReactQuill
-                 defaultValue={item.content}
-                 value={this.state.productIntroduction}
-                 onChange={this.productIntroduction}
-                 placeholder='请输入...'
-               />
-            </Form.Item>
-            <FormItem
-              label="封面图片"
-              {...formItemLayout}
-            >
-              {getFieldDecorator('contentPic', {
-                initialValue: item.contentPic,
-                valuePropName: "fileList",
-                rules:[{
-                  required:true,
-                  message:'请选择图片'
-                },
-               ],
-              })(
-                 <UploadPicture />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
               label="标签选择"
               style={{
                 display: getFieldValue('contentType') === '60000' ? 'block' : 'none',
@@ -285,7 +240,75 @@ export default class BasicForms extends PureComponent {
                 )}
               </div>
             </FormItem>
-
+            <FormItem
+              {...formItemLayout}
+              label="排序"
+            >
+              {getFieldDecorator('contentSort',{
+                initialValue: item.contentSort,
+              })(
+                <Input min={1} max={10000} type="number" placeholder="请输入"/>
+              )}
+            </FormItem>
+            <FormItem
+              label="封面图片"
+              {...formItemLayout}
+            >
+              {getFieldDecorator('contentPic', {
+                initialValue: item.contentPic,
+                valuePropName: "fileList",
+                rules:[{
+                  required:true,
+                  message:'请选择图片'
+                },
+               ],
+              })(
+                 <UploadPicture />
+              )}
+            </FormItem>
+            {/* <Form.Item
+              labelCol= {{
+                xs: { span: 24 },
+                sm: { span: 7 },
+              }}
+              wrapperCol={{
+                xs: { span: 24, offset: 0 },
+                sm: { span: 24, offset: 7 },
+              }}
+              style={{width:'60%'}}
+               >
+               <ReactQuill
+                 defaultValue={item.content}
+                 value={this.state.productIntroduction}
+                 onChange={this.productIntroduction}
+                 placeholder='请输入...'
+               />
+            </Form.Item> */}
+            <Form.Item
+              labelCol= {{
+                xs: { span: 24 },
+                sm: { span: 7 },
+              }}
+              wrapperCol={{
+                xs: { span: 24, offset: 0 },
+                sm: { span: 24, offset: 7 },
+              }}
+              style={{width:'60%'}}
+               >
+                 {getFieldDecorator('content', {
+                   initialValue: item.content,
+                   valuePropName: "defaultValue",
+                   rules:[{
+                     required:true,
+                     message:'请输入内容'
+                   },
+                  ],
+                 })(
+                   <ReactQuill
+                     placeholder='请输入...'
+                   />
+                 )}
+            </Form.Item>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交

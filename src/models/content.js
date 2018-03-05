@@ -78,7 +78,7 @@ export default {
     *update({ payload, callback }, { call, put }) {
       const response = yield call(editContent, payload);
       if (response.code === 0) {
-        message.success('新建成功');
+        message.success('更新成功');
       } else {
         message.error(response.msg)
         return

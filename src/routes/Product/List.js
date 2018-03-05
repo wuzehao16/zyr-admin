@@ -433,7 +433,7 @@ export default class TableList extends PureComponent {
   }
 
   render() {
-    const { product: { data, city }, loading, dispatch } = this.props;
+    const { product: { data, city }, user:{ currentUser } , loading, dispatch } = this.props;
     const { selectedRows, modalVisible, addInputValue, item } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -473,6 +473,7 @@ export default class TableList extends PureComponent {
               selectedRows={selectedRows}
               loading={loading}
               data={data}
+              userIdentity={currentUser.data.userIdentity}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
               handleResetPassword={this.handleResetPassword}
