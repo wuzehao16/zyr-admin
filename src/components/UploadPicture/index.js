@@ -53,7 +53,6 @@ class PicturesWall extends React.Component {
       }
     }
 
-    console.log(fileList)
 
     if (fileList[0] && fileList[0].status) {
       const file = fileList[0];

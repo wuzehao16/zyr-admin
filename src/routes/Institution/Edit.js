@@ -5,6 +5,7 @@ import {
   Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Row, Col, Upload, Modal,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import UploadPicture from '../../components/UploadPicture';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -34,13 +35,6 @@ export default class BasicForms extends PureComponent {
         institutionCode: item.institutionCode,
         sublInstitution: item.sublInstitution,
         manageName: item.manageName,
-        userEmail: item.userEmail,
-        userPhone: item.userPhone,
-        loginAccount: item.loginAccount,
-        sort: item.sort,
-        cityCode: item.cityCode,
-        startStatus: item.startStatus,
-        approvalStatus: item.approvalStatus,
       });
       if (item.manageLogoId) {
         this.setState({
@@ -75,9 +69,11 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         const values = {
           ...fieldsValue,
-         manageLogoId: fieldsValue.manageLogoId && fieldsValue.manageLogoId.file
-                                        ? fieldsValue.manageLogoId.file.response.data.match(/ima[^\n]*jpeg/)[0]
-                                        : fieldsValue.manageLogoId
+          manageLogoId: fieldsValue.manageLogoId
+            ?(fieldsValue.manageLogoId.match(/ima[^\n]*Ex/)
+                ?fieldsValue.manageLogoId.match(/ima[^\n]*Ex/)[0].slice(0,-3)
+                :fieldsValue.manageLogoId)
+            :fieldsValue.manageLogoId,
         };
         this.props.dispatch({
           type: 'institution/update',
@@ -115,7 +111,7 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { institution: { data, city, institutionType, institutionList, subInstitutionList }, submitting, dispatch } = this.props;
+    const { institution: { data, city, institutionType, institutionList, subInstitutionList, item }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { fileList, previewVisible,previewImage } = this.state;
     getFieldDecorator('manageName')
@@ -171,6 +167,7 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="机构类型">
                   {getFieldDecorator('institutionCode', {
+                    initialValue: item.institutionCode,
                     rules: [{
                       required: true, message: '请选择机构类型',
                     }],
@@ -186,6 +183,7 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="所在城市">
                   {getFieldDecorator('cityCode', {
+                    initialValue: item.cityCode,
                     rules: [{
                       required: true, message: '请选择算在城市',
                     }],
@@ -282,6 +280,7 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="邮箱">
                   {getFieldDecorator('userEmail',{
+                    initialValue: item.userEmail,
                     rules: [{
                       required: true, message: '请输入邮箱',
                     }],
@@ -295,6 +294,7 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="用户名">
                   {getFieldDecorator('loginAccount',{
+                    initialValue: item.loginAccount,
                     rules: [{
                       required: true, message: '请输入用户名',
                     }],
@@ -310,6 +310,7 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="手机号">
                   {getFieldDecorator('userPhone',{
+                    initialValue: item.userPhone,
                     rules: [{
                       required: true, message: '请输入手机号',
                     },{
@@ -325,7 +326,9 @@ export default class BasicForms extends PureComponent {
                 <FormItem
                   {...formItemLayout}
                    label="排序">
-                  {getFieldDecorator('sort')(
+                  {getFieldDecorator('sort',{
+                  initialValue: item.sort,
+                })(
                     <Input min={1} max={10000} type="number" placeholder="请输入"/>
                   )}
                 </FormItem>
@@ -337,6 +340,7 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="启用状态">
                   {getFieldDecorator('startStatus',{
+                    initialValue: item.startStatus,
                     rules: [{
                       required: true, message: '请选择是否启用',
                     }],
@@ -352,21 +356,16 @@ export default class BasicForms extends PureComponent {
                 <FormItem
                   {...formItemLayout}
                    label="机构logo">
-                   {getFieldDecorator('manageLogoId')(
-                     <Upload
-                       action="http://47.104.27.184:8000/sysAnno/uploadImage"
-                       listType="picture-card"
-                       onPreview={this.handlePreview}
-                       onChange={this.handleChange}
-                       fileList={fileList}
-                     >
-                       {fileList.length >= 1 ? null : uploadButton}
-                     </Upload>
+                   {getFieldDecorator('manageLogoId',{
+                     initialValue: item.manageLogoId,
+                     valuePropName: "fileList",
+                       rules:[{
+                         required:true,
+                         message:'请选择图片'
+                       }]
+                   })(
+                     <UploadPicture />
                    )}
-
-                   <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                   </Modal>
                 </FormItem>
               </Col>
             </Row>

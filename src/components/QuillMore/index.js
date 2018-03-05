@@ -32,7 +32,6 @@ class Editor extends React.Component {
   }
 
   imageHandler = (image, callback) => {
-    console.log(image)
      const self = this;
       if(image){
           const input = document.createElement('input');
