@@ -69,7 +69,7 @@ class ColumnTable extends PureComponent {
         dataIndex: 'channelName',
       },
       {
-        title: '排列顺序',
+        title: '排序',
         dataIndex: 'adsSort',
       },
       {
@@ -84,7 +84,7 @@ class ColumnTable extends PureComponent {
         dataIndex: 'oper',
       },
       {
-        title: '创建时间',
+        title: '更新时间',
         dataIndex: 'updateTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },

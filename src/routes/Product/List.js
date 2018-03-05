@@ -460,11 +460,11 @@ export default class TableList extends PureComponent {
                 selectedRows.length > 0 && (
                   <span>
                     {/* <Button>批量操作</Button> */}
-                    <Dropdown overlay={menu}>
+                    {/* <Dropdown overlay={menu}>
                       <Button>
                         更多操作 <Icon type="down" />
                       </Button>
-                    </Dropdown>
+                    </Dropdown> */}
                   </span>
                 )
               }
