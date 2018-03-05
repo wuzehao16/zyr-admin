@@ -152,12 +152,13 @@ class Step4 extends React.PureComponent {
       e.preventDefault();
       validateFields((err, values) => {
         if (!err) {
-          const ndata = Object.assign(data,{city:''})
+          const ndata = Object.assign(data,{city: '', institutionList: "", institutionTypeList: ""})
           dispatch({
             type: 'register/submitStep4Form',
             payload: {
               ...ndata,
               ...values,
+              manageLogoId: values.manageLogoId?values.manageLogoId.match(/ima[^\n]*Ex/)[0].slice(0,-3):values.manageLogoId,
             },
           });
         }
