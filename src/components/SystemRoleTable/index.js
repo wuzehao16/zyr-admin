@@ -60,6 +60,10 @@ class StandardTable extends PureComponent {
         dataIndex: 'remark',
       },
       {
+        title: '等级',
+        dataIndex: 'grade',
+      },
+      {
         title: '创建人',
         dataIndex: 'loginAccount',
       },

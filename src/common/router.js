@@ -185,33 +185,41 @@ export const getRouterData = (app) => {
     },
     '/system/user': {
       component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/User')),
+      name: '用户列表',
     },
     '/system/user/list': {
       component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/UserList')),
     },
     '/system/user/add': {
       component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/AddUser')),
+      name: '新增系统用户',
     },
     '/system/user/edit': {
       component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/EditUser')),
+      name: '编辑系统用户',
     },
     '/system/dict': {
       component: dynamicWrapper(app, ['systemDict'], () => import('../routes/System/Dict')),
+      name: '字典列表',
     },
     '/system/menu': {
       component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/Menu')),
+      name: '菜单列表',
     },
     '/system/menu/list': {
       component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/MenuList')),
     },
     '/system/menu/add': {
       component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/AddMenu')),
+      name: '新增菜单',
     },
     '/system/menu/edit': {
       component: dynamicWrapper(app, ['systemMenu'], () => import('../routes/System/EditMenu')),
+      name: '编辑菜单',
     },
     '/system/role': {
       component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/Role')),
+      name:'角色列表',
     },
     '/system/role/list': {
       component: dynamicWrapper(app, ['systemRole'], () => import('../routes/System/RoleList')),

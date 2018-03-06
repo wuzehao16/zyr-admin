@@ -90,6 +90,18 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
+              label="角色等级"
+            >
+              {getFieldDecorator('grade', {
+                rules: [{
+                  required: true, message: '请输入角色等级',
+                }],
+              })(
+                <Input type="number" min={1} max={100} placeholder="请输入角色等级" />
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
               label="备注"
             >
               {getFieldDecorator('remark', {

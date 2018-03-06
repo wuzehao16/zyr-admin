@@ -76,6 +76,7 @@ class StandardTable extends PureComponent {
       {
         title: '机构名称',
         dataIndex: 'manageName',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '手机号',
@@ -109,7 +110,7 @@ class StandardTable extends PureComponent {
         title: '审核时间',
         dataIndex: 'approvalTime',
         sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        render: val => <span>{val?moment(val).format('YYYY-MM-DD HH:mm:ss'):'--'}</span>,
       },
       {
         title: '注册时间',
