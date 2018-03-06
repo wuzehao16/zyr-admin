@@ -63,7 +63,7 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { submitting, data, dispatch } = this.props;
+    const { submitting, data, data:{ item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     getFieldDecorator('roleId');
     console.log(getFieldValue('sysMenus'),"getsys")
@@ -111,6 +111,7 @@ export default class BasicForms extends PureComponent {
               label="角色等级"
             >
               {getFieldDecorator('grade', {
+                initialValue: item.grade,
                 rules: [{
                   required: true, message: '请输入角色等级',
                 }],
