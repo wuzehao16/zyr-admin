@@ -29,6 +29,7 @@ export default class BasicForms extends PureComponent {
           <DescriptionList size="large" title="广告详情" style={{ marginBottom: 32 }} col={1}>
             <Description term="标题">{item.adsTitle}</Description>
             <Description term="内容">{item.adsContent}</Description>
+            <Description term="匹配词">{item.adsMatch}</Description>
             <Description term="图片"><img src={item.adsPic} alt=""/></Description>
             <Description term="跳转链接">{item.adsUrl}</Description>
             <Description term="排序">{item.adsSort}</Description>
