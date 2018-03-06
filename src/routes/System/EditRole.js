@@ -5,7 +5,7 @@ import {
 } from 'antd';
 import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import RoleTree from '../../components/RoleTree';
+import RoleTree from '../../components/RoleTree1';
 
 const FormItem = Form.Item;
 
@@ -47,9 +47,12 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         if (values.sysMenus) {
           /* eslint-disable no-param-reassign */
-          values.sysMenus.forEach((item, index, arr) => {
-            arr[index] = { meunId: item };
-          });
+          console.log(values.sysMenus)
+          if (values.sysMenus) {
+            values.sysMenus.forEach((item, index, arr) => {
+              arr[index] = { meunId: item };
+            });
+          }
           /* eslint-disable no-param-reassign */
         }
         this.props.dispatch({

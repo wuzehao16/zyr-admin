@@ -24,13 +24,13 @@ class RoleTree extends React.Component {
       autoExpandParent: false,
     });
   }
-  onCheck = (checkedKeys, e) => {
-    console.log(e.halfCheckedKeys)
-    this.setState({ checkedKeys });
-    var checked = checkedKeys.concat(e.halfCheckedKeys)
+  onCheck = (checkedKeys) => {
+
+    // var checked = checkedKeys.concat(e.halfCheckedKeys)
     if(this.props.onCheck) {
-      this.props.onCheck(checked);
+      this.props.onCheck(checkedKeys.checked);
     }
+    this.setState({ checkedKeys });
 
     console.log('onCheck', checkedKeys);
   }
@@ -65,8 +65,8 @@ class RoleTree extends React.Component {
         checkable
         onExpand={this.onExpand}
         expandedKeys={this.state.expandedKeys}
-        checkedKeys="halfChecked"
         autoExpandParent={this.state.autoExpandParent}
+        checkStrictly="ture"
         onCheck={this.onCheck}
         checkedKeys={this.state.checkedKeys}
         onSelect={this.onSelect}

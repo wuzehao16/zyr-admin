@@ -46,6 +46,7 @@ export default class BasicForms extends PureComponent {
         const values = {
           ...fieldsValue,
           manageLogoId: fieldsValue.manageLogoId?fieldsValue.manageLogoId.match(/ima[^\n]*Ex/)[0].slice(0,-3):fieldsValue.manageLogoId,
+          sysRoles:[{roleId: "28d4c3a66ffa4e0d973c8177c611f109"}],
         };
         this.props.dispatch({
           type: 'institution/add',
