@@ -102,22 +102,13 @@ class StandardTable extends PureComponent {
         title: '内容',
         width:'10%',
         dataIndex: 'adsContent',
-        render: (text) => <span className={styles.txt}>{text}</span>,
+        render: (text) => <span className={styles.txt}>{text||'--'}</span>,
       },
       {
         title: '匹配词',
         dataIndex: 'adsMatch',
-        render: (text) => <span className={styles.txt}>{text}</span>,
+        render: (text) => <span className={styles.txt}>{text||'--'}</span>,
       },
-      // {
-      //   title: '图片',
-      //   dataIndex: 'adsPic',
-      //   render: val => (val && val.match(/ima[^\n]*Ex/) )?val.match(/ima[^\n]*Ex/)[0].slice(0,-3):val
-      // },
-      // {
-      //   title: '跳转链接',
-      //   dataIndex: 'adsUrl',
-      // },
       {
         title: '上架状态',
         dataIndex: 'upState',

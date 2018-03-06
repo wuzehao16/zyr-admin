@@ -84,6 +84,7 @@ class StandardTable extends PureComponent {
       {
         title: '邮箱',
         dataIndex: 'userEmail',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '排序',

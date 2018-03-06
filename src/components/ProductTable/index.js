@@ -77,6 +77,7 @@ class StandardTable extends PureComponent {
       {
         title: '产品名称',
         dataIndex: 'productName',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '城市',
@@ -102,7 +103,7 @@ class StandardTable extends PureComponent {
         title: '纳入评测',
         dataIndex: 'isEvaluating',
         render(val) {
-          return <span>{isEvaluaStatuts[val]}</span>;
+          return <span>{isEvaluaStatuts[val]||'--'}</span>;
         },
       },
       {

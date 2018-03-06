@@ -62,6 +62,7 @@ class StandardTable extends PureComponent {
       {
         title: '姓名',
         dataIndex: 'userName',
+        render: (text) => <span >{text || '--'}</span>,
       },
       {
         title: '创建人',

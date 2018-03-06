@@ -59,6 +59,7 @@ class StandardTable extends PureComponent {
       {
         title: '标题',
         dataIndex: 'contentTitle',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '栏目名称',
