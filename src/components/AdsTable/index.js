@@ -107,6 +107,7 @@ class StandardTable extends PureComponent {
       {
         title: '匹配词',
         dataIndex: 'adsMatch',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       // {
       //   title: '图片',

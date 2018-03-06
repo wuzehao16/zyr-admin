@@ -34,7 +34,12 @@ export default class BasicForms extends PureComponent {
             <Description term="跳转链接">{item.adsUrl}</Description>
             <Description term="排序">{item.adsSort}</Description>
             <Description term="上架状态">{item.upState==0?'待上架':item.upState==1?'已上架':'已下架'}</Description>
-            <Description term="自动上架时间">{moment(item.autoUpTime).format('llll')}</Description>
+            {/* {
+              item.upState ==0
+                ? <Description term="自动上架时间">{moment(item.autoUpTime).format('llll')}</Description>
+                : null
+            } */}
+            <Description term="自动下架时间">{moment(item.autoDownTime).format('llll')}</Description>
             <Description term="自动下架时间">{moment(item.autoDownTime).format('llll')}</Description>
             <Description term="广告类型">{item.adsTypeName}</Description>
           </DescriptionList>
