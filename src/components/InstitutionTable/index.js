@@ -88,6 +88,7 @@ class StandardTable extends PureComponent {
       {
         title: '排序',
         dataIndex: 'sort',
+        sorter: true,
       },
       {
         title: '启用状态',
@@ -106,11 +107,13 @@ class StandardTable extends PureComponent {
       {
         title: '审核时间',
         dataIndex: 'approvalTime',
+        sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '注册时间',
         dataIndex: 'registrationTime',
+        sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {

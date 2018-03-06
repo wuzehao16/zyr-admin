@@ -73,6 +73,7 @@ class StandardTable extends PureComponent {
       {
         title: '排序',
         dataIndex: 'leveSort',
+        sorter: true,
       },
       {
         title: '价格/月',
@@ -85,6 +86,7 @@ class StandardTable extends PureComponent {
       {
         title: '更新时间',
         dataIndex: 'uodateTime',
+        sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {

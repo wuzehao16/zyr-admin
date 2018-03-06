@@ -70,16 +70,6 @@ class StandardTable extends PureComponent {
       {
         title: '是否锁定',
         dataIndex: 'islock',
-        filters: [
-          {
-            text: status[0],
-            value: 0,
-          },
-          {
-            text: status[1],
-            value: 1,
-          },
-        ],
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
@@ -87,14 +77,15 @@ class StandardTable extends PureComponent {
       {
         title: '创建时间',
         dataIndex: 'createTime',
-
+        sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
-      {
-        title: '登录时间',
-        dataIndex: 'updatedAt',
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
+      // {
+      //   title: '登录时间',
+      //   dataIndex: 'updatedAt',
+      //   sorter: true,
+      //   render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      // },
       {
         title: '操作',
         render: (text, record) => {

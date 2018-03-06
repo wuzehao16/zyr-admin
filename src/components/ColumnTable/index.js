@@ -71,6 +71,7 @@ class ColumnTable extends PureComponent {
       {
         title: '排序',
         dataIndex: 'adsSort',
+        sorter: true,
       },
       {
         title: '是否显示',
@@ -86,6 +87,7 @@ class ColumnTable extends PureComponent {
       {
         title: '更新时间',
         dataIndex: 'updateTime',
+        sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
