@@ -53,6 +53,15 @@ class StandardTable extends PureComponent {
     const contentLabelStatus = ['推荐', '热点', '最新', '视频'];
     const columns = [
       {
+        title: '序号',
+        dataIndex: 'no',
+        render: (text, record, index) => {
+          return (
+              <span>{index+1}</span>
+          );
+        },
+      },
+      {
         title: 'ID',
         dataIndex: 'contentId',
       },
