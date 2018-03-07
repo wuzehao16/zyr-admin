@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import {
-  Form, Button, Card, Divider, Steps,
+  Form, Button, Card, Divider, Steps, Devider
 } from 'antd';
 import DescriptionList from '../../components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -123,6 +123,7 @@ export default class BasicForms extends PureComponent {
             <Description term="提单人手机">{item.userPhone}</Description>
             <Description term="产品分润比例">{item.productRatio}</Description>
           </DescriptionList>
+          <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="贷款人信息" style={{ marginBottom: 32 }} col={2}>
             <Description term="姓名">{item.loanName}</Description>
             <Description term="年龄">{item.loanAge}</Description>
@@ -132,6 +133,7 @@ export default class BasicForms extends PureComponent {
             <Description term="有效期至">{item.effectiveDate}</Description>
             <Description term="住址">{item.address}</Description>
           </DescriptionList>
+          <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="申请贷款信息" style={{ marginBottom: 32 }} col={2}>
             <Description term="贷款金额">{item.loanMoney}万</Description>
             <Description term="贷款期限">{item.loanLimit}期</Description>
