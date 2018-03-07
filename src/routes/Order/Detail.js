@@ -10,7 +10,6 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 const { Description } = DescriptionList;
 const Step = Steps.Step;
-
 @connect(({ order }) => ({
   data: order,
 }))
@@ -140,6 +139,7 @@ export default class BasicForms extends PureComponent {
             <Description term="还款方式">{item.payTypeName}</Description>
             <Description term="申请备注">{item.applicationNotes}</Description>
           </DescriptionList>
+            <Divider style={{ marginBottom: 32 }} />
           {this.renderForm()}
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
             <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/order'))}>
