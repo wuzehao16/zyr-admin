@@ -6,7 +6,7 @@ import styles from './style.less';
 const passwordStatusMap = {
   ok: <div className={styles.success}>强度：强</div>,
   pass: <div className={styles.warning}>强度：中</div>,
-  pool: <div className={styles.error}>强度：短</div>,
+  pool: <div className={styles.error}>强度：弱</div>,
 };
 
 const passwordProgressMap = {
@@ -132,6 +132,16 @@ class Step3 extends React.PureComponent {
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields((err, values) => {
+        const { form } = this.props;
+        if (form.getFieldValue('confirm') !== form.getFieldValue('loginPassord')) {
+          form.setFields({
+            confirm: {
+              value: values.confirm,
+              errors: [new Error('两次输入的密码不一致!')],
+            },
+          });
+          return
+        }
         if (!err) {
           dispatch({
             type: 'register/submitStep3Form',
@@ -168,6 +178,9 @@ class Step3 extends React.PureComponent {
                   rules: [
                     {
                       validator: this.checkPassword,
+                    },
+                    {
+                      validator: this.checkConfirm,
                     },
                   ],
                 })(

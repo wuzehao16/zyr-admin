@@ -99,6 +99,7 @@ class StandardTable extends PureComponent {
       showSizeChanger: true,
       showQuickJumper: true,
       total: count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {
@@ -115,7 +116,7 @@ class StandardTable extends PureComponent {
           <Alert
             message={(
               <div>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 个用户&nbsp;&nbsp;
+                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 条记录&nbsp;&nbsp;
                 <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
               </div>
             )}

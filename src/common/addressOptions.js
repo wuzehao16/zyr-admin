@@ -1,27 +1,26 @@
 const options = [
   {
-    label: '深圳',
-    value: 0,
-  },
-  {
-    label: '广州',
-    value: 1,
-  },
-  {
-    label: '珠海',
-    value: 2,
-  },
-  {
-    label: '惠州',
-    value: 3,
-  },
-  {
-    label: '东莞',
-    value: 4,
-  },
-  {
-    label: '中山',
-    value: 5,
-  }
-]
+  label: '深圳',
+  value: '20'
+},
+{
+  label: '广州',
+  value: '30'
+},
+{
+  label: '珠海',
+  value: '40'
+},
+{
+  label: '东莞',
+  value: '50'
+},
+{
+  label: '惠州',
+  value: '60'
+},
+{
+  label: '中山',
+  value: '70'
+}]
 export default options;

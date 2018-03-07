@@ -17,6 +17,11 @@ class ColumnTable extends PureComponent {
     }
   }
 
+  handleEdit = (item) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(item);
+    }
+  }
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
     if (this.props.onSelectRow) {
       this.props.onSelectRow(selectedRows);
@@ -35,65 +40,61 @@ class ColumnTable extends PureComponent {
 
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { list, pagination }, loading } = this.props;
+    const { data: { data, count }, loading } = this.props;
 
     const columnStatus = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
     const parentColumnStatus = ['金融资讯', '系统消息', '常识讲堂'];
-    const onlineStatus = ['是', '否'];
+    const onlineStatus = ['否', '是'];
     const contentLabelStatus = ['推荐', '热点', '最新', '视频'];
     const columns = [
       {
-        title: 'ID',
+        title: '序号',
         dataIndex: 'no',
+        render: (text, record, index) => {
+          return (
+              <span>{index+1}</span>
+          );
+        },
       },
       {
-        title: '上级栏目',
-        dataIndex: 'parentColumn',
-        render(val) {
-          return `${parentColumnStatus[val]}`;
-        },
+        title: 'ID',
+        dataIndex: 'channelId',
+      },
+      {
+        title: '栏目分类',
+        dataIndex: 'channelTypeName',
       },
       {
         title: '栏目名称',
-        dataIndex: 'columnStatus',
-        render(val) {
-          // return <Badge columnStatus={statusMap[val]} text={columnStatus[val]} />;
-          return `${columnStatus[val]}`;
-        },
+        dataIndex: 'channelName',
       },
       {
-        title: '内容标签',
-        dataIndex: 'contentLabel',
-        render(val) {
-          return `${contentLabelStatus[val]}`;
-        },
-      },
-      {
-        title: '排列顺序',
-        dataIndex: 'topIndex',
+        title: '排序',
+        dataIndex: 'adsSort',
+        sorter: true,
       },
       {
         title: '是否显示',
-        dataIndex: 'online',
+        dataIndex: 'channelDisplay',
         render(val) {
           return `${onlineStatus[val]}`;
         },
       },
       {
-        title: '栏目图片',
-        dataIndex: 'columnImg',
+        title: '操作者',
+        dataIndex: 'oper',
       },
       {
-        title: '创建时间',
-        dataIndex: 'createdAt',
+        title: '更新时间',
+        dataIndex: 'updateTime',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '操作',
-        render: () => (
+        render: (text, record) => (
           <div>
-            <a href="">编辑</a>
+            <a onClick={() => this.handleEdit(record)}>编辑</a>
           </div>
         ),
       },
@@ -102,7 +103,8 @@ class ColumnTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      total: count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {
@@ -129,9 +131,9 @@ class ColumnTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.key}
+          rowKey={record => record.channelId}
           rowSelection={rowSelection}
-          dataSource={list}
+          dataSource={data}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}

@@ -44,9 +44,16 @@ export default {
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(removeDict, payload);
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      const list = yield call(query);
       yield put({
         type: 'save',
-        payload: response,
+        payload: list,
       });
       if (callback) callback();
     },

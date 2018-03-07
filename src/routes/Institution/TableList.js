@@ -35,7 +35,7 @@ const CreateForm = Form.create()((props) => {
       <FormItem
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 15 }}
-        label="账号"
+        label="用户名"
       >
         {item.loginAccount}
       </FormItem>
@@ -77,7 +77,8 @@ const CreateForm = Form.create()((props) => {
   );
 });
 
-@connect(({ institution, loading }) => ({
+@connect(({ user, institution, loading }) => ({
+  user,
   institution,
   loading: loading.models.institution,
 }))
@@ -406,7 +407,6 @@ export default class TableList extends PureComponent {
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
       </Menu>
     );
     const parentMethods = {
@@ -425,10 +425,10 @@ export default class TableList extends PureComponent {
               <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/institution/add'))}>
                 新建
               </Button>
-              {/* {
+              {
                 selectedRows.length > 0 && (
                   <span>
-                    <Button>批量操作</Button>
+                    {/* <Button>批量操作</Button> */}
                     <Dropdown overlay={menu}>
                       <Button>
                         更多操作 <Icon type="down" />
@@ -436,7 +436,7 @@ export default class TableList extends PureComponent {
                     </Dropdown>
                   </span>
                 )
-              } */}
+              }
             </div>
             <StandardTable
               selectedRows={selectedRows}

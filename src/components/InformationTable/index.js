@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment  } from 'react';
 import moment from 'moment';
 import { Table, Alert, Divider } from 'antd';
 import { Link } from 'react-router-dom';
@@ -25,7 +25,16 @@ class StandardTable extends PureComponent {
 
     this.setState({ selectedRowKeys });
   }
-
+  handleEdit = (item) => {
+    if (this.props.handleEdit) {
+      this.props.handleEdit(item);
+    }
+  }
+  handleDetail = (item) => {
+    if (this.props.handleDetail) {
+      this.props.handleDetail(item);
+    }
+  }
   handleTableChange = (pagination, filters, sorter) => {
     this.props.onChange(pagination, filters, sorter);
   }
@@ -36,103 +45,81 @@ class StandardTable extends PureComponent {
 
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { list, pagination }, loading } = this.props;
+    const { data: { data, count }, loading } = this.props;
 
     const columnStatus = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
     const parentColumnStatus = ['金融资讯', '系统消息', '常识讲堂'];
-    const onlineStatus = ['是', '否'];
+    const onlineStatus = ['否', '是'];
     const contentLabelStatus = ['推荐', '热点', '最新', '视频'];
     const columns = [
       {
         title: '序号',
         dataIndex: 'no',
-      },
-      {
-        title: '内容标题',
-        dataIndex: 'description',
-      },
-      {
-        title: '归属栏目',
-        dataIndex: 'parentColumn',
-        render(val) {
-          return `${parentColumnStatus[val]}`;
+        render: (text, record, index) => {
+          return (
+              <span>{index+1}</span>
+          );
         },
+      },
+      {
+        title: 'ID',
+        dataIndex: 'contentId',
+      },
+      {
+        title: '标题',
+        dataIndex: 'contentTitle',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '栏目名称',
-        dataIndex: 'columnStatus',
-        render(val) {
-          // return <Badge status={statusMap[val]} text={status[val]} />;
-          return `${columnStatus[val]}`;
-        },
+        dataIndex: 'channelName',
       },
       {
-        title: '内容标签',
-        dataIndex: 'contentLabel',
-        render(val) {
-          return `${contentLabelStatus[val]}`;
-        },
+        title: '栏目分类',
+        dataIndex: 'channelTypeName',
       },
       {
-        title: '固顶级别',
-        dataIndex: 'topIndex',
+        title: '排序',
+        dataIndex: 'contentSort',
+        sorter: true,
       },
       {
-        title: '是否在线',
-        dataIndex: 'online',
-        filters: [
-          {
-            text: onlineStatus[0],
-            value: 0,
-          },
-          {
-            text: onlineStatus[1],
-            value: 1,
-          },
-        ],
+        title: '是否显示',
+        dataIndex: 'isDisplay',
         render(val) {
           return `${onlineStatus[val]}`;
         },
       },
       {
-        title: '固顶截止日期',
-        dataIndex: 'updatedAt',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        title: '发布者',
+        dataIndex: 'oper',
       },
       {
-        title: '创建人',
-        dataIndex: 'creator',
-      },
-      {
-        title: '创建时间',
-        dataIndex: 'createdAt',
+        title: '更新时间',
+        dataIndex: 'updateTime',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '操作',
-        render: () => (
-          <div>
-            <Link to={{
-              pathname: '/content/information/detail',
-              search: '?sort=name',
-              hash: '#the-hash',
-            }}
-            >
-            详情
-            </Link>
-            <Divider type="vertical" />
-            <a href="">编辑</a>
-          </div>
-        ),
+        align: 'center',
+        render: (text, record) => {
+          return (
+            <Fragment>
+              <a onClick={() => this.handleEdit(record)}>编辑</a>
+              <Divider type="vertical" />
+              <a onClick={() => this.handleDetail(record)}>详情</a>
+            </Fragment>
+          );
+        },
       },
     ];
 
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      total:count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {
@@ -159,9 +146,9 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.key}
+          rowKey={record => record.contentId}
           rowSelection={rowSelection}
-          dataSource={list}
+          dataSource={data}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}

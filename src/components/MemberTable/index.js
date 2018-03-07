@@ -51,7 +51,7 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, pagination }, loading } = this.props;
+    const { data: { data, count }, loading } = this.props;
     const status = ['否', '是'];
     const lockStatus = ['禁用', '启用'];
     const membershipStatus = ['会员', '非会员'];
@@ -93,38 +93,19 @@ class StandardTable extends PureComponent {
       {
         title: '是否客服',
         dataIndex: 'isCustom',
-        filters: [
-          {
-            text: status[0],
-            value: 0,
-          },
-          {
-            text: status[1],
-            value: 1,
-          },
-        ],
         render: val => <span>{status[val]}</span>
       },
       {
         title: '启用状态',
         dataIndex: 'islock',
-        filters: [
-          {
-            text: lockStatus[0],
-            value: 0,
-          },
-          {
-            text: lockStatus[1],
-            value: 1,
-          },
-        ],
         render(val) {
           return <Badge status={statusMap[val]} text={lockStatus[val]} />;
         },
       },
       {
-        title: '更新时间',
+        title: '注册时间',
         dataIndex: 'registerTime',
+        sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
@@ -147,7 +128,8 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      total: count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {

@@ -56,7 +56,7 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, pagination }, loading } = this.props
+    const { data: { data, count }, loading } = this.props
     const approvalStatus = ['未通过', '审核中', '已通过'];
     const lockStatus = ['禁用', '启用'];
     const columns = [
@@ -76,6 +76,7 @@ class StandardTable extends PureComponent {
       {
         title: '机构名称',
         dataIndex: 'manageName',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '手机号',
@@ -84,24 +85,16 @@ class StandardTable extends PureComponent {
       {
         title: '邮箱',
         dataIndex: 'userEmail',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '排序',
         dataIndex: 'sort',
+        sorter: true,
       },
       {
         title: '启用状态',
         dataIndex: 'startStatus',
-        filters: [
-          {
-            text: lockStatus[0],
-            value: 0,
-          },
-          {
-            text: lockStatus[1],
-            value: 1,
-          },
-        ],
         render(val) {
           return <Badge status={statusMap[val]} text={lockStatus[val]} />;
         },
@@ -109,20 +102,6 @@ class StandardTable extends PureComponent {
       {
         title: '审核状态',
         dataIndex: 'approvalStatus',
-        filters: [
-          {
-            text: approvalStatus[0],
-            value: 0,
-          },
-          {
-            text: approvalStatus[1],
-            value: 1,
-          },
-          {
-            text: approvalStatus[1],
-            value: 2,
-          },
-        ],
         render(val) {
           return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
         },
@@ -130,13 +109,15 @@ class StandardTable extends PureComponent {
       {
         title: '审核时间',
         dataIndex: 'approvalTime',
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        sorter: true,
+        render: val => <span>{val?moment(val).format('YYYY-MM-DD HH:mm:ss'):'--'}</span>,
       },
-      {
-        title: '注册时间',
-        dataIndex: 'registrationTime',
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
+      // {
+      //   title: '注册时间',
+      //   dataIndex: 'registrationTime',
+      //   sorter: true,
+      //   render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      // },
       {
         title: '操作',
         align: 'center',
@@ -169,7 +150,8 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
+      total: count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {

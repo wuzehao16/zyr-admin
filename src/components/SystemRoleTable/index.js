@@ -60,6 +60,10 @@ class StandardTable extends PureComponent {
         dataIndex: 'remark',
       },
       {
+        title: '等级',
+        dataIndex: 'grade',
+      },
+      {
         title: '创建人',
         dataIndex: 'loginAccount',
       },
@@ -69,12 +73,12 @@ class StandardTable extends PureComponent {
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
-      {
-        title: '登录时间',
-        dataIndex: 'updatedAt',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
+      // {
+      //   title: '登录时间',
+      //   dataIndex: 'updatedAt',
+      //
+      //   render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      // },
       {
         title: '操作',
         render: (text, record) => {
@@ -88,14 +92,15 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      count,
+      total: count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {
       selectedRowKeys,
       onChange: this.handleRowSelectChange,
       getCheckboxProps: record => ({
-        disabled: record.disabled,
+        disabled: record.roleId=='28d4c3a66ffa4e0d973c8177c611f109',
       }),
     };
 
@@ -105,7 +110,7 @@ class StandardTable extends PureComponent {
           <Alert
             message={(
               <div>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 个用户&nbsp;&nbsp;
+                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 条记录&nbsp;&nbsp;
                 <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
               </div>
             )}

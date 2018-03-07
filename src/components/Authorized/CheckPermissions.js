@@ -60,7 +60,7 @@ const checkPermissions = (authority, currentAuthority, target, Exception) => {
   // Function 处理
   if (typeof authority === 'function') {
     try {
-      const bool = authority();
+      const bool = authority(currentAuthority);
       if (bool) {
         return target;
       }

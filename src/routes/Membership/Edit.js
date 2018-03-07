@@ -113,7 +113,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请输入价格',
                 }],
               })(
-                <Input type="number" min={0} addonAfter="元" placeholder="请输入价格" />
+                <Input type="number" min={0} max={10000} addonAfter="元" placeholder="请输入价格" />
               )}
             </FormItem>
             <FormItem

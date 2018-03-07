@@ -277,7 +277,7 @@ export default class Register extends Component {
           </FormItem>
           <FormItem>
             <Upload
-              action="//jsonplaceholder.typicode.com/posts/"
+              action="http://47.104.27.184:8000/sysAnno/uploadImage"
               listType="picture"
               fileList={fileList}
               onPreview={this.handlePreview}

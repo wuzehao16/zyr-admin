@@ -9,10 +9,13 @@ for (let i = 0; i < 46; i += 1) {
     manageName: '平安银行',
     updateUser: "瓜娃子",
     oper: "瓜娃子",
-    cityCode: '30',
+    cityCode:"20",
+    institutionCode:"1",
     userPhone: "13812341234",
+    institutionId:"5e553724754f4d47b57c45ff6afd53d6",
     institutionCode: `${Math.floor(Math.random()*2) + 1}`,
     loginAccount: "jaccc",
+    manageLogoId: "https://picsum.photos/200/200",
     userEmail: "laonianren@gmail.com",
     sort: Math.floor(Math.random()*100),
     startStatus: `${Math.floor(Math.random()*2)}`,
@@ -91,21 +94,16 @@ export function saveInstitution(req, res, u, b) {
     /* eslint no-case-declarations:0 */
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     const i = Math.ceil(Math.random() * 10000);
-    tableListDataSource.unshift({
+    tableListDataSource.unshift(Object.assign({
       manageId: `${i}`,
+      oper: '二花',
       city: '广州',
-      cityCode: body.cityCode,
-      userPhone: body.userPhone,
-      userEmail: body.userEmail,
-      sort: body.sort,
-      startStatus: body.startStatus,
-      approvalStatus: body.approvalStatus,
-      loginAccount: body.loginAccount,
       approvalUser: '小李子',
       updateUser: "瓜娃子",
+      createTime: new Date,
       approvalTime: new Date,
       registrationTime: new Date,
-    });
+    },body));
     const result = {
       code: 0,
       data: tableListDataSource,
@@ -139,7 +137,7 @@ export function getInstitutionDetail(req, res, u) {
 
   const result = {
     code: 0,
-    data: dataSource[0],
+    data: [dataSource[0]],
     count: dataSource.length,
   };
 
@@ -185,22 +183,7 @@ export function updateInstitution(req, res, u, b) {
     // tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
     tableListDataSource.map((item,index) => {
       if(item.manageId == manageId){
-      tableListDataSource[index]={
-          key: body.manageId,
-          manageId: `${body.manageId}`,
-          city: '广州',
-          cityCode: body.cityCode,
-          userPhone: body.userPhone,
-          userEmail: body.userEmail,
-          sort: body.sort,
-          startStatus: body.startStatus,
-          approvalStatus: body.approvalStatus,
-          loginAccount: body.loginAccount,
-          approvalUser: '小李子',
-          updateUser: "瓜娃子",
-          updateTime: new Date,
-          createTime: new Date,
-        }
+      tableListDataSource[index]= Object.assign(item,body);
       }
     });
   const result = {

@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import {
   Form, Input, Button, Card,
 } from 'antd';
+import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import RoleTree from '../../components/RoleTree';
 
@@ -32,8 +33,10 @@ export default class BasicForms extends PureComponent {
         if (values.sysMenus) {
           /* eslint-disable no-param-reassign */
           values.sysMenus.forEach((item, index, arr) => {
-            arr[index] = { roleId: item };
+            arr[index] = { meunId: item };
           });
+        } else {
+          values.sysMenus = [];
           /* eslint-disable no-param-reassign */
         }
         this.props.dispatch({
@@ -44,7 +47,7 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting, data, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -87,6 +90,18 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
+              label="角色等级"
+            >
+              {getFieldDecorator('grade', {
+                rules: [{
+                  required: true, message: '请输入角色等级',
+                }],
+              })(
+                <Input type="number" min={1} max={100} placeholder="请输入角色等级" />
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
               label="备注"
             >
               {getFieldDecorator('remark', {
@@ -111,6 +126,9 @@ export default class BasicForms extends PureComponent {
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
+              </Button>
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/role'))}>
+                返回
               </Button>
             </FormItem>
           </Form>

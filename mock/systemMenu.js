@@ -62,7 +62,6 @@ export function selectMenuAll(req, res, u) {
                                 "createUserId": "0c2b89b987d34bffa7ace51addc211f0",
                                 "createTime": 1516614745000,
                                 "createUser": "小宇宙",
-                                "children": []
                             },
                             {
                                 "meunId": "688b5f232d0848f0b9e89e420a061dfd",

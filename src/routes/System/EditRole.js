@@ -3,8 +3,9 @@ import { connect } from 'dva';
 import {
   Form, Input, Button, Card,
 } from 'antd';
+import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import RoleTree from '../../components/RoleTree';
+import RoleTree from '../../components/RoleTree1';
 
 const FormItem = Form.Item;
 
@@ -19,11 +20,13 @@ export default class BasicForms extends PureComponent {
     if (this.props.data.item) {
       const { item } = this.props.data;
       let sysMenus = [];
+      console.log(item,"item")
       if (item.sysMenus) {
-        sysMenus = item.sysMenus.forEach((m) => {
+        sysMenus = item.sysMenus.map((m) => {
           return m.meunId;
         });
       }
+      console.log(sysMenus,"sysMenus")
       setFieldsValue({
         remark: item.remark,
         roleId: item.roleId,
@@ -44,9 +47,12 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         if (values.sysMenus) {
           /* eslint-disable no-param-reassign */
-          values.sysMenus.forEach((item, index, arr) => {
-            arr[index] = { meunId: item };
-          });
+          console.log(values.sysMenus)
+          if (values.sysMenus) {
+            values.sysMenus.forEach((item, index, arr) => {
+              arr[index] = { meunId: item };
+            });
+          }
           /* eslint-disable no-param-reassign */
         }
         this.props.dispatch({
@@ -57,9 +63,10 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting, data, data:{ item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     getFieldDecorator('roleId');
+    console.log(getFieldValue('sysMenus'),"getsys")
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -101,6 +108,19 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
+              label="角色等级"
+            >
+              {getFieldDecorator('grade', {
+                initialValue: item.grade,
+                rules: [{
+                  required: true, message: '请输入角色等级',
+                }],
+              })(
+                <Input type="number" min={1} max={100} placeholder="请输入角色等级" />
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
               label="备注"
             >
               {getFieldDecorator('remark', {
@@ -127,7 +147,9 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/role'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

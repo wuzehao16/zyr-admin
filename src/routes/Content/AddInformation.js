@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import {
-  Form, Input, DatePicker, Select, Button, Card, Radio, Icon, Upload,
+  Form, Input, DatePicker, Select, Button, Card, Radio, Icon, Upload, Modal,
 } from 'antd';
+import ReactQuill from '../../components/QuillMore';
+import UploadPicture from '../../components/UploadPicture';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './AddInformation.less';
 
@@ -11,32 +14,41 @@ const { Option } = Select;
 // const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
-const upLoadProps = {
-  action: '//jsonplaceholder.typicode.com/posts/',
-  listType: 'picture',
-  // defaultFileList: [...fileList],
-  // className: 'uploadlist-inline',
-};
-@connect(state => ({
-  submitting: state.form.regularFormSubmitting,
+@connect(({ content, loading }) => ({
+  content,
+  submitting: loading.effects['content/add'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  state = {
-    fileList : [],
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+
+    dispatch({
+      type: 'content/fetchColumnType',
+      payload: {
+        type: 'chaClassify'
+      }
+    });
+  }
+  onChange = (value) =>{
+    this.props.dispatch({
+      type: 'content/fetchColumn',
+      payload: {
+        channelType: value
+      }
+    });
   }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'form/submitRegularForm',
-          payload: values,
-        });
-        this.props.dispatch({
           type: 'content/add',
           payload: {
-            values,
+            ...values,
+            // content: this.state.productIntroduction,
+            contentPic: values.contentPic.match(/ima[^\n]*Ex/)?values.contentPic.match(/ima[^\n]*Ex/)[0].slice(0,-3):values.contentPic,
           },
         });
       }
@@ -44,9 +56,12 @@ export default class BasicForms extends PureComponent {
   }
 
   render() {
-    const { submitting } = this.props;
-    const { getFieldDecorator } = this.props.form;
-    const { fileList } = this.state
+    const { content: { columnType, column }, submitting, dispatch } = this.props;
+    const { getFieldDecorator, getFieldValue } = this.props.form;
+    if (column.data) {
+      var columnNameOptions = column.data.map(item => <Option key={item.channelId} value={item.channelId}>{item.channelName}</Option>);
+    }
+    const columnTypeOptions = columnType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -65,9 +80,15 @@ export default class BasicForms extends PureComponent {
         sm: { span: 10, offset: 7 },
       },
     };
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
 
     return (
-      <PageHeaderLayout title="基础表单" >
+      <PageHeaderLayout title="新增内容" >
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -76,46 +97,79 @@ export default class BasicForms extends PureComponent {
           >
             <FormItem
               {...formItemLayout}
-              label="选择栏目"
+              label="栏目分类"
             >
-              {getFieldDecorator('column')(
-                <Select defaultValue="lucy">
-                  <Option value="jack">Jack</Option>
-                  <Option value="lucy">Lucy</Option>
-                  <Option value="Yiminghe">yiminghe</Option>
+              {getFieldDecorator('channelType', {
+                rules: [{
+                  required: true, message: '请选择内容名称',
+                }],
+              })(
+                <Select placeholder="请选择" onChange={this.onChange}>
+                  {columnTypeOptions}
                 </Select>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="内容标题"
+              label="栏目名称"
             >
-              {getFieldDecorator('title', {
+              {getFieldDecorator('channelId', {
+                rules: [{
+                  required: true, message: '请选择栏目名称',
+                }],
+              })(
+                <Select placeholder="请选择">
+                  {columnNameOptions}
+                </Select>
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="标题"
+            >
+              {getFieldDecorator('contentTitle',{
                 rules: [{
                   required: true, message: '请输入标题',
                 }],
               })(
-                <Input placeholder="给内容起个名字" />
+                <Input type="text" maxLength="20" placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="内容标签"
+              label="简介"
             >
-              {getFieldDecorator('informationTitle')(
-                <Select defaultValue="lucy" >
-                  <Option value="jack">Jack</Option>
-                  <Option value="lucy">Lucy</Option>
-                  <Option value="Yiminghe">yiminghe</Option>
-                </Select>
+              {getFieldDecorator('contentBrief')(
+                <Input placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="是否启用"
+              label="来源"
             >
-              {getFieldDecorator('enable')(
-                <Select defaultValue="lucy">
+              {getFieldDecorator('source')(
+                <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="来源网址"
+            >
+              {getFieldDecorator('sourceSite')(
+                <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="是否显示"
+            >
+              {getFieldDecorator('isDisplay',{
+                rules:[{
+                  required: true,
+                  message: "请选择是否显示"
+                }]
+              })(
+                <Select placeholder="请选择">
                   <Option value="1">是</Option>
                   <Option value="0">否</Option>
                 </Select>
@@ -123,104 +177,93 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="固顶级别"
+              label="内容类型"
             >
-              {getFieldDecorator('topLevel', {
+              {getFieldDecorator('contentType', {
                 rules: [{
-                  required: true, message: '请输入标题',
+                  required: true, message: '请输入内容类型',
                 }],
               })(
-                <Input placeholder="请输入固顶级别" />
+                <Select placeholder="请选择">
+                  <Option value="60000">图文</Option>
+                  <Option value="61000">视频</Option>
+                </Select>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="起止日期"
-            >
-              {getFieldDecorator('date', {
-                rules: [{
-                  required: true, message: '请选择起止日期',
-                }],
-              })(
-                <DatePicker style={{ width: '100%' }} />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="内容简介"
-            >
-              {getFieldDecorator('goal', {
-                rules: [{
-                  required: true, message: '请输入内容简介',
-                }],
-              })(
-                <TextArea style={{ minHeight: 32 }} placeholder="请输入内容简介" rows={4} />
-              )}
-            </FormItem>
-            <FormItem
-              label="栏目图片"
-              {...formItemLayout}
-            >
-              <Upload {...upLoadProps} onChange={this.onFileChange}>
-                {fileList.length >= 1 ? null :
-                (
-                  <Button>
-                    <Icon type="upload" /> upload
-                  </Button>
-                )
-                }
-              </Upload>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="附件类型"
+              label="标签选择"
+              style={{
+                display: getFieldValue('contentType') === '60000' ? 'block' : 'none',
+              }}
             >
               <div>
-                {getFieldDecorator('type', {
-                  initialValue: '1',
+                {getFieldDecorator('contentTag', {
                 })(
-                  <Radio.Group>
-                    <Radio value="1">普通</Radio>
-                    <Radio value="2">视屏</Radio>
-                  </Radio.Group>
+                  <Select allowClear placeholder="请选择">
+                    <Option value="0">荐</Option>
+                    <Option value="1">热</Option>
+                  </Select>
                 )}
               </div>
             </FormItem>
             <FormItem
-              label="代表图片"
               {...formItemLayout}
+              label="排序"
             >
-              <Upload {...upLoadProps} onChange={this.onFileChange}>
-                {fileList.length >= 1 ? null :
-                (
-                  <Button>
-                    <Icon type="upload" /> upload
-                  </Button>
-)
-                }
-              </Upload>
+              {getFieldDecorator('contentSort')(
+                <Input min={1} max={10000} type="number" placeholder="请输入"/>
+              )}
             </FormItem>
             <FormItem
+              label="封面图片"
               {...formItemLayout}
-              label="查看权限"
             >
-              <div>
-                {getFieldDecorator('public', {
-                  initialValue: '1',
-                })(
-                  <Radio.Group>
-                    <Radio value="1">所有客户</Radio>
-                    <Radio value="2">仅限会员</Radio>
-                  </Radio.Group>
-                )}
-              </div>
+              {getFieldDecorator('contentPic', {
+                rules:[{
+                  required:true,
+                  message:'请选择图片'
+                },
+               ],
+              })(
+                 <UploadPicture />
+              )}
+
             </FormItem>
+
+            <Form.Item
+              labelCol= {{
+                xs: { span: 24 },
+                sm: { span: 7 },
+              }}
+              wrapperCol={{
+                xs: { span: 24, offset: 0 },
+                sm: { span: 24, offset: 7 },
+              }}
+              style={{width:'60%'}}
+               >
+                 {getFieldDecorator('content', {
+                   rules:[{
+                     required:true,
+                     message:'请输入内容'
+                   },
+                  ],
+                 })(
+                   <ReactQuill
+                     placeholder='请输入...'
+                   />
+                 )}
+
+            </Form.Item>
+
 
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 8 }}>保存</Button>
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content/information'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

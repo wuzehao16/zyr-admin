@@ -7,6 +7,7 @@ import { Route, Redirect, Switch } from 'dva/router';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import { enquireScreen } from 'enquire-js';
+import { routerRedux } from 'dva/router';
 import GlobalHeader from '../components/GlobalHeader';
 import GlobalFooter from '../components/GlobalFooter';
 import SiderMenu from '../components/SiderMenu';
@@ -27,8 +28,8 @@ const getRedirect = (item) => {
   if (item && item.children) {
     if (item.children[0] && item.children[0].path) {
       redirectData.push({
-        from: `/${item.path}`,
-        to: `/${item.children[0].path}`,
+        from: `${item.path}`,
+        to: `${item.children[0].path}`,
       });
       item.children.forEach((children) => {
         getRedirect(children);
@@ -117,6 +118,12 @@ class BasicLayout extends React.PureComponent {
       this.props.dispatch({
         type: 'login/logout',
       });
+      this.props.dispatch({
+        type: 'global/clearMenus',
+      });
+    }
+    if (key === 'setting') {
+      this.props.dispatch(routerRedux.push('/setting'));
     }
   }
   handleNoticeVisibleChange = (visible) => {
