@@ -158,7 +158,7 @@ class Step4 extends React.PureComponent {
             payload: {
               ...ndata,
               ...values,
-              manageLogoId: values.manageLogoId?values.manageLogoId.match(/ima[^\n]*Ex/)[0].slice(0,-3):values.manageLogoId,
+              manageLogoId: values.manageLogoId,
             },
           });
         }

@@ -69,11 +69,7 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         const values = {
           ...fieldsValue,
-          manageLogoId: fieldsValue.manageLogoId
-            ?(fieldsValue.manageLogoId.match(/ima[^\n]*Ex/)
-                ?fieldsValue.manageLogoId.match(/ima[^\n]*Ex/)[0].slice(0,-3)
-                :fieldsValue.manageLogoId)
-            :fieldsValue.manageLogoId,
+          manageLogoId: fieldsValue.manageLogoId,
         };
         this.props.dispatch({
           type: 'institution/update',

@@ -72,7 +72,7 @@ export default class BasicForms extends PureComponent {
           payload: {
             ...values,
             // content: this.state.productIntroduction,
-            contentPic: values.contentPic.match(/ima[^\n]*Ex/)?values.contentPic.match(/ima[^\n]*Ex/)[0].slice(0,-3):values.contentPic,
+            contentPic: values.contentPic,
           },
         });
       }

@@ -79,7 +79,7 @@ export default class BasicForms extends PureComponent {
           ...fieldsValue,
           autoUpTime: fieldsValue.time && moment(fieldsValue.time[0]).local(),
           autoDownTime: fieldsValue.time && moment(fieldsValue.time[1]).local(),
-          adsPic: fieldsValue.adsPic?(fieldsValue.adsPic.match(/ima[^\n]*Ex/)?fieldsValue.adsPic.match(/ima[^\n]*Ex/)[0].slice(0,-3):fieldsValue.adsPic):fieldsValue.adsPic,
+          adsPic: fieldsValue.adsPic,
         };
         this.props.dispatch({
           type: 'ads/update',
