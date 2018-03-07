@@ -39,7 +39,8 @@ export default class BasicForms extends PureComponent {
     }
   }
   renderDefault = ()=> {
-    const { submitting, data: { item }, dispatch } = this.props
+    const { submitting, data: { item }, dispatch } = this.props;
+    item.orderStatus -= 0;
     return (
       <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
         <Step title="申请中" />
