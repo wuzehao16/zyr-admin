@@ -159,15 +159,6 @@ export default {
         },
       });
     },
-    *fetchCusCategory({ payload }, { call, put }) {
-      const response = yield call(queryDict, payload);
-      yield put({
-        type: 'saveThing',
-        payload: {
-          cusCategory: response.data
-        },
-      });
-    },
     *fetchRepMethod({ payload }, { call, put }) {
       const response = yield call(queryDict, payload);
       yield put({
