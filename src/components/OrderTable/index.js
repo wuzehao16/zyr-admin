@@ -125,7 +125,7 @@ class StandardTable extends PureComponent {
           return (
             <Fragment>
               {
-                userIdentity===1
+                userIdentity===1 && (record.orderStatus == 1 || record.orderStatus == 2 || record.orderStatus == 3 || record.orderStatus == 4 )
                   ? <span>
                       <a onClick={() => this.handleReview(record)}>审批</a>
                       <Divider type="vertical" />
