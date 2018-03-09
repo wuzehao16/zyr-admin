@@ -88,11 +88,11 @@ export default class BasicForms extends PureComponent {
              <Description term="上架状态">{item.shelfState==1?'已上架':'已下架'}</Description>
            </DescriptionList>
            <DescriptionList size="large" style={{ marginBottom: 32 }} col={1}>
-             <Description term="产品类别">{item.productFeatures}</Description>
-             <Description term="房产类型">{item.productPayWay}</Description>
-             <Description term="客户类别">{item.customerType}</Description>
-             <Description term="还款方式">{item.productType}</Description>
-             <Description term="产品特点">{item.propertyType}</Description>
+             <Description term="产品类别">{item.productTypeName}</Description>
+             <Description term="房产类型">{item.propertyTypeName}</Description>
+             <Description term="客户类别">{item.customerTypeName}</Description>
+             <Description term="还款方式">{item.productPayWayName}</Description>
+             <Description term="产品特点">{item.productFeaturesName}</Description>
            </DescriptionList>
           {item.approvalStatuts == 1
            ?  <div>
