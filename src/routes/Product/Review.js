@@ -76,14 +76,14 @@ export default class BasicForms extends PureComponent {
              <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
              <Description term="机构名称">{item.manageName}</Description>
              <Description term="产品名称">{item.productName}</Description>
-             <Description term="最高可贷">{item.productMaxLoad}</Description>
-             <Description term="产品分润比例">{item.productRatio}</Description>
+             <Description term="最高可贷">{item.productMaxLoad}万元</Description>
+             <Description term="产品分润比例">{item.productRatio}%</Description>
              <Description term="月费率">{item.monthlyFeeRate}%</Description>
              <Description term="产品期限">{item.productTimeLimit?item.productTimeLimit.replace(',','-'):''}期</Description>
              <Description term="手续费">{item.productPoundage}%</Description>
              <Description term="审批时效">{item.approvalAging?item.approvalAging.replace(',','-'):''}天</Description>
              <Description term="产品须知">{item.productNotice}</Description>
-             <Description term="推荐语">{item.productRecommend}期</Description>
+             <Description term="推荐语">{item.productRecommend}</Description>
              <Description term="排序">{item.productSort}</Description>
              <Description term="上架状态">{item.shelfState==1?'已上架':'已下架'}</Description>
            </DescriptionList>
