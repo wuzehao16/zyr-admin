@@ -36,6 +36,9 @@ export default class TableList extends PureComponent {
       type: 'content/fetch',
     });
     dispatch({
+      type: 'content/fetchColumn',
+    });
+    dispatch({
       type: 'content/fetchColumnType',
       payload: {
         type: 'chaClassify'
