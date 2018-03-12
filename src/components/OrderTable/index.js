@@ -75,10 +75,12 @@ class StandardTable extends PureComponent {
       {
         title: '机构名称',
         dataIndex: 'manageName',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '产品名称',
         dataIndex: 'productName',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '申请贷款金额',

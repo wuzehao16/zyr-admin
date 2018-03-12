@@ -83,16 +83,17 @@ class StandardTable extends PureComponent {
         title: '城市',
         dataIndex: 'city',
       },
-      {
-        title: '机构类型',
-        dataIndex: 'institutionCode',
-        render(val) {
-          return <span>{institutionType[val]}</span>;
-        },
-      },
+      // {
+      //   title: '机构类型',
+      //   dataIndex: 'institutionCode',
+      //   render(val) {
+      //     return <span>{institutionType[val]}</span>;
+      //   },
+      // },
       {
         title: '机构名称',
         dataIndex: 'manageName',
+        render: (text) => <span className={styles.txt}>{text}</span>,
       },
       {
         title: '月费率',
