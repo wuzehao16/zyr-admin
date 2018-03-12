@@ -157,22 +157,10 @@ class StandardTable extends PureComponent {
 
     return (
       <div className={styles.standardTable}>
-        <div className={styles.tableAlert}>
-          <Alert
-            message={(
-              <div>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
-              </div>
-            )}
-            type="info"
-            showIcon
-          />
-        </div>
         <Table
           loading={loading}
           rowKey={record => record.orderId}
-          rowSelection={rowSelection}
+          // rowSelection={rowSelection}
           userIdentity={userIdentity}
           dataSource={data}
           columns={columns}
