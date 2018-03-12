@@ -227,7 +227,7 @@ export default class BasicForms extends PureComponent {
           <DescriptionList size="large" title="贷款人信息" style={{ marginBottom: 32 }} col={2}>
             <Description term="姓名">{item.loanName}</Description>
             <Description term="年龄">{item.loanAge}</Description>
-            <Description term="名族">{item.nationality}</Description>
+            <Description term="民族">{item.nationality}</Description>
             <Description term="身份证">{item.idNumber}</Description>
             <Description term="发证机关">{item.issuingOrgan}</Description>
             <Description term="有效期至">{item.effectiveDate}</Description>
