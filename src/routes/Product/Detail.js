@@ -92,7 +92,7 @@ export default class BasicForms extends PureComponent {
           </DescriptionList>
           <Divider style={{ marginBottom: 12 }} />
           <DescriptionList size="large" title="产品申请流程" style={{ marginBottom: 32 }} col={1}>
-            <Steps size="small" current={-1}>
+            <Steps size="small" current={-1} style={{width:'80%'}}>
               {step}
             </Steps>
           </DescriptionList>

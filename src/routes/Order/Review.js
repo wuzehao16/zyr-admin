@@ -56,6 +56,7 @@ export default class BasicForms extends PureComponent {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     return (
       <div>
+      <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
       <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
         <Step title="申请中" />
         <Step title="已申请" />
@@ -93,6 +94,7 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <div>
+        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
       <Steps progressDot   current={0} style={{ marginBottom: 80 }}>
         <Step title="已拒绝" />
         <Step title="申请中" />
@@ -108,15 +110,19 @@ export default class BasicForms extends PureComponent {
   renderCancel = ()=> {
     const { submitting, data: { item }, dispatch } = this.props
     return (
-      <Steps progressDot status="error"  current={0} style={{ marginBottom: 80 }}>
-        <Step title="已取消" />
-        <Step title="申请中" />
-        <Step title="已申请" />
-        <Step title="已初审" />
-        <Step title="已终审" />
-        <Step title="已面签" />
-        <Step title="已放款" />
-      </Steps>
+      <div>
+        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
+        <Steps progressDot status="error"  current={0} style={{ marginBottom: 80 }}>
+          <Step title="已取消" />
+          <Step title="申请中" />
+          <Step title="已申请" />
+          <Step title="已初审" />
+          <Step title="已终审" />
+          <Step title="已面签" />
+          <Step title="已放款" />
+        </Steps>
+      </div>
+
     )
   }
   renderloan = ()=> {
@@ -124,6 +130,7 @@ export default class BasicForms extends PureComponent {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     return (
       <div>
+        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
         <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
           <Step title="申请中" />
           <Step title="已申请" />
@@ -229,7 +236,7 @@ export default class BasicForms extends PureComponent {
             <Description term="年龄">{item.loanAge}</Description>
             <Description term="民族">{item.nationality}</Description>
             <Description term="身份证">{item.idNumber}</Description>
-            <Description term="发证机关">{item.issuingOrgan}</Description>
+            <Description term="签发机关">{item.issuingOrgan}</Description>
             <Description term="有效期至">{moment(item.effectiveDate).format('l')}</Description>
             <Description term="住址">{item.address}</Description>
           </DescriptionList>
