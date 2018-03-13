@@ -147,9 +147,7 @@ export default {
       };
     },
     removeAds(state, action) {
-      console.log(action,"action")
-      const newList = state.data.data.filter(item => item.adsId != action.payload.adsId)
-      console.log(newList)
+      const newList = state.data.data.filter(item => item.adsId != action.payload.adsId);
       return{
         ...state,
         data:{
