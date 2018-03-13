@@ -123,6 +123,7 @@ class StandardTable extends PureComponent {
       {
         title: '操作',
         align: 'center',
+        fixed: 'right',
         render: (text, record) => {
           return (
             <Fragment>
@@ -163,6 +164,7 @@ class StandardTable extends PureComponent {
           loading={loading}
           rowKey={record => record.orderId}
           // rowSelection={rowSelection}
+          scroll={{ x: 1700}}
           userIdentity={userIdentity}
           dataSource={data}
           columns={columns}

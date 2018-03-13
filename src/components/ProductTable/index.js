@@ -83,13 +83,13 @@ class StandardTable extends PureComponent {
         title: '城市',
         dataIndex: 'city',
       },
-      // {
-      //   title: '机构类型',
-      //   dataIndex: 'institutionCode',
-      //   render(val) {
-      //     return <span>{institutionType[val]}</span>;
-      //   },
-      // },
+      {
+        title: '机构类型',
+        dataIndex: 'institutionCode',
+        render(val) {
+          return <span>{institutionType[val]}</span>;
+        },
+      },
       {
         title: '机构名称',
         dataIndex: 'manageName',
@@ -127,6 +127,7 @@ class StandardTable extends PureComponent {
       {
         title: '操作',
         align: 'center',
+        fixed: 'right',
         render: (text, record) => {
           return (
             <Fragment>
@@ -174,6 +175,7 @@ class StandardTable extends PureComponent {
           loading={loading}
           rowKey={record => record.productId}
           // rowSelection={rowSelection}
+          scroll={{ x: 1700}}
           dataSource={data}
           userIdentity={userIdentity}
           columns={columns}
