@@ -331,7 +331,7 @@ export default class TableList extends PureComponent {
 
           <Col md={8} sm={24}>
             <FormItem label="更新时间"
-              style={{display: currentUser.data.userIdentity==0?'block':'none'}}
+              style={{display: currentUser.data.userIdentity==0?'flex':'none'}}
               >
               {getFieldDecorator('date')(
                 <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
