@@ -133,17 +133,17 @@ class StandardTable extends PureComponent {
           return (
             <Fragment>
               { record.approvalStatuts == 2
-                ? <a>
+                ? <span>
                     <a onClick={() => this.handleResetPassword(record)}>{record.shelfState==1?'下架':'上架'}</a>
                     <Divider type="vertical" />
-                  </a>
+                  </span>
                 : null
               }
               { record.approvalStatuts == 1 && userIdentity===0
-                ? <a>
+                ? <span>
                     <a onClick={() => this.handleReview(record)}>审核</a>
                     <Divider type="vertical" />
-                  </a>
+                  </span>
                 : null
               }
               <a onClick={() => this.handleEdit(record)}>编辑</a>
