@@ -36,6 +36,12 @@ export async function updateShelvesStatus(params) {
   });
 }
 
+export async function remove(params) {
+  return request(`/sys/deleteProduct/${params.productId}`, {
+    method: 'Delete',
+  });
+}
+
 export async function add(params) {
   return request('/sys/addProduct', {
     method: 'POST',

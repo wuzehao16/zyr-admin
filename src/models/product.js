@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, query, queryDetail, update, updateAprovalStatus, updateShelvesStatus, queryManage } from '../services/product';
+import { add, query, queryDetail, update, updateAprovalStatus, updateShelvesStatus, queryManage, remove } from '../services/product';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -33,6 +33,22 @@ export default {
         type: 'save',
         payload: response,
       });
+    },
+    *remove({ payload, callback }, { call, put }) {
+      const response = yield call(remove, payload);
+      console.log(response)
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      const list = yield call(query);
+      yield put({
+        type: 'save',
+        payload: list,
+      });
+      if (callback) callback();
     },
     *fetchInstitutionType({ payload }, { call, put }) {
       const response = yield call(queryDict, payload);

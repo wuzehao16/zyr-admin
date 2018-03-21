@@ -175,7 +175,7 @@ class StandardTable extends PureComponent {
         <Table
           loading={loading}
           rowKey={record => record.productId}
-          // rowSelection={rowSelection}
+          rowSelection={rowSelection}
           scroll={{ x: 1700}}
           dataSource={data}
           userIdentity={userIdentity}
