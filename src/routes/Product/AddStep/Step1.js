@@ -73,6 +73,7 @@ class Step1 extends React.PureComponent {
         cusCategory,
         repMethod,
         prodFeatures,
+        step,
       },
       user: {
         currentUser
@@ -81,18 +82,18 @@ class Step1 extends React.PureComponent {
       dispatch
     } = this.props;
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
-    if (city) {
-      var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    if (institutionType) {
-      var institutionTypeOptions = institutionType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    if (institutionList) {
-      var institutionListOptions = institutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
-    }
-    if (subInstitutionList) {
-      var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
-    }
+      if (city) {
+        var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      }
+      if (institutionType) {
+        var institutionTypeOptions = institutionType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      }
+      if (institutionList) {
+        var institutionListOptions = institutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
+      }
+      if (subInstitutionList) {
+        var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
+      }
       var prodCategoryOptions = prodCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var propCategoryOptions = propCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var cusCategoryOptions = cusCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
@@ -170,6 +171,7 @@ class Step1 extends React.PureComponent {
                             {...formItemLayout}
                              label="机构类型">
                             {getFieldDecorator('institutionCode', {
+                              initialValue: step.institutionCode,
                               rules: [{
                                 required: true, message: '请选择机构类型',
                               }],
@@ -185,6 +187,7 @@ class Step1 extends React.PureComponent {
                             {...formItemLayout}
                              label="所在城市">
                             {getFieldDecorator('cityCode', {
+                              initialValue: step.cityCode,
                               rules: [{
                                 required: true, message: '请选择所在城市',
                               }],
@@ -207,6 +210,7 @@ class Step1 extends React.PureComponent {
                                 {...formItemLayout}
                                >
                                 {getFieldDecorator('manageId',{
+                                  initialValue: step.manageId,
                                   rules: [
                                     {
                                       required: true,
@@ -233,6 +237,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productName',{
+                  initialValue: step.productName,
                   rules: [
                     {
                       required: true,
@@ -254,6 +259,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productMaxLoad',{
+                  initialValue: step.productMaxLoad,
                   rules: [
                     {
                       required: true,
@@ -275,6 +281,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productRatio',{
+                  initialValue: step.productRatio,
                   rules: [
                     {
                       required: true,
@@ -300,6 +307,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('monthlyFeeRate',{
+                  initialValue: step.monthlyFeeRate,
                   rules: [
                     {
                       required: true,
@@ -325,6 +333,7 @@ class Step1 extends React.PureComponent {
                  <InputGroup
                     compact>
                    {getFieldDecorator('productTimeLimitStart',{
+                     initialValue: step.productTimeLimitStart,
                      rules:[{
                        required: true,
                        message: '请输入产品期限'
@@ -338,6 +347,7 @@ class Step1 extends React.PureComponent {
                      type="number"
                      style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
                    {getFieldDecorator('productTimeLimitEnd',{
+                     initialValue: step.productTimeLimitEnd,
                      rules:[{
                        required: true,
                        message: '请输入产品期限'
@@ -357,6 +367,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productPoundage',{
+                  initialValue: step.productPoundage,
                 })(
                   <Input
                     type="number"
@@ -375,6 +386,7 @@ class Step1 extends React.PureComponent {
                >
                  <InputGroup compact>
                     {getFieldDecorator('approvalAgingStart',{
+                      initialValue: step.approvalAgingStart,
                       rules:[{
                         required: true,
                         message: '请输入审批时效'
@@ -388,6 +400,7 @@ class Step1 extends React.PureComponent {
                      type="number"
                      style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
                    {getFieldDecorator('approvalAgingEnd',{
+                     initialValue: step.approvalAgingEnd,
                      rules:[{
                        required: true,
                        message: '请输入审批时效'
@@ -407,6 +420,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productNotice',{
+                  initialValue: step.productNotice,
                   rules: [
                     {
                       required: true,
@@ -427,6 +441,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('productRecommend',{
+                  initialValue: step.productRecommend,
                   rules: [
                     {
                       required: true,
@@ -448,7 +463,9 @@ class Step1 extends React.PureComponent {
                 label="排序"
                 {...formItemLayout}
                >
-                {getFieldDecorator('productSort')(
+                {getFieldDecorator('productSort', {
+                  initialValue: step.productSort,
+                })(
                   <Input
                     placeholder="请输入"
                   />
@@ -463,6 +480,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout1}
                >
                 {getFieldDecorator('productType',{
+                  initialValue: step.productType,
                   rules: [
                     {
                       required: true,
@@ -489,9 +507,9 @@ class Step1 extends React.PureComponent {
                 label="房产类型"
                 {...formItemLayout1}
                 // (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'')
-                style={{
-                  display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'') == '1' ? 'block' : 'none',
-                }}
+                // style={{
+                //   display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'') == '1' ? 'block' : 'none',
+                // }}
                >
                 {getFieldDecorator('propertyType')(
                   <Select
@@ -514,6 +532,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout1}
                >
                 {getFieldDecorator('customerType',{
+                  initialValue: step.customerType,
                   rules: [
                     {
                       required: true,
@@ -541,6 +560,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout1}
                >
                 {getFieldDecorator('productPayWay',{
+                  initialValue: step.productPayWay,
                   rules: [
                     {
                       required: true,
@@ -568,6 +588,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout1}
                >
                 {getFieldDecorator('productFeatures',{
+                  initialValue: step.productFeatures,
                   rules: [
                     {
                       required: true,
@@ -609,6 +630,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('shelfState',{
+                  initialValue: step.shelfState,
                   rules: [
                     {
                       required: true,
