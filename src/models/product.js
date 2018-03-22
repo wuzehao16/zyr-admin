@@ -17,7 +17,9 @@ export default {
     intRange: [],
     audit: [],
     institutionType: [],
-    step:{},
+    step:{
+      productType:[],
+    },
     prodCategory: [],
     propCategory: [],
     cusCategory: [],
@@ -203,11 +205,17 @@ export default {
       });
     },
     *submitStepForm({ payload }, { call, put }) {
-      yield call(add, payload);
-      yield put({
-        type: 'saveStepFormData',
-        payload,
-      });
+      const response = yield call(add, payload);
+      if (response.code === 0) {
+        message.success('新增成功');
+        yield put({
+          type: 'removeStepFormDate',
+        });
+      } else {
+        message.error(response.msg)
+        return
+      }
+
       yield put(routerRedux.push('/product'));
     },
   },
@@ -225,6 +233,14 @@ export default {
         step: {
           ...state.step,
           ...payload,
+        },
+      };
+    },
+    removeStepFormDate(state, { payload }) {
+      return {
+        ...state,
+        step:{
+          productType:[],
         },
       };
     },

@@ -24,6 +24,13 @@ export default class BasicForms extends PureComponent {
       sysMenus: value,
     });
   }
+  componentDidMount () {
+    const { data: { item } } = this.props;
+    const { setFieldsValue } = this.props.form;
+    setFieldsValue({
+      orderId: item.orderId,
+    });
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -211,7 +218,9 @@ export default class BasicForms extends PureComponent {
   }
   render() {
     const { submitting, data: { item }, dispatch } = this.props;
-    const { getFieldDecorator, getFieldValue } = this.props.form;
+    const { getFieldDecorator, getFieldValue, setFieldsValue } = this.props.form;
+    console.log(item)
+    getFieldDecorator("orderId")
     return (
       <PageHeaderLayout title="订单详情" >
         <Card bordered={false}>

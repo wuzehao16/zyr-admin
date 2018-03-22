@@ -24,7 +24,6 @@ export default {
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
-      console.log(response)
       if (response.code === 0) {
         message.success('删除成功');
       } else {

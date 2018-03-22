@@ -99,6 +99,7 @@ class Step1 extends React.PureComponent {
       var cusCategoryOptions = cusCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var repMethodOptions = repMethod.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var prodFeaturesOptions = prodFeatures.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+      getFieldValue('productType')? console.log(getFieldValue('productType')) : console.log("123")
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -136,16 +137,10 @@ class Step1 extends React.PureComponent {
       validateFields((err, values) => {
         console.log(values,err)
         if (!err) {
-          console.log(1)
           dispatch({
             type: 'product/saveStepFormData',
             payload: {
               ...values,
-              productFeatures: values.productFeatures && values.productFeatures.join(','),
-              productPayWay: values.productPayWay && values.productPayWay.join(','),
-              customerType: values.customerType && values.customerType.join(','),
-              productType: values.productType && values.productType.join(','),
-              propertyType: values.propertyType && values.propertyType.join(','),
               productTimeLimit: values.productTimeLimitStart + ',' + values.productTimeLimitEnd,
               approvalAging: values.approvalAgingStart + ',' + values.approvalAgingEnd,
               productPoundage: values.productPoundage ? values.productPoundage : 0,
@@ -507,11 +502,13 @@ class Step1 extends React.PureComponent {
                 label="房产类型"
                 {...formItemLayout1}
                 // (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'')
-                // style={{
-                //   display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'') == '1' ? 'block' : 'none',
-                // }}
+                style={{
+                  display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110).length:'') == '1' ? 'block' : 'none',
+                }}
                >
-                {getFieldDecorator('propertyType')(
+                {getFieldDecorator('propertyType', {
+                  initialValue: step.propertyType,
+                })(
                   <Select
                     mode="multiple"
                     style={{ width: '100%' }}

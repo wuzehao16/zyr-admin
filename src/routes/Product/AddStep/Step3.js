@@ -53,6 +53,11 @@ class Step3 extends React.PureComponent {
         type: 'product/submitStepForm',
         payload: {
           ...data,
+          productFeatures: data.productFeatures && data.productFeatures.join(','),
+          productPayWay: data.productPayWay && data.productPayWay.join(','),
+          customerType: data.customerType && data.customerType.join(','),
+          productType: data.productType && data.productType.join(','),
+          propertyType: data.propertyType && data.propertyType.join(','),
           applyFlow
         },
       });

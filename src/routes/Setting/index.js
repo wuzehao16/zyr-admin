@@ -514,7 +514,7 @@ export default class BasicForms extends PureComponent {
 
             </TabPane>
             <TabPane tab="机构信息" key="2">
-              <DescriptionList size="large" title="设置LOGO" style={{ marginBottom: 32 }} col={2}>
+              <DescriptionList size="large" style={{ marginBottom: 32 }} col={2}>
 
                 <Description term="机构logo">
                   <img src={item.manageLogoId} alt="" width={80} height={80}/>
@@ -525,7 +525,7 @@ export default class BasicForms extends PureComponent {
                 <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
                 <Description term="所在城市">{item.city}</Description>
                 <Description term="机构名称">{item.manageName}</Description>
-                <p>如需修改基本信息联系客服</p>
+                <p>如需修改基本信息联系客服（0755）21046730</p>
               </DescriptionList>
             </TabPane>
 
