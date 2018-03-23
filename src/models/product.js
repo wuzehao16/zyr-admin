@@ -102,6 +102,16 @@ export default {
       }
       yield put(routerRedux.push('/product'));
     },
+    *updateAprovalStatus({ payload }, { call, put }) {
+      const response = yield call(updateAprovalStatus, payload);
+      if (response.code === 0) {
+        message.success('提交成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/product'));
+    },
     *updateShelvesStatus({ payload, callback }, { call, put }) {
       const response = yield call(updateShelvesStatus, payload);
       if(response.code === 0){

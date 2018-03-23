@@ -14,7 +14,7 @@ const Option = Select.Option;
 
 @connect(({ product, loading }) => ({
   product,
-  submitting: loading.effects['product/update'],
+  submitting: loading.effects['product/updateAprovalStatus'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -40,7 +40,7 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'product/update',
+          type: 'product/updateAprovalStatus',
           payload: values,
         });
       }
