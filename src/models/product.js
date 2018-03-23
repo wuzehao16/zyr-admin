@@ -93,6 +93,9 @@ export default {
       const response = yield call(update, payload);
       if (response.code === 0) {
         message.success('提交成功');
+        yield put({
+          type: 'removeStepFormDate',
+        });
       } else {
         message.error(response.msg)
         return
