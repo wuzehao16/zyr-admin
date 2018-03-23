@@ -20,7 +20,7 @@ export async function updateOrderState(params) {
   });
 }
 export async function remove(params) {
-  return request(`/sys/deleteOrder/${params.id}`, {
+  return request(`/sys/deleteOrder/${params.orderId}`, {
     method: 'Delete',
   });
 }

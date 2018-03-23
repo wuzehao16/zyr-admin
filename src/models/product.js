@@ -19,6 +19,11 @@ export default {
     institutionType: [],
     step:{
       productType:[],
+      productIntroduction: '',
+      basieReq: '',
+      creditReq: '',
+      positonCount: '',
+      otherReq: '',
     },
     prodCategory: [],
     propCategory: [],

@@ -27,6 +27,8 @@ export default class BasicForms extends PureComponent {
     expandForm1: false,
     expandForm2: false,
     expandForm3: false,
+    visible: false,
+    help: '',
   }
 
   componentDidMount() {
@@ -188,11 +190,73 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
+  checkConfirm = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && value !== form.getFieldValue('newPassword')) {
+      callback('两次输入的密码不一致!');
+    } else {
+      callback();
+    }
+  };
+  checkPassword = (rule, value, callback) => {
+    console.log(value)
+    if (!value) {
+      this.setState({
+        help: '请输入密码！',
+        visible: !!value,
+      });
+      callback('error');
+    } else if(this.checkPass(value) < 2){
+      this.setState({
+        help: '请输入6-24位字母、数字或“_”,两种以上',
+        visible: !!value,
+      });
+      callback('error');
+    } else {
+      this.setState({
+        help: '',
+      });
+      if (value.length < 6) {
+        callback('error');
+      } else {
+        if (!this.state.visible) {
+          this.setState({
+            visible: !!value,
+          });
+        }
+        const { form } = this.props;
+        if (value && this.state.confirmDirty) {
+          form.validateFields(['confirm'], { force: true });
+        }
+        callback();
+      }
+    }
+  };
+  checkPass = (s) => {
+    if (s.length < 6) {
+      return 0;
+    }
+    let ls = 0;
+    if (s.match(/([a-z])+/)) {
+      ls += 1;
+    }
+    if (s.match(/([0-9])+/)) {
+      ls += 1;
+    }
+    if (s.match(/([A-Z])+/)) {
+      ls += 1;
+    }
+    if (s.match(/[^a-zA-Z0-9]+/)) {
+      ls += 1;
+    }
+    return ls
+  }
   renderAdvancedForm1() {
+    const { help } = this.state;
     const { submitting, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
     return(
-      <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={1}>
+      <DescriptionList size="large" title="修改密码" style={{ marginBottom: 32 }} col={1}>
         <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过<a  onClick={()=> dispatch(routerRedux.push('/user/reset-password'))}>手机号重置</a>或通过<a onClick={() => dispatch(routerRedux.push('/user/reset-password'))}>邮箱重置</a>您的密码。</Description>
         <Form
           onSubmit={this.handleSubmit}
@@ -207,23 +271,45 @@ export default class BasicForms extends PureComponent {
                   message: '请输入旧密码'
                 }]
               })(
-                <Input style={{width:'200px'}} type="password"/>
+                <Input style={{width:'200px'}} type="password" placeholder="旧密码"/>
             )}
             </FormItem>
           </Col>
         </Description>
         <Description term="新密码">
           <Col sm={12} xs={24}>
-            <FormItem >
+            <FormItem
+              help={this.state.help}
+              >
               {getFieldDecorator('newPassword',{
                 rules: [{
                   required: true,
                   message: '请输入新密码'
+                },
+                {
+                  validator: this.checkPassword,
                 }]
               })(
-                <Input style={{width:'200px'}} type="password"/>
+                <Input style={{width:'200px'}} type="password" placeholder="新密码"/>
             )}
             </FormItem>
+          </Col>
+        </Description>
+        <Description term="确实密码">
+          <Col sm={12} xs={24}>
+            <Form.Item>
+              {getFieldDecorator('confirm', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请确认密码！',
+                  },
+                  {
+                    validator: this.checkConfirm,
+                  },
+                ],
+              })(<Input style={{width:'200px'}}  type="password" placeholder="确认密码"/>)}
+          </Form.Item>
           </Col>
         </Description>
         <Description>
@@ -242,7 +328,7 @@ export default class BasicForms extends PureComponent {
   renderSimpleForm1() {
     const {  dispatch } = this.props;
     return(
-    <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={1}>
+    <DescriptionList size="large" title="修改密码" style={{ marginBottom: 32 }} col={1}>
       <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过<a  onClick={()=> dispatch(routerRedux.push('/user/reset-password'))}>手机号重置</a>或通过<a onClick={() => dispatch(routerRedux.push('/user/reset-password'))}>邮箱重置</a>您的密码。</Description>
       <a style={{ float:'right' }} onClick={this.toggleForm1}>
         展开 <Icon type="down" />
@@ -497,7 +583,7 @@ export default class BasicForms extends PureComponent {
       <PageHeaderLayout title="账号设置" >
         <Card bordered={false}>
           <Tabs defaultActiveKey="1">
-            <TabPane tab="个人信息" key="1">
+            <TabPane tab="基本设置" key="1">
                 {currentUser.data.loginAccount ? (
                   <div>
 
@@ -513,7 +599,7 @@ export default class BasicForms extends PureComponent {
 
 
             </TabPane>
-            <TabPane tab="机构信息" key="2">
+            <TabPane tab="基本信息" key="2">
               <DescriptionList size="large" style={{ marginBottom: 32 }} col={2}>
 
                 <Description term="机构logo">

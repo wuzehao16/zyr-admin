@@ -120,7 +120,7 @@ class Editor extends React.Component {
       toolbar: {
             container:  [['bold', 'italic', 'underline', 'blockquote'],
                 [{'list': 'ordered'}, {'list': 'bullet'}],
-                ['formula','link', 'image'],
+                ['link', 'image'],
                 ['clean']],
          handlers: {
              'image': this.imageHandler

@@ -59,10 +59,9 @@ class Step2 extends React.PureComponent {
   render() {
     const { form, data, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFields } = form;
+
     const onPrev = () => {
-      // dispatch(routerRedux.push('/product/add/step1'));
-      console.log(1)
-      window.history.go(-1)
+      dispatch(routerRedux.push('/product/add/step1'));
     };
     const onValidateForm = (e) => {
       dispatch(routerRedux.push('/product/add/step3'));
@@ -85,6 +84,7 @@ class Step2 extends React.PureComponent {
           {...formItemLayout}
            label="产品介绍">
            <ReactQuill
+             defaultValue={data.productIntroduction}
              value={this.state.productIntroduction}
              onChange={this.productIntroduction}
              placeholder='请输入...'
@@ -94,6 +94,7 @@ class Step2 extends React.PureComponent {
           {...formItemLayout}
            label="基本要求">
            <ReactQuill
+             defaultValue={data.basieReq}
              value={this.state.basieReq}
              onChange={this.basieReq}
              placeholder='请输入...'
@@ -103,6 +104,7 @@ class Step2 extends React.PureComponent {
           {...formItemLayout}
            label="征信要求">
            <ReactQuill
+             defaultValue={data.creditReq}
              value={this.state.creditReq}
              onChange={this.creditReq}
              placeholder='请输入...'
@@ -112,6 +114,7 @@ class Step2 extends React.PureComponent {
           {...formItemLayout}
            label="额度计算">
            <ReactQuill
+             defaultValue={data.positonCount}
              value={this.state.positonCount}
              onChange={this.positonCount}
              placeholder='请输入...'
@@ -121,6 +124,7 @@ class Step2 extends React.PureComponent {
           {...formItemLayout}
            label="其它要求">
            <ReactQuill
+             defaultValue={data.otherReq}
              value={this.state.otherReq}
              onChange={this.otherReq}
              placeholder='请输入...'
