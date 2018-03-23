@@ -295,7 +295,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
           </Col>
         </Description>
-        <Description term="确实密码">
+        <Description term="确认密码">
           <Col sm={12} xs={24}>
             <Form.Item>
               {getFieldDecorator('confirm', {

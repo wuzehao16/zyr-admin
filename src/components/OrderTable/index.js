@@ -124,6 +124,7 @@ class StandardTable extends PureComponent {
         title: '操作',
         align: 'center',
         fixed: 'right',
+        width: 120,
         render: (text, record) => {
           return (
             <Fragment>
