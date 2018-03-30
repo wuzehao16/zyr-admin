@@ -56,6 +56,11 @@ export default class BasicForms extends PureComponent {
     });
   }
   getInstitution = (code) => {
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('sublInstitution')){
+      resetFields(['sublInstitution','manageId'])
+    }
+
     this.props.dispatch({
       type: 'institution/getInstitution',
       payload: {

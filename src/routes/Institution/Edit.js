@@ -90,6 +90,16 @@ export default class BasicForms extends PureComponent {
   handleChange = ({ fileList }) => {
     this.setState({ fileList })
   }
+  changeCity = (code) => {
+    const { resetFields } = this.props.form;
+    resetFields(['sublInstitution','manageId'])
+    this.props.dispatch({
+      type: 'institution/getInstitution',
+      payload: {
+        cityCode: code
+      },
+    });
+  }
   getInstitution = (code) => {
     this.props.dispatch({
       type: 'institution/getInstitution',
@@ -184,7 +194,7 @@ export default class BasicForms extends PureComponent {
                       required: true, message: '请选择算在城市',
                     }],
                   })(
-                    <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getInstitution}>
+                    <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.changeCity}>
                       {cityOptions}
                     </Select>
                   )}
