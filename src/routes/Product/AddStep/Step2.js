@@ -64,7 +64,7 @@ class Step2 extends React.PureComponent {
       dispatch(routerRedux.push('/product/add/step1'));
     };
     const onValidateForm = (e) => {
-      dispatch(routerRedux.push('/product/add/step3'));
+
       e.preventDefault();
       // validateFields((err, values) => {
         // if (!err) {
@@ -75,6 +75,7 @@ class Step2 extends React.PureComponent {
               ...this.state,
             },
           });
+          dispatch(routerRedux.push('/product/add/step3'));
         // }
       // });
     };
@@ -152,7 +153,6 @@ class Step2 extends React.PureComponent {
   }
 }
 
-export default connect(({ product, loading }) => ({
-  submitting: loading.effects['product/submitStepForm'],
+export default connect(({ product }) => ({
   data: product.step,
 }))(Step2);

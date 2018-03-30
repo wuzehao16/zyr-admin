@@ -99,7 +99,6 @@ class Step1 extends React.PureComponent {
       var cusCategoryOptions = cusCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var repMethodOptions = repMethod.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var prodFeaturesOptions = prodFeatures.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-      getFieldValue('productType')? console.log(getFieldValue('productType')) : console.log("123")
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -336,7 +335,7 @@ class Step1 extends React.PureComponent {
                    })(
                   <Input
                     type="number"
-                    style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
+                    style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
                   )}
                    <Input
                      type="number"
@@ -348,7 +347,7 @@ class Step1 extends React.PureComponent {
                        message: '请输入产品期限'
                      }]
                    })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="Maximum" />
+                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="最大值" />
                    )}
                  </InputGroup>
 
@@ -389,7 +388,7 @@ class Step1 extends React.PureComponent {
                     })(
                    <Input
                      type="number"
-                     style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
+                     style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
                    )}
                    <Input
                      type="number"
@@ -401,7 +400,7 @@ class Step1 extends React.PureComponent {
                        message: '请输入审批时效'
                      }]
                    })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
+                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="最大值" />
                    )}
                  </InputGroup>
 

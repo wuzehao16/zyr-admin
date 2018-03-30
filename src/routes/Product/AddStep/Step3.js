@@ -6,15 +6,19 @@ import Result from '../../../components/Result';
 import styles from './style.less';
 
 const Step = Steps.Step;
-class Step3 extends React.PureComponent {
-  state = {
-    step1: '',
-    step2: '',
-    step3: '',
-    step4: undefined,
-    step5: '',
-    step6: '',
+class Step3 extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+        step1: props.data.step1,
+        step2: props.data.step2,
+        step3: props.data.step3,
+        step4: props.data.step4,
+        step5: props.data.step5,
+        step6: props.data.step6,
+      }
   }
+
   onChangeStep1 = (e) =>{
     this.setState({
       step1: e.target.value
@@ -47,6 +51,7 @@ class Step3 extends React.PureComponent {
   }
   render() {
     const { dispatch, data, submitting } = this.props;
+    console.log(data)
     const onFinish = () => {
       const applyFlow = Object.values(this.state).join(",")
       dispatch({
@@ -68,13 +73,20 @@ class Step3 extends React.PureComponent {
       </Popover>
     );
     const onPrev = () => {
+      dispatch({
+        type: 'product/saveStepFormData',
+        payload: {
+          ...data,
+          ...this.state,
+        },
+      });
       dispatch(routerRedux.push('/product/add/step2'));
     };
     return (
       <div style={{marginTop:"50px"}}>
         <h1>申请流程:</h1>
         <Steps current={6} progressDot style={{marginTop:"50px"}} >
-          <Step title="1" description={<Input  onChange={this.onChangeStep1} placeholder="申请"/>} />
+          <Step title="1" description={<Input value={this.state.step1} onChange={this.onChangeStep1} placeholder="请输入"/>} />
           <Step title="2" description={<Input value={this.state.step2} onChange={this.onChangeStep2} placeholder="请输入"/>} />
           <Step title="3" description={<Input value={this.state.step3} onChange={this.onChangeStep3} placeholder="请输入"/>} />
           <Step title="4" description={<Input value={this.state.step4} onChange={this.onChangeStep4} placeholder="请输入"/>} />

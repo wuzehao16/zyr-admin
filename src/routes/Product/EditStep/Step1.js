@@ -349,7 +349,7 @@ class Step1 extends React.PureComponent {
                    })(
                   <Input
                     type="number"
-                    style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
+                    style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
                   )}
                    <Input
                      type="number"
@@ -357,7 +357,7 @@ class Step1 extends React.PureComponent {
                    {getFieldDecorator('productTimeLimitEnd',{
                      initialValue:item.productTimeLimit?item.productTimeLimit.split(',')[1]:''
                    })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="Maximum" />
+                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="最大值" />
                    )}
                  </InputGroup>
 
@@ -398,7 +398,7 @@ class Step1 extends React.PureComponent {
                     })(
                    <Input
                      type="number"
-                     style={{ width: '40%', textAlign: 'center' }} placeholder="Minimum" />
+                     style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
                    )}
                    <Input
                      type="number"
@@ -410,7 +410,7 @@ class Step1 extends React.PureComponent {
                        message: '请输入审批时效'
                      }]
                    })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
+                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="最大值" />
                    )}
                  </InputGroup>
 
