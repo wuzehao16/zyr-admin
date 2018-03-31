@@ -90,12 +90,12 @@ class StandardTable extends PureComponent {
       {
         title: '实际贷款金额',
         dataIndex: 'realLoanMoney',
-        render: val => `${val}万`,
+        render: val => val?`${val}万`:"--",
       },
       {
         title: '贷款期限',
         dataIndex: 'loanLimit',
-        render: val => `${val}期`,
+        render: val => val?`${val}期`:"--",
       },
       {
         title: '贷款人',
