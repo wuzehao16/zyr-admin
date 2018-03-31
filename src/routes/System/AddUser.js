@@ -24,14 +24,14 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        if (values.sysRoles) {
-          values.sysRoles.map((item, index, arr) => {
+        var newValues = [];
+          newValues = JSON.parse(JSON.stringify(values))
+          newValues.sysRoles.map((item, index, arr) => {
             arr[index] = { roleId: item };
           });
-        }
         this.props.dispatch({
-          type: 'systemUser/add',
-          payload: values,
+          type: 'systemUser/update',
+          payload: newValues,
         });
       }
     });

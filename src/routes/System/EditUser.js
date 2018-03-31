@@ -16,28 +16,6 @@ const CheckboxGroup = Checkbox.Group;
   submitting: loading.effects['systemUser/update'],
 }))
 @Form.create({
-  // mapPropsToFields(props) {
-  //   console.log('mapPropsToFields', props);
-  //   const item = props.data.data.item;
-  //   console.log(item.loginAccount)
-  //   return {
-  //     loginAccount: Form.createFormField(item.loginAccount),
-  //     loginPassord: Form.createFormField(item.loginPassord),
-  //     userName: Form.createFormField(item.userNames),
-  //     islock: Form.createFormField(item.islock),
-  //     userId: Form.createFormField(item.islock),
-  //   };
-  // },
-  // onFieldsChange(props, fields) {
-  //   console.log('onFieldsChange', fields);
-  //   props.dispatch({
-  //     type: 'save_fields',
-  //     payload: fields,
-  //   });
-  // },
-  //  onValuesChange(_, values) {
-  //   console.log(values);
-  // },
 })
 export default class BasicForms extends PureComponent {
   componentWillMount() {
@@ -73,14 +51,15 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        if (values.sysRoles) {
-          values.sysRoles.map((item, index, arr) => {
+        var newValues = [];
+          newValues = JSON.parse(JSON.stringify(values))
+          newValues.sysRoles.map((item, index, arr) => {
             arr[index] = { roleId: item };
           });
-        }
+
         this.props.dispatch({
           type: 'systemUser/update',
-          payload: values,
+          payload: newValues,
         });
       }
     });
