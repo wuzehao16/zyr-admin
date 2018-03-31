@@ -13,6 +13,7 @@ export default {
       pagination: {},
     },
     item: {},
+    repMethod:[],
     orderType:[],
   },
 
@@ -48,6 +49,16 @@ export default {
         return
       }
       if (callback) callback();
+    },
+    // 还款方式
+    *fetchRepMethod({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          repMethod: response.data
+        },
+      });
     },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);

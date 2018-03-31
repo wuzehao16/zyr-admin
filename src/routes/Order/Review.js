@@ -30,6 +30,12 @@ export default class BasicForms extends PureComponent {
     setFieldsValue({
       orderId: item.orderId,
     });
+    this.props.dispatch({
+      type: 'order/fetchRepMethod',
+      payload: {
+        type: 'repMethod'
+      },
+    });
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -133,8 +139,9 @@ export default class BasicForms extends PureComponent {
     )
   }
   renderloan = ()=> {
-    const { submitting, data: { item }, dispatch } = this.props
+    const { submitting, data: { item, repMethod }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
+    var repMethodOptions = repMethod.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     return (
       <div>
         <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
@@ -206,7 +213,7 @@ export default class BasicForms extends PureComponent {
                  }],
                })(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value={6}>拒绝</Option>
+                  { repMethodOptions }
                 </Select>
             )}
             </FormItem>
