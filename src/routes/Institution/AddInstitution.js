@@ -278,7 +278,7 @@ export default class BasicForms extends PureComponent {
                 <FormItem
                   {...formItemLayout}
                    label="启用状态">
-                  {getFieldDecorator('islock',{
+                  {getFieldDecorator('startStatus',{
                     rules: [{
                       required: true, message: '请选择是否启用',
                     }],
