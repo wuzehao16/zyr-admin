@@ -34,7 +34,10 @@ export default class BasicForms extends PureComponent {
             <Description term="来源网址">{item.sourceSite}</Description>
             <Description term="内容类型">{item.contentTypeName}</Description>
             <Description term="是否显示">{item.isDisplay==1?'是':'否'}</Description>
-            <Description term="标签选择">{item.contentTag==0?'荐':item.contentTag==1?'热':'无'}</Description>
+            {
+              item.contentTypeName == '图文'
+              ?<Description term="标签选择">{item.contentTag==0?'荐':item.contentTag==1?'热':'无'}</Description> :<Description></Description>
+            }
 
           </DescriptionList>
           <Divider style={{ marginBottom: 12 }} />
