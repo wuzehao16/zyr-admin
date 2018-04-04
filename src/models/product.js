@@ -10,9 +10,11 @@ export default {
   state: {
     data: {
       data: [],
-      pagination: {},
+      pagination: "",
     },
-    item: {},
+    item: {
+      applyFlow:""
+    },
     city: [],
     intRange: [],
     audit: [],
@@ -146,7 +148,6 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/product/Detail'));
     },
     *fetchReview({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);

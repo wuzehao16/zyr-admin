@@ -19,15 +19,7 @@ const Option = Select.Option;
 @Form.create()
 export default class BasicForms extends PureComponent {
   componentDidMount() {
-    const { setFieldsValue } = this.props.form;
-    if (this.props.product.item) {
-      const { item } = this.props.product;
-      if (item.productId) {
-        setFieldsValue({
-          productId: item.productId,
-        });
-      }
-    }
+
   }
   onCheck = (value) => {
     const { setFieldsValue } = this.props.form;
@@ -49,7 +41,7 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, product: { item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue  } = this.props.form;
-    getFieldDecorator('productId')
+    getFieldDecorator('productId',{initialValue:item.productId})
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },

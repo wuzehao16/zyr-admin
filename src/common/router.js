@@ -269,11 +269,11 @@ export const getRouterData = (app) => {
     '/product/list': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product/List')),
     },
-    '/product/detail': {
+    '/product/detail/:id': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Detail')),
       name: '产品详情',
     },
-    '/product/Review': {
+    '/product/Review/:id': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Review')),
       name: '产品审核',
     },
