@@ -353,11 +353,11 @@ export const getRouterData = (app) => {
     '/order/list': {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order/List')),
     },
-    '/order/detail': {
+    '/order/detail/:id': {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order/Detail')),
       name: '订单详情',
     },
-    '/order/review': {
+    '/order/review/:id': {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order/Review')),
       name: '订单详情',
     },

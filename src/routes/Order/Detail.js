@@ -15,10 +15,13 @@ const Step = Steps.Step;
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  onCheck = (value) => {
-    const { setFieldsValue } = this.props.form;
-    setFieldsValue({
-      sysMenus: value,
+  componentDidMount () {
+    const id = this.props.match.params.id;
+    this.props.dispatch({
+      type: 'order/fetchDetail',
+      payload: {
+        orderId: id,
+      },
     });
   }
   renderForm() {
@@ -97,7 +100,7 @@ export default class BasicForms extends PureComponent {
     return (
       <div>
         <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
-        <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
+        <Steps progressDot  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
           <Step title="申请中" />
           <Step title="已申请" />
           <Step title="已初审" />
@@ -106,11 +109,11 @@ export default class BasicForms extends PureComponent {
           <Step title="已放款" />
         </Steps>
         <DescriptionList size="large"  style={{ marginBottom: 32 }} col={2}>
-          <Description term="贷款金额">{item.realLoanMoney}万</Description>
-          <Description term="贷款期限">{item.loanLimit}期</Description>
-          <Description term="还款方式">{item.realLoanTypeName}</Description>
-          <Description term="平台收益">{item.platformIncome}元</Description>
-          <Description term="提单人佣金">{item.soleCommission}元</Description>
+          <Description term="贷款金额">{item.realLoanMoney + '万'}</Description>
+          <Description term="贷款期限">{item.loanLimit + '期'}</Description>
+          <Description term="还款方式">{item.realTypeName}</Description>
+          <Description term="平台收益">{item.platformIncome + '元'}</Description>
+          <Description term="提单人佣金">{item.soleCommission + '元'}</Description>
         </DescriptionList>
       </div>
     )
@@ -129,7 +132,7 @@ export default class BasicForms extends PureComponent {
             <Description term="推荐语">{item.productRecommend}</Description>
             <Description term="提单人">{item.userName}</Description>
             <Description term="提单人手机">{item.userPhone}</Description>
-            <Description term="产品分润比例">{item.productRatio}%</Description>
+            <Description term="产品分润比例">{item.productRatio + '%'}</Description>
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="贷款人信息" style={{ marginBottom: 32 }} col={2}>
@@ -143,8 +146,8 @@ export default class BasicForms extends PureComponent {
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
           <DescriptionList size="large" title="申请贷款信息" style={{ marginBottom: 32 }} col={2}>
-            <Description term="贷款金额">{item.loanMoney}万</Description>
-            <Description term="贷款期限">{item.loanLimit}期</Description>
+            <Description term="贷款金额">{item.loanMoney + '万'}</Description>
+            <Description term="贷款期限">{item.loanLimit + '期'}</Description>
             <Description term="还款方式">{item.payTypeName}</Description>
             <Description term="申请备注">{item.applicationNotes}</Description>
           </DescriptionList>

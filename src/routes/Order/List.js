@@ -81,20 +81,10 @@ export default class TableList extends PureComponent {
     this.handleModalVisible(true);
   }
   handleReview = (item) => {
-    this.props.dispatch({
-      type: 'order/fetchReview',
-      payload: {
-        orderId: item.orderId,
-      },
-    });
+    this.props.dispatch(routerRedux.push('/order/review/' + item.orderId));
   }
   handleDetail = (item) => {
-    this.props.dispatch({
-      type: 'order/fetchDetail',
-      payload: {
-        orderId: item.orderId,
-      },
-    });
+    this.props.dispatch(routerRedux.push('/order/detail/' + item.orderId));
   }
 
   handleStandardTableChange = (pagination, filtersArg, sorter) => {

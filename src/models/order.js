@@ -66,15 +66,6 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/order/detail'));
-    },
-    *fetchReview({payload}, { call, put }) {
-      const response = yield call(queryDetail, payload);
-      yield put({
-        type: 'saveDetail',
-        payload: response.data,
-      });
-      yield put(routerRedux.push('/order/review'));
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);

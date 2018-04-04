@@ -18,18 +18,15 @@ const Option = Select.Option;
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  onCheck = (value) => {
-    const { setFieldsValue } = this.props.form;
-    setFieldsValue({
-      sysMenus: value,
-    });
-  }
   componentDidMount () {
-    const { data: { item } } = this.props;
-    const { setFieldsValue } = this.props.form;
-    setFieldsValue({
-      orderId: item.orderId,
+    const id = this.props.match.params.id;
+    this.props.dispatch({
+      type: 'order/fetchDetail',
+      payload: {
+        orderId: id,
+      },
     });
+
     this.props.dispatch({
       type: 'order/fetchRepMethod',
       payload: {
@@ -70,7 +67,7 @@ export default class BasicForms extends PureComponent {
     return (
       <div>
       <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
-      <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
+      <Steps progressDot  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
         <Step title="申请中" />
         <Step title="已申请" />
         <Step title="已初审" />
@@ -145,7 +142,7 @@ export default class BasicForms extends PureComponent {
     return (
       <div>
         <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
-        <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80 }}>
+        <Steps progressDot  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
           <Step title="申请中" />
           <Step title="已申请" />
           <Step title="已初审" />
@@ -226,8 +223,7 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data: { item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue, setFieldsValue } = this.props.form;
-    console.log(item)
-    getFieldDecorator("orderId")
+    getFieldDecorator("orderId",{initialValue: item.orderId})
     return (
       <PageHeaderLayout title="订单详情" >
         <Card bordered={false}>
