@@ -21,6 +21,7 @@ import { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeNa
 import { selectAds, updateAds, saveAds, getAdsDetail, deleteAds } from './mock/advertisement'
 import { selectPMI,selectAllMI, updatePMI, savePMI, getPMIDetail, deletePMI } from './mock/info'
 import { selectOrder, selectOrderDetail, queryOrderByInstitution, updateOrder, deleteOrder } from './mock/order'
+import { selectModel, saveModel } from './mock/match'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -246,6 +247,9 @@ const proxy = {
   'GET /sys/selectOrderByManageId': queryOrderByInstitution,
   'PUT /sys/updateOrderStauts': updateOrder,
   'DELETE /sys/deleteOrder/*': deleteOrder,
+  //智能匹配
+  'GET /sys/getInfoModeList': selectModel,
+  'GET /sys/newAddMode': saveModel,
 
 };
 

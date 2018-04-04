@@ -140,6 +140,10 @@ const menuData = [{
       // ]
     },
   ],
+}, {
+ name: '模型匹配',
+ icon: 'user',
+ path: 'match',
 },{
   name: '用户管理',
   icon: 'user',

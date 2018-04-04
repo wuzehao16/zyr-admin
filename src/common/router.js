@@ -361,9 +361,13 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order/Review')),
       name: '订单详情',
     },
-    // '/user/:id': {
-    //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
-    // },
+    '/match': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match')),
+      name: '模型匹配',
+    },
+    '/match/list': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/List')),
+    },
   };
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());
