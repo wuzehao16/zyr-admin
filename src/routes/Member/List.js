@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Menu, DatePicker, Modal } from 'antd';
+import { routerRedux } from 'dva/router';
 import StandardTable from '../../components/MemberTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -90,20 +91,10 @@ export default class TableList extends PureComponent {
     this.handleModalVisible(true);
   }
   handleEdit = (item) => {
-    this.props.dispatch({
-      type: 'member/fetchEdit',
-      payload: {
-        userId: item.userId,
-      },
-    });
+    this.props.dispatch(routerRedux.push('/member/edit/' + item.userId))
   }
   handleDetail = (item) => {
-    this.props.dispatch({
-      type: 'member/fetchDetail',
-      payload: {
-        userId: item.userId,
-      },
-    });
+    this.props.dispatch(routerRedux.push('/member/detail/' + item.userId))
   }
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;

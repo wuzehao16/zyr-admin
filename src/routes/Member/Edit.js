@@ -22,22 +22,13 @@ export default class BasicForms extends PureComponent {
     this.props.dispatch({
       type: 'member/getInstitution',
     });
-    const { setFieldsValue } = this.props.form;
-    if (this.props.data.item) {
-      const { item } = this.props.data;
-      setFieldsValue({
-        loginAccount: item.loginAccount,
-        islock: item.islock,
-        isCustom: item.isCustom,
-        userIdentity: item.userIdentity,
-        userId: item.userId,
-      });
-      if (item.manageId) {
-        setFieldsValue({
-          manageId: item.manageId,
-        });
-      }
-    }
+    const id = this.props.match.params.id;
+    this.props.dispatch({
+      type: 'member/fetchDetail',
+      payload: {
+        userId: id,
+      },
+    });
   }
   onCheck = (value) => {
     const { setFieldsValue } = this.props.form;
@@ -66,8 +57,12 @@ export default class BasicForms extends PureComponent {
   }
   render() {
     const { submitting, data: { item, institutionList }, dispatch } = this.props;
-    const { getFieldDecorator, getFieldValue } = this.props.form;
-    getFieldDecorator('userId');
+    const { getFieldDecorator, getFieldValue, setFieldsValue } = this.props.form;
+    getFieldDecorator('userId',{initialValue:item.userId});
+    // setFieldsValue({
+    //   userId: item.userId,
+    // });
+    console.log(item)
     if (institutionList) {
       var institutionListOptions = institutionList.map(item => <Option key={item.manageId} title={item.manageName} >{item.manageName}</Option>);
     }
@@ -85,12 +80,12 @@ export default class BasicForms extends PureComponent {
                 <Col sm={12} xs={24}>
                   <FormItem >
                     {getFieldDecorator('loginAccount', {
-                      rules: [
-                    { required: true, message: '请输入用户手机号...' },
-                    {
-                      pattern: /^1[3|4|5|8]\d{9}$/,
-                      message: '手机号格式错误！',
-                    },
+                      initialValue:item.loginAccount,
+                      rules: [{ required: true, message: '请输入用户手机号...' },
+                      {
+                        pattern: /^1[3|4|5|8]\d{9}$/,
+                        message: '手机号格式错误！',
+                      },
                     ],
                 })(
                   <Input style={{ marginBottom: 8 }} type="mobile" placeholder="请输入" />
@@ -120,14 +115,14 @@ export default class BasicForms extends PureComponent {
             <Divider style={{ marginBottom: 32 }} />
             <DescriptionList size="large" title="会员信息" style={{ marginBottom: 32 }} col={2}>
               <Description term="是否为会员">{item.isMember === 1 ? '否' : '是'}</Description>
-              { item.isMember === 1 ? <Description>&nbsp;</Description> : (
+              { item.isMember === 0 ? (
                 <div>
                   <Description term="会员等级">{item.leveName}</Description>
                   <Description term="购买时间">{moment(item.appMemberInfo.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
                   <Description term="有效时间">{moment(item.appMemberInfo.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
                   <Description term="购买时长">{item.appMemberInfo.longTime}个月</Description>
                   <Description term="价格">{item.appMemberInfo.memberPrice}元</Description>
-                </div>  )
+                </div>  ) : <Description>&nbsp;</Description>
              }
             </DescriptionList>
             <Divider style={{ marginBottom: 32 }} />
@@ -135,7 +130,9 @@ export default class BasicForms extends PureComponent {
               <Description term="是否为客服">
                 <Col sm={12} xs={24}>
                   <FormItem >
-                    {getFieldDecorator('isCustom')(
+                    {getFieldDecorator('isCustom',{
+                      initialValue:item.isCustom,
+                    })(
                       <Select placeholder="请选择" style={{ width: '100%' }}>
                         <Option value={0}>否</Option>
                         <Option value={1}>是</Option>
@@ -152,7 +149,9 @@ export default class BasicForms extends PureComponent {
               >
                 <Col sm={12} xs={24}>
                   <FormItem >
-                    {getFieldDecorator('userIdentity')(
+                    {getFieldDecorator('userIdentity',{
+                      initialValue:item.userIdentity,
+                    })(
                       <Select placeholder="请选择" style={{ width: '100%' }}>
                         <Option value={1}>机构客服</Option>
                         <Option value={2}>平台客服</Option>
@@ -169,7 +168,9 @@ export default class BasicForms extends PureComponent {
               >
                 <Col sm={12} xs={24}>
                   <FormItem >
-                    {getFieldDecorator('manageId')(
+                    {getFieldDecorator('manageId',{
+                      initialValue:item.manageId,
+                    })(
                       <Select
                         // mode="tags"
                         // value={this.state.value}
@@ -190,7 +191,9 @@ export default class BasicForms extends PureComponent {
               <Description term="启用状态">
                 <Col sm={12} xs={24}>
                   <FormItem >
-                    {getFieldDecorator('islock')(
+                    {getFieldDecorator('islock',{
+                      initialValue:item.islock,
+                    })(
                       <Select placeholder="请选择" style={{ width: '100%' }}>
                         <Option value={0}>禁用</Option>
                         <Option value={1}>启用</Option>

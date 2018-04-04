@@ -44,21 +44,12 @@ export default {
       }
       if (callback) callback();
     },
-    *fetchEdit({payload}, { call, put }) {
-      const response = yield call(queryDetail, payload);
-      yield put({
-        type: 'saveDetail',
-        payload: response.data,
-      });
-      yield put(routerRedux.push('/member/edit'));
-    },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
       yield put({
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/member/Detail'));
     },
     *getInstitution({ payload }, { call, put }) {
       const response = yield call(queryInstitution, payload);

@@ -15,13 +15,15 @@ const { Description } = DescriptionList;
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
-  onCheck = (value) => {
-    const { setFieldsValue } = this.props.form;
-    setFieldsValue({
-      sysMenus: value,
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    this.props.dispatch({
+      type: 'member/fetchDetail',
+      payload: {
+        userId: id,
+      },
     });
   }
-
   render() {
     const { submitting, data: { item }, dispatch } = this.props;
 

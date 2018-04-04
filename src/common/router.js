@@ -254,11 +254,11 @@ export const getRouterData = (app) => {
     '/member/list': {
       component: dynamicWrapper(app, ['member'], () => import('../routes/Member/List')),
     },
-    '/member/edit': {
+    '/member/edit/:id': {
       component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Edit')),
       name: '编辑用户',
     },
-    '/member/detail': {
+    '/member/detail/:id': {
       component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Detail')),
       name: '查看用户详情',
     },
