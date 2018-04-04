@@ -166,7 +166,7 @@ export default class BasicForms extends PureComponent {
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option
                     style={{display:(item.orderStatus < 5)?'block':'none'}}
-                    value={item.orderStatus+1}>下一步</Option>
+                    value={item.orderStatus-1+2}>下一步</Option>
                   <Option value={6}>拒绝</Option>
                 </Select>
             )}
