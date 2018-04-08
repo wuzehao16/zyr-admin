@@ -57,88 +57,39 @@ class StandardTable extends PureComponent {
   render() {
     const { selectedRowKeys } = this.state;
     const { data: { data, count }, loading } = this.props
-    const approvalStatus = ['待上架', '已上架', '已下架'];
-    const institutionType = ['无','银行机构','金融机构','小额贷款'];
-    const isEvaluaStatuts = ['否', '是'];
-    const adsType = [
-      {
-        text: '产品-搜索框广告词',
-        value: 11100,
-      },
-      {
-        text: 'Banner',
-        value: 11200,
-      },
-      {
-        text: '小喇叭',
-        value: 11300,
-      },
-      {
-        text: 'app启动页',
-        value: 11400,
-      },
-    ]
     const columns = [
       {
-        title: '序号',
-        dataIndex: 'no',
+        // title: '模型名称',
+        dataIndex: 'modeName',
         render: (text, record, index) => {
+          console.log(record)
           return (
-              <span>{index+1}</span>
+            <div className={styles.model_name}>
+              <div className={styles.model_title}>{text}</div>
+              <div className={record.modeStatus===1?styles.act:styles.disabled}>{record.modeStatus===1?'启用':'禁用'}</div>
+            </div>
+
           );
         },
       },
       {
-        title: '广告类型',
-        dataIndex: 'adsTypeName',
+        // title: '机构名称',
+        dataIndex: 'manageName',
+        render:val => <span className={styles.manageName}>{val}</span>
       },
       {
-        title: '标题',
-        width:'10%',
-        dataIndex: 'adsTitle',
-        render: (text) => <span className={styles.txt}>{text}</span>,
-      },
-      {
-        title: '内容',
-        width:'10%',
-        dataIndex: 'adsContent',
-        render: (text) => <span className={styles.txt}>{text||'--'}</span>,
-      },
-      {
-        title: '匹配词',
-        dataIndex: 'adsMatch',
-        render: (text) => <span className={styles.txt}>{text||'--'}</span>,
-      },
-      {
-        title: '上架状态',
-        dataIndex: 'upState',
-        render(val) {
-          return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
-        },
-      },
-      {
-        title: '排序',
-        sorter: true,
-        dataIndex: 'adsSort',
-      },
-      {
-        title: '操作者',
-        dataIndex: 'oper',
-      },
-      {
-        title: '更新时间',
+        // title: '更新时间',
         dataIndex: 'createTime',
-        sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
-        title: '操作',
+        // title: '操作',
         align: 'center',
         render: (text, record) => {
           return (
             <Fragment>
               <span>
-                <a onClick={() => this.handleResetPassword(record)}>{record.upState==1?'下架':'上架'}</a>
+                <a onClick={() => this.handleResetPassword(record)}>{record.modeStatus==1?'禁止':'启用'}</a>
                 <Divider type="vertical" />
               </span>
               <a onClick={() => this.handleEdit(record)}>编辑</a>
@@ -167,7 +118,7 @@ class StandardTable extends PureComponent {
 
     return (
       <div className={styles.standardTable}>
-        <div className={styles.tableAlert}>
+        {/* <div className={styles.tableAlert}>
           <Alert
             message={(
               <div>
@@ -178,11 +129,11 @@ class StandardTable extends PureComponent {
             type="info"
             showIcon
           />
-        </div>
+        </div> */}
         <Table
           loading={loading}
-          rowKey={record => record.adsId}
-          rowSelection={rowSelection}
+          rowKey={record => record.modeName}
+          // rowSelection={rowSelection}
           dataSource={data}
           // scroll={{ x: 1800}}
           columns={columns}

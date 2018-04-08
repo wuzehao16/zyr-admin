@@ -224,29 +224,26 @@ export default class TableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="广告类型">
-              {getFieldDecorator('matchType')(
+            <FormItem label="名称">
+              {getFieldDecorator('keyword')(
+                    <Input placeholder="请输入模型名称、机构名称" />
+              )}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="启用状态">
+              {getFieldDecorator('modeStatus')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  {matchTypeOptions}
+                  <Option value={0}>禁用</Option>
+                  <Option value={1}>启用</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="上架状态">
-              {getFieldDecorator('upState')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value={0}>待上架</Option>
-                  <Option value={1}>已上架</Option>
-                  <Option value={2}>已下架</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="标题">
-              {getFieldDecorator('matchTitle')(
-                <Input placeholder="请输入" />
+            <FormItem label="跟新时间">
+              {getFieldDecorator('date')(
+                <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
               )}
             </FormItem>
           </Col>
