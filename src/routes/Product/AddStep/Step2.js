@@ -23,6 +23,7 @@ class Step2 extends React.PureComponent {
    basieReq: '',
    creditReq: '',
    positonCount: '',
+   claims:'',
    otherReq: '',
  };
  productIntroduction = (value) => {
@@ -38,6 +39,11 @@ class Step2 extends React.PureComponent {
  creditReq = (value) => {
     this.setState({
       creditReq: value,
+    })
+  };
+ claims = (value) => {
+    this.setState({
+      claims: value,
     })
   };
  positonCount = (value) => {
@@ -108,6 +114,16 @@ class Step2 extends React.PureComponent {
              defaultValue={data.creditReq}
              value={this.state.creditReq}
              onChange={this.creditReq}
+             placeholder='请输入...'
+            />
+        </Form.Item>
+        <Form.Item
+          {...formItemLayout}
+           label="负债要求">
+           <ReactQuill
+             defaultValue={data.claims}
+             value={this.state.claims}
+             onChange={this.claims}
              placeholder='请输入...'
             />
         </Form.Item>
