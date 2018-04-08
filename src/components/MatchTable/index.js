@@ -62,7 +62,6 @@ class StandardTable extends PureComponent {
         // title: '模型名称',
         dataIndex: 'modeName',
         render: (text, record, index) => {
-          console.log(record)
           return (
             <div className={styles.model_name}>
               <div className={styles.model_title}>{text}</div>
