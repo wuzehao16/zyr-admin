@@ -88,8 +88,9 @@ class UploadVideo extends React.Component {
       <div className="clearfix">
         {/* http://47.104.27.184:8000/sysAnno/uploadImage */}
         <Upload
-          action="http://47.104.27.184:8000/sys/uploadVideo"
+          action="http://192.168.2.115:8000/sys/uploadVideo"
           // listType="picture-card"
+          withCredentials='true'
           fileList={fileList}
           // onPreview={this.handlePreview}
           // beforeUpload={this.beforeUpload}
