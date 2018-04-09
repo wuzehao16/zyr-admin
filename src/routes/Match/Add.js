@@ -20,7 +20,7 @@ const formItemLayout = {
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 12 },
-    md: { span: 12 },
+    md: { span: 5 },
   },
 };
 
@@ -91,6 +91,19 @@ export default class BasicForms extends PureComponent {
             hideRequiredMark
             style={{ marginTop: 8 }}
           >
+            <FormItem
+              {...formItemLayout}
+              label="广告类型"
+            >
+              {getFieldDecorator('matchType', {
+                rules: [{
+                  required: true,
+                  message: '请选择广告类型',
+                }],
+              })(
+                <CheckboxGroup options={options} />
+              )}
+            </FormItem>
             <FormItem
               {...formItemLayout}
               label="广告类型"

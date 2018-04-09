@@ -369,7 +369,17 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/List')),
     },
     '/match/add': {
-      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/Add')),
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep')),
+      name: '新增模型',
+    },
+    '/match/add/step1': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step1')),
+    },
+    '/match/add/step2': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step2')),
+    },
+    '/match/add/step3': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step3')),
     },
   };
   // Get name from ./menu.js or just set it in the router data.

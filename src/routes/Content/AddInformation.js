@@ -7,6 +7,7 @@ import {
 import ReactQuill from '../../components/QuillMore';
 import UploadPicture from '../../components/UploadPicture';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import UploadVideo from '../../components/UploadVideo';
 import styles from './AddInformation.less';
 
 const FormItem = Form.Item;
@@ -230,31 +231,48 @@ export default class BasicForms extends PureComponent {
               )}
 
             </FormItem>
+            {
+              getFieldValue('contentType') == 61000
+                ?             <FormItem
+                              label="视频"
+                              {...formItemLayout}
+                            >
+                              {getFieldDecorator('content', {
+                                rules:[{
+                                  required:true,
+                                  message:'请选择视频'
+                                },
+                               ],
+                              })(
+                                 <UploadVideo />
+                              )}
 
-            <Form.Item
-              labelCol= {{
-                xs: { span: 24 },
-                sm: { span: 7 },
-              }}
-              wrapperCol={{
-                xs: { span: 24, offset: 0 },
-                sm: { span: 24, offset: 7 },
-              }}
-              style={{width:'60%'}}
-               >
-                 {getFieldDecorator('content', {
-                   rules:[{
-                     required:true,
-                     message:'请输入内容'
-                   },
-                  ],
-                 })(
-                   <ReactQuill
-                     placeholder='请输入...'
-                   />
-                 )}
+                            </FormItem>:<Form.Item
+                                          labelCol= {{
+                                            xs: { span: 24 },
+                                            sm: { span: 7 },
+                                          }}
+                                          wrapperCol={{
+                                            xs: { span: 24, offset: 0 },
+                                            sm: { span: 24, offset: 7 },
+                                          }}
+                                          style={{width:'60%'}}
+                                           >
+                                             {getFieldDecorator('content', {
+                                               rules:[{
+                                                 required:true,
+                                                 message:'请输入内容'
+                                               },
+                                              ],
+                                             })(
+                                               <ReactQuill
+                                                 placeholder='请输入...'
+                                               />
+                                             )}
 
-            </Form.Item>
+                                        </Form.Item>
+            }
+
 
 
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>

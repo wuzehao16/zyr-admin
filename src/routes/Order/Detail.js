@@ -45,7 +45,7 @@ export default class BasicForms extends PureComponent {
     item.orderStatus -= 0;
     return (
       <div>
-        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
+        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>订单状态</p>
         <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80, width: '80%', }}>
           <Step title="申请中" />
           <Step title="已申请" />
@@ -62,7 +62,7 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <div>
-        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
+        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>订单状态</p>
       <Steps progressDot   current={0} style={{ marginBottom: 80 }}>
         <Step title="已拒绝" />
         <Step title="申请中" />
@@ -82,7 +82,7 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <div>
-        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
+        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>订单状态</p>
         <Steps progressDot status="error"  current={0} style={{ marginBottom: 80 }}>
           <Step title="已取消" />
           <Step title="申请中" />
@@ -99,7 +99,7 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <div>
-        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
+        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>订单状态</p>
         <Steps progressDot  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
           <Step title="申请中" />
           <Step title="已申请" />
