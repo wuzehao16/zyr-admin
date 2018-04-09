@@ -61,11 +61,19 @@ export default function request(url, options) {
       if (newOptions.method === 'DELETE' || response.status === 204) {
         return response.text();
       }
+      console.log("here")
       return response.json();
     })
     .catch((e) => {
       const { dispatch } = store;
       const status = e.name;
+      console.log(status)
+      if (status === 'TypeError') {
+        dispatch({
+          type: 'login/logout',
+        });
+        return;
+      }
       if (status === 401) {
         dispatch({
           type: 'login/logout',
