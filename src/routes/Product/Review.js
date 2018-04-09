@@ -19,7 +19,13 @@ const Option = Select.Option;
 @Form.create()
 export default class BasicForms extends PureComponent {
   componentDidMount() {
-
+    const id = this.props.match.params.id;
+    this.props.dispatch({
+      type: 'product/fetchDetail',
+      payload: {
+        productId: id,
+      },
+    });
   }
   onCheck = (value) => {
     const { setFieldsValue } = this.props.form;

@@ -193,9 +193,9 @@ class BasicLayout extends React.PureComponent {
             </div>
             <GlobalFooter
               links={[{
-                key: 'Pro 首页',
-                title: 'Pro 首页',
-                href: 'http://pro.ant.design',
+                key: '众银云测',
+                title: '众银云测',
+                href: 'http://www.ibankmatch.com/',
                 blankTarget: true,
               }, {
                 key: 'github',
@@ -203,9 +203,9 @@ class BasicLayout extends React.PureComponent {
                 href: 'https://github.com/ant-design/ant-design-pro',
                 blankTarget: true,
               }, {
-                key: 'Ant Design',
-                title: 'Ant Design',
-                href: 'http://ant.design',
+                key: '众易融',
+                title: '众易融',
+                href: 'http://www.zyrbank.com',
                 blankTarget: true,
               }]}
               copyright={

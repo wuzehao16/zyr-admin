@@ -61,14 +61,13 @@ export default function request(url, options) {
       if (newOptions.method === 'DELETE' || response.status === 204) {
         return response.text();
       }
-      console.log("here")
       return response.json();
     })
     .catch((e) => {
       const { dispatch } = store;
       const status = e.name;
       console.log(status)
-      if (status === 'TypeError') {
+      if (status === 'SyntaxError') {
         dispatch({
           type: 'login/logout',
         });

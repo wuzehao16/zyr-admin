@@ -110,12 +110,13 @@ export default class TableList extends PureComponent {
     this.props.dispatch(routerRedux.push('/product/Detail/' + item.productId));
   }
   handleReview = (item) => {
-    this.props.dispatch({
-      type: 'product/fetchReview',
-      payload: {
-        productId: item.productId,
-      },
-    });
+    this.props.dispatch(routerRedux.push('/product/Review/' + item.productId));
+    // this.props.dispatch({
+    //   type: 'product/fetchReview',
+    //   payload: {
+    //     productId: item.productId,
+    //   },
+    // });
   }
 
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
