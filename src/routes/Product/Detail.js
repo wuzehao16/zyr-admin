@@ -26,9 +26,10 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { submitting, data: { item }, dispatch } = this.props
-    const step = item.applyFlow.split(',').map(item => item !== ""
-      ? <Step key={item} title={item}  />
+    const { submitting, data: { item }, dispatch } = this.props;
+    console.log(item.applyFlow)
+    const step = item.applyFlow.split(',').map((item,index) => item !== ""
+      ? <Step key={index} title={item}  />
       : null
     )
     // const step1 = item.applyFlow.split(',').map(item => <Step key={item} title={item}  />)
