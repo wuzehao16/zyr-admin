@@ -27,7 +27,7 @@ export default {
       pagination: {},
     },
     item: {},
-    adsType:[],
+    matchType:[],
   },
 
   effects: {
@@ -46,7 +46,7 @@ export default {
         message.error(response.msg)
         return
       }
-      yield put(routerRedux.push('/ads'));
+      yield put(routerRedux.push('/match'));
       if (callback) callback();
     },
     *addAi({ payload, callback }, { call, put }) {
@@ -68,7 +68,7 @@ export default {
         message.error(response.msg)
         return
       }
-      yield put(routerRedux.push('/ads'));
+      yield put(routerRedux.push('/match'));
     },
     *upAdsState({ payload, callback }, { call, put }) {
       const response = yield call(upAdsState, payload);
@@ -90,7 +90,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/ads/edit'));
+      yield put(routerRedux.push('/match/edit'));
     },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
@@ -98,7 +98,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/ads/Detail'));
+      yield put(routerRedux.push('/match/Detail'));
     },
     *fetchReview({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
@@ -106,7 +106,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/ads/Review'));
+      yield put(routerRedux.push('/match/Review'));
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
@@ -133,7 +133,7 @@ export default {
     },
     updateShelves(state, action) {
       const updateAds = action.payload;
-      const newList = state.data.data.map(item => item.adsId == updateAds.adsId ? {...item,...updateAds} : item);
+      const newList = state.data.data.map(item => item.matchId == updateAds.matchId ? {...item,...updateAds} : item);
       return {
         ...state,
         data:{
@@ -141,12 +141,69 @@ export default {
         }
       }
     },
-    saveStepFormData(state, { payload }) {
+    saveStep1FormData(state, { payload }) {
       return {
         ...state,
         step: {
           ...state.step,
-          ...payload,
+          loanDemand:{
+            ...payload,
+          }
+        },
+      };
+    },
+    saveStep2FormData(state, { payload }) {
+      return {
+        ...state,
+        step: {
+          ...state.step,
+          basicInformation:{
+            ...payload,
+          }
+        },
+      };
+    },
+    saveStep3FormData(state, { payload }) {
+      return {
+        ...state,
+        step: {
+          ...state.step,
+          creditInformation:{
+            ...payload,
+          }
+        },
+      };
+    },
+    saveStep4FormData(state, { payload }) {
+      return {
+        ...state,
+        step: {
+          ...state.step,
+          income:{
+            ...payload,
+          }
+        },
+      };
+    },
+    saveStep5FormData(state, { payload }) {
+      return {
+        ...state,
+        step: {
+          ...state.step,
+          assets:{
+            ...payload,
+          }
+        },
+      };
+    },
+    saveStep5FormData(state, { payload }) {
+      return {
+        ...state,
+        step: {
+          ...state.step,
+          capitalDebtSituation:{
+            ...payload,
+          }
         },
       };
     },
@@ -163,7 +220,7 @@ export default {
       };
     },
     removeAds(state, action) {
-      const newList = state.data.data.filter(item => item.adsId != action.payload.adsId);
+      const newList = state.data.data.filter(item => item.matchId != action.payload.matchId);
       return{
         ...state,
         data:{

@@ -385,6 +385,15 @@ export const getRouterData = (app) => {
     '/match/add/step3': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step3')),
     },
+    '/match/add/step4': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step4')),
+    },
+    '/match/add/step5': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step5')),
+    },
+    '/match/add/step6': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step6')),
+    },
   };
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());

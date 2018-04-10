@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Button, Row, Col, Checkbox   } from 'antd';
+import { Form, Button, Row, Col, Radio    } from 'antd';
 import { routerRedux } from 'dva/router';
 import styles from './style.less';
 
 const FormItem = Form.Item;
-const CheckboxGroup = Checkbox.Group;
+const RadioGroup = Radio.Group;
 
 const options = [
   { label: '信用贷款', value: 0 },
@@ -63,7 +63,7 @@ class Step1 extends React.PureComponent {
         console.log(values,err)
         if (!err) {
           dispatch({
-            type: 'match/saveStepFormData',
+            type: 'match/saveStep1FormData',
             payload: {
               ...values,
             },
@@ -82,13 +82,14 @@ class Step1 extends React.PureComponent {
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
               <Form.Item
+                style={{marginTop:100}}
                 label="贷款类型"
                 {...formItemLayout}
                >
                 {getFieldDecorator('loanType',{
-                  initialValue: [0,1],
+                  initialValue: 0,
                 })(
-                  <CheckboxGroup options={options}  />
+                  <RadioGroup  options={options}  />
                 )}
               </Form.Item>
             </Col>
