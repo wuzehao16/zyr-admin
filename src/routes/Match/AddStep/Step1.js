@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Button, Row, Col, Radio    } from 'antd';
+import { Form, Button, Row, Col, Radio, Input    } from 'antd';
 import { routerRedux } from 'dva/router';
 import styles from './style.less';
 
@@ -83,6 +83,20 @@ class Step1 extends React.PureComponent {
             <Col md={24} sm={24}>
               <Form.Item
                 style={{marginTop:100}}
+                label="模型名称"
+                {...formItemLayout}
+               >
+                {getFieldDecorator('modelName',{
+                  rules:[{
+                  required:true,
+                  message:"请输入模型名称"
+                }]})(
+                  <Input  type="text" style={{width:200}}/>
+                )}
+              </Form.Item>
+            </Col>
+            <Col md={24} sm={24}>
+              <Form.Item
                 label="贷款类型"
                 {...formItemLayout}
                >

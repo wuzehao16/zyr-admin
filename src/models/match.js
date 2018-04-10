@@ -22,12 +22,9 @@ export default {
       //资产负债
       capitalDebtSituation: null,
     },
-    data: {
-      data: [],
-      pagination: {},
-    },
-    item: {},
-    matchType:[],
+    data:{
+      data:[]
+    }
   },
 
   effects: {
@@ -122,6 +119,20 @@ export default {
       }
       if (callback) callback();
     },
+    *submitStepForm({ payload }, { call, put, select }) {
+      const response = yield call(add, {
+        modelJson:payload,
+        modelName:payload.loanDemand.modelName
+      });
+      if (response.code === 0) {
+        message.success('新增成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+
+      yield put(routerRedux.push('/match'));
+    },
   },
 
   reducers: {
@@ -196,7 +207,7 @@ export default {
         },
       };
     },
-    saveStep5FormData(state, { payload }) {
+    saveStep6FormData(state, { payload }) {
       return {
         ...state,
         step: {

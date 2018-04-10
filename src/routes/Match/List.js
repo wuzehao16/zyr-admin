@@ -21,14 +21,14 @@ const CreateForm = Form.create()((props) => {
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-      fieldsValue.matchId = item.matchId;
-      fieldsValue.upState = item.upState==1 ? 2: 1;
+      fieldsValue.id = item.id;
+      fieldsValue.modelStatus = item.modelStatus==1 ? 2: 1;
       handleAdd(fieldsValue);
     });
   };
   return (
     <Modal
-      title={item.upState==1?"下架产品":"上架产品"}
+      title={item.modelStatus==1?"禁用匹配模型":"启用匹配模型"}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
@@ -36,7 +36,7 @@ const CreateForm = Form.create()((props) => {
       <FormItem
         style={{ textAlign: 'center',fontSize:'24px' }}
       >
-        确认{item.upState==1?"下架":"上架"}{item.matchName}?
+        确认{item.modelStatus==1?"禁用":"启用"}{item.matchName}?
       </FormItem>
     </Modal>
   );
@@ -75,7 +75,7 @@ export default class TableList extends PureComponent {
       item: {
         matchName: v.matchName,
         matchId: v.matchId,
-        upState: v.upState
+        modelStatus: v.modelStatus
       },
     });
     this.handleModalVisible(true);

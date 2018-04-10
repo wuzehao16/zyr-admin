@@ -31,7 +31,7 @@ export async function remove(params) {
 }
 
 export async function add(params) {
-  return request('/sys/insertAds', {
+  return request('/sys/insertModelInfo', {
     method: 'POST',
     body: {
       ...params,
