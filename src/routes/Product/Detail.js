@@ -81,7 +81,7 @@ export default class BasicForms extends PureComponent {
            }}/>
           </DescriptionList>
           <Divider style={{ marginBottom: 12 }} />
-          <DescriptionList size="large" title="负债情况" style={{ marginBottom: 12 }} col={1}>
+          <DescriptionList size="large" title="负债要求" style={{ marginBottom: 12 }} col={1}>
             {/* <Description>{item.claims}</Description> */}
             <div dangerouslySetInnerHTML={{
              __html: item.claims
