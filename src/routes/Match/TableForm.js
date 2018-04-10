@@ -77,7 +77,7 @@ export default class TableForm extends PureComponent {
         return;
       }
       const target = this.getRowByKey(key) || {};
-      if (!target.workId || !target.name || !target.department) {
+      if ( !target.name || !target.expression) {
         message.error('请填写完整算法公式。');
         e.target.focus();
         this.setState({

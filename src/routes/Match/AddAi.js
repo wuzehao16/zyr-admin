@@ -6,8 +6,7 @@ import {
   Icon,
   Col,
   Row,
-  DatePicker,
-  TimePicker,
+  message,
   Input,
   Select,
   Popover,
@@ -19,27 +18,23 @@ import TableForm from './TableForm';
 import styles from './style.less';
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 
 const tableData = [
   // {
   //   key: '1',
-  //   workId: '00001',
+  //   expression: 'm',
   //   name: 'John Brown',
-  //   department: 'New York No. 1 Lake Park',
   // },
   // {
   //   key: '2',
-  //   workId: '00002',
+  //   expression: 'H',
   //   name: 'Jim Green',
-  //   department: 'London No. 1 Lake Park',
   // },
   // {
   //   key: '3',
-  //   workId: '00003',
+  //   expression: 'a',
   //   name: 'Joe Black',
-  //   department: 'Sidney No. 1 Lake Park',
   // },
 ];
 
@@ -49,6 +44,8 @@ class AdvancedForm extends PureComponent {
   };
   componentDidMount() {
     window.addEventListener('resize', this.resizeFooterToolbar);
+    const id = this.props.match.params.id;
+    this.props.form.getFieldDecorator('modelId',{initialValue:id})
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeFooterToolbar);
@@ -66,9 +63,25 @@ class AdvancedForm extends PureComponent {
     const validate = () => {
       validateFieldsAndScroll((error, values) => {
         if (!error) {
+          //格式化数据
+          if (values.algorithmFormula.length >=1) {
+             var a ={}
+            values.algorithmFormula.map(item=>{
+            	console.log(item['name'])
+            	a[item['name']] = item['expression']
+            })
+            values.algorithmStepsJson = {}
+            Object.assign(values.algorithmStepsJson,a)
+            values.algorithmFormula = JSON.stringify(values.algorithmFormula)
+            values.algorithmStepsJson = JSON.stringify(values.algorithmStepsJson)
+            console.log(values)
+          } else{
+            message.error('请填写计公式');
+            return
+          }
           // submit the values
           dispatch({
-            type: 'form/submitAdvancedForm',
+            type: 'match/addAi',
             payload: values,
           });
         }
@@ -119,13 +132,13 @@ class AdvancedForm extends PureComponent {
         wrapperClassName={styles.advancedForm}
       >
         <Card title="额度计算公式" bordered={false}>
-          {getFieldDecorator('members', {
+          {getFieldDecorator('algorithmFormula', {
             initialValue: tableData,
           })(<TableForm />)}
         </Card>
         <FooterToolbar style={{ width: this.state.width }}>
-          {getErrorInfo()}
-          <Button type="primary" onClick={validate} loading={submitting}>
+          {/* {getErrorInfo()} */}
+          <Button type="primary" style={{margin:'0 auto'}} onClick={validate} loading={submitting}>
             提交
           </Button>
         </FooterToolbar>

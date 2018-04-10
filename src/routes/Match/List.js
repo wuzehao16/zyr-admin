@@ -88,6 +88,9 @@ export default class TableList extends PureComponent {
       },
     });
   }
+  handleAddAi = (item) => {
+    this.props.dispatch(routerRedux.push(`/match/addai/${item.id}`));
+  }
   handleDetail = (item) => {
     this.props.dispatch({
       type: 'match/fetchDetail',
@@ -303,6 +306,7 @@ export default class TableList extends PureComponent {
               onChange={this.handleStandardTableChange}
               handleResetPassword={this.handleResetPassword}
               handleEdit={this.handleEdit}
+              handleAddAi={this.handleAddAi}
               handleDetail={this.handleDetail}
               handleReview={this.handleReview}
             />

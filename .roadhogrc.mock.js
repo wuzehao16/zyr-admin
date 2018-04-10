@@ -248,7 +248,7 @@ const proxy = {
   'PUT /sys/updateOrderStauts': updateOrder,
   'DELETE /sys/deleteOrder/*': deleteOrder,
   //智能匹配
-  'GET /sys/getInfoModeList': selectModel,
+  'GET /sys/selectModelList': selectModel,
   'GET /sys/newAddMode': saveModel,
 
 };

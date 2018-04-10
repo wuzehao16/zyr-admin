@@ -4,11 +4,10 @@ import { getUrlParams } from './utils';
 let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
-    modeNo: `${i}`,
+    id: `${i}`,
     modeName: `PT-1${i}`,
-    modeStatus: "多选",
     manageName: "平安-福田分行",
-    modeStatus: Math.floor(Math.random()*2),
+    modelStatus: Math.floor(Math.random()*2),
     updateTime: new Date(`2017-07-${Math.floor(i / 2) + 5}`),
   });
 }

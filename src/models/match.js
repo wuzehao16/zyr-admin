@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, query, queryDetail, update, upAdsState, remove } from '../services/match';
+import { add, addAi, query, queryDetail, update, upAdsState, remove } from '../services/match';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -38,15 +38,6 @@ export default {
         payload: response,
       });
     },
-    *fetchAdsType({ payload }, { call, put }) {
-      const response = yield call(queryDict, payload);
-      yield put({
-        type: 'saveThing',
-        payload: {
-          adsType: response.data
-        },
-      });
-    },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(add, payload);
       if (response.code === 0) {
@@ -56,6 +47,17 @@ export default {
         return
       }
       yield put(routerRedux.push('/ads'));
+      if (callback) callback();
+    },
+    *addAi({ payload, callback }, { call, put }) {
+      const response = yield call(addAi, payload);
+      if (response.code === 0) {
+        message.success('新建成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/match'));
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {

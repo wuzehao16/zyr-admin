@@ -2,7 +2,7 @@ import { stringify } from 'qs';
 import request from '../utils/request';
 
 export async function query(params) {
-  return request(`/sys/getInfoModeList?${stringify(params)}`);
+  return request(`/sys/selectModelList?${stringify(params)}`);
 }
 export async function queryDetail(params) {
   return request(`/sys/selectAdsDetail?${stringify(params)}`);
@@ -32,6 +32,14 @@ export async function remove(params) {
 
 export async function add(params) {
   return request('/sys/insertAds', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function addAi(params) {
+  return request('/sys/insertModeAlgorithm', {
     method: 'POST',
     body: {
       ...params,

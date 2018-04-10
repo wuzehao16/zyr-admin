@@ -372,6 +372,10 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep')),
       name: '新增模型',
     },
+    '/match/addai/:id': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddAi')),
+      name: '额度算法',
+    },
     '/match/add/step1': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step1')),
     },
