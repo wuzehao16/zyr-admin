@@ -128,25 +128,25 @@ export default class TableForm extends PureComponent {
           return text;
         },
       },
-      // {
-      //   title: '工号',
-      //   dataIndex: 'workId',
-      //   key: 'workId',
-      //   width: '20%',
-      //   render: (text, record) => {
-      //     if (record.editable) {
-      //       return (
-      //         <Input
-      //           value={text}
-      //           onChange={e => this.handleFieldChange(e, 'workId', record.key)}
-      //           onKeyPress={e => this.handleKeyPress(e, record.key)}
-      //           placeholder="工号"
-      //         />
-      //       );
-      //     }
-      //     return text;
-      //   },
-      // },
+      {
+        // title: '工号',
+        // dataIndex: 'workId',
+        // key: 'workId',
+        width: '5%',
+        render: (text, record) => {
+          // if (record.editable) {
+          //   return (
+          //     <Input
+          //       value={text}
+          //       onChange={e => this.handleFieldChange(e, 'workId', record.key)}
+          //       onKeyPress={e => this.handleKeyPress(e, record.key)}
+          //       placeholder="工号"
+          //     />
+          //   );
+          // }
+          return '=';
+        },
+      },
       {
         title: '算法公式',
         dataIndex: 'expression',

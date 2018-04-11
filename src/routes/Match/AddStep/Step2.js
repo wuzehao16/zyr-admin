@@ -123,7 +123,7 @@ class Step1 extends React.PureComponent {
             label="配偶是否同意贷款"
             {...formItemLayout}
            >
-            {getFieldDecorator('loanType',{
+            {getFieldDecorator('isAgreeLoan',{
               initialValue: [0,1],
             })(
               <CheckboxGroup>
