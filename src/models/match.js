@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, addAi, query, queryDetail, update, upAdsState, remove } from '../services/match';
+import { add, addAi, query, queryDetail, update, updateStatus, remove } from '../services/match';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -67,8 +67,8 @@ export default {
       }
       yield put(routerRedux.push('/match'));
     },
-    *upAdsState({ payload, callback }, { call, put }) {
-      const response = yield call(upAdsState, payload);
+    *updateStatus({ payload, callback }, { call, put }) {
+      const response = yield call(updateStatus, payload);
       if(response.code === 0){
         message.success('提交成功');
         yield put({
@@ -121,8 +121,8 @@ export default {
     },
     *submitStepForm({ payload }, { call, put, select }) {
       const response = yield call(add, {
-        modelJson:payload,
-        modelName:payload.loanDemand.modelName
+        modelName:payload.loanDemand.modelName,
+        modelJson:JSON.stringify(payload),
       });
       if (response.code === 0) {
         message.success('新增成功');

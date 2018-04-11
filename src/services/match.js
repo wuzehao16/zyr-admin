@@ -16,8 +16,8 @@ export async function update(params) {
     },
   });
 }
-export async function upAdsState(params) {
-  return request('/sys/upStateAds', {
+export async function updateStatus(params) {
+  return request('/sys/updateStatus', {
     method: 'PUT',
     body: {
       ...params,

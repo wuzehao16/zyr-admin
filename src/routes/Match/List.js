@@ -17,12 +17,12 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 const CreateForm = Form.create()((props) => {
   const { modalVisible, form, handleAdd, handleModalVisible, item } = props;
   const { getFieldDecorator } = form;
-
+  console.log(item)
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       fieldsValue.id = item.id;
-      fieldsValue.modelStatus = item.modelStatus==1 ? 2: 1;
+      fieldsValue.modelStatus = item.modelStatus==1 ? 0: 1;
       handleAdd(fieldsValue);
     });
   };
@@ -73,9 +73,9 @@ export default class TableList extends PureComponent {
   handleResetPassword = (v) => {
     this.setState({
       item: {
-        matchName: v.matchName,
-        matchId: v.matchId,
-        modelStatus: v.modelStatus
+        modeName: v.modeName,
+        id: v.id,
+        modelStatus: v.modeStatus
       },
     });
     this.handleModalVisible(true);
@@ -209,7 +209,7 @@ export default class TableList extends PureComponent {
 
   handleAdd = (fields) => {
     this.props.dispatch({
-      type: 'match/upAdsState',
+      type: 'match/updateStatus',
       payload: fields,
     });
     this.setState({
@@ -244,7 +244,7 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="跟新时间">
+            <FormItem label="更新时间">
               {getFieldDecorator('date')(
                 <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
               )}
