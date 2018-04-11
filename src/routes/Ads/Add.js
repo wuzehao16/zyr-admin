@@ -283,7 +283,7 @@ export default class BasicForms extends PureComponent {
             {getFieldValue('upState') ==='0'
                ?<FormItem
                 {...formItemLayout}
-                label="自动上架时间"
+                label="自动上下架时间"
                 >
                 {getFieldDecorator('time', {
                   rules:[{

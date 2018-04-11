@@ -38,7 +38,7 @@ export default class BasicForms extends PureComponent {
             {
               item.upState ==0
                 ? <div>
-                  <Description term="自动上架时间">{moment(item.autoUpTime).format('llll')}</Description>
+                  <Description term="自动上下架时间">{moment(item.autoUpTime).format('llll')}</Description>
                   <Description term="自动下架时间">{moment(item.autoDownTime).format('llll')}</Description>
                   </div>
                 : <Description></Description>

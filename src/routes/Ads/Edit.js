@@ -309,7 +309,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="自动上架时间"
+              label="自动上下架时间"
               style={{
                 display: getFieldValue('upState') === 0 ? 'block' : 'none',
               }}
