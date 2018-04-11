@@ -28,6 +28,7 @@ export default {
     *fetchMenus(_, { call, put }) {
       const response = yield call(queryMenus);
       const { dispatch } = store;
+      console.log(1)
       if (response.code !== 0) {
         dispatch({
           type: 'login/logout',
@@ -49,6 +50,13 @@ export default {
       yield put({
         type: 'user/changeNotifyCount',
         payload: data.length,
+      });
+    },
+    *clearMenus(_,{ put }) {
+      const list = [];
+      yield put({
+        type: 'saveclearMenus',
+        payload: list,
       });
     },
     *clearNotices({ payload }, { put, select }) {
@@ -78,6 +86,12 @@ export default {
       };
     },
     saveMenus(state, { payload }) {
+      return {
+        ...state,
+        menus: payload,
+      };
+    },
+    saveclearMenus(state, { payload }) {
       return {
         ...state,
         menus: payload,

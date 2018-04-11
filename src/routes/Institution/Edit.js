@@ -5,6 +5,7 @@ import {
   Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Row, Col, Upload, Modal,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import UploadPicture from '../../components/UploadPicture';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -14,7 +15,7 @@ const { TextArea } = Input;
 
 @connect(({ institution, loading }) => ({
   institution,
-  submitting: loading.effects['institution/add'],
+  submitting: loading.effects['institution/update'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -24,20 +25,26 @@ export default class BasicForms extends PureComponent {
     fileList: [],
   };
   componentDidMount() {
-    const { setFieldsValue } = this.props.form;
+    const { getFieldDecorator, setFieldsValue } = this.props.form;
     if (this.props.institution.item) {
       const { item } = this.props.institution;
+      getFieldDecorator('institutionId');
+      getFieldDecorator('manageId');
+      getFieldDecorator('sublInstitution');
       setFieldsValue({
         institutionCode: item.institutionCode,
+        sublInstitution: item.sublInstitution,
         manageName: item.manageName,
-        userEmail: item.userEmail,
-        userPhone: item.userPhone,
-        loginAccount: item.loginAccount,
-        sort: item.sort,
-        cityCode: item.cityCode,
-        startStatus: item.startStatus,
-        approvalStatus: item.approvalStatus,
       });
+      if (item.manageLogoId) {
+        this.setState({
+          fileList:[{
+            uid:-1,
+            name:"xxx.png",
+            url: item.manageLogoId
+          }]
+        })
+      }
       if (item.institutionId) {
         setFieldsValue({
           institutionId: item.institutionId,
@@ -48,6 +55,12 @@ export default class BasicForms extends PureComponent {
           manageId: item.manageId,
         });
       }
+      if (item.cityCode) {
+        this.getInstitution(item.cityCode);
+      }
+      if (item.sublInstitution) {
+        this.getSubInstitution(item.sublInstitution)
+      }
     }
   }
   handleSubmit = (e) => {
@@ -56,10 +69,10 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         const values = {
           ...fieldsValue,
-          manageLogoId: fieldsValue.manageLogoId && fieldsValue.manageLogoId.file.response.data.match(/ima[^\n]*jpeg/)[0],
+          manageLogoId: fieldsValue.manageLogoId,
         };
         this.props.dispatch({
-          type: 'institution/add',
+          type: 'institution/update',
           payload: values,
         });
       }
@@ -76,6 +89,16 @@ export default class BasicForms extends PureComponent {
   }
   handleChange = ({ fileList }) => {
     this.setState({ fileList })
+  }
+  changeCity = (code) => {
+    const { resetFields } = this.props.form;
+    resetFields(['sublInstitution','manageId'])
+    this.props.dispatch({
+      type: 'institution/getInstitution',
+      payload: {
+        cityCode: code
+      },
+    });
   }
   getInstitution = (code) => {
     this.props.dispatch({
@@ -94,7 +117,7 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { institution: { data, city, institutionType, institutionList, subInstitutionList }, submitting, dispatch } = this.props;
+    const { institution: { data, city, institutionType, institutionList, subInstitutionList, item }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { fileList, previewVisible,previewImage } = this.state;
     getFieldDecorator('manageName')
@@ -105,10 +128,10 @@ export default class BasicForms extends PureComponent {
       var institutionTypeOptions = institutionType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
     if (institutionList) {
-      var institutionListOptions = institutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
+      var institutionListOptions = institutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
     }
     if (subInstitutionList) {
-      var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
+      var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
     }
     const formItemLayout = {
       labelCol: {
@@ -150,6 +173,7 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="机构类型">
                   {getFieldDecorator('institutionCode', {
+                    initialValue: item.institutionCode,
                     rules: [{
                       required: true, message: '请选择机构类型',
                     }],
@@ -165,11 +189,12 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="所在城市">
                   {getFieldDecorator('cityCode', {
+                    initialValue: item.cityCode,
                     rules: [{
                       required: true, message: '请选择算在城市',
                     }],
                   })(
-                    <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getInstitution}>
+                    <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.changeCity}>
                       {cityOptions}
                     </Select>
                   )}
@@ -186,7 +211,7 @@ export default class BasicForms extends PureComponent {
                               <FormItem
                                 {...formItemLayout}
                                  label="银行名称">
-                                {getFieldDecorator('manageId')(
+                                {getFieldDecorator('sublInstitution')(
                                   <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getSubInstitution}>
                                   { institutionListOptions }
                                   </Select>
@@ -197,7 +222,7 @@ export default class BasicForms extends PureComponent {
                               <FormItem
                                 {...formItemLayout}
                                  label="下属机构">
-                                {getFieldDecorator('institutionId')(
+                                {getFieldDecorator('manageId')(
                                   <Select placeholder="请选择" style={{ width: '100%' }} >
                                     { subInstitutionListOptions }
                                   </Select>
@@ -261,6 +286,7 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="邮箱">
                   {getFieldDecorator('userEmail',{
+                    initialValue: item.userEmail,
                     rules: [{
                       required: true, message: '请输入邮箱',
                     }],
@@ -272,10 +298,11 @@ export default class BasicForms extends PureComponent {
               <Col md={12} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="登陆账号">
+                   label="用户名">
                   {getFieldDecorator('loginAccount',{
+                    initialValue: item.loginAccount,
                     rules: [{
-                      required: true, message: '请输入登陆账号',
+                      required: true, message: '请输入用户名',
                     }],
                   })(
                     <Input placeholder="请输入" />
@@ -289,9 +316,13 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="手机号">
                   {getFieldDecorator('userPhone',{
+                    initialValue: item.userPhone,
                     rules: [{
                       required: true, message: '请输入手机号',
-                    }],
+                    },{
+                      pattern: /^1[3|4|5|8]\d{9}$/,
+                      message: '手机号格式错误！',
+                    },],
                   })(
                     <Input placeholder="请输入" />
                   )}
@@ -301,8 +332,10 @@ export default class BasicForms extends PureComponent {
                 <FormItem
                   {...formItemLayout}
                    label="排序">
-                  {getFieldDecorator('sort')(
-                    <Input placeholder="请输入" />
+                  {getFieldDecorator('sort',{
+                  initialValue: item.sort,
+                })(
+                    <Input min={1} max={10000} type="number" placeholder="请输入"/>
                   )}
                 </FormItem>
               </Col>
@@ -313,13 +346,14 @@ export default class BasicForms extends PureComponent {
                   {...formItemLayout}
                    label="启用状态">
                   {getFieldDecorator('startStatus',{
+                    initialValue: item.startStatus,
                     rules: [{
                       required: true, message: '请选择是否启用',
                     }],
                   })(
                     <Select placeholder="请选择" style={{ width: '100%' }}>
-                      <Option value="0">禁用</Option>
-                      <Option value="1">启用</Option>
+                      <Option value={0}>禁用</Option>
+                      <Option value={1}>启用</Option>
                     </Select>
                   )}
                 </FormItem>
@@ -328,20 +362,16 @@ export default class BasicForms extends PureComponent {
                 <FormItem
                   {...formItemLayout}
                    label="机构logo">
-                   {getFieldDecorator('manageLogoId')(
-                     <Upload
-                       action="http://192.168.2.101:8080/sysAnno/uploadImage"
-                       listType="picture-card"
-                       onPreview={this.handlePreview}
-                       onChange={this.handleChange}
-                     >
-                       {fileList.length >= 1 ? null : uploadButton}
-                     </Upload>
+                   {getFieldDecorator('manageLogoId',{
+                     initialValue: item.manageLogoId,
+                     valuePropName: "fileList",
+                       rules:[{
+                         required:true,
+                         message:'请选择图片'
+                       }]
+                   })(
+                     <UploadPicture />
                    )}
-
-                   <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                   </Modal>
                 </FormItem>
               </Col>
             </Row>

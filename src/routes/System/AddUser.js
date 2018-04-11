@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import {
   Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox,
 } from 'antd';
@@ -23,14 +24,14 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        if (values.sysRoles) {
-          values.sysRoles.map((item, index, arr) => {
+        var newValues = [];
+          newValues = JSON.parse(JSON.stringify(values))
+          newValues.sysRoles.map((item, index, arr) => {
             arr[index] = { roleId: item };
           });
-        }
         this.props.dispatch({
-          type: 'systemUser/add',
-          payload: values,
+          type: 'systemUser/update',
+          payload: newValues,
         });
       }
     });
@@ -44,7 +45,7 @@ export default class BasicForms extends PureComponent {
     });
   }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting, data, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     if (data.data.roleList) {
       var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
@@ -143,7 +144,9 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/user'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

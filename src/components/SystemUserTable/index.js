@@ -49,6 +49,11 @@ class StandardTable extends PureComponent {
       {
         title: '序号',
         dataIndex: 'userId',
+        render: (text, record, index) => {
+          return (
+              <span>{index+1}</span>
+          );
+        },
       },
       {
         title: '账号',
@@ -57,6 +62,7 @@ class StandardTable extends PureComponent {
       {
         title: '姓名',
         dataIndex: 'userName',
+        render: (text) => <span >{text || '--'}</span>,
       },
       {
         title: '创建人',
@@ -65,16 +71,6 @@ class StandardTable extends PureComponent {
       {
         title: '是否锁定',
         dataIndex: 'islock',
-        filters: [
-          {
-            text: status[0],
-            value: 0,
-          },
-          {
-            text: status[1],
-            value: 1,
-          },
-        ],
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
@@ -85,12 +81,12 @@ class StandardTable extends PureComponent {
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
-      {
-        title: '登录时间',
-        dataIndex: 'updatedAt',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
+      // {
+      //   title: '登录时间',
+      //   dataIndex: 'updatedAt',
+      //   sorter: true,
+      //   render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      // },
       {
         title: '操作',
         render: (text, record) => {
@@ -104,7 +100,8 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      count,
+      total: count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {
@@ -131,7 +128,7 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.key}
+          rowKey={record => record.userId}
           rowSelection={rowSelection}
           dataSource={data}
           columns={columns}

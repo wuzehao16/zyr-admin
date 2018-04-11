@@ -10,7 +10,7 @@ export default {
       list: [],
       pagination: {},
     },
-    menuList:{},
+    menuList:[],
     item: {}
   },
 
@@ -31,11 +31,17 @@ export default {
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(removeRole, payload);
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
       yield put({
         type: 'save',
         payload: response,
       });
-      const list = yield call(queryRole, payload);
+      const list = yield call(queryRole);
       yield put({
         type: 'save',
         payload: list,
@@ -44,10 +50,6 @@ export default {
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addRole, payload);
-      // yield put({
-      //   type: 'save',
-      //   payload: response,
-      // });
       if (response.code === 0) {
         message.success('新建成功');
       } else {
@@ -58,8 +60,13 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      yield call(updateRole, payload);
-      message.success('提交成功');
+      const response = yield call(updateRole, payload);
+      if (response.code === 0) {
+        message.success('提交成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
       yield put(routerRedux.push('/system/role'));
     },
     *saveRole({payload}, { call, put }) {
@@ -67,7 +74,7 @@ export default {
         type: 'saveRoleInfo',
         payload: payload,
       });
-      const response = yield call(queryMenu, payload);
+      const response = yield call(queryMenu);
       yield put({
         type: 'saveMenu',
         payload: response.data,

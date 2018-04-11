@@ -1,12 +1,12 @@
 import mockjs from 'mockjs';
 import { getRule, postRule } from './mock/rule';
-import { getActivities, getNotice, getFakeList } from './mock/api';
+import { getActivities, getNotice, getFakeList, ok } from './mock/api';
 import { getFakeChartData } from './mock/chart';
 import { imgMap } from './mock/utils';
 import { getProfileBasicData } from './mock/profile';
 import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
-import { getContent, postContent } from './mock/content';
+import { queryColumn, saveColumn, deleteColumn, updateColumn, queryContent, queryContentDetail, saveContent ,deleteContent, updateContent } from './mock/content';
 import { getSystemUser, postSystemUser } from './mock/systemUser';
 import { getInstitution, getSubInstitution, queryAllInstitution } from './mock/register';
 import { selectDictionary, deleteDictionary, updateDictionary, saveDictionary } from './mock/dictionary'
@@ -17,6 +17,11 @@ import { selectAllRole, deleteRole, updateRole, saveRole } from './mock/systemRo
 import { selectMemberRank, deleteMemberRank, updateMemberRank, saveMemberRank } from './mock/membership'
 import { getUser, updateUser, updatePassword, getUserDetail } from './mock/member.js'
 import { selectInstitution, updateInstitution, saveInstitution, getInstitutionDetail } from './mock/institution'
+import { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeName } from './mock/product'
+import { selectAds, updateAds, saveAds, getAdsDetail, deleteAds } from './mock/advertisement'
+import { selectPMI,selectAllMI, updatePMI, savePMI, getPMIDetail, deletePMI } from './mock/info'
+import { selectOrder, selectOrderDetail, queryOrderByInstitution, updateOrder, deleteOrder } from './mock/order'
+import { selectModel, saveModel } from './mock/match'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -25,7 +30,7 @@ const noProxy = process.env.NO_PROXY === 'false';
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const proxy = {
   // 支持值为 Object 和 Array
-  'GET /api/currentUser': {
+  'GET /sysAnno/currentUser': {
     $desc: "获取当前用户接口",
     $params: {
       pageSize: {
@@ -34,10 +39,14 @@ const proxy = {
       },
     },
     $body: {
-      name: 'Serati Ma',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-      userid: '00000001',
-      notifyCount: 12,
+      data:{
+        loginAccount: '娃子 瓜',
+        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+        userid: '00000001',
+        userPhone:13812341234,
+        userIdentity: 0,
+        userEmail:'cc@gmail.com',
+      }
     },
   },
   // GET POST 可省略
@@ -150,16 +159,6 @@ const proxy = {
       "path": "/base/category/list"
     });
   },
-  'GET /api/content': getContent,
-  'POST /api/content': {
-    $params: {
-      pageSize: {
-        desc: '分页',
-        exp: 2,
-      },
-    },
-    $body: postContent,
-  },
   'POST /sysAnno/InstitutionManageParent': getInstitution,
   'POST /sysAnno/InstitutionManageSub': getSubInstitution,
   'POST /sysAnno/myPwdOrEmail': (req, res) => {
@@ -186,6 +185,8 @@ const proxy = {
   'POST /sys/insertMemberRank': saveMemberRank,
   'DELETE /sys/deleteMemberRank/*': deleteMemberRank,
   'PUT /sys/updateMemberRank': updateMemberRank,
+  // 未登录字典
+  'GET /module/selectByType':selectDictionary,
   //用户个管理
   'GET /sys/selectAppUser': getUser,
   'GET /sys/selectAppUserDetail': getUserDetail,
@@ -196,7 +197,60 @@ const proxy = {
   'GET /sys/viewdetailInstitutionManage': getInstitutionDetail,
   'POST /sys/addInstitutionManage': saveInstitution,
   'PUT /sys/editInstitutionManage': updateInstitution,
+  'PUT /sys/updateStatusInstitution': updateInstitution,
   'PUT /sys/editPasswordUser': updatePassword,
+  //产品管理
+  //产品管理
+  'GET /sys/selectMapManageParameter': getMangeName,
+  'GET /sys/selectProduct': selectProduct,
+  'GET /sys/detailsProduct': getProductDetail,
+  'POST /sys/addProduct': saveProduct,
+  'PUT /sys/editProduct': updateProduct,
+  'PUT /sys/updateAprovalStatusProduct': ok,
+  'PUT /sys/updateShelfStateProduct': ok,
+  //广告管理
+  'GET /sys/selectAds': selectAds,
+  'GET /sys/selectAdsDetail': getAdsDetail,
+  'POST /sys/insertAds': saveAds,
+  'PUT /sys/updateAds': updateAds,
+  'PUT /sys/upStateAds': ok,
+  'DELETE /sys/deleteAds/*': deleteAds,
+  //消息管理
+  'GET /sys/selectAllPMI': selectPMI,
+  'GET /sys/selectAllMI': selectAllMI,
+  'GET /sys/selectPMIDetail': selectPMI,
+  'POST /sys/insertPMI': savePMI,
+  'PUT /sys/updatePMI': updatePMI,
+  'PUT /sys/updatePMIStatus': ok,
+  'DELETE /sys/deletePMI/*': deletePMI,
+  //账号设置
+  'GET /sys/getCodeByOldPhone': ok,
+  'GET /sys/getCodeByNewPhone': ok,
+  'GET /sys/getCodeByOldEMail': ok,
+  'GET /sys/getCodeByNewEMail': ok,
+  'PUT /sys/updatePassword': ok,
+  'PUT /sys/bindingPhone': ok,
+  'PUT /sys/bindingEmail': ok,
+  //内容管理
+  'GET /sys/selectChannel': queryColumn,
+  'POST /sys/addChannel': saveColumn,
+  'DELETE /sys/deleteChannel/*': deleteColumn,
+  'PUT /sys/editChannel': updateColumn,
+  'GET /sys/selectContent': queryContent,
+  'GET /sys/viewDetailContent': queryContentDetail,
+  'POST /sys/addContent': saveContent,
+  'DELETE /sys/deleteContent/*': deleteContent,
+  'PUT /sys/editContent': updateContent,
+  //訂單管理
+  'GET /sys/selectOrder': selectOrder,
+  'GET /sys/selectDetailsOrder': selectOrderDetail,
+  'GET /sys/selectOrderByManageId': queryOrderByInstitution,
+  'PUT /sys/updateOrderStauts': updateOrder,
+  'DELETE /sys/deleteOrder/*': deleteOrder,
+  //智能匹配
+  'GET /sys/selectModelList': selectModel,
+  'GET /sys/newAddMode': saveModel,
+
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

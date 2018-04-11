@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, query, queryDetail, update, updatePassword, queryDict } from '../services/institution';
+import { add, query, queryDetail, update, updatePassword, review } from '../services/institution';
+import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
 export default {
@@ -15,6 +16,8 @@ export default {
     city: [],
     audit: [],
     institutionType: [],
+    institutionList:[],
+    subInstitutionList:[]
   },
 
   effects: {
@@ -58,8 +61,23 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      yield call(update, payload);
-      message.success('提交成功');
+      const response = yield call(update, payload);
+      if (response.code === 0) {
+        message.success('提交成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/institution'));
+    },
+    *review({ payload }, { call, put }) {
+      const response = yield call(review, payload);
+      if (response.code === 0) {
+        message.success('提交成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
       yield put(routerRedux.push('/institution'));
     },
     *updatePassword({ payload, callback }, { call, put }) {
@@ -77,7 +95,7 @@ export default {
       const response = yield call(queryDetail, payload);
       yield put({
         type: 'saveDetail',
-        payload: response.data,
+        payload: response.data && response.data[0],
       });
       yield put(routerRedux.push('/institution/edit'));
     },
@@ -85,7 +103,7 @@ export default {
       const response = yield call(queryDetail, payload);
       yield put({
         type: 'saveDetail',
-        payload: response.data,
+        payload: response.data && response.data[0],
       });
       yield put(routerRedux.push('/institution/Detail'));
     },
@@ -93,7 +111,7 @@ export default {
       const response = yield call(queryDetail, payload);
       yield put({
         type: 'saveDetail',
-        payload: response.data,
+        payload: response.data && response.data[0],
       });
       yield put(routerRedux.push('/institution/Review'));
     },

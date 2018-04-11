@@ -84,13 +84,13 @@ class StandardTable extends PureComponent {
       // {
       //   title: '创建时间',
       //   dataIndex: 'createTime',
-      //   sorter: true,
+      //
       //   render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       // },
       // {
       //   title: '登录时间',
       //   dataIndex: 'updatedAt',
-      //   sorter: true,
+      //
       //   render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       // },
       {
@@ -106,7 +106,8 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      count,
+      total: count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {
@@ -123,7 +124,7 @@ class StandardTable extends PureComponent {
           <Alert
             message={(
               <div>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 个用户&nbsp;&nbsp;
+                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 条记录&nbsp;&nbsp;
                 <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
               </div>
             )}

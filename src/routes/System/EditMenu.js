@@ -3,8 +3,9 @@ import { connect } from 'dva';
 import {
   Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox, Radio, Modal,
 } from 'antd';
+import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import Treebeard from '../../components/Treebeard';
+import TreeSelect from '../../components/TreeSelect';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -40,12 +41,13 @@ export default class BasicForms extends PureComponent {
   //   });
   // }
   componentDidMount() {
-    const { setFieldsValue } = this.props.form;
+    const { setFieldsValue, getFieldDecorator } = this.props.form;
     if (this.props.data.item) {
       const item = this.props.data.item;
       if (this.props.data.data.data) {
         const menu = this.props.data.data.data;
       }
+      getFieldDecorator('meunId')
       setFieldsValue({
         type: item.type,
         icon: item.icon,
@@ -53,6 +55,8 @@ export default class BasicForms extends PureComponent {
         orderNum: item.orderNum,
         perms: item.authority,
         url: item.path,
+        meunId: item.meunId,
+        parentId: item.parentId,
       });
     }
   }
@@ -72,23 +76,6 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  handleModalVisible = (flag) => {
-    const { form } = this.props;
-    this.setState({
-      modalVisible: !!flag,
-      // isAdd: true,
-    });
-  }
-  handleAdd = () => {
-    const { getFieldDecorator, setFieldsValue } = this.props.form;
-    const { item } = this.state;
-    this.handleModalVisible();
-    getFieldDecorator('parentId');
-    setFieldsValue({
-      parentName: item.name,
-      parentId: item.meunId,
-    });
-  }
   onToggle = (item) => {
     const { getFieldDecorator } = this.props.form;
     this.setState({
@@ -101,6 +88,18 @@ export default class BasicForms extends PureComponent {
       <div>
         <FormItem
           {...formItemLayout}
+          label="菜单URL"
+        >
+          {getFieldDecorator('url', {
+            rules: [{
+              required: true, message: '请输入菜单URL',
+            }],
+          })(
+            <Input placeholder="菜单URL" />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
           label="排序号"
         >
           {getFieldDecorator('orderNum', {
@@ -108,7 +107,7 @@ export default class BasicForms extends PureComponent {
               required: true, message: '请输入排序号',
             }],
           })(
-            <InputNumber style={{ width: '100%' }} />
+            <Input min={1} max={10000} type="number" placeholder="请输入"/>
           )}
         </FormItem>
         <FormItem
@@ -160,7 +159,7 @@ export default class BasicForms extends PureComponent {
               required: true, message: '请输入排序号',
             }],
           })(
-            <InputNumber style={{ width: '100%' }} />
+            <Input min={1} max={10000} type="number" placeholder="请输入"/>
           )}
         </FormItem>
         <FormItem
@@ -207,7 +206,11 @@ export default class BasicForms extends PureComponent {
     }
   }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting, data, dispatch } = this.props;
+    var treeData = [];
+    if (data && data.data && data.data.data) {
+        treeData = [data.data.data]
+    }
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { modalVisible } = this.state;
     const submitFormLayout = {
@@ -239,19 +242,6 @@ export default class BasicForms extends PureComponent {
                 </RadioGroup>
               )}
             </FormItem>
-            <Modal
-              title="选择上级菜单"
-              visible={modalVisible}
-              onOk={this.handleAdd}
-              onCancel={() => this.handleModalVisible()}
-            >
-              <Form>
-                <Treebeard
-                  data={data}
-                  onToggle={this.onToggle}
-                />
-              </Form>
-            </Modal>
 
             <FormItem
               {...formItemLayout}
@@ -269,12 +259,16 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="上级菜单"
             >
-              {getFieldDecorator('parentName', {
+              {getFieldDecorator('parentId', {
+                initialValue: data.item.parentId,
                 rules: [{
                   required: true, message: '菜单名称或按钮名称',
                 }],
               })(
-                <Input placeholder="请输入菜单名称或按钮名称" onClick={() => this.handleModalVisible(true)} />
+                <TreeSelect
+                  data={treeData}
+                  default={data.item.parentId}
+                  />
               )}
             </FormItem>
             {this.renderForm()}
@@ -282,7 +276,9 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/menu'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

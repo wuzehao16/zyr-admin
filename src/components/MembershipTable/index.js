@@ -73,24 +73,19 @@ class StandardTable extends PureComponent {
       {
         title: '排序',
         dataIndex: 'leveSort',
+        sorter: true,
       },
       {
-        title: '价格',
+        title: '价格/月',
         dataIndex: 'levePrice',
       },
       {
-        title: '创建人',
+        title: '更新人',
         dataIndex: 'updateUser',
       },
       {
-        title: '创建时间',
-        dataIndex: 'createTime',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
-      {
-        title: '登录时间',
-        dataIndex: 'updatedAt',
+        title: '更新时间',
+        dataIndex: 'uodateTime',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
@@ -107,7 +102,8 @@ class StandardTable extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      count,
+      total: count,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {

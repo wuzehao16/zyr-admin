@@ -8,7 +8,9 @@ export default {
     data: {
       list: [],
       pagination: {},
-      roleList: []
+      roleList: [],
+      item:{},
+      data:[]
     },
   },
 
@@ -37,10 +39,6 @@ export default {
         message.error(response.msg);
         return
       }
-      yield put({
-        type: 'save',
-        payload: response,
-      });
       yield put(routerRedux.push('/system/user'));
       if (callback) callback();
     },
@@ -52,7 +50,7 @@ export default {
         message.error(response.msg);
         return
       }
-      const list = yield call(queryUser, payload);
+      const list = yield call(queryUser);
       yield put({
         type: 'save',
         payload: list,
@@ -60,8 +58,13 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      yield call(updateUser, payload);
-      message.success('提交成功');
+      const response = yield call(updateUser, payload);
+      if (response.code === 0) {
+        message.success('提交成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
       yield put(routerRedux.push('/system/user'));
     },
     *saveUser({ payload }, { call, put }) {

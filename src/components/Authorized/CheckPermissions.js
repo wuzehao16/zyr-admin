@@ -29,6 +29,9 @@ const checkPermissions = (authority, currentAuthority, target, Exception) => {
   // }
   if (Array.isArray(authority)) {
    // 原本根据获得的字符串来判断，如果是数组需要修改
+   // if(typeof currentAuthority === 'string') {
+   //
+   // }
    if (currentAuthority.filter(auth => authority.indexOf(auth) >= 0).length > 0) {
      return target;
    }
@@ -60,7 +63,7 @@ const checkPermissions = (authority, currentAuthority, target, Exception) => {
   // Function 处理
   if (typeof authority === 'function') {
     try {
-      const bool = authority();
+      const bool = authority(currentAuthority);
       if (bool) {
         return target;
       }

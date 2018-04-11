@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
-import { Card, Form, Icon, Button, Dropdown, Menu } from 'antd';
+import { Card, Form, Icon, Button, Dropdown, Menu, Alert } from 'antd';
 import StandardTable from '../../components/MembershipTable';
+import RenderAuthorized from '../../components/Authorized'
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './style.less';
 
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
-
+// const Authorized = RenderAuthorized('sys:memberRank:insert');
 @connect(({ membership, loading }) => ({
   membership,
   loading: loading.models.membership,
@@ -133,23 +134,26 @@ export default class TableList extends PureComponent {
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
       </Menu>
     );
 
     return (
-      <PageHeaderLayout title="用户列表">
+      <PageHeaderLayout title="会员等级">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm} />
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/membership/add'))}>
-                新建
-              </Button>
+              {/* <Authorized > */}
+                {/* <Alert message="user Passed!" type="success" showIcon /> */}
+                <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/membership/add'))}>
+                  新建
+                </Button>
+              {/* </Authorized> */}
+
               {
                 selectedRows.length > 0 && (
                   <span>
-                    <Button>批量操作</Button>
+                    {/* <Button>批量操作</Button> */}
                     <Dropdown overlay={menu}>
                       <Button>
                         更多操作 <Icon type="down" />

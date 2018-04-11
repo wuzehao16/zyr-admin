@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import {
   Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox,
 } from 'antd';
+import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
 
@@ -15,28 +16,6 @@ const CheckboxGroup = Checkbox.Group;
   submitting: loading.effects['systemUser/update'],
 }))
 @Form.create({
-  // mapPropsToFields(props) {
-  //   console.log('mapPropsToFields', props);
-  //   const item = props.data.data.item;
-  //   console.log(item.loginAccount)
-  //   return {
-  //     loginAccount: Form.createFormField(item.loginAccount),
-  //     loginPassord: Form.createFormField(item.loginPassord),
-  //     userName: Form.createFormField(item.userNames),
-  //     islock: Form.createFormField(item.islock),
-  //     userId: Form.createFormField(item.islock),
-  //   };
-  // },
-  // onFieldsChange(props, fields) {
-  //   console.log('onFieldsChange', fields);
-  //   props.dispatch({
-  //     type: 'save_fields',
-  //     payload: fields,
-  //   });
-  // },
-  //  onValuesChange(_, values) {
-  //   console.log(values);
-  // },
 })
 export default class BasicForms extends PureComponent {
   componentWillMount() {
@@ -48,19 +27,22 @@ export default class BasicForms extends PureComponent {
     });
   }
   componentDidMount() {
-    const { setFieldsValue } = this.props.form;
+    const { getFieldDecorator,setFieldsValue } = this.props.form;
     if (this.props.data.data.item) {
       const item = this.props.data.data.item;
       let sysRoles = [];
       if (item.sysRoles) {
         sysRoles = item.sysRoles.map((item) => { return item.roleId; });
       }
+      getFieldDecorator('userName')
+      getFieldDecorator('islock')
       setFieldsValue({
         loginAccount: item.loginAccount,
         loginPassord: item.loginPassord,
         userName: item.userName,
         islock: item.islock,
         userId: item.userId,
+        userIdentity: item.userIdentity,
         sysRoles,
       });
     }
@@ -69,14 +51,15 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        if (values.sysRoles) {
-          values.sysRoles.map((item, index, arr) => {
+        var newValues = [];
+          newValues = JSON.parse(JSON.stringify(values))
+          newValues.sysRoles.map((item, index, arr) => {
             arr[index] = { roleId: item };
           });
-        }
+
         this.props.dispatch({
           type: 'systemUser/update',
-          payload: values,
+          payload: newValues,
         });
       }
     });
@@ -85,10 +68,10 @@ export default class BasicForms extends PureComponent {
     console.log(value);
   }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting, data:{ data}, data:{ data: { item } },  dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    if (data.data.roleList) {
-      var RoleOptions = data.data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
+    if (data.roleList) {
+      var RoleOptions = data.roleList.map(item => <Checkbox key={item.roleId} value={item.roleId}>{item.roleName}</Checkbox>);
     }
     getFieldDecorator('userId');
     const formItemLayout = {
@@ -130,43 +113,50 @@ export default class BasicForms extends PureComponent {
                 <Input placeholder="请输入用户账号" disabled />
               )}
             </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="用户密码"
-            >
-              {getFieldDecorator('loginPassord')(
-                <Input type="password" placeholder="请输入用户密码" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="用户姓名"
-            >
-              {getFieldDecorator('userName', {
-                rules: [{
-                  required: true, message: '请输入用户姓名',
-                }],
-              })(
-                <Input placeholder="请输入用户姓名" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="是否锁定"
-            >
-              {getFieldDecorator('islock', {
-                rules: [{
-                  required: true, message: '请选择是否锁定用户',
-                }],
-              })(
-                <Select
-                  placeholder="请选择是否锁定用户"
-                >
-                  <Option value={0}>是</Option>
-                  <Option value={1}>否</Option>
-                </Select>
-              )}
-            </FormItem>
+            {
+              getFieldValue('userIdentity') === 0
+                ? <div>
+                  <FormItem
+                    {...formItemLayout}
+                    label="用户密码"
+                  >
+                    {getFieldDecorator('loginPassord')(
+                      <Input type="password" placeholder="请输入用户密码" />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label="用户姓名"
+                  >
+                    {getFieldDecorator('userName', {
+                      // initialValue: item.userName,
+                      rules: [{
+                        required: true, message: '请输入用户姓名',
+                      }],
+                    })(
+                      <Input placeholder="请输入用户姓名" />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label="是否锁定"
+                  >
+                    {getFieldDecorator('islock', {
+                      // initialValue: item.islock,
+                      rules: [{
+                        required: true, message: '请选择是否锁定用户',
+                      }],
+                    })(
+                      <Select
+                        placeholder="请选择是否锁定用户"
+                      >
+                        <Option value={0}>是</Option>
+                        <Option value={1}>否</Option>
+                      </Select>
+                    )}
+                  </FormItem>
+                </div> : null
+            }
             <FormItem
               {...formItemLayout}
               label="用户权限"
@@ -182,7 +172,9 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/user'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

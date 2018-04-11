@@ -79,23 +79,6 @@ const menuData = [{
     path: 'fail',
   }],
 }, {
-  name: '异常页',
-  icon: 'warning',
-  path: 'exception',
-  children: [{
-    name: '403',
-    path: '403',
-  }, {
-    name: '404',
-    path: '404',
-  }, {
-    name: '500',
-    path: '500',
-  }, {
-    name: '触发异常',
-    path: 'trigger',
-  }],
-}, {
   name: '账户',
   icon: 'user',
   path: 'user',
@@ -110,15 +93,41 @@ const menuData = [{
     name: '注册结果',
     path: 'register-result',
   }],
+},{
+  name:'消息管理',
+  path: 'info',
+  children:[{
+    name: '系统通知',
+    path: 'notification',
+  },{
+    name: '系统消息',
+    path: 'sysinfo',
+  }],
+}, {
+ name: '广告管理',
+ icon: 'user',
+ path: 'ads',
+}, {
+ name: '订单订单',
+ icon: 'user',
+ path: 'order',
+},{
+  name: '产品管理',
+  icon: 'product',
+  path: 'product',
 }, {
   name: '机构管理',
   icon: 'user',
-  path: 'Institution',
+  path: 'institution',
 },{
-  name: '内容管理', // 页面名称，会展示在菜单栏中
+  name: '内容设置', // 页面名称，会展示在菜单栏中
   path: 'content', // 匹配的路由
   icon: 'book', // 页面图标，会展示在菜单栏中
   children: [
+    {
+      name: '栏目管理',
+      path: 'column',
+    },
     {
       name: '信息管理',
       path: 'information',
@@ -130,11 +139,11 @@ const menuData = [{
       //   }
       // ]
     },
-    {
-      name: '栏目管理',
-      path: 'column',
-    },
   ],
+}, {
+ name: '模型匹配',
+ icon: 'user',
+ path: 'match',
 },{
   name: '用户管理',
   icon: 'user',

@@ -4,6 +4,7 @@ import { Form, Input, Button, Alert, Divider, Row, Col, Popover, Progress, Uploa
 import { routerRedux } from 'dva/router';
 import options from '../../../common/addressOptions';
 import { digitUppercase } from '../../../utils/utils';
+import UploadPicture from '../../../components/UploadPicture'
 import styles from './style.less';
 
 const formItemLayout = {
@@ -30,6 +31,12 @@ class Step4 extends React.PureComponent {
     clearInterval(this.interval);
   }
   componentDidMount () {
+    this.props.dispatch({
+      type: 'register/queryCity',
+      payload: {
+        type: 'city'
+      },
+    });
     this.getInstitutionType();
   }
   onGetCaptcha = () => {
@@ -49,8 +56,14 @@ class Step4 extends React.PureComponent {
       type:'register/getEmailCaptcha',
       payload:{
         userEmail,
-      }
+      },
+      callback: () => {
+        this.captcha();
+      },
     })
+
+  };
+  captcha = () => {
     let count = 59;
     this.setState({ count });
     this.interval = setInterval(() => {
@@ -60,7 +73,7 @@ class Step4 extends React.PureComponent {
         clearInterval(this.interval);
       }
     }, 1000);
-  };
+  }
   getPasswordStatus = () => {
     const { form } = this.props;
     const value = form.getFieldValue('password');
@@ -118,29 +131,34 @@ class Step4 extends React.PureComponent {
       },
     });
   }
+
   render() {
     const { form, data, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFields, getFieldValue  } = form;
     const { previewVisible, previewImage, count, fileList, userEmail } = this.state;
-    const cityOptions = options.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    if (data.city) {
+      var  cityOptions = data.city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+    }
     if (data.institutionTypeList) {
       var institutionTypeListOptions = data.institutionTypeList.map(item => <Option key={item.institutionCode} value={item.institutionCode}>{item.institutionName}</Option>);
     }
     if (data.institutionList) {
-      var institutionListOptions = data.institutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
+      var institutionListOptions = data.institutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
     }
     if (data.subInstitutionList) {
-      var subInstitutionListOptions = data.subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
+      var subInstitutionListOptions = data.subInstitutionList.map(item => <Option key={item.manageId} value={item.manageId}>{item.manageName}</Option>);
     }
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields((err, values) => {
         if (!err) {
+          const ndata = {...data, ...{city: '', institutionList: "", institutionTypeList: ""}}
           dispatch({
             type: 'register/submitStep4Form',
             payload: {
-              ...data,
+              ...ndata,
               ...values,
+              manageLogoId: values.manageLogoId,
             },
           });
         }
@@ -156,35 +174,21 @@ class Step4 extends React.PureComponent {
       <div>
         <h2 className={styles.title}>机构信息</h2>
         <Divider style={{ margin: '10px 0 24px' }} />
-        <div className="clearfix">
-          <Upload
-            action="//jsonplaceholder.typicode.com/posts/"
-            listType="picture-card"
-            onPreview={this.handlePreview}
-            onChange={this.handleChange}
-          >
-            {fileList.length >= 1 ? null : uploadButton}
-          </Upload>
-          <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-            <img alt="example" style={{ width: '100%' }} src={previewImage} />
-          </Modal>
-        </div>
         <Form layout="horizontal" className={styles.stepForm}>
-          {/* <Form.Item>
-            <Upload
-              action="//192.168.2.101:8080/sysAnno/uploadImage"
-              // action="https://jsonplaceholder.typicode.com/posts/"
-              listType="picture-card"
-              fileList={fileList}
-              onPreview={this.handlePreview}
-              onChange={this.handleChange}
-            >
-              {fileList.length >= 1 ? null : uploadButton}
-            </Upload>
-            <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-              <img alt="example" style={{ width: '100%' }} src={previewImage} />
-            </Modal>
-          </Form.Item> */}
+          <Form.Item
+            {...formItemLayout}
+             label="机构logo">
+             {getFieldDecorator('manageLogoId',{
+               rules:[{
+                 required:true,
+                 message:'请选择图片'
+               },
+              ],
+             })(
+               <UploadPicture />
+             )}
+
+          </Form.Item>
           <Form.Item
             label="所在城市"
             {...formItemLayout}
@@ -228,7 +232,7 @@ class Step4 extends React.PureComponent {
                           label="银行名称"
                           {...formItemLayout}
                          >
-                          {getFieldDecorator('manageId', {
+                          {getFieldDecorator('sublInstitution', {
                             rules: [
                               {
                                 required: true,
@@ -247,7 +251,7 @@ class Step4 extends React.PureComponent {
                           label="下属机构"
                           {...formItemLayout}
                           >
-                          {getFieldDecorator('sublInstitution')(
+                          {getFieldDecorator('manageId')(
                             <Select placeholder="下属机构">
                               {data.subInstitutionList
                                 ? subInstitutionListOptions
@@ -344,7 +348,7 @@ class Step4 extends React.PureComponent {
           <Form.Item
             >
             {getFieldDecorator('userName')(
-              <Input size="large" type="text" maxLength="15" placeholder="请输入账号" />
+              <Input size="large" type="text" maxLength="15" placeholder="请输入用户名" />
             )}
           </Form.Item>
           <Form.Item

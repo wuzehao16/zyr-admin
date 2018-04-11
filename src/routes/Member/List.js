@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Menu, DatePicker, Modal } from 'antd';
+import { routerRedux } from 'dva/router';
 import StandardTable from '../../components/MemberTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -20,6 +21,7 @@ const CreateForm = Form.create()((props) => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       fieldsValue.userId = item.userId;
+      fieldsValue.userName = item.userName;
       handleAdd(fieldsValue);
     });
   };
@@ -83,25 +85,16 @@ export default class TableList extends PureComponent {
       item: {
         userId: v.userId,
         phone: v.loginAccount,
+        userName: v.userName,
       },
     });
     this.handleModalVisible(true);
   }
   handleEdit = (item) => {
-    this.props.dispatch({
-      type: 'member/fetchEdit',
-      payload: {
-        userId: item.userId,
-      },
-    });
+    this.props.dispatch(routerRedux.push('/member/edit/' + item.userId))
   }
   handleDetail = (item) => {
-    this.props.dispatch({
-      type: 'member/fetchDetail',
-      payload: {
-        userId: item.userId,
-      },
-    });
+    this.props.dispatch(routerRedux.push('/member/detail/' + item.userId))
   }
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
@@ -340,29 +333,21 @@ export default class TableList extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="查询表格">
+      <PageHeaderLayout title="用户管理">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>
               {this.renderForm()}
             </div>
-            {/* <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
-              </Button>
+            <div className={styles.tableListOperator}>
               {
                 selectedRows.length > 0 && (
                   <span>
-                    <Button>批量操作</Button>
-                    <Dropdown overlay={menu}>
-                      <Button>
-                        更多操作 <Icon type="down" />
-                      </Button>
-                    </Dropdown>
+                    {/* <Button>批量操作</Button> */}
                   </span>
                 )
               }
-            </div> */}
+            </div>
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}

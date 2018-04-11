@@ -27,8 +27,9 @@ export default {
         message.success('删除成功');
       } else {
         message.error(response.msg);
+        return
       }
-      const list = yield call(queryMenu, payload);
+      const list = yield call(queryMenu);
       yield put({
         type: 'save',
         payload: list,
@@ -37,10 +38,6 @@ export default {
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addMenu, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
       if (response.code === 0 ) {
         message.success('新建成功');
       } else {
@@ -51,12 +48,16 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      yield call(updateMenu, payload);
-      message.success('提交成功');
+      const response = yield call(updateMenu, payload);
+      if (response.code === 0 ) {
+        message.success('修改成功');
+      } else {
+        message.error(response.msg);
+        return
+      }
       yield put(routerRedux.push('/system/menu'));
     },
     *saveMenu({payload}, { call, put }) {
-      console.log(payload,"payload")
       yield put({
         type: 'saveMenuInfo',
         payload: payload,

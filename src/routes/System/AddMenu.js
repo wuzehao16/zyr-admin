@@ -3,8 +3,9 @@ import { connect } from 'dva';
 import {
   Form, Input, Select, Button, Card, InputNumber, Icon, Tooltip, Checkbox, Radio, Modal,
 } from 'antd';
+import { routerRedux } from 'dva/router';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import Treebeard from '../../components/Treebeard';
+import TreeSelect from '../../components/TreeSelect';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -33,10 +34,10 @@ export default class BasicForms extends PureComponent {
     modalVisible: false,
     item: {},
   }
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'systemUser/fetch',
+      type: 'systemMenu/fetch',
     });
   }
   handleSubmit = (e) => {
@@ -55,29 +56,7 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  handleModalVisible = (flag) => {
-    const { form } = this.props;
-    this.setState({
-      modalVisible: !!flag,
-      // isAdd: true,
-    });
-  }
-  handleAdd = () => {
-    const { getFieldDecorator, setFieldsValue } = this.props.form;
-    const { item } = this.state;
-    this.handleModalVisible();
-    getFieldDecorator('parentId');
-    setFieldsValue({
-      parentName: item.name,
-      parentId: item.meunId,
-    });
-  }
-  onToggle = (item) => {
-    const { getFieldDecorator } = this.props.form;
-    this.setState({
-      item,
-    });
-  }
+
   renderCatalogue() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -103,7 +82,7 @@ export default class BasicForms extends PureComponent {
               required: true, message: '请输入排序号',
             }],
           })(
-            <InputNumber style={{ width: '100%' }} />
+            <Input min={1} max={10000} type="number" placeholder="请输入"/>
           )}
         </FormItem>
         <FormItem
@@ -155,7 +134,7 @@ export default class BasicForms extends PureComponent {
               required: true, message: '请输入排序号',
             }],
           })(
-            <InputNumber style={{ width: '100%' }} />
+            <Input min={1} max={10000} type="number" placeholder="请输入"/>
           )}
         </FormItem>
         <FormItem
@@ -181,7 +160,7 @@ export default class BasicForms extends PureComponent {
         {...formItemLayout}
         label="授权标识"
       >
-        {getFieldDecorator('"perms')(
+        {getFieldDecorator('perms')(
           <Input placeholder="多个用逗号分隔，如：user:list,user:create" />
         )}
       </FormItem>
@@ -202,7 +181,11 @@ export default class BasicForms extends PureComponent {
     }
   }
   render() {
-    const { submitting, data } = this.props;
+    const { submitting, data, dispatch } = this.props;
+    var treeData = [];
+    if (data && data.data && data.data.data) {
+        treeData = [data.data.data]
+    }
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { modalVisible } = this.state;
     const submitFormLayout = {
@@ -234,23 +217,9 @@ export default class BasicForms extends PureComponent {
                 </RadioGroup>
               )}
             </FormItem>
-            <Modal
-              title="选择上级菜单"
-              visible={modalVisible}
-              onOk={this.handleAdd}
-              onCancel={() => this.handleModalVisible()}
-            >
-              <Form>
-                <Treebeard
-                  data={data}
-                  onToggle={this.onToggle}
-                />
-              </Form>
-            </Modal>
-
             <FormItem
               {...formItemLayout}
-              label="菜单名称"
+              label="名称"
             >
               {getFieldDecorator('name', {
                 rules: [{
@@ -264,12 +233,15 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="上级菜单"
             >
-              {getFieldDecorator('parentName', {
+              {getFieldDecorator('parentId', {
                 rules: [{
                   required: true, message: '菜单名称或按钮名称',
                 }],
               })(
-                <Input placeholder="请输入菜单名称或按钮名称" onClick={() => this.handleModalVisible(true)} />
+                <TreeSelect
+                  data={treeData}
+                  // onChange={this.selectTree}
+                  />
               )}
             </FormItem>
             {this.renderForm()}
@@ -277,7 +249,9 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              {/* <Button style={{ marginLeft: 8 }}>保存</Button> */}
+              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/menu'))}>
+                返回
+              </Button>
             </FormItem>
           </Form>
         </Card>

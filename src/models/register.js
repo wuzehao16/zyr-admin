@@ -2,6 +2,7 @@ import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 import { fakeSubmitForm } from '../services/api';
 import { msgPhone, validataPhone, msgEmail, getInstitution, getSubInstitution, getInstitutionType, register } from '../services/register'
+import { queryDict } from '../services/api'
 export default {
   namespace: 'register',
 
@@ -9,7 +10,7 @@ export default {
     step: {
       userPhone: '',
       prefix: '86',
-      isEmailRegister: 0
+      isEmailRegister: '',
     },
   },
 
@@ -41,19 +42,23 @@ export default {
         message.error(response.msg);
       }
     },
-    *getEmailCaptcha({ payload }, { call, put }) {
+    *getEmailCaptcha({ payload, callback }, { call, put }) {
       const response = yield call(msgEmail, payload);
       if(response.code == 0){
         message.success('发送成功');
+        if (callback) callback();
       } else{
-        yield put({
-          type: 'saveStepFormData',
-          payload:{
-            isEmailRegister : 1
-          },
-        });
         message.error(response.msg);
       }
+    },
+    *queryCity({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveStepFormData',
+        payload:{
+          city : response.data
+        },
+      });
     },
     *getInstitutionType({ payload }, { call, put }) {
       const response = yield call(getInstitutionType, payload);
@@ -100,11 +105,13 @@ export default {
       yield put(routerRedux.push('/user/register/step4'));
     },
     *submitStep4Form({ payload }, { call, put }) {
-      yield call(register, payload);
-      yield put({
-        type: 'saveStepFormData',
-        payload,
-      });
+      const response = yield call(register, payload);
+      if(response.code == 0){
+        message.success('发送成功');
+      } else{
+        message.error(response.msg);
+        return
+      }
       yield put(routerRedux.push('/user/register-result'));
     },
     *submitAdvancedForm({ payload }, { call }) {

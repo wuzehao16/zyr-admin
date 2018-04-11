@@ -1,6 +1,8 @@
 import { message } from 'antd';
-import { fakeAccountLogin } from '../services/api';
+import { routerRedux } from 'dva/router';
+import { login, logout } from '../services/api';
 import { setAuthority } from '../utils/authority';
+import { reloadAuthorized } from '../utils/Authorized';
 
 export default {
   namespace: 'login',
@@ -11,7 +13,7 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const response = yield call(login, payload);
       if (response.code === 0) {
         response.data.push('admin')
         response.currentAuthority = response.data;
@@ -25,25 +27,30 @@ export default {
       });
       // Login successfully
       if (response.msg === 'ok') {
-        // 非常粗暴的跳转,登陆成功之后权限会变成user或admin,会自动重定向到主页
-        // Login success after permission changes to admin or user
-        // The refresh will automatically redirect to the home page
-        // yield put(routerRedux.push('/'));
-        window.location.reload();
+        reloadAuthorized();
+        yield put(routerRedux.push('/'));
       }
     },
-    *logout(_, { put }) {
-      yield put({
-        type: 'changeLoginStatus',
-        payload: {
-          status: false,
-          currentAuthority: 'guest',
-        },
-      });
-      // yield put(routerRedux.push('/user/login'));
-      // Login out after permission changes to admin or user
-      // The refresh will automatically redirect to the login page
-      window.location.reload();
+    *logout(_, { call, put, select }) {
+      try {
+        // get location pathname
+        const response = yield call(logout);
+        const urlParams = new URL(window.location.href);
+        const pathname = yield select(state => state.routing.location.pathname);
+        // add the parameters in the url
+        urlParams.searchParams.set('redirect', pathname);
+        window.history.replaceState(null, 'login', urlParams.href);
+      } finally {
+        yield put({
+          type: 'changeLoginStatus',
+          payload: {
+            status: false,
+            currentAuthority: 'guest',
+          },
+        });
+        reloadAuthorized();
+        yield put(routerRedux.push('/user/login'));
+      }
     },
   },
 

@@ -24,11 +24,13 @@ export default {
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-      const list = yield call(query, payload);
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      const list = yield call(query);
       yield put({
         type: 'save',
         payload: list,
@@ -47,8 +49,13 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      yield call(update, payload);
-      message.success('提交成功');
+      const response = yield call(update, payload);
+      if (response.code === 0) {
+        message.success('提交成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
       yield put(routerRedux.push('/membership'));
     },
     *saveItem({payload}, { call, put }) {

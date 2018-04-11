@@ -1,5 +1,5 @@
 import { fakeChartData } from '../services/api';
-
+import { getFakeChartData } from './fakeChart';
 export default {
   namespace: 'chart',
 
@@ -19,14 +19,16 @@ export default {
 
   effects: {
     *fetch(_, { call, put }) {
-      const response = yield call(fakeChartData);
+      // const response = yield call(fakeChartData);
+      const response = getFakeChartData;
       yield put({
         type: 'save',
         payload: response,
       });
     },
     *fetchSalesData(_, { call, put }) {
-      const response = yield call(fakeChartData);
+      // const response = yield call(fakeChartData);
+      const response = getFakeChartData;
       yield put({
         type: 'save',
         payload: {

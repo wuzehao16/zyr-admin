@@ -58,7 +58,7 @@ class StandardTable extends PureComponent {
       {
         title: '服务调用次数',
         dataIndex: 'callNo',
-        sorter: true,
+        
         align: 'right',
         render: val => `${val} 万`,
       },
@@ -90,7 +90,7 @@ class StandardTable extends PureComponent {
       {
         title: '更新时间',
         dataIndex: 'updatedAt',
-        sorter: true,
+        
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
@@ -109,6 +109,7 @@ class StandardTable extends PureComponent {
       showSizeChanger: true,
       showQuickJumper: true,
       ...pagination,
+      showTotal:total => `总共 ${total} 条`,
     };
 
     const rowSelection = {

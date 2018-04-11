@@ -13,7 +13,7 @@ const { Description } = DescriptionList;
 
 @connect(({ institution, loading }) => ({
   institution,
-  submitting: loading.effects['institution/update'],
+  submitting: loading.effects['institution/review'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -39,7 +39,7 @@ export default class BasicForms extends PureComponent {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'institution/update',
+          type: 'institution/review',
           payload: values,
         });
       }
@@ -49,11 +49,15 @@ export default class BasicForms extends PureComponent {
     const { submitting, institution: { item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue  } = this.props.form;
     getFieldDecorator('manageId')
+    getFieldDecorator('orderId',{initialValue: item.orderId})
+    getFieldDecorator('userEmail',{initialValue: item.userEmail})
+    getFieldDecorator('loginAccount',{initialValue: item.loginAccount})
+    getFieldDecorator('userPhone',{initialValue: item.userPhone})
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
         sm: { span: 5 },
-        md: { span: 3 },
+        md: { span: 4 },
       },
       wrapperCol: {
         xs: { span: 24 },
@@ -74,20 +78,19 @@ export default class BasicForms extends PureComponent {
             <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
             <Description term="所在城市">{item.city}</Description>
             <Description term="机构名称">{item.manageName}</Description>
-            <Description term="登录账号">{item.loginAccount}</Description>
+            <Description term="用户名">{item.loginAccount}</Description>
             <Description term="邮箱">{item.userEmail}</Description>
             <Description term="手机">{item.userPhone}</Description>
             <Description term="机构logo">
-              <img src="https://picsum.photos/80/80?random" alt="" />
+              <img src={item.manageLogoId} alt="" width={80} height={80}/>
             </Description>
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32 }} col={2}>
             <Description term="排序">{item.sort}</Description>
             <Description term="启用状态">{item.startStatus==1?'启用':'禁用'}</Description>
             <Description term="操作者">{item.oper}</Description>
-            <Description term="审核时间">{item.approvalTime}</Description>
-            <Description term="注册时间">{item.registrationTime}</Description>
-            <Description term="注册时间">{item.approvalStatus}</Description>
+            <Description term="审核时间">{moment(item.approvalTime).format('llll')}</Description>
+            <Description term="注册时间">{moment(item.registrationTime).format('llll')}</Description>
           </DescriptionList>
           {item.approvalStatus == 1
            ?  <div>
@@ -98,8 +101,8 @@ export default class BasicForms extends PureComponent {
                            label="审核状态">
                            {getFieldDecorator('approvalStatus')(
                              <Radio.Group style={{ width: '100%' }}>
-                               <Radio value="0">通过</Radio>
-                               <Radio value="1">不通过</Radio>
+                               <Radio value="2">通过</Radio>
+                               <Radio value="0">不通过</Radio>
                              </Radio.Group>
                            )}
                         </FormItem>
@@ -111,7 +114,7 @@ export default class BasicForms extends PureComponent {
                             {...formItemLayout}
                              label="审核备注"
                              style={{
-                               display: getFieldValue('approvalStatus') === '1' ? 'block' : 'none',
+                               display: getFieldValue('approvalStatus') === '0' ? 'block' : 'none',
                              }}
                              >
                              {getFieldDecorator('approvalRemaeks')(

@@ -55,7 +55,6 @@ export default function request(url, options) {
     };
     newOptions.body = JSON.stringify(newOptions.body);
   }
-  // url = "http://localhost:8000" + url
   return fetch(url, newOptions)
     .then(checkStatus)
     .then((response) => {
@@ -67,6 +66,13 @@ export default function request(url, options) {
     .catch((e) => {
       const { dispatch } = store;
       const status = e.name;
+      console.log(status)
+      if (status === 'SyntaxError') {
+        dispatch({
+          type: 'login/logout',
+        });
+        return;
+      }
       if (status === 401) {
         dispatch({
           type: 'login/logout',

@@ -286,10 +286,20 @@ export const getActivities = [
     template: '在 @{group} 新建项目 @{project}',
   },
 ];
-
+export function ok(req, res) {
+  const result = {
+    code: 0,
+  };
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
 
 export default {
   getNotice,
   getActivities,
   getFakeList,
+  ok,
 };

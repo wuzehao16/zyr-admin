@@ -1,6 +1,11 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
 
+
+export async function queryDict(params) {
+  return request(`/module/selectByType?${stringify(params)}`);
+}
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
@@ -60,11 +65,14 @@ export async function queryFakeList(params) {
   return request(`/api/fake_list?${stringify(params)}`);
 }
 
-export async function fakeAccountLogin(params) {
+export async function login(params) {
   return request('/sysAnno/login', {
     method: 'POST',
     body: params,
   });
+}
+export async function logout() {
+  return request('/sysAnno/logout');
 }
 
 export async function fakeRegister(params) {

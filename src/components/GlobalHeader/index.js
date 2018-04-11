@@ -60,7 +60,10 @@ export default class GlobalHeader extends PureComponent {
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         <Menu.Item disabled><Icon type="user" />个人中心</Menu.Item>
-        <Menu.Item disabled><Icon type="setting" />设置</Menu.Item>
+        <Menu.Item
+          disabled={currentUser.data&& currentUser.data.userIdentity==1?'':'disabled'}
+          key="setting"
+          ><Icon type="setting" />设置</Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout"><Icon type="logout" />退出登录</Menu.Item>
       </Menu>
@@ -125,11 +128,11 @@ export default class GlobalHeader extends PureComponent {
               emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
             />
           </NoticeIcon>
-          {currentUser.name ? (
+          {(currentUser.data && currentUser.data.loginAccount) ? (
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>
-                <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
-                <span className={styles.name}>{currentUser.name}</span>
+                <Avatar size="small" className={styles.avatar} src={currentUser.data.avatar||'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'} />
+                <span className={styles.name}>{currentUser.data.loginAccount}</span>
               </span>
             </Dropdown>
           ) : <Spin size="small" style={{ marginLeft: 8 }} />}
