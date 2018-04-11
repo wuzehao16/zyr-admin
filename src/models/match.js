@@ -87,7 +87,7 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/match/edit'));
+      // yield put(routerRedux.push('/match/edit'));
     },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);

@@ -5,7 +5,7 @@ export async function query(params) {
   return request(`/sys/selectModelList?${stringify(params)}`);
 }
 export async function queryDetail(params) {
-  return request(`/sys/selectAdsDetail?${stringify(params)}`);
+  return request(`/sys/selectModelDetail?${stringify(params)}`);
 }
 
 export async function update(params) {

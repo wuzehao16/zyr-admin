@@ -384,6 +384,15 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
         </Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          <Col md={8} sm={24}>
+            <FormItem label="手机号">
+              {getFieldDecorator('phone')(
+                  <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+          </Col>
+        </Row>
         <div style={{ overflow: 'hidden' }}>
           <span style={{ float: 'right', marginBottom: 24 }}>
             <Button type="primary" htmlType="submit">查询</Button>

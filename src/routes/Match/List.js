@@ -81,12 +81,13 @@ export default class TableList extends PureComponent {
     this.handleModalVisible(true);
   }
   handleEdit = (item) => {
-    this.props.dispatch({
-      type: 'match/fetchEdit',
-      payload: {
-        id: item.matchId,
-      },
-    });
+    this.props.dispatch(routerRedux.push(`/match/edit/${item.id}`));
+    // this.props.dispatch({
+    //   type: 'match/fetchEdit',
+    //   payload: {
+    //     id: item.matchId,
+    //   },
+    // });
   }
   handleAddAi = (item) => {
     this.props.dispatch(routerRedux.push(`/match/addai/${item.id}`));
