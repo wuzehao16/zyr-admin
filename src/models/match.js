@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, addAi, query, queryDetail, update, updateStatus, remove } from '../services/match';
+import { add, addAi, query,queryAI, queryDetail, update, updateStatus, remove } from '../services/match';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -9,6 +9,7 @@ export default {
 
   state: {
     step:{
+      modelName:"",
       //贷款需求
       loanDemand: null,
       //基本信息
@@ -24,6 +25,9 @@ export default {
     },
     data:{
       data:[]
+    },
+    ai:{
+
     }
   },
 
@@ -33,6 +37,13 @@ export default {
       yield put({
         type: 'save',
         payload: response,
+      });
+    },
+    *fetchAI({ payload }, { call, put }) {
+      const response = yield call(queryAI, payload);
+      yield put({
+        type: 'saveAI',
+        payload: response.data,
       });
     },
     *add({ payload, callback }, { call, put }) {
@@ -81,30 +92,30 @@ export default {
       }
       if (callback) callback();
     },
-    *fetchEdit({payload}, { call, put }) {
-      const response = yield call(queryDetail, payload);
-      yield put({
-        type: 'saveDetail',
-        payload: response.data,
-      });
-      // yield put(routerRedux.push('/match/edit'));
-    },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
+      const step = {
+        modelName:response.data.modeName,
+        ...JSON.parse(response.data.modeJson)
+      }
+      console.log(step,'step')
       yield put({
         type: 'saveDetail',
-        payload: response.data,
+        payload: step,
       });
-      yield put(routerRedux.push('/match/Detail'));
+      console.log(response)
+      // yield put(routerRedux.push('/match/Detail'));
     },
-    *fetchReview({payload}, { call, put }) {
-      const response = yield call(queryDetail, payload);
-      yield put({
-        type: 'saveDetail',
-        payload: response.data,
-      });
-      yield put(routerRedux.push('/match/Review'));
-    },
+    // *fetchReview({payload}, { call, put }) {
+    //   const response = yield call(queryDetail, payload);
+    //
+    //   console.log(step,"step")
+    //   yield put({
+    //     type: 'saveDetail',
+    //     payload: response.data,
+    //   });
+    //   yield put(routerRedux.push('/match/Review'));
+    // },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
       if (response.code === 0) {
@@ -120,8 +131,10 @@ export default {
       if (callback) callback();
     },
     *submitStepForm({ payload }, { call, put, select }) {
+      const modelName = payload.modelName;
+      delete payload['modelName']
       const response = yield call(add, {
-        modelName:payload.loanDemand.modelName,
+        modelName:modelName,
         modelJson:JSON.stringify(payload),
       });
       if (response.code === 0) {
@@ -142,6 +155,12 @@ export default {
         data: action.payload,
       };
     },
+    saveAI(state, action) {
+      return {
+        ...state,
+        AI: action.payload,
+      };
+    },
     updateShelves(state, action) {
       const updateAds = action.payload;
       const newList = state.data.data.map(item => item.matchId == updateAds.matchId ? {...item,...updateAds} : item);
@@ -157,8 +176,9 @@ export default {
         ...state,
         step: {
           ...state.step,
+          modelName:payload.modelName,
           loanDemand:{
-            ...payload,
+            loanType:payload.loanType,
           }
         },
       };
@@ -227,7 +247,7 @@ export default {
     saveDetail(state, action) {
       return {
         ...state,
-        item: action.payload,
+        step: action.payload,
       };
     },
     removeAds(state, action) {

@@ -394,26 +394,26 @@ export const getRouterData = (app) => {
     '/match/add/step6': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step6')),
     },
-    '/match/edit/:id': {
+    '/match/edit': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep')),
       name: '编辑模型',
     },
-    '/match/edit/step1/:id': {
+    '/match/edit/step1': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step1')),
     },
-    '/match/edit/step2/:id': {
+    '/match/edit/step2': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step2')),
     },
-    '/match/edit/step3/:id': {
+    '/match/edit/step3': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step3')),
     },
-    '/match/edit/step4/:id': {
+    '/match/edit/step4': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step4')),
     },
-    '/match/edit/step5/:id': {
+    '/match/edit/step5': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step5')),
     },
-    '/match/edit/step6/:id': {
+    '/match/edit/step6': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step6')),
     },
   };

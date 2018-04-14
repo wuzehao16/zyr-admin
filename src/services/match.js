@@ -4,12 +4,15 @@ import request from '../utils/request';
 export async function query(params) {
   return request(`/sys/selectModelList?${stringify(params)}`);
 }
+export async function queryAI(params) {
+  return request(`/sys/selectModeAlgorithm?${stringify(params)}`);
+}
 export async function queryDetail(params) {
   return request(`/sys/selectModelDetail?${stringify(params)}`);
 }
 
 export async function update(params) {
-  return request('/sys/updateAds', {
+  return request('/sys/updateModelInfo', {
     method: 'PUT',
     body: {
       ...params,
