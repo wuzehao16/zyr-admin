@@ -151,7 +151,7 @@ export default class BasicForms extends PureComponent {
                                display: getFieldValue('approvalStatuts') === '0' ? 'block' : 'none',
                              }}
                              >
-                             {getFieldDecorator('approvalRemaeks')(
+                             {getFieldDecorator('approvalRemarks')(
                                <Input.TextArea style={{ width: '100%' }}/>
                              )}
                           </FormItem>

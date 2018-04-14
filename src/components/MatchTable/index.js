@@ -70,7 +70,7 @@ class StandardTable extends PureComponent {
           return (
             <div className={styles.model_name}>
               <div className={styles.model_title}>{text}</div>
-              <div className={record.modelStatus===1?styles.act:styles.disabled}>{record.modelStatus===1?'启用':'禁用'}</div>
+              <div className={record.modeStatus===1?styles.act:styles.disabled}>{record.modeStatus===1?'禁用':'启用'}</div>
             </div>
 
           );
@@ -93,7 +93,7 @@ class StandardTable extends PureComponent {
           return (
             <Fragment>
               <span>
-                <a onClick={() => this.handleResetPassword(record)}>{record.modelStatus==1?'禁止':'启用'}</a>
+                <a onClick={() => this.handleResetPassword(record)}>{record.modeStatus==1?'禁止':'启用'}</a>
                 <Divider type="vertical" />
               </span>
               <a onClick={() => this.handleEdit(record)}>编辑</a>
