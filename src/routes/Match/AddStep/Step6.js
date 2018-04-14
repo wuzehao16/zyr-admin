@@ -176,7 +176,7 @@ class Step1 extends React.PureComponent {
           </Form.Item>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" onClick={onValidateForm}>
-              下一步
+              提交
             </Button>
             <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/match'))}>
               返回

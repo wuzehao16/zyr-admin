@@ -24,8 +24,8 @@ export default class StepForm extends PureComponent {
     }
   }
   render() {
-    const { match, routerData } = this.props;
-    console.log(match)
+    const { match, routerData,history } = this.props;
+    console.log(this.props)
     return (
       <PageHeaderLayout>
         <Card bordered={false}>
@@ -39,7 +39,7 @@ export default class StepForm extends PureComponent {
               <Step title="资产负债" />
             </Steps>
             <Switch>
-              {/* {
+              {
                 getRoutes(match.path, routerData).map(item => (
                   <Route
                     key={item.key}
@@ -48,8 +48,16 @@ export default class StepForm extends PureComponent {
                     exact={item.exact}
                   />
                 ))
-              } */}
-              <Redirect from='/match/edit/:id' to='/match/edit/step1/:id'/>
+              }
+              <Route path="/match/edit" render={() => (
+                <Redirect to={{
+                  pathname:'/match/edit/step1',
+                  query:{
+                    id:history.location.query.id
+                  }
+                }}/>
+              )} />
+              {/* <Redirect from='/match/edit' to='/match/edit/step1'/> */}
               <Route render={NotFound} />
             </Switch>
           </div>

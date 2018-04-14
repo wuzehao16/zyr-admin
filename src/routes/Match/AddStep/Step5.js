@@ -315,7 +315,7 @@ class Step1 extends React.PureComponent {
             label="保单缴费方式"
             {...formItemLayout}
            >
-            {getFieldDecorator('policyBrand',{
+            {getFieldDecorator('policyBrandPaymentMethod',{
               initialValue: [0,1,2,3],
             })(
               <CheckboxGroup  >

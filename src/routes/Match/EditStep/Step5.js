@@ -23,6 +23,7 @@ class Step1 extends React.PureComponent {
       submitting,
       dispatch
     } = this.props;
+    var item = step.assets;
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
     const formItemLayout = {
@@ -67,7 +68,7 @@ class Step1 extends React.PureComponent {
               ...values,
             },
           });
-          dispatch(routerRedux.push('/match/add/step6'));
+          dispatch(routerRedux.push('/match/edit/step6'));
         }
       });
     };
@@ -92,7 +93,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isHouseProperty',{
-              initialValue: [0,1],
+              initialValue: item.isHouseProperty,
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>有</Checkbox>
@@ -105,7 +106,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneMonthQueries',{
-              // initialValue: "<10",
+              initialValue: item.sumOneMonthQueries,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="套"/>
             )}
@@ -115,7 +116,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('housePropertyDependency',{
-              initialValue: [0,1,2],
+              initialValue: item.housePropertyDependency,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>深房</Checkbox>
@@ -129,7 +130,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('ownership',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.ownership,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>本人</Checkbox>
@@ -145,7 +146,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('propertyRightRatio',{
-              // initialValue: "<10",
+              initialValue: item.propertyRightRatio,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="%"/>
             )}
@@ -155,7 +156,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('ownership',{
-              initialValue: [0,1,2,3,4,5],
+              initialValue: item.ownership,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>住宅</Checkbox>
@@ -172,7 +173,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('propertyStatus',{
-              initialValue: [0,1,2],
+              initialValue: item.propertyStatus,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>红本在手</Checkbox>
@@ -186,7 +187,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('repaymentMethod',{
-              initialValue: [0,1,2],
+              initialValue: item.repaymentMethod,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>等额本息</Checkbox>
@@ -200,7 +201,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('mortgageBalance',{
-              // initialValue: "<10",
+              initialValue: item.mortgageBalance,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -210,7 +211,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('mortgageMonthRepayment',{
-              // initialValue: "<10",
+              initialValue: item.mortgageMonthRepayment,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -220,7 +221,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('mortgageTerm',{
-              // initialValue: "<10",
+              initialValue: item.mortgageTerm,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="月"/>
             )}
@@ -230,7 +231,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('returnedMonths',{
-              // initialValue: "<10",
+              initialValue: item.returnedMonths,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="月"/>
             )}
@@ -240,7 +241,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('propertyTotalArea',{
-              // initialValue: "<10",
+              initialValue: item.propertyTotalArea,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="平"/>
             )}
@@ -250,7 +251,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('propertyTotalMarketValue',{
-              // initialValue: "<10",
+              initialValue: item.propertyTotalMarketValue,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="万元"/>
             )}
@@ -275,7 +276,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumBusinessPolicy',{
-              // initialValue: "<10",
+              initialValue: item.sumBusinessPolicy,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="份"/>
             )}
@@ -285,7 +286,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('policyBrand',{
-              initialValue: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
+              initialValue: item.policyBrand,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>中国平安</Checkbox>
@@ -315,8 +316,8 @@ class Step1 extends React.PureComponent {
             label="保单缴费方式"
             {...formItemLayout}
            >
-            {getFieldDecorator('policyBrand',{
-              initialValue: [0,1,2,3],
+            {getFieldDecorator('policyBrandPaymentMethod',{
+              initialValue: item.policyBrandPaymentMethod,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>年缴</Checkbox>
@@ -331,7 +332,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('policyPaymentYears',{
-              initialValue: [0,1,2,3],
+              initialValue: item.policyPaymentYears,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>1年以下</Checkbox>
@@ -346,7 +347,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('policyPayment',{
-              // initialValue: "<10",
+              initialValue: item.policyPayment,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -358,7 +359,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isFamilyCar',{
-              initialValue: [0,1],
+              initialValue: item.isFamilyCar,
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>有</Checkbox>
@@ -371,7 +372,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumFamilyCar',{
-              // initialValue: "<10",
+              initialValue: item.sumFamilyCar,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="辆"/>
             )}
@@ -381,7 +382,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('carRegistStatus',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.carRegistStatus,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>绿本在手</Checkbox>
@@ -397,7 +398,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('carPotentialPrice',{
-              // initialValue: "<10",
+              initialValue: item.carPotentialPrice,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -407,7 +408,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('carLoanBalance',{
-              // initialValue: "<10",
+              initialValue: item.carLoanBalance,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -417,7 +418,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('carRepayment',{
-              // initialValue: "<10",
+              initialValue: item.carRepayment,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -427,7 +428,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('carrRepaymentMonths',{
-              // initialValue: "<10",
+              initialValue: item.carrRepaymentMonths,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="月"/>
             )}

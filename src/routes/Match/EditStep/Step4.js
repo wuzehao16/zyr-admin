@@ -23,6 +23,7 @@ class Step1 extends React.PureComponent {
       submitting,
       dispatch
     } = this.props;
+    var item = step.income;
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
     const formItemLayout = {
@@ -67,7 +68,7 @@ class Step1 extends React.PureComponent {
               ...values,
             },
           });
-          dispatch(routerRedux.push('/match/add/step5'));
+          dispatch(routerRedux.push('/match/edit/step5'));
         }
       });
     };

@@ -23,6 +23,7 @@ class Step1 extends React.PureComponent {
       submitting,
       dispatch
     } = this.props;
+    const item = step.capitalDebtSituation
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
     const formItemLayout = {
@@ -62,7 +63,7 @@ class Step1 extends React.PureComponent {
       validateFields((err, values) => {
         if (!err) {
           dispatch({
-            type: 'match/submitStepForm',
+            type: 'match/update',
             payload: {
               ...data,
               capitalDebtSituation:{
@@ -95,7 +96,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumCreditLoan',{
-              initialValue: "<10",
+              initialValue: item.sumCreditLoan,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}
@@ -105,6 +106,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('equalInterestTotalBalance',{
+              initialValue: item.equalInterestTotalBalance,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -114,6 +116,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('equalInteresMonthPayment',{
+              initialValue: item.equalInteresMonthPayment,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -123,6 +126,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumEqualInterest',{
+              initialValue: item.sumEqualInterest,
               initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
@@ -133,6 +137,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('firstInterestTotalBalance',{
+              initialValue: item.firstInterestTotalBalance,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -142,6 +147,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('firstInterestMonthPayment',{
+              initialValue: item.firstInterestMonthPayment,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -151,7 +157,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumAlongLoan',{
-              initialValue: "<10",
+              initialValue: item.sumAlongLoan,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}
@@ -161,6 +167,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('creditCardTotalLimit',{
+              initialValue: item.creditCardTotalLimit,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -170,13 +177,14 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('creditCardUsedLimit',{
+              initialValue: item.creditCardUsedLimit,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
           </Form.Item>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" onClick={onValidateForm}>
-              下一步
+              提交
             </Button>
             <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/match'))}>
               返回

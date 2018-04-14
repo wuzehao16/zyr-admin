@@ -23,6 +23,7 @@ class Step1 extends React.PureComponent {
       submitting,
       dispatch
     } = this.props;
+    var item = step.creditInformation;
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
     const formItemLayout = {
@@ -67,7 +68,7 @@ class Step1 extends React.PureComponent {
               ...values,
             },
           });
-          dispatch(routerRedux.push('/match/add/step4'));
+          dispatch(routerRedux.push('/match/edit/step4'));
         }
       });
     };
@@ -92,7 +93,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('recordTime',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.recordTime,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>无</Checkbox>
@@ -108,7 +109,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumPettyLoan',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.sumPettyLoan,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>无</Checkbox>
@@ -124,7 +125,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumConsumerFinanceLoan',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.sumConsumerFinanceLoan,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>无</Checkbox>
@@ -140,7 +141,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isParticleLoan',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.isParticleLoan,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -153,7 +154,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('particleLoanLimit',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.particleLoanLimit,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>3千以下</Checkbox>
@@ -168,7 +169,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('particleLoanLimit',{
-              initialValue: [0,1],
+              initialValue: item.particleLoanLimit,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>有</Checkbox>
@@ -181,7 +182,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isLoanLoss',{
-              initialValue: [0,1],
+              initialValue: item.isLoanLoss,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>有</Checkbox>
@@ -195,7 +196,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isOverdue',{
-              initialValue: [0,1],
+              initialValue: item.isOverdue,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>有</Checkbox>
@@ -208,7 +209,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('overdueCategory',{
-              initialValue: [0,1,2],
+              initialValue: item.overdueCategory,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>信用卡逾期</Checkbox>
@@ -222,7 +223,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('overdueDays',{
-              initialValue: [0,1,2,3],
+              initialValue: item.overdueDays,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>3天以下</Checkbox>
@@ -237,7 +238,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('creditCardOverdueMoney',{
-              initialValue: [0,1,2,3],
+              initialValue: item.creditCardOverdueMoney,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>5百以下</Checkbox>
@@ -252,7 +253,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('loanOverdueMoney',{
-              initialValue: [0,1,2,3],
+              initialValue: item.loanOverdueMoney,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>5百以下</Checkbox>
@@ -267,7 +268,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isOverdueBalance',{
-              initialValue: [0,1],
+              initialValue: item.isOverdueBalance,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -280,7 +281,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isTwoMonthsOverdue',{
-              initialValue: [0,1],
+              initialValue: item.isTwoMonthsOverdue,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -293,7 +294,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isThreeMonthsOverdue',{
-              initialValue: [0,1],
+              initialValue: item.isThreeMonthsOverdue,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -306,7 +307,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isSixMonthsOverdue',{
-              initialValue: [0,1],
+              initialValue: item.isSixMonthsOverdue,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -319,7 +320,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isOneYearOverdue',{
-              initialValue: [0,1],
+              initialValue: item.isOneYearOverdue,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -332,7 +333,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isTwoYearsOverdue',{
-              initialValue: [0,1],
+              initialValue: item.isTwoYearsOverdue,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -345,7 +346,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isFiveYearsOverdue',{
-              initialValue: [0,1],
+              initialValue: item.isFiveYearsOverdue,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -359,7 +360,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneMonthQueries',{
-              initialValue: "<10",
+              initialValue: item.sumOneMonthQueries,
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -369,7 +370,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumTwoMonthsQueries',{
-              initialValue: "<10",
+              initialValue: item.sumTwoMonthsQueries,
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -379,7 +380,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumTwoMonthsQueries',{
-              initialValue: "<10",
+              initialValue: item.sumTwoMonthsQueries,
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -389,7 +390,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumThreeMonthsQueries',{
-              initialValue: "<10",
+              initialValue: item.sumThreeMonthsQueries,
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -399,7 +400,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumSixMonthsQueries',{
-              initialValue: "<10",
+              initialValue: item.sumSixMonthsQueries,
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -409,7 +410,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneYearQueries',{
-              initialValue: "<10",
+              initialValue: item.sumOneYearQueries,
             })(
                 <Input  type="text" style={{width:100}}/>
             )}

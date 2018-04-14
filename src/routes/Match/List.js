@@ -81,7 +81,11 @@ export default class TableList extends PureComponent {
     this.handleModalVisible(true);
   }
   handleEdit = (item) => {
-    this.props.dispatch(routerRedux.push(`/match/edit/${item.id}`));
+    this.props.dispatch(routerRedux.push({
+        pathname: '/match/edit',
+        query:{id: item.id }
+      })
+    );
     // this.props.dispatch({
     //   type: 'match/fetchEdit',
     //   payload: {
@@ -90,7 +94,7 @@ export default class TableList extends PureComponent {
     // });
   }
   handleAddAi = (item) => {
-    this.props.dispatch(routerRedux.push(`/match/addai/${item.id}`));
+    this.props.dispatch(routerRedux.push(`/match/addai/${item.id}?id=${item.id}`));
   }
   handleDetail = (item) => {
     this.props.dispatch({

@@ -35,6 +35,7 @@ class Step1 extends React.PureComponent {
       submitting,
       dispatch
     } = this.props;
+    var item = step.basicInformation
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
     const formItemLayout = {
@@ -79,7 +80,7 @@ class Step1 extends React.PureComponent {
               ...values,
             },
           });
-          dispatch(routerRedux.push('/match/add/step3'));
+          dispatch(routerRedux.push('/match/edit/step3'));
         }
       });
     };
@@ -104,7 +105,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('age',{
-              initialValue: this.toArray(ageOptions),
+              initialValue: item.age,
             })(
               <CheckboxGroup options={ageOptions}  />
             )}
@@ -114,7 +115,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('loanType',{
-              initialValue: this.toArray(maritalStatusOptions),
+              initialValue: item.loanType,
             })(
               <CheckboxGroup options={maritalStatusOptions}  />
             )}
@@ -124,7 +125,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isAgreeLoan',{
-              initialValue: [0,1],
+              initialValue: item.isAgreeLoan,
             })(
               <CheckboxGroup>
                 <Checkbox value={1}>是</Checkbox>
@@ -137,7 +138,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('location',{
-              initialValue: [0,1,2,3],
+              initialValue: item.location,
             })(
               <CheckboxGroup >
                 <Checkbox value={0}>深户</Checkbox>
@@ -152,7 +153,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('education',{
-              initialValue: [0,1,2,3],
+              initialValue: item.education,
             })(
               <CheckboxGroup>
                 <Checkbox value={0}>全日制本科及以上</Checkbox>
@@ -168,7 +169,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('eduoccupationcation',{
-              initialValue: [0,1,2,3],
+              initialValue: item.eduoccupationcation,
             })(
               <CheckboxGroup>
                 <Checkbox value={0}>工薪族</Checkbox>
@@ -183,7 +184,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('unitProperty',{
-              initialValue: [0,1,2,3,4,5,6,7],
+              initialValue: item.unitProperty,
             })(
               <CheckboxGroup >
                 <Checkbox value={0}>教师医生(公立)</Checkbox>
@@ -203,7 +204,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('salaryDistribution',{
-              initialValue: [0,1,2],
+              initialValue: item.salaryDistribution,
             })(
               <CheckboxGroup>
                 <Checkbox value={0}>扣税代发</Checkbox>
@@ -217,7 +218,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('workTime',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.workTime,
             })(
               <CheckboxGroup >
                 <Checkbox value={0}>3个月以下</Checkbox>
@@ -233,7 +234,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('monthAvgSalary',{
-              initialValue: [0,1,2,3,4,5],
+              initialValue: item.monthAvgSalary,
             })(
               <CheckboxGroup >
                 <Checkbox value={0}>4千以下</Checkbox>
@@ -250,7 +251,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isInsurance',{
-              initialValue: [0,1],
+              initialValue: item.isInsurance,
             })(
               <CheckboxGroup >
                 <Checkbox value={1}>有</Checkbox>
@@ -263,7 +264,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('insurancePaymonth',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.insurancePaymonth,
             })(
               <CheckboxGroup >
                 <Checkbox value={0}>3个月以下</Checkbox>
@@ -279,7 +280,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('insurancePaymonth',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.insurancePaymonth,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>4千以下</Checkbox>
@@ -295,7 +296,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isProvidentFund',{
-              initialValue: [0,1],
+              initialValue: item.isProvidentFund,
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>有</Checkbox>
@@ -308,7 +309,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('providentFundPaymonth',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.providentFundPaymonth,
             })(
               <CheckboxGroup >
                 <Checkbox value={0}>3个月以下</Checkbox>
@@ -324,7 +325,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('providentFundBase',{
-              initialValue: [0,1,2,3,4],
+              initialValue: item.providentFundBase,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>4千以下</Checkbox>
@@ -340,7 +341,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('invoiceValue',{
-              initialValue: [0,1,2,3],
+              initialValue: item.invoiceValue,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>2万以下</Checkbox>
@@ -355,7 +356,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('shareRatio',{
-              initialValue: [0,1,2,3],
+              initialValue: item.shareRatio,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>2万以下</Checkbox>
@@ -370,7 +371,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isLegalPerson',{
-              initialValue: [0,1],
+              initialValue: item.isLegalPerson,
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>是</Checkbox>
@@ -383,7 +384,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isPhoneCall',{
-              initialValue: [0,1],
+              initialValue: item.isPhoneCall,
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>是</Checkbox>
@@ -396,7 +397,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isInvestigate',{
-              initialValue: [0,1],
+              initialValue: item.isInvestigate,
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>是</Checkbox>
@@ -409,7 +410,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('licenseRegistTime',{
-              initialValue: [0,1,2,3,4,5],
+              initialValue: item.licenseRegistTime,
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>暂未注册</Checkbox>

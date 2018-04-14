@@ -14,7 +14,14 @@ const options = [
 @Form.create()
 class Step1 extends React.PureComponent {
   componentDidMount () {
-
+    const id = this.props.location.query.id;
+    console.log(id)
+    this.props.dispatch({
+      type:'match/fetchDetail',
+      payload:{
+        id:id
+      }
+    })
   }
   render() {
     const {
@@ -24,6 +31,7 @@ class Step1 extends React.PureComponent {
       submitting,
       dispatch
     } = this.props;
+    var item = step.loanDemand || {}
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
     const formItemLayout = {
@@ -68,7 +76,7 @@ class Step1 extends React.PureComponent {
               ...values,
             },
           });
-          dispatch(routerRedux.push('/match/add/step2'));
+          dispatch(routerRedux.push('/match/edit/step2'));
         }
       });
     };
@@ -87,6 +95,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('modelName',{
+                  initialValue:step.modelName,
                   rules:[{
                   required:true,
                   message:"请输入模型名称"
@@ -101,7 +110,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('loanType',{
-                  initialValue: 0,
+                  initialValue: item.loanType,
                 })(
                   <RadioGroup  options={options}  />
                 )}
