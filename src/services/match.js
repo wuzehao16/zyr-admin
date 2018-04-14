@@ -10,6 +10,9 @@ export async function queryAI(params) {
 export async function queryDetail(params) {
   return request(`/sys/selectModelDetail?${stringify(params)}`);
 }
+export async function queryAIDetail(params) {
+  return request(`/sys/selectModeAlgorithm?${stringify(params)}`);
+}
 
 export async function update(params) {
   return request('/sys/updateModelInfo', {

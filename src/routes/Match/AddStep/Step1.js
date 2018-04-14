@@ -66,6 +66,7 @@ class Step1 extends React.PureComponent {
             type: 'match/saveStep1FormData',
             payload: {
               ...values,
+              loanType:[values.loanType]
             },
           });
           dispatch(routerRedux.push('/match/add/step2'));

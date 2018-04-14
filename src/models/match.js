@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, addAi, query,queryAI, queryDetail, update, updateStatus, remove } from '../services/match';
+import { add, addAi, query,queryAI, queryDetail,queryAIDetail, update, updateStatus, remove } from '../services/match';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -26,7 +26,7 @@ export default {
     data:{
       data:[]
     },
-    ai:{
+    AI:{
 
     }
   },
@@ -41,6 +41,13 @@ export default {
     },
     *fetchAI({ payload }, { call, put }) {
       const response = yield call(queryAI, payload);
+      yield put({
+        type: 'saveAI',
+        payload: response.data,
+      });
+    },
+    *fetchAIDetail({ payload }, { call, put }) {
+      const response = yield call(queryAIDetail, payload);
       yield put({
         type: 'saveAI',
         payload: response.data,

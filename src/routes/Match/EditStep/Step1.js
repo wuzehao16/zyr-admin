@@ -110,7 +110,7 @@ class Step1 extends React.PureComponent {
                 {...formItemLayout}
                >
                 {getFieldDecorator('loanType',{
-                  initialValue: item.loanType,
+                  initialValue: item.loanType?item.loanType[0]:null,
                 })(
                   <RadioGroup  options={options}  />
                 )}

@@ -94,7 +94,11 @@ export default class TableList extends PureComponent {
     // });
   }
   handleAddAi = (item) => {
-    this.props.dispatch(routerRedux.push(`/match/addai/${item.id}?id=${item.id}`));
+    if (item.algorithmId) {
+      this.props.dispatch(routerRedux.push(`/match/editai/${item.algorithmId}`));
+    } else{
+      this.props.dispatch(routerRedux.push(`/match/addai/${item.id}`));
+    }
   }
   handleDetail = (item) => {
     this.props.dispatch({

@@ -20,23 +20,6 @@ import styles from './style.less';
 const { Option } = Select;
 
 
-const tableData = [
-  // {
-  //   key: '1',
-  //   expression: 'm',
-  //   name: 'John Brown',
-  // },
-  // {
-  //   key: '2',
-  //   expression: 'H',
-  //   name: 'Jim Green',
-  // },
-  // {
-  //   key: '3',
-  //   expression: 'a',
-  //   name: 'Joe Black',
-  // },
-];
 
 class AdvancedForm extends PureComponent {
   state = {
@@ -44,9 +27,12 @@ class AdvancedForm extends PureComponent {
   };
   componentDidMount() {
     window.addEventListener('resize', this.resizeFooterToolbar);
-    console.log(this.props)
     const id = this.props.match.params.id;
     this.props.form.getFieldDecorator('modelId',{initialValue:id})
+    this.props.dispatch({
+      type:'match/fetchAI',
+      payload:{ id:id}
+    })
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeFooterToolbar);
@@ -59,6 +45,10 @@ class AdvancedForm extends PureComponent {
     }
   };
   render() {
+    var tableData = []
+    if (this.props.AI.algorithmFormula) {
+       tableData = JSON.parse(this.props.AI.algorithmFormula)
+    }
     const { form, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;
     const validate = () => {
@@ -190,7 +180,8 @@ class AdvancedForm extends PureComponent {
   }
 }
 
-export default connect(({ global, loading }) => ({
+export default connect(({ global, loading, match }) => ({
   collapsed: global.collapsed,
+  AI: match.AI,
   submitting: loading.effects['form/submitAdvancedForm'],
 }))(Form.create()(AdvancedForm));
