@@ -32,6 +32,7 @@ class Step2 extends React.PureComponent {
      productIntroduction: item.productIntroduction,
      basieReq: item.basieReq,
      creditReq: item.creditReq,
+     claims: item.claims,
      positonCount: item.positonCount,
      otherReq: item.otherReq
    })

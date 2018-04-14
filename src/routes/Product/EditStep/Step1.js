@@ -170,7 +170,7 @@ class Step1 extends React.PureComponent {
     return (
       <div>
         <Form
-          onSubmit={this.handleSubmit}
+          onSubmit={onValidateForm}
           hideRequiredMark
           style={{ marginTop: 8 }}
         >
@@ -303,6 +303,7 @@ class Step1 extends React.PureComponent {
                 })(
                   <Input
                     type="number"
+                    step="0.01"
                     max={100}
                     min={0}
                     addonAfter="%"
@@ -328,6 +329,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
+                    step="0.001"
                     type="number"
                     max={100}
                     min={0}
@@ -376,6 +378,7 @@ class Step1 extends React.PureComponent {
                   <Input
                     type="number"
                     max={100}
+                    step="0.01"
                     min={0}
                     addonAfter="%"
                     placeholder="请输入"
@@ -651,7 +654,7 @@ class Step1 extends React.PureComponent {
             </Col>
           </Row>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-            <Button type="primary" htmlType="submit" onClick={onValidateForm}>
+            <Button type="primary" htmlType="submit" >
               下一步
             </Button>
             <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/product'))}>
