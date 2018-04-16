@@ -331,7 +331,7 @@ class Step1 extends React.PureComponent {
                   <Input
                     step="0.001"
                     type="number"
-                    max={100}
+                    max={3}
                     min={0}
                     addonAfter="%"
                     placeholder="请输入"
