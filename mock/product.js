@@ -231,5 +231,25 @@ export function getMangeName(req, res, u, b) {
     return result;
   }
 }
+export function selectMyModel(req, res, u, b) {
+  const result = {
+    code: 0,
+    data: [
+      {
+        "modeName": "也非模型",
+        "modeNo": "11947314793"
+      },
+      {
+        "modeName": "也非模型1",
+        "modeNo": "11947314792"
+      }]
+  };
 
-export default { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeName };
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
+
+export default { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeName, selectMyModel };

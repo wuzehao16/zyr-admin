@@ -17,7 +17,7 @@ import { selectAllRole, deleteRole, updateRole, saveRole } from './mock/systemRo
 import { selectMemberRank, deleteMemberRank, updateMemberRank, saveMemberRank } from './mock/membership'
 import { getUser, updateUser, updatePassword, getUserDetail } from './mock/member.js'
 import { selectInstitution, updateInstitution, saveInstitution, getInstitutionDetail } from './mock/institution'
-import { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeName } from './mock/product'
+import { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeName,selectMyModel } from './mock/product'
 import { selectAds, updateAds, saveAds, getAdsDetail, deleteAds } from './mock/advertisement'
 import { selectPMI,selectAllMI, updatePMI, savePMI, getPMIDetail, deletePMI } from './mock/info'
 import { selectOrder, selectOrderDetail, queryOrderByInstitution, updateOrder, deleteOrder } from './mock/order'
@@ -250,6 +250,7 @@ const proxy = {
   //智能匹配
   'GET /sys/selectModelList': selectModel,
   'GET /sys/newAddMode': saveModel,
+  'GET /sys/selecMyManagetModelinfo': selectMyModel,
 
 };
 

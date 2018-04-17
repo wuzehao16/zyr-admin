@@ -165,7 +165,7 @@ export const getRouterData = (app) => {
     '/content/information/add': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/AddInformation')),
     },
-    '/content/information/edit': {
+    '/content/information/edit/:id': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/EditInformation')),
     },
     '/content/information/detail': {

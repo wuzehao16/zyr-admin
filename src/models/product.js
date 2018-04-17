@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, query, queryDetail, update, updateAprovalStatus, updateShelvesStatus, queryManage, remove } from '../services/product';
+import { add, query,queryModel, queryDetail, update, updateAprovalStatus, updateShelvesStatus, queryManage, remove } from '../services/product';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -33,6 +33,10 @@ export default {
       step4: '',
       step5: '',
       step6: '',
+      applyFlow:"",
+    },
+    item:{
+      applyFlow:''
     },
     prodCategory: [],
     propCategory: [],
@@ -40,6 +44,8 @@ export default {
     repMethod: [],
     prodFeatures: [],
     institutionList:[],
+    ModelList1:[],//信用贷
+    ModelList2:[],//抵押
   },
 
   effects: {
@@ -48,6 +54,25 @@ export default {
       yield put({
         type: 'save',
         payload: response,
+      });
+    },
+    *fetchModel1({ payload }, { call, put }) {
+      console.log(1)
+      const response = yield call(queryModel, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          ModelList1: response.data
+        },
+      });
+    },
+    *fetchModel2({ payload }, { call, put }) {
+      const response = yield call(queryModel, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          ModelList2: response.data
+        },
       });
     },
     *remove({ payload, callback }, { call, put }) {
@@ -138,7 +163,7 @@ export default {
     *fetchEdit({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
       yield put({
-        type: 'saveDetail',
+        type: 'saveEdit',
         payload: response.data,
       });
       yield put(routerRedux.push('/product/edit'));
@@ -314,6 +339,12 @@ export default {
       return {
         ...state,
         institutionType: action.payload,
+      };
+    },
+    saveEdit(state, action) {
+      return {
+        ...state,
+        step: action.payload,
       };
     },
     saveDetail(state, action) {

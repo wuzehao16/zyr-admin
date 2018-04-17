@@ -225,6 +225,12 @@ export default class TableList extends PureComponent {
       modalVisible: !!flag,
     });
   }
+  toAdd = () => {
+    this.props.dispatch({
+      type: 'product/removeStepFormDate',
+    });
+    this.props.dispatch(routerRedux.push('/product/add'))
+  }
 
   handleAdd = (fields) => {
     this.props.dispatch({
@@ -427,7 +433,6 @@ export default class TableList extends PureComponent {
   renderForm() {
     return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
   }
-
   render() {
     const { product: { data, city }, user:{ currentUser } , loading, dispatch } = this.props;
     const { selectedRows, modalVisible, addInputValue, item } = this.state;
@@ -449,7 +454,7 @@ export default class TableList extends PureComponent {
               {this.renderForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/product/add'))}>
+              <Button icon="plus" type="primary" onClick={this.toAdd}>
                 新建
               </Button>
               {

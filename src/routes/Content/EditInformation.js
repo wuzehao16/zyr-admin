@@ -26,9 +26,13 @@ export default class BasicForms extends PureComponent {
   componentDidMount() {
     const { content: { item }, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
-    getFieldDecorator('contentId', {
-      initialValue: item.contentId,
-    })
+    const id = this.props.match.params.id;
+    dispatch({
+      type: 'content/fetchDetail',
+      payload: {
+        contentId: id,
+      },
+    });
     dispatch({
       type: 'content/fetchColumnType',
       payload: {
@@ -64,6 +68,9 @@ export default class BasicForms extends PureComponent {
   //    })
   //  };
   handleSubmit = (e) => {
+    // getFieldDecorator('contentId', {
+    //   initialValue: item.contentId,
+    // })
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -73,6 +80,7 @@ export default class BasicForms extends PureComponent {
             ...values,
             // content: this.state.productIntroduction,
             contentPic: values.contentPic,
+            contentId:this.props.content.item.contentId
           },
         });
       }

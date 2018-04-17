@@ -63,7 +63,8 @@ class Step3 extends React.Component {
           customerType: data.customerType && data.customerType.join(','),
           productType: data.productType && data.productType.join(','),
           propertyType: data.propertyType && data.propertyType.join(','),
-          applyFlow
+          applyFlow,
+          matchingMode:data.matchingMode1+','+ data.matchingMode2
         },
       });
     };

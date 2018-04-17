@@ -27,14 +27,14 @@ class Step2 extends React.PureComponent {
    otherReq: '',
  };
  componentDidMount() {
-   const { product:{ item } } = this.props;
+   const { product:{ step } } = this.props;
    this.setState({
-     productIntroduction: item.productIntroduction,
-     basieReq: item.basieReq,
-     creditReq: item.creditReq,
-     claims: item.claims,
-     positonCount: item.positonCount,
-     otherReq: item.otherReq
+     productIntroduction: step.productIntroduction,
+     basieReq: step.basieReq,
+     creditReq: step.creditReq,
+     claims: step.claims,
+     positonCount: step.positonCount,
+     otherReq: step.otherReq
    })
  }
  productIntroduction = (value) => {
@@ -74,7 +74,8 @@ class Step2 extends React.PureComponent {
   //   });
   // };
   render() {
-    const { form, data, dispatch, submitting, product:{ item } } = this.props;
+    const { form, data, dispatch, submitting, product:{ step } } = this.props;
+    const item = step ||{};
     const { getFieldDecorator, validateFields } = form;
     const onPrev = () => {
       dispatch(routerRedux.push('/product/edit/step1'));

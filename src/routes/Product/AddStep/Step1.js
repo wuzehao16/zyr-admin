@@ -46,6 +46,18 @@ class Step1 extends React.PureComponent {
         type: 'prodFeatures'
       },
     });
+    this.props.dispatch({
+      type: 'product/fetchModel1',
+      payload: {
+        loanType: '0'
+      },
+    });
+    this.props.dispatch({
+      type: 'product/fetchModel2',
+      payload: {
+        loanType: '1'
+      },
+    });
   }
   getInstitution = (code) => {
     const { getFieldValue } = this.props.form;
@@ -74,6 +86,8 @@ class Step1 extends React.PureComponent {
         repMethod,
         prodFeatures,
         step,
+        ModelList1,
+        ModelList2
       },
       user: {
         currentUser
@@ -93,6 +107,13 @@ class Step1 extends React.PureComponent {
       }
       if (subInstitutionList) {
         var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
+      }
+      // 匹配模型
+      if (ModelList1) {
+        var ModelList1Options = ModelList1.map(item => <Option key={item.modeNo} value={item.modeNo}>{item.modeName}</Option>);
+      }
+      if (ModelList2) {
+        var ModelList2Options = ModelList2.map(item => <Option key={item.modeNo} value={item.modeNo}>{item.modeName}</Option>);
       }
       var prodCategoryOptions = prodCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var propCategoryOptions = propCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
@@ -313,7 +334,7 @@ class Step1 extends React.PureComponent {
                   <Input
                     type="number"
                     step="0.0001"
-                    max={100}
+                    max={3}
                     min={0}
                     addonAfter="%"
                     placeholder="请输入"
@@ -469,6 +490,27 @@ class Step1 extends React.PureComponent {
                 )}
               </Form.Item>
             </Col>
+            <Col md={12} sm={24}>
+              <Form.Item
+                label="上架状态"
+                {...formItemLayout}
+               >
+                {getFieldDecorator('shelfState',{
+                  initialValue: step.shelfState,
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入上架状态',
+                    },
+                  ],
+                })(
+                  <Select placeholder="请选择">
+                    <Option value="1">上架</Option>
+                    <Option value="0">下架</Option>
+                  </Select>
+                )}
+              </Form.Item>
+            </Col>
           </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
@@ -498,6 +540,52 @@ class Step1 extends React.PureComponent {
               </Form.Item>
             </Col>
           </Row>
+          {
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={12} sm={24}>
+                <Form.Item
+                  label="模型(信用贷)"
+                  {...formItemLayout}
+                  style={{
+                    display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==100).length:'') == '1' ? 'block' : 'none',
+                  }}
+                 >
+                  {getFieldDecorator('matchingMode1',{
+                    initialValue: step.matchingMode1,
+                  })(
+                    <Select
+                      style={{ width: '100%' }}
+                      placeholder="请选择"
+                      onChange={this.handleChange}
+                    >
+                      {ModelList1Options}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+              <Col md={12} sm={24}>
+                <Form.Item
+                  label="模型(抵押贷)"
+                  {...formItemLayout}
+                  style={{
+                    display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110).length:'') == '1' ? 'block' : 'none',
+                  }}
+                 >
+                  {getFieldDecorator('matchingMode2',{
+                    initialValue: step.matchingMode2,
+                  })(
+                    <Select
+                      style={{ width: '100%' }}
+                      placeholder="请选择"
+                      onChange={this.handleChange}
+                    >
+                      {ModelList2Options}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+          }
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
               <Form.Item
@@ -623,27 +711,41 @@ class Step1 extends React.PureComponent {
             </Col>
           </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="上架状态"
-                {...formItemLayout}
-               >
-                {getFieldDecorator('shelfState',{
-                  initialValue: step.shelfState,
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入上架状态',
-                    },
-                  ],
-                })(
-                  <Select placeholder="请选择">
-                    <Option value="1">上架</Option>
-                    <Option value="0">下架</Option>
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
+              <Col md={12} sm={24}>
+                <FormItem
+                  {...formItemLayout}
+                   label="是否纳入评测"
+                   style={{
+                     display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
+                   }}
+                   >
+                   {getFieldDecorator('isEvaluating')(
+                     <Select placeholder="请选择">
+                       <Option value='0'>否</Option>
+                       <Option value='1'>是</Option>
+                     </Select>
+                   )}
+                </FormItem>
+              </Col>
+              <Col md={12} sm={24}>
+                <FormItem
+                  {...formItemLayout}
+                   label="是否为火"
+                   style={{
+                     display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
+                   }}
+                   >
+                   {getFieldDecorator('isFire')(
+                     <Select placeholder="请选择">
+                       <Option value='0'>否</Option>
+                       <Option value='1'>是</Option>
+                     </Select>
+                   )}
+                </FormItem>
+              </Col>
+            </Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+
           </Row>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" >

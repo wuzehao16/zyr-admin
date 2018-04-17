@@ -16,14 +16,14 @@ class Step3 extends React.PureComponent {
     step6: '',
   }
   componentDidMount() {
-    const { product:{ item } } = this.props;
+    const { product:{ step } } = this.props;
     this.setState({
-      step1: item.applyFlow && item.applyFlow.split(',')[0],
-      step2: item.applyFlow && item.applyFlow.split(',')[1],
-      step3: item.applyFlow && item.applyFlow.split(',')[2],
-      step4: item.applyFlow && item.applyFlow.split(',')[3],
-      step5: item.applyFlow && item.applyFlow.split(',')[4],
-      step6: item.applyFlow && item.applyFlow.split(',')[5],
+      step1: step.applyFlow && step.applyFlow.split(',')[0],
+      step2: step.applyFlow && step.applyFlow.split(',')[1],
+      step3: step.applyFlow && step.applyFlow.split(',')[2],
+      step4: step.applyFlow && step.applyFlow.split(',')[3],
+      step5: step.applyFlow && step.applyFlow.split(',')[4],
+      step6: step.applyFlow && step.applyFlow.split(',')[5],
     })
   }
   onChangeStep1 = (e) =>{
