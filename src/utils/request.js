@@ -67,12 +67,12 @@ export default function request(url, options) {
       const { dispatch } = store;
       const status = e.name;
       console.log(status)
-      if (status === 'SyntaxError') {
-        dispatch({
-          type: 'login/logout',
-        });
-        return;
-      }
+      // if (status === 'SyntaxError') {
+      //   dispatch({
+      //     type: 'login/logout',
+      //   });
+      //   return;
+      // }
       if (status === 401) {
         dispatch({
           type: 'login/logout',
