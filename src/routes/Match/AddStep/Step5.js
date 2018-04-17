@@ -352,7 +352,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {/* 汽车 */}
-          <div style={{fontSize:20,fontWeight:'bold'}}>商业保单</div>
+          <div style={{fontSize:20,fontWeight:'bold'}}>车辆状况</div>
           <Form.Item
             label="名下是否必须有家用汽车"
             {...formItemLayout}
@@ -393,7 +393,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="车辆残值评估要求"
+            label="车辆残值评估价格要求"
             {...formItemLayout}
            >
             {getFieldDecorator('carPotentialPrice',{

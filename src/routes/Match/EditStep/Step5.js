@@ -89,20 +89,20 @@ class Step1 extends React.PureComponent {
           </Row> */}
           <div style={{fontSize:20,fontWeight:'bold'}}>房产状况</div>
           <Form.Item
-            label="名下有无房产"
+            label="名下是否必须有房产"
             {...formItemLayout}
            >
             {getFieldDecorator('isHouseProperty',{
               initialValue: item.isHouseProperty,
             })(
               <CheckboxGroup  >
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
           <Form.Item
-            label="名下房产数量"
+            label="名下房产数量要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneMonthQueries',{
@@ -112,7 +112,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="名下房产属地"
+            label="名下房产属地要求"
             {...formItemLayout}
            >
             {getFieldDecorator('housePropertyDependency',{
@@ -126,7 +126,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="产权归属"
+            label="产权归属要求"
             {...formItemLayout}
            >
             {getFieldDecorator('ownership',{
@@ -142,7 +142,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="产权占比"
+            label="产权占比要求"
             {...formItemLayout}
            >
             {getFieldDecorator('propertyRightRatio',{
@@ -152,7 +152,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="房产类型"
+            label="房产类型要求"
             {...formItemLayout}
            >
             {getFieldDecorator('ownership',{
@@ -169,7 +169,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="房产状态"
+            label="房产状态要求"
             {...formItemLayout}
            >
             {getFieldDecorator('propertyStatus',{
@@ -183,7 +183,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="还款方式"
+            label="还款方式要求"
             {...formItemLayout}
            >
             {getFieldDecorator('repaymentMethod',{
@@ -197,7 +197,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="本笔抵押贷款余额"
+            label="本笔抵押贷款余额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('mortgageBalance',{
@@ -207,7 +207,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="每月还款金额"
+            label="每月还款金额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('mortgageMonthRepayment',{
@@ -217,7 +217,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="本笔抵押贷款期限"
+            label="本笔抵押贷款期限要求"
             {...formItemLayout}
            >
             {getFieldDecorator('mortgageTerm',{
@@ -227,7 +227,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="已还月份数"
+            label="已还月份数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('returnedMonths',{
@@ -237,7 +237,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="本房产总面积"
+            label="本房产总面积要求"
             {...formItemLayout}
            >
             {getFieldDecorator('propertyTotalArea',{
@@ -247,7 +247,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="本房产总市值"
+            label="本房产总市值要求"
             {...formItemLayout}
            >
             {getFieldDecorator('propertyTotalMarketValue',{
@@ -259,20 +259,20 @@ class Step1 extends React.PureComponent {
           {/* 保单 */}
           <div style={{fontSize:20,fontWeight:'bold'}}>商业保单</div>
           <Form.Item
-            label="名下有无商业保单"
+            label="名下是否必须有商业保单"
             {...formItemLayout}
            >
             {getFieldDecorator('businessPolicy',{
               initialValue: [0,1],
             })(
               <CheckboxGroup  >
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
           <Form.Item
-            label="名下保单份数"
+            label="名下保单份数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumBusinessPolicy',{
@@ -282,7 +282,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="保单品牌"
+            label="保单品牌要求"
             {...formItemLayout}
            >
             {getFieldDecorator('policyBrand',{
@@ -313,7 +313,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="保单缴费方式"
+            label="保单缴费方式要求"
             {...formItemLayout}
            >
             {getFieldDecorator('policyBrandPaymentMethod',{
@@ -328,7 +328,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="保单缴费时长"
+            label="保单缴费时长要求"
             {...formItemLayout}
            >
             {getFieldDecorator('policyPaymentYears',{
@@ -343,7 +343,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="保单年缴费金额"
+            label="保单年缴费金额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('policyPayment',{
@@ -353,22 +353,22 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {/* 汽车 */}
-          <div style={{fontSize:20,fontWeight:'bold'}}>商业保单</div>
+          <div style={{fontSize:20,fontWeight:'bold'}}>车辆状况</div>
           <Form.Item
-            label="名下有无家用汽车"
+            label="名下是否必须有家用汽车"
             {...formItemLayout}
            >
             {getFieldDecorator('isFamilyCar',{
               initialValue: item.isFamilyCar,
             })(
               <CheckboxGroup  >
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
           <Form.Item
-            label="名下车辆数量"
+            label="名下车辆数量要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumFamilyCar',{
@@ -378,7 +378,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="车辆登记证状态"
+            label="车辆登记证状态要求"
             {...formItemLayout}
            >
             {getFieldDecorator('carRegistStatus',{
@@ -394,7 +394,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="车辆残值评估"
+            label="车辆残值评估价格要求"
             {...formItemLayout}
            >
             {getFieldDecorator('carPotentialPrice',{
@@ -404,7 +404,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="车辆贷款余额"
+            label="车辆贷款余额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('carLoanBalance',{
@@ -414,7 +414,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="车贷月还款金额"
+            label="车贷还款金额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('carRepayment',{
@@ -424,7 +424,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="车贷已还款月份"
+            label="车贷还款月份要求"
             {...formItemLayout}
            >
             {getFieldDecorator('carrRepaymentMonths',{

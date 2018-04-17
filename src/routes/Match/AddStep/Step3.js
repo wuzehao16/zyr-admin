@@ -189,9 +189,9 @@ class Step1 extends React.PureComponent {
               </CheckboxGroup>
             )}
           </Form.Item>
-            <div style={{fontSize:20,fontWeight:'bold'}}>是否允许当前有逾期</div>
+            <div style={{fontSize:20,fontWeight:'bold'}}>征信逾期情况</div>
           <Form.Item
-            label="当前是否有逾期"
+            label="是否允许当前有逾期"
             {...formItemLayout}
            >
             {getFieldDecorator('isOverdue',{
@@ -365,7 +365,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近2个月查询次数要求"
+            label="近2个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumTwoMonthsQueries',{
@@ -375,17 +375,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近2个月查询次数要求"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('sumTwoMonthsQueries',{
-              initialValue: "<10",
-            })(
-                <Input  type="text" style={{width:100}}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="请输入近3个月查询次数要求"
+            label="近3个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumThreeMonthsQueries',{
@@ -395,7 +385,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近6个月查询次数要求"
+            label="近6个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumSixMonthsQueries',{
@@ -405,7 +395,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近12个月查询次数要求"
+            label="近12个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneYearQueries',{

@@ -180,7 +180,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="职业类别要求"
+            label="单位性质要求"
             {...formItemLayout}
            >
             {getFieldDecorator('unitProperty',{
@@ -200,7 +200,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="工资发放方式"
+            label="工资发放方式要求"
             {...formItemLayout}
            >
             {getFieldDecorator('salaryDistribution',{
@@ -214,7 +214,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="现单位上班时长"
+            label="现单位上班时长要求"
             {...formItemLayout}
            >
             {getFieldDecorator('workTime',{
@@ -230,7 +230,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="现单位上班时长"
+            label="现单位月均工资要求"
             {...formItemLayout}
            >
             {getFieldDecorator('monthAvgSalary',{
@@ -247,36 +247,20 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="社保有无缴纳"
+            label="是否需要缴纳社保"
             {...formItemLayout}
            >
             {getFieldDecorator('isInsurance',{
               initialValue: item.isInsurance,
             })(
               <CheckboxGroup >
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
           <Form.Item
-            label="现单位社保连续缴纳时长"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('insurancePaymonth',{
-              initialValue: item.insurancePaymonth,
-            })(
-              <CheckboxGroup >
-                <Checkbox value={0}>3个月以下</Checkbox>
-                <Checkbox value={1}>3-6个月</Checkbox>
-                <Checkbox value={2}>6-12个月</Checkbox>
-                <Checkbox value={3}>12-24个月</Checkbox>
-                <Checkbox value={4}>24个月以上</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="现单位社保缴纳基数"
+            label="现单位社保缴纳基数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('insurancePaymonth',{
@@ -292,24 +276,11 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="公积金有无缴纳"
+            label="现单位社保连续缴纳时长要求"
             {...formItemLayout}
            >
-            {getFieldDecorator('isProvidentFund',{
-              initialValue: item.isProvidentFund,
-            })(
-              <CheckboxGroup  >
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="现单位公积金连续缴纳时长"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('providentFundPaymonth',{
-              initialValue: item.providentFundPaymonth,
+            {getFieldDecorator('insurancePaymonth',{
+              initialValue: item.insurancePaymonth,
             })(
               <CheckboxGroup >
                 <Checkbox value={0}>3个月以下</Checkbox>
@@ -321,7 +292,20 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="现单位公积金缴纳基数"
+            label="是否需要缴纳公积金"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('isProvidentFund',{
+              initialValue: item.isProvidentFund,
+            })(
+              <CheckboxGroup  >
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
+              </CheckboxGroup>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="现单位公积金缴纳基数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('providentFundBase',{
@@ -337,7 +321,41 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="企业一年开票金额"
+            label="现单位公积金连续缴纳时长要求"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('providentFundPaymonth',{
+              initialValue: item.providentFundPaymonth,
+            })(
+              <CheckboxGroup >
+                <Checkbox value={0}>3个月以下</Checkbox>
+                <Checkbox value={1}>3-6个月</Checkbox>
+                <Checkbox value={2}>6-12个月</Checkbox>
+                <Checkbox value={3}>12-24个月</Checkbox>
+                <Checkbox value={4}>24个月以上</Checkbox>
+              </CheckboxGroup>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="本地营业执照注册时长要求"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('licenseRegistTime',{
+              initialValue: item.licenseRegistTime,
+            })(
+              <CheckboxGroup  >
+                <Checkbox value={0}>暂未注册</Checkbox>
+                <Checkbox value={1}>3个月以下</Checkbox>
+                <Checkbox value={2}>3-6个月</Checkbox>
+                <Checkbox value={3}>6-12个月</Checkbox>
+
+                <Checkbox value={4}>12-24个月</Checkbox>
+                <Checkbox value={5}>24个月以上</Checkbox>
+              </CheckboxGroup>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="企业一年开票金额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('invoiceValue',{
@@ -352,7 +370,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="股份占比"
+            label="股份占比要求"
             {...formItemLayout}
            >
             {getFieldDecorator('shareRatio',{
@@ -367,7 +385,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="是否法人"
+            label="是否必须是法人"
             {...formItemLayout}
            >
             {getFieldDecorator('isLegalPerson',{
@@ -380,7 +398,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="单位座机是否能正常接听"
+            label="单位座机是否必须能正常接听"
             {...formItemLayout}
            >
             {getFieldDecorator('isPhoneCall',{
@@ -393,7 +411,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="公司是否方便实地考察"
+            label="公司是否必须方便实地考察"
             {...formItemLayout}
            >
             {getFieldDecorator('isInvestigate',{
@@ -402,24 +420,6 @@ class Step1 extends React.PureComponent {
               <CheckboxGroup  >
                 <Checkbox value={1}>是</Checkbox>
                 <Checkbox value={0}>否</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="本地营业执照注册时长"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('licenseRegistTime',{
-              initialValue: item.licenseRegistTime,
-            })(
-              <CheckboxGroup  >
-                <Checkbox value={0}>暂未注册</Checkbox>
-                <Checkbox value={1}>3个月以下</Checkbox>
-                <Checkbox value={2}>3-6个月</Checkbox>
-                <Checkbox value={3}>6-12个月</Checkbox>
-
-                <Checkbox value={4}>12-24个月</Checkbox>
-                <Checkbox value={5}>24个月以上</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>

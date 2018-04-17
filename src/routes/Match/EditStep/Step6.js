@@ -92,7 +92,7 @@ class Step1 extends React.PureComponent {
           </Row> */}
           {/* <div style={{fontSize:20,fontWeight:'bold'}}>名下负债状况</div> */}
           <Form.Item
-            label="信用类贷款"
+            label="信用类贷款笔数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumCreditLoan',{
@@ -102,7 +102,17 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="等额本息类贷款总余额"
+            label="等额本息每月还款总额要求"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('equalInteresMonthPayment',{
+              initialValue: item.equalInteresMonthPayment,
+            })(
+                <Input  type="text" style={{width:200}} addonAfter="笔"/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="等额本息类贷款总余额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('equalInterestTotalBalance',{
@@ -112,7 +122,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="每月还款总额"
+            label="等额本息每月还款总额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('equalInteresMonthPayment',{
@@ -122,18 +132,18 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="先息后本贷款"
+            label="先息后本类要求"
             {...formItemLayout}
            >
-            {getFieldDecorator('sumEqualInterest',{
-              initialValue: item.sumEqualInterest,
+            {getFieldDecorator('sumFirstInterest',{
+              initialValue: item.sumFirstInterest,
               initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}
           </Form.Item>
           <Form.Item
-            label="先息后本类贷款总余额"
+            label="先息后本类贷款总余额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('firstInterestTotalBalance',{
@@ -143,7 +153,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="每月还利息"
+            label="先息后本每月还利息要求"
             {...formItemLayout}
            >
             {getFieldDecorator('firstInterestMonthPayment',{
@@ -153,7 +163,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="随借随还类"
+            label="随借随还类要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumAlongLoan',{
@@ -163,7 +173,38 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="信用卡总额度"
+            label="随借随还类贷款总余额要求"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('alongLoanTotalBalance',{
+              initialValue: item.alongLoanTotalBalance,
+            })(
+                <Input  type="text" style={{width:200}} addonAfter="笔"/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="随借随还每月还利息要求"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('alongLoanMonthPayment',{
+              initialValue: item.alongLoanMonthPayment,
+            })(
+                <Input  type="text" style={{width:200}} addonAfter="笔"/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="信用卡笔数要求"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('sumCreditCard',{
+              initialValue: item.sumCreditCard,
+            })(
+                <Input  type="text" style={{width:200}} addonAfter="笔"/>
+            )}
+          </Form.Item>
+
+          <Form.Item
+            label="信用卡总额度要求"
             {...formItemLayout}
            >
             {getFieldDecorator('creditCardTotalLimit',{
@@ -173,13 +214,33 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="信用卡当月已使用额度"
+            label="信用卡当月已使用额度要求"
             {...formItemLayout}
            >
             {getFieldDecorator('creditCardUsedLimit',{
               initialValue: item.creditCardUsedLimit,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="信用卡近6个月平均使用额度要求"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('creditCardSixMonthsAvgUsedLimit',{
+              initialValue: item.creditCardSixMonthsAvgUsedLimit,
+            })(
+                <Input  type="text" style={{width:200}} addonAfter="元"/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="信用卡办理分期还款数量要求"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('sumStagesCreditCard',{
+              initialValue: item.sumStagesCreditCard,
+            })(
+                <Input  type="text" style={{width:200}} addonAfter="张"/>
             )}
           </Form.Item>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
