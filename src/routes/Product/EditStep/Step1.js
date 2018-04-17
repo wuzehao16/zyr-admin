@@ -46,6 +46,18 @@ class Step1 extends React.PureComponent {
         type: 'prodFeatures'
       },
     });
+    this.props.dispatch({
+      type: 'product/fetchModel1',
+      payload: {
+        loanType: '0'
+      },
+    });
+    this.props.dispatch({
+      type: 'product/fetchModel2',
+      payload: {
+        loanType: '1'
+      },
+    });
     if (this.props.product && this.props.product.item) {
       const { item } = this.props.product;
       const { getFieldValue } = this.props.form;
@@ -84,7 +96,9 @@ class Step1 extends React.PureComponent {
         cusCategory,
         repMethod,
         prodFeatures,
-        item,
+        step,
+        ModelList1,
+        ModelList2
       },
       user:{
         currentUser
@@ -92,6 +106,7 @@ class Step1 extends React.PureComponent {
       submitting,
       dispatch
     } = this.props;
+    const item = step || {};
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
@@ -104,6 +119,13 @@ class Step1 extends React.PureComponent {
     }
     if (subInstitutionList) {
       var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
+    }
+    // 匹配模型
+    if (ModelList1) {
+      var ModelList1Options = ModelList1.map(item => <Option key={item.modeNo} value={item.modeNo}>{item.modeName}</Option>);
+    }
+    if (ModelList2) {
+      var ModelList2Options = ModelList2.map(item => <Option key={item.modeNo} value={item.modeNo}>{item.modeName}</Option>);
     }
       var prodCategoryOptions = prodCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var propCategoryOptions = propCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
@@ -506,6 +528,52 @@ class Step1 extends React.PureComponent {
               </Form.Item>
             </Col>
           </Row>
+          {
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={12} sm={24}>
+                <Form.Item
+                  label="模型(信用贷)"
+                  {...formItemLayout}
+                  style={{
+                    display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==100).length:'') == '1' ? 'block' : 'none',
+                  }}
+                 >
+                  {getFieldDecorator('matchingMode1',{
+                    initialValue: item.matchingMode?item.matchingMode.split(',')[0]:"",
+                  })(
+                    <Select
+                      style={{ width: '100%' }}
+                      placeholder="请选择"
+                      onChange={this.handleChange}
+                    >
+                      {ModelList1Options}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+              <Col md={12} sm={24}>
+                <Form.Item
+                  label="模型(抵押贷)"
+                  {...formItemLayout}
+                  style={{
+                    display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110).length:'') == '1' ? 'block' : 'none',
+                  }}
+                 >
+                  {getFieldDecorator('matchingMode2',{
+                    initialValue: item.matchingMode?item.matchingMode.split(',')[1]:"",
+                  })(
+                    <Select
+                      style={{ width: '100%' }}
+                      placeholder="请选择"
+                      onChange={this.handleChange}
+                    >
+                      {ModelList2Options}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+          }
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
               <Form.Item
