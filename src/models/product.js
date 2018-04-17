@@ -35,6 +35,9 @@ export default {
       step6: '',
       applyFlow:"",
     },
+    item:{
+      applyFlow:''
+    },
     prodCategory: [],
     propCategory: [],
     cusCategory: [],
@@ -160,7 +163,7 @@ export default {
     *fetchEdit({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
       yield put({
-        type: 'saveDetail',
+        type: 'saveEdit',
         payload: response.data,
       });
       yield put(routerRedux.push('/product/edit'));
@@ -338,10 +341,16 @@ export default {
         institutionType: action.payload,
       };
     },
-    saveDetail(state, action) {
+    saveEdit(state, action) {
       return {
         ...state,
         step: action.payload,
+      };
+    },
+    saveDetail(state, action) {
+      return {
+        ...state,
+        item: action.payload,
       };
     },
   },

@@ -19,13 +19,13 @@
   "publicPath": "/",
   "hash": true,
   "proxy": {
-     "/sysAnno/*": {
+     "/sysAnno1/*": {
        "target": "http://47.104.27.184:8000"
      },
-     "/sys/*": {
+     "/sys1/*": {
        "target": "http://47.104.27.184:8000"
      },
-     "/module/*": {
+     "/module1/*": {
        "target": "http://47.104.27.184:8000"
      }
    }

@@ -490,6 +490,27 @@ class Step1 extends React.PureComponent {
                 )}
               </Form.Item>
             </Col>
+            <Col md={12} sm={24}>
+              <Form.Item
+                label="上架状态"
+                {...formItemLayout}
+               >
+                {getFieldDecorator('shelfState',{
+                  initialValue: step.shelfState,
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入上架状态',
+                    },
+                  ],
+                })(
+                  <Select placeholder="请选择">
+                    <Option value="1">上架</Option>
+                    <Option value="0">下架</Option>
+                  </Select>
+                )}
+              </Form.Item>
+            </Col>
           </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
@@ -690,27 +711,41 @@ class Step1 extends React.PureComponent {
             </Col>
           </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="上架状态"
-                {...formItemLayout}
-               >
-                {getFieldDecorator('shelfState',{
-                  initialValue: step.shelfState,
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入上架状态',
-                    },
-                  ],
-                })(
-                  <Select placeholder="请选择">
-                    <Option value="1">上架</Option>
-                    <Option value="0">下架</Option>
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
+              <Col md={12} sm={24}>
+                <FormItem
+                  {...formItemLayout}
+                   label="是否纳入评测"
+                   style={{
+                     display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
+                   }}
+                   >
+                   {getFieldDecorator('isEvaluating')(
+                     <Select placeholder="请选择">
+                       <Option value='0'>否</Option>
+                       <Option value='1'>是</Option>
+                     </Select>
+                   )}
+                </FormItem>
+              </Col>
+              <Col md={12} sm={24}>
+                <FormItem
+                  {...formItemLayout}
+                   label="是否为火"
+                   style={{
+                     display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
+                   }}
+                   >
+                   {getFieldDecorator('isFire')(
+                     <Select placeholder="请选择">
+                       <Option value='0'>否</Option>
+                       <Option value='1'>是</Option>
+                     </Select>
+                   )}
+                </FormItem>
+              </Col>
+            </Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+
           </Row>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" >
