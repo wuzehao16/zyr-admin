@@ -87,7 +87,7 @@ class Step1 extends React.PureComponent {
             </Col>
           </Row> */}
           <Form.Item
-            label="请输入本单位连续上班月份"
+            label="请输入本单位连续上班月份要求"
             {...formItemLayout}
            >
             {getFieldDecorator('specificWorkTime',{
@@ -97,7 +97,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="近3个月税前月均收入"
+            label="近3个月税前月均收入要求"
             {...formItemLayout}
            >
             {getFieldDecorator('threeMonthsAvgSalary',{
@@ -107,7 +107,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="近6个月税前月均收入"
+            label="近6个月税前月均收入要求"
             {...formItemLayout}
            >
             {getFieldDecorator('SixMonthsAvgSalary',{
@@ -117,7 +117,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="近12个月税前月均收入"
+            label="近12个月税前月均收入要求"
             {...formItemLayout}
            >
             {getFieldDecorator('thisYearMonthsAvgSalary',{
@@ -127,7 +127,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="上一年度税前月均收入"
+            label="上一年度税前月均收入要求"
             {...formItemLayout}
            >
             {getFieldDecorator('lastYearMonthsAvgSalary',{
@@ -137,7 +137,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="社保缴纳基数"
+            label="社保缴纳基数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('specificInsuranceBase',{
@@ -147,7 +147,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="本单位连续缴纳"
+            label="本单位连续缴纳时长要求"
             {...formItemLayout}
            >
             {getFieldDecorator('specificInsurancePaymonth',{
@@ -157,20 +157,20 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="有无养老保险"
+            label="是否必须有养老保险"
             {...formItemLayout}
            >
             {getFieldDecorator('isEndowmentInsurance',{
               initialValue: [0,1],
             })(
               <CheckboxGroup  >
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
           <Form.Item
-            label="本单位有无社保基数调整"
+            label="本单位社保基数调整要求"
             {...formItemLayout}
            >
             {getFieldDecorator('isInsuranceAdjustment',{
@@ -184,7 +184,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="调整前社保缴纳基数"
+            label="调整前社保缴纳基数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('exInsuranceBase',{
@@ -194,7 +194,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="公积金缴纳基数"
+            label="公积金缴纳基数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('specificProvidentFundBase',{
@@ -204,7 +204,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="本单位连续缴纳"
+            label="本单位连续缴纳时长要求"
             {...formItemLayout}
            >
             {getFieldDecorator('specificProvidentFundPaymonth',{
@@ -214,7 +214,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="本单位有无公积金基数调整"
+            label="本单位公积金基数调整要求"
             {...formItemLayout}
            >
             {getFieldDecorator('isProvidentFundAdjustment',{
@@ -228,7 +228,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="调整前公积金缴纳基数"
+            label="调整前公积金缴纳基数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('exProvidentFundBase',{

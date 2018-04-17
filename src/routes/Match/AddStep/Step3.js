@@ -88,7 +88,7 @@ class Step1 extends React.PureComponent {
           </Row> */}
           <div style={{fontSize:20,fontWeight:'bold'}}>征信基本情况</div>
           <Form.Item
-            label="征信记录时长"
+            label="征信记录时长要求"
             {...formItemLayout}
            >
             {getFieldDecorator('recordTime',{
@@ -104,7 +104,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="名下上征信小额类贷款笔数"
+            label="名下上征信小额类贷款笔数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumPettyLoan',{
@@ -120,7 +120,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="名下上征信消费金融类贷款笔数"
+            label="名下上征信消费金融类贷款笔数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumConsumerFinanceLoan',{
@@ -136,7 +136,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="是否使用过微粒贷"
+            label="是否允许使用过微粒贷"
             {...formItemLayout}
            >
             {getFieldDecorator('isParticleLoan',{
@@ -149,7 +149,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="使用额度"
+            label="使用微粒贷额度要求"
             {...formItemLayout}
            >
             {getFieldDecorator('particleLoanLimit',{
@@ -164,32 +164,32 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="名下贷款/信用卡账户状态是否有冻结/呆账/止付/挂失/收卡/作废"
+            label="是否允许名下贷款/信用卡账户状态有冻结/呆账/止付/挂失/收卡/作废"
             {...formItemLayout}
            >
             {getFieldDecorator('particleLoanLimit',{
               initialValue: [0,1],
             })(
               <CheckboxGroup  size="small">
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
           <Form.Item
-            label="名下贷款/信用卡五级分类是否有关注/次级/可疑/损失"
+            label="是否允许名下贷款/信用卡五级分类有关注/次级/可疑/损失"
             {...formItemLayout}
            >
             {getFieldDecorator('isLoanLoss',{
               initialValue: [0,1],
             })(
               <CheckboxGroup  size="small">
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
-            <div style={{fontSize:20,fontWeight:'bold'}}>征信预期情况</div>
+            <div style={{fontSize:20,fontWeight:'bold'}}>是否允许当前有逾期</div>
           <Form.Item
             label="当前是否有逾期"
             {...formItemLayout}
@@ -198,13 +198,13 @@ class Step1 extends React.PureComponent {
               initialValue: [0,1],
             })(
               <CheckboxGroup  size="small">
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
           <Form.Item
-            label="当前逾期类别"
+            label="当前逾期类别要求"
             {...formItemLayout}
            >
             {getFieldDecorator('overdueCategory',{
@@ -218,7 +218,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="当前逾期天数"
+            label="当前逾期天数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('overdueDays',{
@@ -233,7 +233,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="当前信用卡逾期金额"
+            label="当前信用卡逾期金额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('creditCardOverdueMoney',{
@@ -248,7 +248,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="当前贷款逾期金额"
+            label="当前贷款逾期金额要求"
             {...formItemLayout}
            >
             {getFieldDecorator('loanOverdueMoney',{
@@ -263,7 +263,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="当前逾期是否已经结清"
+            label="是否必须当前逾期已经结算"
             {...formItemLayout}
            >
             {getFieldDecorator('isOverdueBalance',{
@@ -276,7 +276,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="近2个月内逾期的情况"
+            label="是否允许2个月内逾期"
             {...formItemLayout}
            >
             {getFieldDecorator('isTwoMonthsOverdue',{
@@ -289,7 +289,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="近3个月内逾期的情况"
+            label="是否允许3个月内逾期"
             {...formItemLayout}
            >
             {getFieldDecorator('isThreeMonthsOverdue',{
@@ -302,7 +302,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="近6个月内是否有逾期30天以上的情况"
+            label="是否允许近6个月内有逾期30天以上的情况"
             {...formItemLayout}
            >
             {getFieldDecorator('isSixMonthsOverdue',{
@@ -315,7 +315,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="近1年内是否有逾期60天以上的情况"
+            label="是否允许近1年内有逾期60天以上的情况"
             {...formItemLayout}
            >
             {getFieldDecorator('isOneYearOverdue',{
@@ -328,7 +328,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="近2年内是否有逾期90天以上的情况"
+            label="是否允许近2年内有逾期90天以上的情况"
             {...formItemLayout}
            >
             {getFieldDecorator('isTwoYearsOverdue',{
@@ -341,7 +341,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="近5年内是否有逾期120天以上的情况"
+            label="是否允许近5年内有逾期120天以上的情况"
             {...formItemLayout}
            >
             {getFieldDecorator('isFiveYearsOverdue',{
@@ -355,7 +355,7 @@ class Step1 extends React.PureComponent {
           </Form.Item>
           <div style={{fontSize:20,fontWeight:'bold'}}>征信查询情况</div>
           <Form.Item
-            label="近1个月查询次数"
+            label="近1个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneMonthQueries',{
@@ -365,7 +365,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近2个月查询次数"
+            label="请输入近2个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumTwoMonthsQueries',{
@@ -375,7 +375,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近2个月查询次数"
+            label="请输入近2个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumTwoMonthsQueries',{
@@ -385,7 +385,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近3个月查询次数"
+            label="请输入近3个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumThreeMonthsQueries',{
@@ -395,7 +395,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近6个月查询次数"
+            label="请输入近6个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumSixMonthsQueries',{
@@ -405,7 +405,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近12个月查询次数"
+            label="请输入近12个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneYearQueries',{

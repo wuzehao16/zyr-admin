@@ -101,7 +101,7 @@ class Step1 extends React.PureComponent {
           </Row> */}
           <div style={{fontSize:20,fontWeight:'bold'}}>个人信息</div>
           <Form.Item
-            label="年龄"
+            label="年龄要求"
             {...formItemLayout}
            >
             {getFieldDecorator('age',{
@@ -111,7 +111,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="婚姻状况"
+            label="婚姻状况要求"
             {...formItemLayout}
            >
             {getFieldDecorator('loanType',{
@@ -121,7 +121,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="配偶是否同意贷款"
+            label="是否需要配偶同意贷款"
             {...formItemLayout}
            >
             {getFieldDecorator('isAgreeLoan',{
@@ -134,7 +134,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="户籍所在地"
+            label="户籍所在地要求"
             {...formItemLayout}
            >
             {getFieldDecorator('location',{
@@ -149,7 +149,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="学历"
+            label="学历要求"
             {...formItemLayout}
            >
             {getFieldDecorator('education',{
@@ -165,7 +165,7 @@ class Step1 extends React.PureComponent {
           </Form.Item>
           <div style={{fontSize:20,fontWeight:'bold'}}>工作情况</div>
           <Form.Item
-            label="职业类别"
+            label="职业类别要求"
             {...formItemLayout}
            >
             {getFieldDecorator('eduoccupationcation',{
@@ -180,7 +180,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="职业类别"
+            label="职业类别要求"
             {...formItemLayout}
            >
             {getFieldDecorator('unitProperty',{
