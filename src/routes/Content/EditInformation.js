@@ -292,30 +292,35 @@ export default class BasicForms extends PureComponent {
                                  <UploadVideo />
                               )}
 
-                            </FormItem>:<Form.Item
-                                          labelCol= {{
-                                            xs: { span: 24 },
-                                            sm: { span: 7 },
-                                          }}
-                                          wrapperCol={{
-                                            xs: { span: 24, offset: 0 },
-                                            sm: { span: 24, offset: 7 },
-                                          }}
-                                          style={{width:'60%'}}
-                                           >
-                                             {getFieldDecorator('content', {
-                                               rules:[{
-                                                 required:true,
-                                                 message:'请输入内容'
-                                               },
-                                              ],
-                                             })(
-                                               <ReactQuill
-                                                 placeholder='请输入...'
-                                               />
-                                             )}
-
-                                        </Form.Item>
+                            </FormItem>: null
+            }
+            {
+              getFieldValue('contentType') == 60000
+                ?        <Form.Item
+                          labelCol= {{
+                            xs: { span: 24 },
+                            sm: { span: 7 },
+                          }}
+                          wrapperCol={{
+                            xs: { span: 24, offset: 0 },
+                            sm: { span: 24, offset: 7 },
+                          }}
+                          style={{width:'60%'}}
+                           >
+                             {getFieldDecorator('content', {
+                               initialValue: item.content,
+                               valuePropName: "defaultValue",
+                               rules:[{
+                                 required:true,
+                                 message:'请输入内容'
+                               },
+                              ],
+                             })(
+                               <ReactQuill
+                                 placeholder='请输入...'
+                               />
+                             )}
+                        </Form.Item>: null
             }
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
