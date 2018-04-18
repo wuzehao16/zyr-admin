@@ -169,30 +169,40 @@ class Step1 extends React.PureComponent {
               </CheckboxGroup>
             )}
           </Form.Item>
-          <Form.Item
-            label="本单位社保基数调整要求"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('isInsuranceAdjustment',{
-              initialValue: [0,1,2],
-            })(
-              <CheckboxGroup  >
-                <Checkbox value={0}>无</Checkbox>
-                <Checkbox value={1}>半年内有</Checkbox>
-                <Checkbox value={2}>一年内有</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="调整前社保缴纳基数要求"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('exInsuranceBase',{
-              initialValue: ">0",
-            })(
-                <Input  type="text" style={{width:200}} addonAfter="元"/>
-            )}
-          </Form.Item>
+          {
+            (getFieldValue('isEndowmentInsurance').indexOf(1) >= 0)
+              ? <div>
+                  <Form.Item
+                    label="本单位社保基数调整要求"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('isInsuranceAdjustment',{
+                      initialValue: [0,1,2],
+                    })(
+                      <CheckboxGroup  >
+                        <Checkbox value={0}>无</Checkbox>
+                        <Checkbox value={1}>半年内有</Checkbox>
+                        <Checkbox value={2}>一年内有</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                  {
+                    ((getFieldValue('isInsuranceAdjustment').indexOf(1) >= 0) || (getFieldValue('isInsuranceAdjustment').indexOf(2) >= 0))
+                      ? <div>
+                          <Form.Item
+                            label="调整前社保缴纳基数要求"
+                            {...formItemLayout}
+                          >
+                            {getFieldDecorator('exInsuranceBase',{
+                              initialValue: ">0",
+                            })(
+                                <Input  type="text" style={{width:200}} addonAfter="元"/>
+                            )}
+                          </Form.Item>
+                        </div>: null
+                  }
+                </div>: null
+          }
           <Form.Item
             label="公积金缴纳基数要求"
             {...formItemLayout}
@@ -227,16 +237,22 @@ class Step1 extends React.PureComponent {
               </CheckboxGroup>
             )}
           </Form.Item>
-          <Form.Item
-            label="调整前公积金缴纳基数要求"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('exProvidentFundBase',{
-              initialValue: ">0",
-            })(
-                <Input  type="text" style={{width:200}} addonAfter="元"/>
-            )}
-          </Form.Item>
+          {
+            ((getFieldValue('isProvidentFundAdjustment').indexOf(1) >= 0) || (getFieldValue('isProvidentFundAdjustment').indexOf(2) >= 0))
+              ? <div>
+                  <Form.Item
+                    label="调整前公积金缴纳基数要求"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('exProvidentFundBase',{
+                      initialValue: ">0",
+                    })(
+                        <Input  type="text" style={{width:200}} addonAfter="元"/>
+                    )}
+                  </Form.Item>
+                </div>: null
+          }
+
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" onClick={onValidateForm}>
               下一步

@@ -15,7 +15,6 @@ const options = [
 class Step1 extends React.PureComponent {
   componentDidMount () {
     const id = this.props.location.query.id;
-    console.log(id)
     this.props.dispatch({
       type:'match/fetchDetail',
       payload:{
@@ -67,18 +66,8 @@ class Step1 extends React.PureComponent {
       },
     };
     const onValidateForm = () => {
-      validateFields((err, values) => {
-        console.log(values,err)
-        if (!err) {
-          dispatch({
-            type: 'match/saveStep1FormData',
-            payload: {
-              ...values,
-            },
-          });
-          dispatch(routerRedux.push('/match/edit/step2'));
-        }
-      });
+      // debugger;
+      dispatch(routerRedux.push('/match/detail/step2'));
     };
     return (
       <div>
@@ -88,13 +77,6 @@ class Step1 extends React.PureComponent {
           style={{ marginTop: 8 }}
         >
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
-              <div style={{fontSize:13,color:'#666',margin:'50px auto',paddingLeft: '3em'}}>
-                <p style={{textIndent: '-3em'}}>提示：1、选择题：请取消勾选不允许存在的选项，比如该产品只面向年龄为18岁及以上的客户，请取消勾选“18岁以下”；若该产品对学历无要求，则保持全选状态，
-                依次类推！</p>
-                <p >2、填空题：不填写阈值表示对该选题无要求，不需选择！！</p>
-              </div>
-            </Col>
             <Col md={24} sm={24}>
               <Form.Item
                 style={{marginTop:100}}

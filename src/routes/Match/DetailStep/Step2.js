@@ -23,8 +23,7 @@ class Step1 extends React.PureComponent {
       submitting,
       dispatch
     } = this.props;
-    var item = step.basicInformation;
-    console.log(item);
+    var item = step.basicInformation
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
     const formItemLayout = {
@@ -60,18 +59,7 @@ class Step1 extends React.PureComponent {
       },
     };
     const onValidateForm = () => {
-      validateFields((err, values) => {
-        console.log(values,err)
-        if (!err) {
-          dispatch({
-            type: 'match/saveStep2FormData',
-            payload: {
-              ...values,
-            },
-          });
-          dispatch(routerRedux.push('/match/edit/step3'));
-        }
-      });
+      dispatch(routerRedux.push('/match/detail/step3'));
     };
     return (
       <div>
@@ -120,7 +108,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('maritalStatus')?getFieldValue('maritalStatus').indexOf(0):'-1' >= 0) ?
+            (getFieldValue('maritalStatus').indexOf(0)>=0)?
               <div>
                 <Form.Item
                   label="是否必须配偶同意贷款"

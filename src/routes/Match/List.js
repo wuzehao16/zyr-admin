@@ -101,12 +101,11 @@ export default class TableList extends PureComponent {
     }
   }
   handleDetail = (item) => {
-    this.props.dispatch({
-      type: 'match/fetchDetail',
-      payload: {
-        id: item.matchId,
-      },
-    });
+    this.props.dispatch(routerRedux.push({
+      pathname: '/match/detail',
+      query:{id: item.id }
+    })
+  );
   }
 
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
