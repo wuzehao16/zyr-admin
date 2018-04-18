@@ -420,6 +420,28 @@ export const getRouterData = (app) => {
     '/match/edit/step6': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step6')),
     },
+    '/match/detail': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep')),
+      name: '模型详情',
+    },
+    '/match/detail/step1': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step1')),
+    },
+    '/match/detail/step2': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step2')),
+    },
+    '/match/detail/step3': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step3')),
+    },
+    '/match/detail/step4': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step4')),
+    },
+    '/match/detail/step5': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step5')),
+    },
+    '/match/detail/step6': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step6')),
+    }
   };
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());

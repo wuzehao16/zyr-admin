@@ -59,18 +59,7 @@ class Step1 extends React.PureComponent {
       },
     };
     const onValidateForm = () => {
-      validateFields((err, values) => {
-        console.log(values,err)
-        if (!err) {
-          dispatch({
-            type: 'match/saveStep5FormData',
-            payload: {
-              ...values,
-            },
-          });
-          dispatch(routerRedux.push('/match/edit/step6'));
-        }
-      });
+      dispatch(routerRedux.push('/match/detail/step6'));
     };
     return (
       <div>
