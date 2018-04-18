@@ -139,9 +139,11 @@ export default {
     },
     *submitStepForm({ payload }, { call, put, select }) {
       const modelName = payload.modelName;
+      const loadType = payload.loanDemand.loanType[0]
       delete payload['modelName']
       const response = yield call(add, {
         modelName:modelName,
+        loanType:loadType,
         modelJson:JSON.stringify(payload),
       });
       if (response.code === 0) {

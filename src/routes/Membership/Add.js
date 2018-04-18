@@ -30,7 +30,7 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         this.props.dispatch({
           type: 'membership/add',
-          payload: values,
+          payload: {...values,levePower:'智能匹配、高阶'},
         });
       }
     });

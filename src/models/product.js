@@ -315,7 +315,19 @@ export default {
     },
     updateShelves(state, action) {
       const updateProduct = action.payload;
-      const newList = state.data.data.map(product => product.productId == updateProduct.productId ? {...product, ...updateProduct} : product);
+      // const newList = state.data.data.map(product => product.productId == updateProduct.productId ? {...product, ...updateProduct,} : product);
+      //处理跟新之后吧数据移动到第一位，以及更新时间
+      const newList = state.data.data;
+      var a = {};
+      for (var i = 0; i < newList.length; i++) {
+          if (newList[i].productId == updateProduct.productId) {
+            a =  newList.splice(i, 1)[0];
+            Object.assign(a,...updateProduct)
+            a.updateTime = new Date()
+            break;
+          }
+        }
+        newList.unshift(a);
       return {
         ...state,
         data:{

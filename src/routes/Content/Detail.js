@@ -41,14 +41,25 @@ export default class BasicForms extends PureComponent {
 
           </DescriptionList>
           <Divider style={{ marginBottom: 12 }} />
-          <DescriptionList size="large" title="内容" style={{ marginBottom: 12 }} col={1}>
-            {/* <Description>{item.contentIntroduction}</Description> */}
-            <div dangerouslySetInnerHTML={{
-             __html: item.content
-           }}/>
+          {
+            item.contentType == 60000
+              ? <div>
+                <DescriptionList size="large" title="内容" style={{ marginBottom: 12 }} col={1}>
+                  {/* <Description>{item.contentIntroduction}</Description> */}
+                  <div dangerouslySetInnerHTML={{
+                   __html: item.content
+                 }}/>
+                </DescriptionList>
+              </div>: <div>
+                      <video src={item.content} controls="controls">
+                      您的浏览器不支持 video 标签。
+                      </video>
+                    </div>
+          }
+
            <Description term="发布者">{item.oper}</Description>
            <Description term="更新时间">{moment(item.updateTime).format('llll')}</Description>
-          </DescriptionList>
+
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
             <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/content/information'))}>
             返回
