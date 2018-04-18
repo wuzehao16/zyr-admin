@@ -24,6 +24,7 @@ export default class BasicForms extends PureComponent {
   state = {
     productIntroduction: '',
   }
+
   componentDidMount() {
     const { content: { item }, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
@@ -40,11 +41,6 @@ export default class BasicForms extends PureComponent {
         type: 'chaClassify'
       }
     });
-    // if (item.content) {
-    //   this.setState({
-    //     productIntroduction: item.content,
-    //   })
-    // }
     if (item.contentPic) {
       this.setState({
         fileList:[{
@@ -91,7 +87,6 @@ export default class BasicForms extends PureComponent {
   render() {
     const { content: { columnType, column, item }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-
     if (column.data) {
       var columnNameOptions = column.data.map(item => <Option key={item.channelId} value={item.channelId}>{item.channelName}</Option>);
     }
