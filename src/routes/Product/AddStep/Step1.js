@@ -283,6 +283,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
+                    min={0}
                     type="number"
                     addonAfter="万"
                     placeholder="请输入"
@@ -357,10 +358,12 @@ class Step1 extends React.PureComponent {
                      }]
                    })(
                   <Input
+                    min={0}
                     type="number"
                     style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
                   )}
                    <Input
+                     min={0}
                      type="number"
                      style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
                    {getFieldDecorator('productTimeLimitEnd',{
@@ -485,6 +488,8 @@ class Step1 extends React.PureComponent {
                   initialValue: step.productSort,
                 })(
                   <Input
+                    type="number"
+                    min={1}
                     placeholder="请输入"
                   />
                 )}

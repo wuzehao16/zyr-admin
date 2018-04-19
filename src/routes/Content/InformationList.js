@@ -121,6 +121,9 @@ export default class TableList extends PureComponent {
     });
   }
   handleEdit = (item) => {
+    this.props.dispatch({
+      type:'content/clearItem',
+    })
     this.props.dispatch(routerRedux.push('/content/information/edit/' + item.contentId));
   }
   handleDetail = (item) => {

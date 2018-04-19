@@ -14,14 +14,17 @@ const options = [
 @Form.create()
 class Step1 extends React.PureComponent {
   componentDidMount () {
-    const id = this.props.location.query.id;
-    console.log(id)
+    const { getFieldDecorator } = this.props.form;
+    console.log(this.props)
+    const id = this.props.location.search.split("=")[1];
     this.props.dispatch({
       type:'match/fetchDetail',
       payload:{
         id:id
       }
     })
+    getFieldDecorator('id',{
+      initialValue: id,})
   }
   render() {
     const {
@@ -33,7 +36,6 @@ class Step1 extends React.PureComponent {
     } = this.props;
     var item = step.loanDemand || {}
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
-
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -74,6 +76,7 @@ class Step1 extends React.PureComponent {
             type: 'match/saveStep1FormData',
             payload: {
               ...values,
+              loanType:[values.loanType]
             },
           });
           dispatch(routerRedux.push('/match/edit/step2'));

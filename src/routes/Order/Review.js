@@ -135,6 +135,7 @@ export default class BasicForms extends PureComponent {
 
     )
   }
+  // 当选择拒绝的时候 隐藏贷款金额等选项
   renderloan = ()=> {
     const { submitting, data: { item, repMethod }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -171,52 +172,55 @@ export default class BasicForms extends PureComponent {
           </Col>
         </Description>
         </DescriptionList>
-        <DescriptionList size="large" title="" style={{ marginBottom: 32 }} col={2}>
-        <Description term="贷款金额">
-          <Col sm={12} xs={24}>
-            <FormItem >
-              {getFieldDecorator('realLoanMoney', {
-                rules: [{
-                   required: true,
-                   message: '请输入贷款金额'
-                 }],
-          })(
-                  <Input type="number" min={0} max={10000} addonAfter="万" placeholder="请输入"/>
-            )}
-            </FormItem>
-          </Col>
-        </Description>
-        <Description term="贷款期限">
-          <Col sm={12} xs={24}>
-            <FormItem >
-              {getFieldDecorator('loanLimit', {
-                rules: [{
-                   required: true,
-                   message: '请输入贷款期限'
-                 }],
-               })(
-                  <Input type="number" min={0} max={100} addonAfter="期" placeholder="请输入"/>
-            )}
-            </FormItem>
-          </Col>
-        </Description>
-        <Description term="还款方式">
-          <Col sm={12} xs={24}>
-            <FormItem >
-              {getFieldDecorator('realLoanType', {
-                rules: [{
-                   required: true,
-                   message: '请选择还款方式'
-                 }],
-               })(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  { repMethodOptions }
-                </Select>
-            )}
-            </FormItem>
-          </Col>
-        </Description>
-        </DescriptionList>
+        {
+          getFieldValue('orderStatus') !== 6
+            ?       <DescriptionList size="large" title="" style={{ marginBottom: 32 }} col={2}>
+                    <Description term="贷款金额">
+                      <Col sm={12} xs={24}>
+                        <FormItem >
+                          {getFieldDecorator('realLoanMoney', {
+                            rules: [{
+                               required: true,
+                               message: '请输入贷款金额'
+                             }],
+                      })(
+                              <Input type="number" min={0} max={10000} addonAfter="万" placeholder="请输入"/>
+                        )}
+                        </FormItem>
+                      </Col>
+                    </Description>
+                    <Description term="贷款期限">
+                      <Col sm={12} xs={24}>
+                        <FormItem >
+                          {getFieldDecorator('loanLimit', {
+                            rules: [{
+                               required: true,
+                               message: '请输入贷款期限'
+                             }],
+                           })(
+                              <Input type="number" min={0} max={100} addonAfter="期" placeholder="请输入"/>
+                        )}
+                        </FormItem>
+                      </Col>
+                    </Description>
+                    <Description term="还款方式">
+                      <Col sm={12} xs={24}>
+                        <FormItem >
+                          {getFieldDecorator('realLoanType', {
+                            rules: [{
+                               required: true,
+                               message: '请选择还款方式'
+                             }],
+                           })(
+                            <Select placeholder="请选择" style={{ width: '100%' }}>
+                              { repMethodOptions }
+                            </Select>
+                        )}
+                        </FormItem>
+                      </Col>
+                    </Description>
+                  </DescriptionList>:null
+        }
       </div>
     )
   }

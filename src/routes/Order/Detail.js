@@ -110,7 +110,7 @@ export default class BasicForms extends PureComponent {
         </Steps>
         <DescriptionList size="large"  style={{ marginBottom: 32 }} col={2}>
           <Description term="贷款金额">{item.realLoanMoney + '万'}</Description>
-          <Description term="贷款期限">{item.loanLimit + '期'}</Description>
+          <Description term="实际贷款期限">{item.realLoanLimit + '期'}</Description>
           <Description term="还款方式">{item.realTypeName}</Description>
           <Description term="平台收益">{item.platformIncome + '元'}</Description>
           <Description term="提单人佣金">{item.soleCommission + '元'}</Description>

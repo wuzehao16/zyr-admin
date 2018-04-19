@@ -71,7 +71,6 @@ class Step1 extends React.PureComponent {
               }
             },
           });
-          // dispatch(routerRedux.push('/match/add/step4'));
         }
       });
     };

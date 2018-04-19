@@ -73,10 +73,11 @@ export default function request(url, options) {
       //   });
       //   return;
       // }
-      if (status === 401) {
+      if (status === 302) {
         dispatch({
           type: 'login/logout',
         });
+        window.reload();
         return;
       }
       if (status === 403) {

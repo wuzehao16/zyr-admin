@@ -76,7 +76,17 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      const response = yield call(update, payload);
+      const modelName = payload.modelName;
+      const id = payload.id;
+      const loadType = payload.loanDemand.loanType[0]
+      delete payload['modelName']
+      delete payload['id']
+      const response = yield call(update, {
+        modelName:modelName,
+        loanType:loadType,
+        id:id,
+        modelJson:JSON.stringify(payload),
+      });
       if (response.code === 0) {
         message.success('提交成功');
       } else {
@@ -171,8 +181,19 @@ export default {
       };
     },
     updateShelves(state, action) {
-      const updateAds = action.payload;
-      const newList = state.data.data.map(item => item.matchId == updateAds.matchId ? {...item,...updateAds} : item);
+      const updateMatch = action.payload;
+      console.log(updateMatch,"e")
+      const newList = state.data.data;
+      var a = {};
+      for (var i = 0; i < newList.length; i++) {
+          if (newList[i].id == updateMatch.id) {
+            a =  newList.splice(i, 1)[0];
+            Object.assign(a,{modeStatus:updateMatch.modelStatus})
+            a.updateTime = new Date()
+            break;
+          }
+        }
+        newList.unshift(a);
       return {
         ...state,
         data:{
@@ -185,7 +206,7 @@ export default {
         ...state,
         step: {
           ...state.step,
-          modelName:payload.modelName,
+          ...payload,
           loanDemand:{
             loanType:payload.loanType,
           }

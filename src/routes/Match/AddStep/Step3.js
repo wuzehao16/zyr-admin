@@ -67,7 +67,11 @@ class Step1 extends React.PureComponent {
               ...values,
             },
           });
-          dispatch(routerRedux.push('/match/add/step4'));
+          if(step.basicInformation.occupation.indexOf(0) > -1 || step.basicInformation.occupation.indexOf(0) > -1){
+            dispatch(routerRedux.push('/match/add/step4'));
+          } else {
+            dispatch(routerRedux.push('/match/add/step5'));
+          }
         }
       });
     };
@@ -368,7 +372,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneMonthQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -378,7 +382,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumTwoMonthsQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -388,7 +392,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumThreeMonthsQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -398,7 +402,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumSixMonthsQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -408,7 +412,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneYearQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}

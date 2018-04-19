@@ -91,7 +91,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('specificWorkTime',{
-              initialValue: ">0",
+              // initialValue: ">0",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="月"/>
             )}
@@ -101,7 +101,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('threeMonthsAvgSalary',{
-              initialValue: ">0",
+              // initialValue: ">0",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -111,7 +111,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('SixMonthsAvgSalary',{
-              initialValue: ">0",
+              // initialValue: ">0",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -121,7 +121,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('thisYearMonthsAvgSalary',{
-              initialValue: ">0",
+              // initialValue: ">0",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -131,7 +131,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('lastYearMonthsAvgSalary',{
-              initialValue: ">0",
+              // initialValue: ">0",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -141,7 +141,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('specificInsuranceBase',{
-              initialValue: ">0",
+              // initialValue: ">0",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -151,7 +151,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('specificInsurancePaymonth',{
-              initialValue: ">0",
+              // initialValue: ">0",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="月"/>
             )}
@@ -194,7 +194,7 @@ class Step1 extends React.PureComponent {
                             {...formItemLayout}
                           >
                             {getFieldDecorator('exInsuranceBase',{
-                              initialValue: ">0",
+                              // initialValue: ">0",
                             })(
                                 <Input  type="text" style={{width:200}} addonAfter="元"/>
                             )}
@@ -208,7 +208,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('specificProvidentFundBase',{
-              initialValue: ">0",
+              // initialValue: ">0",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -218,7 +218,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('specificProvidentFundPaymonth',{
-              initialValue: ">0",
+              // initialValue: ">0",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="月"/>
             )}
@@ -245,7 +245,7 @@ class Step1 extends React.PureComponent {
                     {...formItemLayout}
                   >
                     {getFieldDecorator('exProvidentFundBase',{
-                      initialValue: ">0",
+                      // initialValue: ">0",
                     })(
                         <Input  type="text" style={{width:200}} addonAfter="元"/>
                     )}

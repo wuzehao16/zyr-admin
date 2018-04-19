@@ -160,8 +160,8 @@ class Step1 extends React.PureComponent {
             label="职业类别要求"
             {...formItemLayout}
            >
-            {getFieldDecorator('eduoccupationcation',{
-              initialValue: item.eduoccupationcation,
+            {getFieldDecorator('occupation',{
+              initialValue: item.occupation,
             })(
               <CheckboxGroup>
                 <Checkbox value={0}>工薪族</Checkbox>
@@ -172,7 +172,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('eduoccupationcation').indexOf(0) >= 0 || getFieldValue('eduoccupationcation').indexOf(2) >= 0)?
+            (getFieldValue('occupation').indexOf(0) >= 0 || getFieldValue('occupation').indexOf(2) >= 0)?
               <div>
                 <Form.Item
                   label="单位性质要求"
@@ -344,7 +344,7 @@ class Step1 extends React.PureComponent {
               </div>: null
           }
           {
-            (getFieldValue('eduoccupationcation').indexOf(1) >= 0 || getFieldValue('eduoccupationcation').indexOf(2) >= 0)?
+            (getFieldValue('occupation').indexOf(1) >= 0 || getFieldValue('occupation').indexOf(2) >= 0)?
               <div>
                 <Form.Item
                   label="本地营业执照注册时长要求"
