@@ -373,7 +373,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneMonthQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -383,7 +383,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumTwoMonthsQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -393,7 +393,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumThreeMonthsQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -403,7 +403,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumSixMonthsQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
@@ -413,7 +413,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneYearQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:100}}/>
             )}
