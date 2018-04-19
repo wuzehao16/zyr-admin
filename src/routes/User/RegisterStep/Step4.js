@@ -251,7 +251,14 @@ class Step4 extends React.PureComponent {
                           label="下属机构"
                           {...formItemLayout}
                           >
-                          {getFieldDecorator('manageId')(
+                          {getFieldDecorator('manageId', {
+                            rules: [
+                              {
+                                required: true,
+                                message: '请选择下属机构！',
+                              },
+                            ],
+                          })(
                             <Select placeholder="下属机构">
                               {data.subInstitutionList
                                 ? subInstitutionListOptions
