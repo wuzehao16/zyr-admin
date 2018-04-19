@@ -318,11 +318,12 @@ export default {
       // const newList = state.data.data.map(product => product.productId == updateProduct.productId ? {...product, ...updateProduct,} : product);
       //处理跟新之后吧数据移动到第一位，以及更新时间
       const newList = state.data.data;
+      console.log(updateProduct)
       var a = {};
       for (var i = 0; i < newList.length; i++) {
           if (newList[i].productId == updateProduct.productId) {
             a =  newList.splice(i, 1)[0];
-            Object.assign(a,...updateProduct)
+            Object.assign(a,{shelfState:updateProduct.shelfState})
             a.updateTime = new Date()
             break;
           }
