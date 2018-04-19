@@ -120,7 +120,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('maritalStatus')?getFieldValue('maritalStatus').indexOf(0):'-1' >= 0) ?
+            (getFieldValue('maritalStatus').indexOf(0) >= 0) ?
               <div>
                 <Form.Item
                   label="是否必须配偶同意贷款"
@@ -160,10 +160,10 @@ class Step1 extends React.PureComponent {
               initialValue: item.education,
             })(
               <CheckboxGroup>
-                <Checkbox value={0}>全日制本科及以上</Checkbox>
+                <Checkbox value={0}>本科及以上</Checkbox>
                 <Checkbox value={1}>全日制大专</Checkbox>
                 <Checkbox value={2}>高中及以下</Checkbox>
-                <Checkbox value={3}>其他(自考/函授)</Checkbox>
+                <Checkbox value={3}>自考/函授</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
@@ -172,19 +172,19 @@ class Step1 extends React.PureComponent {
             label="职业类别要求"
             {...formItemLayout}
            >
-            {getFieldDecorator('eduoccupationcation',{
-              initialValue: item.eduoccupationcation,
+            {getFieldDecorator('occupation',{
+              initialValue: item.occupation,
             })(
               <CheckboxGroup>
                 <Checkbox value={0}>工薪族</Checkbox>
                 <Checkbox value={1}>企业主</Checkbox>
-                <Checkbox value={2}>工薪族和企业主</Checkbox>
+                <Checkbox value={2}>工薪/企业主</Checkbox>
                 <Checkbox value={3}>自由职业</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
           {
-            (getFieldValue('eduoccupationcation').indexOf(0) >= 0 || getFieldValue('eduoccupationcation').indexOf(2) >= 0)?
+            (getFieldValue('occupation').indexOf(0) >= 0 || getFieldValue('occupation').indexOf(2) >= 0)?
               <div>
                 <Form.Item
                   label="单位性质要求"
@@ -194,7 +194,7 @@ class Step1 extends React.PureComponent {
                     initialValue: item.unitProperty,
                   })(
                     <CheckboxGroup >
-                      <Checkbox value={0}>教师医生(公立)</Checkbox>
+                      <Checkbox value={0}>公立教师医生</Checkbox>
                       <Checkbox value={1}>公务员</Checkbox>
                       <Checkbox value={2}>事业单位</Checkbox>
                       <Checkbox value={3}>高新企业</Checkbox>
@@ -356,7 +356,7 @@ class Step1 extends React.PureComponent {
               </div>: null
           }
           {
-            (getFieldValue('eduoccupationcation').indexOf(1) >= 0 || getFieldValue('eduoccupationcation').indexOf(2) >= 0)?
+            (getFieldValue('occupation').indexOf(1) >= 0 || getFieldValue('occupation').indexOf(2) >= 0)?
               <div>
                 <Form.Item
                   label="本地营业执照注册时长要求"

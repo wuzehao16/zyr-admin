@@ -148,10 +148,10 @@ class Step1 extends React.PureComponent {
               initialValue: item.education,
             })(
               <CheckboxGroup>
-                <Checkbox value={0}>全日制本科及以上</Checkbox>
+                <Checkbox value={0}>本科及以上</Checkbox>
                 <Checkbox value={1}>全日制大专</Checkbox>
                 <Checkbox value={2}>高中及以下</Checkbox>
-                <Checkbox value={3}>其他(自考/函授)</Checkbox>
+                <Checkbox value={3}>自考/函授</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
@@ -166,7 +166,7 @@ class Step1 extends React.PureComponent {
               <CheckboxGroup>
                 <Checkbox value={0}>工薪族</Checkbox>
                 <Checkbox value={1}>企业主</Checkbox>
-                <Checkbox value={2}>工薪族和企业主</Checkbox>
+                <Checkbox value={2}>工薪/企业主</Checkbox>
                 <Checkbox value={3}>自由职业</Checkbox>
               </CheckboxGroup>
             )}
@@ -182,7 +182,7 @@ class Step1 extends React.PureComponent {
                     initialValue: item.unitProperty,
                   })(
                     <CheckboxGroup >
-                      <Checkbox value={0}>教师医生(公立)</Checkbox>
+                      <Checkbox value={0}>公立教师医生</Checkbox>
                       <Checkbox value={1}>公务员</Checkbox>
                       <Checkbox value={2}>事业单位</Checkbox>
                       <Checkbox value={3}>高新企业</Checkbox>

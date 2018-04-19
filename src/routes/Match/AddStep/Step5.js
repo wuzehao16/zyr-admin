@@ -404,7 +404,7 @@ class Step1 extends React.PureComponent {
                       <CheckboxGroup  >
                         <Checkbox value={0}>绿本在手</Checkbox>
                         <Checkbox value={1}>银行按揭</Checkbox>
-                        <Checkbox value={2}>信用卡形式按揭</Checkbox>
+                        <Checkbox value={2}>信用卡按揭</Checkbox>
                         <Checkbox value={3}>车贷机构抵押</Checkbox>
                         <Checkbox value={4}>汽车金融按揭</Checkbox>
                       </CheckboxGroup>
