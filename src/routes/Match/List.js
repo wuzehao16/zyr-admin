@@ -270,7 +270,9 @@ export default class TableList extends PureComponent {
   }
 
   render() {
-    const { match: { data, city }, loading, dispatch } = this.props;
+    const { match: { data, city }, loading, dispatch,user } = this.props;
+    const userIdentity = user.currentUser?user.currentUser.data.userIdentity:0;
+
     const { selectedRows, modalVisible, addInputValue, item } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -290,9 +292,12 @@ export default class TableList extends PureComponent {
               {this.renderSimpleForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/match/add'))}>
-                新建
-              </Button>
+              {
+                userIdentity ===1
+                ?              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/match/add'))}>
+                                新建
+                              </Button>:null
+              }
               {
                 selectedRows.length > 0 && (
                   <span>
@@ -309,6 +314,7 @@ export default class TableList extends PureComponent {
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}
+              userIdentity={userIdentity}
               data={data}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}

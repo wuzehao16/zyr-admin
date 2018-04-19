@@ -52,9 +52,7 @@ export default class StepForm extends PureComponent {
               <Route path="/match/edit" render={() => (
                 <Redirect to={{
                   pathname:'/match/edit/step1',
-                  query:{
-                    id:history.location.query.id
-                  }
+                  search:`?id=${history.location.query.id}`
                 }}/>
               )} />
               {/* <Redirect from='/match/edit' to='/match/edit/step1'/> */}

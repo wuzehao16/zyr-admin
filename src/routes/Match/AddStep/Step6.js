@@ -95,7 +95,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumCreditLoan',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}
@@ -105,7 +105,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumEqualInterest',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}
@@ -133,7 +133,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumFirstInterest',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}
@@ -161,7 +161,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumAlongLoan',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}
@@ -171,7 +171,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('alongLoanTotalBalance',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -181,7 +181,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('alongLoanMonthPayment',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="元"/>
             )}
@@ -191,7 +191,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('sumCreditCard',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}

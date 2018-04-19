@@ -76,7 +76,17 @@ export default {
       if (callback) callback();
     },
     *update({ payload }, { call, put }) {
-      const response = yield call(update, payload);
+      const modelName = payload.modelName;
+      const id = payload.id;
+      const loadType = payload.loanDemand.loanType[0]
+      delete payload['modelName']
+      delete payload['id']
+      const response = yield call(update, {
+        modelName:modelName,
+        loanType:loadType,
+        id:id,
+        modelJson:JSON.stringify(payload),
+      });
       if (response.code === 0) {
         message.success('提交成功');
       } else {
@@ -185,7 +195,7 @@ export default {
         ...state,
         step: {
           ...state.step,
-          modelName:payload.modelName,
+          ...payload,
           loanDemand:{
             loanType:payload.loanType,
           }

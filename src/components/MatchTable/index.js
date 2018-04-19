@@ -61,7 +61,7 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, count }, loading } = this.props
+    const { data: { data, count }, loading,userIdentity } = this.props
     const columns = [
       {
         // title: '模型名称',
@@ -70,7 +70,7 @@ class StandardTable extends PureComponent {
           return (
             <div className={styles.model_name}>
               <div className={styles.model_title}>{text}</div>
-              <div className={record.modeStatus===1?styles.act:styles.disabled}>{record.modeStatus===1?'禁用':'启用'}</div>
+              <div className={record.modeStatus==1?styles.act:styles.disabled}>{record.modeStatus==1?'启用':'禁用'}</div>
             </div>
 
           );
@@ -83,7 +83,7 @@ class StandardTable extends PureComponent {
       },
       {
         // title: '更新时间',
-        dataIndex: 'createTime',
+        dataIndex: 'updateTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
@@ -92,12 +92,22 @@ class StandardTable extends PureComponent {
         render: (text, record) => {
           return (
             <Fragment>
-              <span>
-                <a onClick={() => this.handleResetPassword(record)}>{record.modeStatus==1?'禁止':'启用'}</a>
-                <Divider type="vertical" />
-              </span>
-              <a onClick={() => this.handleEdit(record)}>编辑</a>
-              <Divider type="vertical" />
+              {
+                userIdentity ===0
+                ?              <span>
+                                <a onClick={() => this.handleResetPassword(record)}>{record.modeStatus==1?'禁止':'启用'}</a>
+                                <Divider type="vertical" />
+                              </span>:null
+              }
+              {
+                userIdentity===1
+                 ?<span>
+                   <a onClick={() => this.handleEdit(record)}>编辑</a>
+                   <Divider type="vertical" />
+                 </span> :null
+
+              }
+
               <a onClick={() => this.handleAddAi(record)}>额度算法</a>
               <Divider type="vertical" />
               <a onClick={() => this.handleDetail(record)}>详情</a>

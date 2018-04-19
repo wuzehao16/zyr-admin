@@ -160,7 +160,12 @@ export default class BasicForms extends PureComponent {
                               <FormItem
                                 {...formItemLayout}
                                  label="银行名称">
-                                {getFieldDecorator('sublInstitution')(
+                                {getFieldDecorator('sublInstitution',{
+                                  rules:[{
+                                    required:true,
+                                    message:'请选择银行名称'
+                                  }]
+                                })(
                                   <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getSubInstitution}>
                                   { institutionListOptions }
                                   </Select>
@@ -171,7 +176,12 @@ export default class BasicForms extends PureComponent {
                               <FormItem
                                 {...formItemLayout}
                                  label="下属机构">
-                                {getFieldDecorator('manageId')(
+                                {getFieldDecorator('manageId',{
+                                  rules:[{
+                                    required:true,
+                                    message:'请选择下属机构'
+                                  }]
+                                })(
                                   <Select placeholder="请选择" style={{ width: '100%' }} >
                                     { subInstitutionListOptions }
                                   </Select>
