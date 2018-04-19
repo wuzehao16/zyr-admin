@@ -29,11 +29,20 @@ export default {
       const response = yield call(queryMenus);
       const { dispatch } = store;
       console.log(1)
-      if (response.code !== 0) {
+      try {
+        if (response.code !== 0) {
+          dispatch({
+            type: 'login/logout',
+          });
+          return;
+        }
+      } catch (e) {
         dispatch({
           type: 'login/logout',
         });
-        return;
+        window.location.reload();
+      } finally {
+
       }
       const menus = formatter(response.data.children)
       yield put({
