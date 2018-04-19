@@ -215,7 +215,6 @@ class Step1 extends React.PureComponent {
                     <CheckboxGroup  size="small">
                       <Checkbox value={0}>信用卡逾期</Checkbox>
                       <Checkbox value={1}>贷款逾期</Checkbox>
-                      <Checkbox value={2}>信用卡和贷款逾期</Checkbox>
                     </CheckboxGroup>
                   )}
                 </Form.Item>
