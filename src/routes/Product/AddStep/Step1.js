@@ -363,7 +363,6 @@ class Step1 extends React.PureComponent {
                     style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
                   )}
                    <Input
-                     min={0}
                      type="number"
                      style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
                    {getFieldDecorator('productTimeLimitEnd',{
@@ -373,7 +372,7 @@ class Step1 extends React.PureComponent {
                        message: '请输入产品期限'
                      }]
                    })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="最大值" />
+                   <Input type="number" min={0} style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="最大值" />
                    )}
                  </InputGroup>
 
@@ -415,6 +414,7 @@ class Step1 extends React.PureComponent {
                     })(
                    <Input
                      type="number"
+                     min={0}
                      style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
                    )}
                    <Input
@@ -427,7 +427,7 @@ class Step1 extends React.PureComponent {
                        message: '请输入审批时效'
                      }]
                    })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="最大值" />
+                   <Input type="number" min={0} style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="最大值" />
                    )}
                  </InputGroup>
 
