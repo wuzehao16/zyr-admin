@@ -14,7 +14,7 @@ const options = [
 @Form.create()
 class Step1 extends React.PureComponent {
   componentDidMount () {
-    const id = this.props.location.query.id;
+    const id = this.props.location.search.split("=")[1];
     this.props.dispatch({
       type:'match/fetchDetail',
       payload:{

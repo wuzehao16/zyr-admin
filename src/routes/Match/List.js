@@ -17,7 +17,6 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 const CreateForm = Form.create()((props) => {
   const { modalVisible, form, handleAdd, handleModalVisible, item } = props;
   const { getFieldDecorator } = form;
-  console.log(item)
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
