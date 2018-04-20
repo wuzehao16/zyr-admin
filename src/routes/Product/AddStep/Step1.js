@@ -152,10 +152,74 @@ class Step1 extends React.PureComponent {
         sm: { span: 10, offset: 7 },
       },
     };
-    const onValidateForm = () => {
+    const onValidateForm = (e) => {
         // dispatch(routerRedux.push('/product/add/step2'));
       validateFields((err, values) => {
-        console.log(values,err)
+        const { form } = this.props;
+        const reg = /^[1-9]+[0-9]*$/;
+
+        if (! reg.test(form.getFieldValue('productTimeLimitStart'))) {
+          form.setFields({
+            productTimeLimitStart: {
+              value: values.productTimeLimitStart,
+              errors: [new Error('请输入正整数值!')],
+            }
+          });
+          return
+        }
+
+        if (! reg.test(form.getFieldValue('productTimeLimitEnd'))) {
+          form.setFields({
+            productTimeLimitEnd: {
+              value: values.productTimeLimitEnd,
+              errors: [new Error('请输入正整数值!')],
+            }
+          });
+          return
+        }
+
+        if (reg.test(form.getFieldValue('productTimeLimitEnd')) && (form.getFieldValue('productTimeLimitEnd') < form.getFieldValue('productTimeLimitStart'))) {
+          form.setFields({
+            productTimeLimitEnd: {
+              value: values.productTimeLimitEnd,
+              errors: [new Error('请输入大于最小值的正整数!')],
+            }
+          });
+          return
+        }
+
+        if (! reg.test(form.getFieldValue('approvalAgingStart'))) {
+          form.setFields({
+            approvalAgingStart: {
+              value: values.approvalAgingStart,
+              errors: [new Error('请输入正整数值!')],
+            }
+          });
+          return
+        }
+
+        if (! reg.test(form.getFieldValue('approvalAgingEnd'))) {
+          form.setFields({
+            approvalAgingEnd: {
+              value: values.approvalAgingEnd,
+              errors: [new Error('请输入正整数值!')],
+            }
+          });
+          return
+        }
+
+
+        if (reg.test(form.getFieldValue('approvalAgingEnd')) && (form.getFieldValue('approvalAgingEnd') < form.getFieldValue('approvalAgingStart'))) {
+          form.setFields({
+            approvalAgingEnd: {
+              value: values.approvalAgingEnd,
+              errors: [new Error('请输入大于最小值的正整数!')],
+            }
+          });
+          return
+        }
+
+        console.log(values,err);
         if (!err) {
           dispatch({
             type: 'product/saveStepFormData',
@@ -348,8 +412,8 @@ class Step1 extends React.PureComponent {
                 label="产品期限(期)"
                 {...formItemLayout}
                >
-                 <InputGroup
-                    compact>
+                <Col span={11}>
+                  <Form.Item style={{display:"inline-block"}}>
                    {getFieldDecorator('productTimeLimitStart',{
                      initialValue: step.productTimeLimitStart,
                      rules:[{
@@ -357,26 +421,34 @@ class Step1 extends React.PureComponent {
                        message: '请输入产品期限'
                      }]
                    })(
-                  <Input
-                    min={0}
-                    type="number"
-                    style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
-                  )}
-                   <Input
-                     min={0}
-                     type="number"
-                     style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
-                   {getFieldDecorator('productTimeLimitEnd',{
-                     initialValue: step.productTimeLimitEnd,
-                     rules:[{
-                       required: true,
-                       message: '请输入产品期限'
-                     }]
-                   })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="最大值" />
-                   )}
-                 </InputGroup>
-
+                    <Input
+                      min={0}
+                      type="number"
+                      style={{textAlign: 'center' }} placeholder="最小值"
+                    />
+                    )}
+                  </Form.Item>
+                  </Col>
+                  <Col span={2}>
+                    <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
+                      -
+                    </span>
+                  </Col>
+                  <Col span={11}>
+                    <Form.Item style={{display:"inline-block"}}>
+                      {getFieldDecorator('productTimeLimitEnd',{
+                        initialValue: step.productTimeLimitEnd,
+                        rules:[{
+                          required: true,
+                          message: '请输入产品期限'
+                        }]
+                      })(
+                      <Input style={{ textAlign: 'center'}}  placeholder="最大值"
+                          min={0}
+                      />
+                      )}
+                    </Form.Item>
+                  </Col>
               </Form.Item>
             </Col>
           </Row>
@@ -405,7 +477,8 @@ class Step1 extends React.PureComponent {
                 label="审批时效(天)"
                 {...formItemLayout}
                >
-                 <InputGroup compact>
+                <Col span={11}>
+                  <Form.Item>
                     {getFieldDecorator('approvalAgingStart',{
                       initialValue: step.approvalAgingStart,
                       rules:[{
@@ -413,13 +486,21 @@ class Step1 extends React.PureComponent {
                         message: '请输入审批时效'
                       }]
                     })(
-                   <Input
-                     type="number"
-                     style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
-                   )}
-                   <Input
-                     type="number"
-                     style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
+                    <Input
+                      type="number"
+                      min={0}
+                      style={{textAlign: 'center'}} placeholder="最小值"
+                      />
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={2}>
+                  <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
+                    -
+                  </span>
+                </Col>
+                <Col span={11}>
+                  <Form.Item>
                    {getFieldDecorator('approvalAgingEnd',{
                      initialValue: step.approvalAgingEnd,
                      rules:[{
@@ -427,10 +508,14 @@ class Step1 extends React.PureComponent {
                        message: '请输入审批时效'
                      }]
                    })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="最大值" />
+                   <Input
+                    type="number"
+                    min={0}
+                    style={{textAlign: 'center'}} placeholder="最大值"
+                   />
                    )}
-                 </InputGroup>
-
+                   </Form.Item>
+                </Col>
               </Form.Item>
             </Col>
           </Row>
