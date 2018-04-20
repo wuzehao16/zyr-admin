@@ -125,12 +125,13 @@ export default {
       }
       if (callback) callback();
     },
-    *clearItem(_,{ put }) {
+    *clearItem({callback},{ put }) {
       const list = {};
       yield put({
         type: 'saveclearItem',
         payload: list,
       });
+      if (callback) callback();
     },
   },
 
@@ -174,10 +175,10 @@ export default {
         }
       }
     },
-    saveclearItem(state, { payload }) {
+    saveclearItem(state) {
       return {
         ...state,
-        item: payload,
+        item: {},
       };
     },
     handleRemoveColumn(state, action) {
