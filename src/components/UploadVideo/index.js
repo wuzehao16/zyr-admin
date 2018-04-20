@@ -24,19 +24,6 @@ class UploadVideo extends React.Component {
 
   handleCancel = () => this.setState({ previewVisible: false })
 
-  beforeUpload = (file) => {
-    const isPic = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isPic) {
-      message.error('上传的文件不是图片类型，请重新上传！');
-      this.setState({ fileList: [] })
-    }
-
-    // const isLt2M = file.size / 1024 / 1024 < 2;
-    // if (!isLt2M) {
-    //   message.error('上传图片大小应该小于 2MB!');
-    // }
-    return isPic ;
-  }
 
   handlePreview = (file) => {
     this.setState({
@@ -101,9 +88,7 @@ class UploadVideo extends React.Component {
         >
           {fileList.length >= 1 ? null : uploadButton}
         </Upload>
-        {/* <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
-        </Modal> */}
+
       </div>
     );
   }

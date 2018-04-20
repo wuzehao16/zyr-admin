@@ -148,7 +148,7 @@ class StandardTable extends PureComponent {
         </div> */}
         <Table
           loading={loading}
-          rowKey={record => record.modeName}
+          rowKey={record => record.id}
           // rowSelection={rowSelection}
           dataSource={data}
           // scroll={{ x: 1800}}

@@ -41,15 +41,15 @@ export default class BasicForms extends PureComponent {
         type: 'chaClassify'
       }
     });
-    if (item.contentPic) {
-      this.setState({
-        fileList:[{
-          uid:-1,
-          name:"xxx.png",
-          url: item.contentPic
-        }]
-      })
-    }
+    // if (item.contentPic) {
+    //   this.setState({
+    //     fileList:[{
+    //       uid:-1,
+    //       name:"xxx.png",
+    //       url: item.contentPic
+    //     }]
+    //   })
+    // }
   }
   onChange = (value) =>{
     this.props.dispatch({
@@ -59,15 +59,8 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  // productIntroduction = (value) => {
-  //    this.setState({
-  //      productIntroduction: value,
-  //    })
-  //  };
+
   handleSubmit = (e) => {
-    // getFieldDecorator('contentId', {
-    //   initialValue: item.contentId,
-    // })
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -277,6 +270,7 @@ export default class BasicForms extends PureComponent {
                               {...formItemLayout}
                             >
                               {getFieldDecorator('content', {
+                                initialValue: item.content,
                                 valuePropName: "fileList",
                                 rules:[{
                                   required:true,

@@ -60,9 +60,9 @@ class Step1 extends React.PureComponent {
     };
     const onValidateForm = () => {
       if(step.basicInformation.occupation.indexOf(0) > -1 || step.basicInformation.occupation.indexOf(0) > -1){
-        dispatch(routerRedux.push('/match/add/step4'));
+        dispatch(routerRedux.push('/match/detail/step4'));
       } else {
-        dispatch(routerRedux.push('/match/add/step5'));
+        dispatch(routerRedux.push('/match/detail/step5'));
       }
     };
     return (

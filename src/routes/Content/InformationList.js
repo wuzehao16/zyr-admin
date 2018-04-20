@@ -122,9 +122,18 @@ export default class TableList extends PureComponent {
   }
   handleEdit = (item) => {
     this.props.dispatch({
+      type: 'content/fetchDetail',
+      payload: {
+        contentId: item.contentId,
+      },
+    });
+    this.props.dispatch({
       type:'content/clearItem',
-    })
-    this.props.dispatch(routerRedux.push('/content/information/edit/' + item.contentId));
+      callback:() =>{
+        this.props.dispatch(routerRedux.push('/content/information/edit/' + item.contentId));
+      }
+    } )
+
   }
   handleDetail = (item) => {
     const { dispatch } = this.props;
