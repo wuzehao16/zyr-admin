@@ -183,6 +183,7 @@ class Step1 extends React.PureComponent {
               productTimeLimit: values.productTimeLimitStart + ',' + values.productTimeLimitEnd,
               approvalAging: values.approvalAgingStart + ',' + values.approvalAgingEnd,
               productPoundage: values.productPoundage ? values.productPoundage : 0,
+              matchingMode:values.matchingMode1+','+ values.matchingMode2
             },
           });
           dispatch(routerRedux.push('/product/edit/step2'));
@@ -735,8 +736,8 @@ class Step1 extends React.PureComponent {
                      initialValue: item.isEvaluating,
                    })(
                      <Select placeholder="请选择">
-                       <Option value='0'>否</Option>
-                       <Option value='1'>是</Option>
+                       <Option value={0}>否</Option>
+                       <Option value={1}>是</Option>
                      </Select>
                    )}
                 </FormItem>

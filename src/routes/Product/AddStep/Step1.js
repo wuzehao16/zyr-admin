@@ -543,7 +543,7 @@ class Step1 extends React.PureComponent {
               </Form.Item>
             </Col>
           </Row>
-          {/* {
+          {
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <Col md={12} sm={24}>
                 <Form.Item
@@ -588,7 +588,7 @@ class Step1 extends React.PureComponent {
                 </Form.Item>
               </Col>
             </Row>
-          } */}
+          }
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
               <Form.Item
@@ -722,10 +722,12 @@ class Step1 extends React.PureComponent {
                      display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
                    }}
                    >
-                   {getFieldDecorator('isEvaluating')(
+                   {getFieldDecorator('isEvaluating',{
+                     initialValue:step.productFeatures,
+                   })(
                      <Select placeholder="请选择">
-                       <Option value='0'>否</Option>
-                       <Option value='1'>是</Option>
+                       <Option value={0}>否</Option>
+                       <Option value={1}>是</Option>
                      </Select>
                    )}
                 </FormItem>
@@ -738,7 +740,9 @@ class Step1 extends React.PureComponent {
                      display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
                    }}
                    >
-                   {getFieldDecorator('isFire')(
+                   {getFieldDecorator('isFire',{
+                     initialValue:step.isFire,
+                   })(
                      <Select placeholder="请选择">
                        <Option value='0'>否</Option>
                        <Option value='1'>是</Option>
