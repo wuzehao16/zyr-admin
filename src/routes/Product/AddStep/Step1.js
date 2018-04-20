@@ -153,11 +153,7 @@ class Step1 extends React.PureComponent {
       },
     };
     const onValidateForm = (e) => {
-<<<<<<< HEAD
-        // dispatch(routerRedux.push('/product/add/step2'));
-=======
       e.preventDefault();
->>>>>>> 9288441f8a974fd1d40a5ddc30a3d0d2c79cb4be
       validateFields((err, values) => {
         const { form } = this.props;
         const reg = /^[1-9]+[0-9]*$/;
@@ -425,7 +421,6 @@ class Step1 extends React.PureComponent {
                        message: '请输入产品期限'
                      }]
                    })(
-<<<<<<< HEAD
                     <Input
                       min={0}
                       type="number"
@@ -454,26 +449,6 @@ class Step1 extends React.PureComponent {
                       )}
                     </Form.Item>
                   </Col>
-=======
-                  <Input
-                    min={0}
-                    type="number"
-                    style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
-                  )}
-                   <Input
-                     style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
-                   {getFieldDecorator('productTimeLimitEnd',{
-                     initialValue: step.productTimeLimitEnd,
-                     rules:[{
-                       required: true,
-                       message: '请输入产品期限'
-                     }]
-                   })(
-                   <Input type="number" min={0} style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="最大值" />
-                   )}
-                 </InputGroup>
-
->>>>>>> 9288441f8a974fd1d40a5ddc30a3d0d2c79cb4be
               </Form.Item>
             </Col>
           </Row>
@@ -511,7 +486,6 @@ class Step1 extends React.PureComponent {
                         message: '请输入审批时效'
                       }]
                     })(
-<<<<<<< HEAD
                     <Input
                       type="number"
                       min={0}
@@ -527,15 +501,6 @@ class Step1 extends React.PureComponent {
                 </Col>
                 <Col span={11}>
                   <Form.Item>
-=======
-                   <Input
-                     type="number"
-                     min={0}
-                     style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
-                   )}
-                   <Input
-                     style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
->>>>>>> 9288441f8a974fd1d40a5ddc30a3d0d2c79cb4be
                    {getFieldDecorator('approvalAgingEnd',{
                      initialValue: step.approvalAgingEnd,
                      rules:[{
@@ -543,15 +508,11 @@ class Step1 extends React.PureComponent {
                        message: '请输入审批时效'
                      }]
                    })(
-<<<<<<< HEAD
                    <Input
                     type="number"
                     min={0}
                     style={{textAlign: 'center'}} placeholder="最大值"
                    />
-=======
-                   <Input type="number" min={0} style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="最大值" />
->>>>>>> 9288441f8a974fd1d40a5ddc30a3d0d2c79cb4be
                    )}
                    </Form.Item>
                 </Col>
