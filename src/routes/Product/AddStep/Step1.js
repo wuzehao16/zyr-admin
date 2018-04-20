@@ -152,8 +152,8 @@ class Step1 extends React.PureComponent {
         sm: { span: 10, offset: 7 },
       },
     };
-    const onValidateForm = () => {
-        // dispatch(routerRedux.push('/product/add/step2'));
+    const onValidateForm = (e) => {
+      e.preventDefault();
       validateFields((err, values) => {
         console.log(values,err)
         if (!err) {
@@ -363,7 +363,6 @@ class Step1 extends React.PureComponent {
                     style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
                   )}
                    <Input
-                     type="number"
                      style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
                    {getFieldDecorator('productTimeLimitEnd',{
                      initialValue: step.productTimeLimitEnd,
@@ -418,7 +417,6 @@ class Step1 extends React.PureComponent {
                      style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
                    )}
                    <Input
-                     type="number"
                      style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
                    {getFieldDecorator('approvalAgingEnd',{
                      initialValue: step.approvalAgingEnd,
@@ -545,7 +543,7 @@ class Step1 extends React.PureComponent {
               </Form.Item>
             </Col>
           </Row>
-          {
+          {/* {
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <Col md={12} sm={24}>
                 <Form.Item
@@ -590,7 +588,7 @@ class Step1 extends React.PureComponent {
                 </Form.Item>
               </Col>
             </Row>
-          }
+          } */}
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
               <Form.Item

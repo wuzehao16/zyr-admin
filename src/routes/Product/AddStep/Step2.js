@@ -26,126 +26,106 @@ class Step2 extends React.PureComponent {
    claims:'',
    otherReq: '',
  };
- productIntroduction = (value) => {
-    this.setState({
-      productIntroduction: value,
-    })
-  };
- basieReq = (value) => {
-    this.setState({
-      basieReq: value,
-    })
-  };
- creditReq = (value) => {
-    this.setState({
-      creditReq: value,
-    })
-  };
- claims = (value) => {
-    this.setState({
-      claims: value,
-    })
-  };
- positonCount = (value) => {
-    this.setState({
-      positonCount: value,
-    })
-  };
- otherReq = (value) => {
-    this.setState({
-      otherReq: value,
-    })
-  };
-  // prompt = () => {
-  //   notification.open({
-  //     message: 'We got value:',
-  //     description: <span dangerouslySetInnerHTML={{ __html: this.state.productIntroduction }}></span>,
-  //   });
-  // };
   render() {
     const { form, data, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFields } = form;
-
     const onPrev = () => {
       dispatch(routerRedux.push('/product/add/step1'));
     };
     const onValidateForm = (e) => {
 
       e.preventDefault();
-      // validateFields((err, values) => {
-        // if (!err) {
+      validateFields((err, values) => {
+        console.log(values)
+        if (!err) {
           dispatch({
             type: 'product/saveStepFormData',
             payload: {
               ...data,
-              ...this.state,
+              ...values,
             },
           });
           dispatch(routerRedux.push('/product/add/step3'));
-        // }
-      // });
+        }
+      });
     };
     return (
-      <Form layout="horizontal" className={styles.stepForm1}>
+      <Form
+        layout="horizontal"
+        hideRequiredMark
+        className={styles.stepForm1}>
         <Form.Item
           {...formItemLayout}
-           label="产品介绍">
-           <ReactQuill
-             defaultValue={data.productIntroduction}
-             value={this.state.productIntroduction}
-             onChange={this.productIntroduction}
-             placeholder='请输入...'
-           />
+           label="产品介绍"
+           >
+           {getFieldDecorator('productIntroduction',{
+             initialValue: data.productIntroduction,
+             valuePropName: "defaultValue",
+           })(
+             <ReactQuill
+               placeholder='请输入...'
+             />
+           )}
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="基本要求">
-           <ReactQuill
-             defaultValue={data.basieReq}
-             value={this.state.basieReq}
-             onChange={this.basieReq}
-             placeholder='请输入...'
-            />
+           {getFieldDecorator('basieReq',{
+             initialValue: data.basieReq,
+             valuePropName: "defaultValue",
+           })(
+             <ReactQuill
+               placeholder='请输入...'
+             />
+           )}
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="征信要求">
-           <ReactQuill
-             defaultValue={data.creditReq}
-             value={this.state.creditReq}
-             onChange={this.creditReq}
-             placeholder='请输入...'
-            />
+           {getFieldDecorator('creditReq',{
+             initialValue: data.creditReq,
+             valuePropName: "defaultValue",
+           })(
+             <ReactQuill
+               placeholder='请输入...'
+             />
+           )}
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="负债要求">
-           <ReactQuill
-             defaultValue={data.claims}
-             value={this.state.claims}
-             onChange={this.claims}
-             placeholder='请输入...'
-            />
+           {getFieldDecorator('claims',{
+             initialValue: data.claims,
+             valuePropName: "defaultValue",
+           })(
+             <ReactQuill
+               placeholder='请输入...'
+             />
+           )}
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="额度计算">
-           <ReactQuill
-             defaultValue={data.positonCount}
-             value={this.state.positonCount}
-             onChange={this.positonCount}
-             placeholder='请输入...'
-            />
+           {getFieldDecorator('positonCount',{
+             initialValue: data.positonCount,
+             valuePropName: "defaultValue",
+           })(
+             <ReactQuill
+               placeholder='请输入...'
+             />
+           )}
         </Form.Item>
         <Form.Item
           {...formItemLayout}
            label="其它要求">
-           <ReactQuill
-             defaultValue={data.otherReq}
-             value={this.state.otherReq}
-             onChange={this.otherReq}
-             placeholder='请输入...'
-            />
+           {getFieldDecorator('otherReq',{
+             initialValue: data.otherReq,
+             valuePropName: "defaultValue",
+           })(
+             <ReactQuill
+               placeholder='请输入...'
+             />
+           )}
         </Form.Item>
 
         <Form.Item
