@@ -564,7 +564,7 @@ class Step1 extends React.PureComponent {
                   }}
                  >
                   {getFieldDecorator('matchingMode1',{
-                    initialValue: item.matchingMode?item.matchingMode.split(',')[0]:"",
+                    initialValue: item.matchingMode1,
                   })(
                     <Select
                       style={{ width: '100%' }}
@@ -585,7 +585,7 @@ class Step1 extends React.PureComponent {
                   }}
                  >
                   {getFieldDecorator('matchingMode2',{
-                    initialValue: item.matchingMode?item.matchingMode.split(',')[1]:"",
+                    initialValue: item.matchingMode2,
                   })(
                     <Select
                       style={{ width: '100%' }}
