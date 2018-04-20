@@ -76,23 +76,7 @@ export default class BasicForms extends PureComponent {
           >
             <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
               <Description term="用户编号">{item.userId}</Description>
-              <Description term="手机">
-                <Col sm={12} xs={24}>
-                  <FormItem >
-                    {getFieldDecorator('loginAccount', {
-                      initialValue:item.loginAccount,
-                      rules: [{ required: true, message: '请输入用户手机号...' },
-                      {
-                        pattern: /^1[3|4|5|8]\d{9}$/,
-                        message: '手机号格式错误！',
-                      },
-                    ],
-                })(
-                  <Input style={{ marginBottom: 8 }} type="mobile" placeholder="请输入" />
-                )}
-                  </FormItem>
-                </Col>
-              </Description>
+              <Description term="手机">{item.loginAccount}</Description>
               <Description term="用户名称">{item.userName}</Description>
               <Description term="微信号">{item.wachatNo}</Description>
               <Description term="用户头像">
