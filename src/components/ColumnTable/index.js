@@ -45,6 +45,7 @@ class ColumnTable extends PureComponent {
     const columnStatus = ['国内资讯', '国际资讯', '个人消息', '平台公告'];
     const parentColumnStatus = ['金融资讯', '系统消息', '常识讲堂'];
     const onlineStatus = ['否', '是'];
+    const uiType = ['图文', '视频'];
     const contentLabelStatus = ['推荐', '热点', '最新', '视频'];
     const columns = [
       {
@@ -72,6 +73,13 @@ class ColumnTable extends PureComponent {
         title: '排序',
         dataIndex: 'adsSort',
         sorter: true,
+      },
+      {
+        title: '是否视频',
+        dataIndex: 'uiType',
+        render(val) {
+          return `${uiType[val]}`;
+        },
       },
       {
         title: '是否显示',
