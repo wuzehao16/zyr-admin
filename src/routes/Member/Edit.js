@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import {
-  Form, Input, Button, Card, Divider, Col, Select,
+  Form, Input, Button, Card, Divider, Col, Select, Row
 } from 'antd';
 import DescriptionList from '../../components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -63,6 +63,18 @@ export default class BasicForms extends PureComponent {
     if (institutionList) {
       var institutionListOptions = institutionList.map(item => <Option key={item.manageId} title={item.manageName} >{item.manageName}</Option>);
     }
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 7 },
+        md: { span: 3 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 },
+        md: { span: 12 },
+      },
+    };
     return (
       <PageHeaderLayout title="编辑用户详请" >
         <Card bordered={false}>
@@ -107,12 +119,19 @@ export default class BasicForms extends PureComponent {
              }
             </DescriptionList>
             <Divider style={{ marginBottom: 32 }} />
-            <DescriptionList size="large" title="其他信息" style={{ marginBottom: 32 }} col={2}>
-              <Description term="是否为客服">
+              <p style={{fontSize:16}}>其他信息</p>
+                <Row>
                 <Col sm={12} xs={24}>
-                  <FormItem >
+                  <FormItem
+                    label="是否为客服"
+                    {...formItemLayout}
+                    >
                     {getFieldDecorator('isCustom',{
                       initialValue:item.isCustom,
+                      rules:[{
+                        required:true,
+                        message:'请选择是否客服'
+                      }]
                     })(
                       <Select placeholder="请选择" style={{ width: '100%' }}>
                         <Option value={0}>否</Option>
@@ -121,69 +140,77 @@ export default class BasicForms extends PureComponent {
                   )}
                   </FormItem>
                 </Col>
-              </Description>
-              <Description
-                term="客服类型"
-                style={{
-                display: getFieldValue('isCustom') === 1 ? 'block' : 'none',
-              }}
-              >
-                <Col sm={12} xs={24}>
-                  <FormItem >
-                    {getFieldDecorator('userIdentity',{
-                      initialValue:item.userIdentity,
-                    })(
-                      <Select placeholder="请选择" style={{ width: '100%' }}>
-                        <Option value={1}>机构客服</Option>
-                        <Option value={2}>平台客服</Option>
-                      </Select>
-                  )}
-                  </FormItem>
-                </Col>
-              </Description>
-              <Description
-                term="机构名称"
-                style={{
-                display: getFieldValue('userIdentity') === 1 ? 'block' : 'none',
-              }}
-              >
-                <Col sm={12} xs={24}>
-                  <FormItem >
-                    {getFieldDecorator('manageId',{
-                      initialValue:item.manageId,
-                    })(
-                      <Select
-                        // mode="tags"
-                        // value={this.state.value}
-                        placeholder={this.props.placeholder}
-                        style={this.props.style}
-                        defaultActiveFirstOption={false}
-                        showArrow={false}
-                        showSearch={true}
-                        filterOption={false}
-                        onSearch={this.handleChange}
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      label="启用状态"
+                      {...formItemLayout}
                       >
-                        {institutionListOptions}
-                      </Select>
-                  )}
-                  </FormItem>
-                </Col>
-              </Description>
-              <Description term="启用状态">
-                <Col sm={12} xs={24}>
-                  <FormItem >
-                    {getFieldDecorator('islock',{
-                      initialValue:item.islock,
-                    })(
-                      <Select placeholder="请选择" style={{ width: '100%' }}>
-                        <Option value={0}>禁用</Option>
-                        <Option value={1}>启用</Option>
-                      </Select>
-                  )}
-                  </FormItem>
-                </Col>
-              </Description>
-            </DescriptionList>
+                      {getFieldDecorator('islock',{
+                        initialValue:item.islock,
+                      })(
+                        <Select placeholder="请选择" style={{ width: '100%' }}>
+                          <Option value={0}>禁用</Option>
+                          <Option value={1}>启用</Option>
+                        </Select>
+                    )}
+                    </FormItem>
+                  </Col>
+                </Row>
+                <Row>
+              {
+                getFieldValue('isCustom') === 1
+                  ?   <Col sm={12} xs={24}>
+                                    <FormItem
+                                      label="客服类型"
+                                      {...formItemLayout}
+                                      >
+                                      {getFieldDecorator('userIdentity',{
+                                        initialValue:item.userIdentity,
+                                        rules:[{
+                                          required:true,
+                                          message:'请选择客服类型'
+                                        }]
+                                      })(
+                                        <Select placeholder="请选择" style={{ width: '100%' }}>
+                                          <Option value={1}>机构客服</Option>
+                                          <Option value={2}>平台客服</Option>
+                                        </Select>
+                                    )}
+                                    </FormItem>
+                                  </Col>: <div></div>
+              }
+              {
+                getFieldValue('userIdentity') === 1
+                ?  <Col sm={12} xs={24}>
+                    <FormItem
+                      label="机构名称"
+                      {...formItemLayout}
+                      >
+                      {getFieldDecorator('manageId',{
+                        initialValue:item.manageId,
+                        rules:[{
+                          required:true,
+                          message:'请选择机构名称'
+                        }]
+                      })(
+                        <Select
+                          // mode="tags"
+                          // value={this.state.value}
+                          placeholder={this.props.placeholder}
+                          style={this.props.style}
+                          defaultActiveFirstOption={false}
+                          showArrow={false}
+                          showSearch={true}
+                          filterOption={false}
+                          onSearch={this.handleChange}
+                        >
+                          {institutionListOptions}
+                        </Select>
+                    )}
+                    </FormItem>
+                  </Col>: <div></div>
+              }
+              </Row>
             <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
               <Button style={{ marginRight: 50 }} type="primary" htmlType="submit" loading={submitting}>
                 保存
