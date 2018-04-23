@@ -173,6 +173,7 @@ export default class BasicForms extends PureComponent {
         this.props.dispatch({
           type: 'user/fetchCurrent',
         })
+        this.toggleForm2()
       }
     });
   }
@@ -187,6 +188,7 @@ export default class BasicForms extends PureComponent {
         this.props.dispatch({
           type: 'user/fetchCurrent',
         })
+        this.toggleForm3()
       }
     });
   }

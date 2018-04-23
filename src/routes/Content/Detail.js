@@ -32,17 +32,17 @@ export default class BasicForms extends PureComponent {
             <Description term="排序">{item.contentSort}</Description>
             <Description term="来源">{item.source}</Description>
             <Description term="来源网址">{item.sourceSite}</Description>
-            <Description term="内容类型">{item.contentTypeName}</Description>
+            <Description term="内容类型">{item.contentType==0?'图文':'视频'}</Description>
             <Description term="是否显示">{item.isDisplay==1?'是':'否'}</Description>
             {
-              item.contentTypeName == '图文'
+              item.contentType == '0'
               ?<Description term="标签选择">{item.contentTag==0?'荐':item.contentTag==1?'热':'无'}</Description> :<Description></Description>
             }
 
           </DescriptionList>
           <Divider style={{ marginBottom: 12 }} />
           {
-            item.contentType == 60000
+            item.contentType == 0
               ? <div>
                 <DescriptionList size="large" title="内容" style={{ marginBottom: 12 }} col={1}>
                   {/* <Description>{item.contentIntroduction}</Description> */}

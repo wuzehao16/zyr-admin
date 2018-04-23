@@ -115,6 +115,23 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
+              label="是否视频"
+            >
+              {getFieldDecorator('uiType', {
+                initialValue: item.uiType,
+                rules: [{
+                  required: true,
+                  message: '请选择是否是视频',
+                }],
+              })(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  <Option value={0}>图文</Option>
+                  <Option value={1}>视频</Option>
+                </Select>
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
               label="排序"
             >
               {getFieldDecorator('adsSort', {
