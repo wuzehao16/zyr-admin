@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
+import { Debounce } from 'lodash-decorators';
+import Bind from 'lodash-decorators/bind';
+
 import {
   Form, Button, Card, Divider, Steps, Col , Select, Input, InputNumber,
 } from 'antd';
@@ -34,6 +37,8 @@ export default class BasicForms extends PureComponent {
       },
     });
   }
+  @Bind()
+  @Debounce(500)
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
