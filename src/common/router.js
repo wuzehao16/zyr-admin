@@ -359,7 +359,7 @@ export const getRouterData = (app) => {
     },
     '/order/review/:id': {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order/Review')),
-      name: '订单详情',
+      name: '订单审批',
     },
     '/match': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match')),

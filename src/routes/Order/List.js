@@ -230,7 +230,7 @@ export default class TableList extends PureComponent {
           <Col md={8} sm={24}
             style={{display: currentUser.data.userIdentity==1?'block':'none'}}
             >
-            <FormItem label="订单号">
+            <FormItem label="订  单  号">
               {getFieldDecorator('orderNo')(
                   <Input placeholder="请输入"/>
               )}
@@ -276,7 +276,7 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="订单号">
+            <FormItem label="订  单  号">
               {getFieldDecorator('orderNo')(
                   <Input placeholder="请输入"/>
               )}
@@ -294,14 +294,14 @@ export default class TableList extends PureComponent {
         </Row>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="提单人">
+            <FormItem label="提  单  人">
               {getFieldDecorator('userName')(
                   <Input placeholder="请输入"/>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="贷款人">
+            <FormItem label="贷  款  人">
               {getFieldDecorator('loanName')(
                   <Input placeholder="请输入"/>
               )}
