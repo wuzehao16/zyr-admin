@@ -60,6 +60,14 @@ export default class BasicForms extends PureComponent {
     });
   }
 
+  changeUiType = (v) =>{
+    const { content: { columnType, column }  } = this.props;
+    const { setFieldsValue, getFieldValue } = this.props.form;
+    var columnName = (column.data.filter(item => item.channelId ==v))[0];
+    setFieldsValue({
+      contentType:columnName.uiType
+    })
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -142,7 +150,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请选择栏目名称',
                 }],
               })(
-                <Select placeholder="请选择">
+                <Select placeholder="请选择" onChange={this.changeUiType}>
                   {columnNameOptions}
                 </Select>
               )}
@@ -206,6 +214,7 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="内容类型"
+              style={{display:'none'}}
             >
               {getFieldDecorator('contentType', {
                 initialValue: item.contentType,
@@ -214,8 +223,8 @@ export default class BasicForms extends PureComponent {
                 }],
               })(
                 <Select placeholder="请选择">
-                  <Option value="60000">图文</Option>
-                  <Option value="61000">视频</Option>
+                  <Option value="0">图文</Option>
+                  <Option value="1">视频</Option>
                 </Select>
               )}
             </FormItem>
@@ -223,7 +232,7 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="标签选择"
               style={{
-                display: getFieldValue('contentType') === '60000' ? 'block' : 'none',
+                display: getFieldValue('contentType') === '0' ? 'block' : 'none',
               }}
             >
               <div>
@@ -264,7 +273,7 @@ export default class BasicForms extends PureComponent {
               )}
             </FormItem>
             {
-              getFieldValue('contentType') == 61000
+              getFieldValue('contentType') == 1
                 ?             <FormItem
                               label="视频"
                               {...formItemLayout}
@@ -284,7 +293,7 @@ export default class BasicForms extends PureComponent {
                             </FormItem>: null
             }
             {
-              getFieldValue('contentType') == 60000
+              getFieldValue('contentType') == 0
                 ?        <Form.Item
                           labelCol= {{
                             xs: { span: 24 },

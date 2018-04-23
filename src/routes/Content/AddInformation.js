@@ -40,6 +40,14 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
+  changeUiType = (v) =>{
+    const { content: { columnType, column }  } = this.props;
+    const { getFieldDecorator, getFieldValue } = this.props.form;
+    var columnName = (column.data.filter(item => item.channelId ==v))[0];
+    getFieldDecorator('contentType', {
+      initialValue:columnName.uiType
+    })
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -119,7 +127,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请选择栏目名称',
                 }],
               })(
-                <Select placeholder="请选择">
+                <Select placeholder="请选择" onChange={this.changeUiType}>
                   {columnNameOptions}
                 </Select>
               )}
@@ -176,7 +184,7 @@ export default class BasicForms extends PureComponent {
                 </Select>
               )}
             </FormItem>
-            <FormItem
+            {/* <FormItem
               {...formItemLayout}
               label="内容类型"
             >
@@ -190,12 +198,12 @@ export default class BasicForms extends PureComponent {
                   <Option value="61000">视频</Option>
                 </Select>
               )}
-            </FormItem>
+            </FormItem> */}
             <FormItem
               {...formItemLayout}
               label="标签选择"
               style={{
-                display: getFieldValue('contentType') === '60000' ? 'block' : 'none',
+                display: getFieldValue('contentType') === '0' ? 'block' : 'none',
               }}
             >
               <div>
@@ -232,7 +240,7 @@ export default class BasicForms extends PureComponent {
 
             </FormItem>
             {
-              getFieldValue('contentType') == 61000
+              getFieldValue('contentType') == 1
                 ?             <FormItem
                               label="视频"
                               {...formItemLayout}

@@ -75,7 +75,7 @@ class ColumnTable extends PureComponent {
         sorter: true,
       },
       {
-        title: '是否视频',
+        title: '内容类型',
         dataIndex: 'uiType',
         render(val) {
           return `${uiType[val]}`;
