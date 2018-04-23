@@ -59,9 +59,6 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item, institutionList }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue, setFieldsValue } = this.props.form;
     getFieldDecorator('userId',{initialValue:item.userId});
-    // setFieldsValue({
-    //   userId: item.userId,
-    // });
     console.log(item)
     if (institutionList) {
       var institutionListOptions = institutionList.map(item => <Option key={item.manageId} title={item.manageName} >{item.manageName}</Option>);
