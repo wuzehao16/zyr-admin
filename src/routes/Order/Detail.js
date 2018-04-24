@@ -122,7 +122,7 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <PageHeaderLayout style={{ marginBottom: 32}} style={{fontWeight:'normal'}}>
-        <Card bordered={false} style={{padding:'0 146px 0 235px'}}>
+        <Card bordered={false} style={{padding:'0 146px 0 135px'}}>
           <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32,position:'relative'}} col={2}>
             <Description term="订单号">{item.orderNo}</Description>
             <Description term="更新时间">{moment(item.updateTime).format('llll')}</Description>
@@ -133,8 +133,8 @@ export default class BasicForms extends PureComponent {
             <Description term="提单人">{item.userName}</Description>
             <Description term="提单人手机">{item.userPhone}</Description>
             <Description term="产品分润比例">{item.productRatio + '%'}</Description>
-            <div className='banklogo' style={{position:'absolute',top:'0',right:'0',width:'260px',height:'140px',padding:'35px 31px',border:'solid 1px #c8c8c8'}}>
-              {/* <img src={item.logo} /> */}
+            <div className='banklogo' style={{position:'absolute',top:'0',right:'0',width:'260px',height:'140px'}}>
+              <img src={item.manageLogoId} />
             </div>
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
@@ -163,6 +163,11 @@ export default class BasicForms extends PureComponent {
           </DescriptionList>
         </Card>
           <style jsx>{`
+            .banklogo img{
+              max-width: 100%;
+               max-height: 100%;
+              border:1px solid #c8c8c8;
+            }
             @media screen and (max-width:1400px) {
               .banklogo {
                 display:none;
