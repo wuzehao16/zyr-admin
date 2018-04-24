@@ -614,7 +614,7 @@ class Step1 extends React.PureComponent {
             </Col>
           </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
+            <Col md={12} sm={24}>
               <Form.Item
                 label="产品类别"
                 {...formItemLayout}
@@ -643,13 +643,16 @@ class Step1 extends React.PureComponent {
           </Row>
           {
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
+              <Col
+                md={12}
+                sm={24}
+                style={{
+                  display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==100).length:'') == '1' ? 'block' : 'none',
+                }}
+                >
                 <Form.Item
                   label="模型(信用贷)"
                   {...formItemLayout}
-                  style={{
-                    display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==100).length:'') == '1' ? 'block' : 'none',
-                  }}
                  >
                   {getFieldDecorator('matchingMode1',{
                     initialValue: item.matchingMode1,
@@ -688,10 +691,10 @@ class Step1 extends React.PureComponent {
             </Row>
           }
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
+            <Col md={12} sm={24}>
               <Form.Item
                 label="房产类型"
-                {...formItemLayout1}
+                {...formItemLayout}
                 // (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'')
                 style={{
                   display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'') == '1' ? 'block' : 'none',
@@ -712,12 +715,10 @@ class Step1 extends React.PureComponent {
                 )}
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
+            <Col md={12} sm={24}>
               <Form.Item
                 label="客户类型"
-                {...formItemLayout1}
+                {...formItemLayout}
                >
                 {getFieldDecorator('customerType',{
                   initialValue:item.customerType?item.customerType.split(','):[],
@@ -742,10 +743,13 @@ class Step1 extends React.PureComponent {
             </Col>
           </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
+
+          </Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+            <Col md={12} sm={24}>
               <Form.Item
                 label="还款方式"
-                {...formItemLayout1}
+                {...formItemLayout}
                >
                 {getFieldDecorator('productPayWay',{
                   initialValue:item.productPayWay?item.productPayWay.split(','):[],
@@ -768,12 +772,10 @@ class Step1 extends React.PureComponent {
                 )}
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
+            <Col md={12} sm={24}>
               <Form.Item
                 label="产品特点"
-                {...formItemLayout1}
+                {...formItemLayout}
                >
                 {getFieldDecorator('productFeatures',{
                   initialValue:item.productFeatures?item.productFeatures.split(','):[],
@@ -810,6 +812,9 @@ class Step1 extends React.PureComponent {
                 )}
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+
           </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <Col md={12} sm={24}>

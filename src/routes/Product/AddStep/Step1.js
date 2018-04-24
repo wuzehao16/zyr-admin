@@ -810,7 +810,7 @@ class Step1 extends React.PureComponent {
                    }}
                    >
                    {getFieldDecorator('isEvaluating',{
-                     initialValue:step.productFeatures,
+                     initialValue:step.isEvaluating,
                    })(
                      <Select placeholder="请选择">
                        <Option value={0}>否</Option>
