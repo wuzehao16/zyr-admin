@@ -197,20 +197,10 @@ class BasicLayout extends React.PureComponent {
                 title: '众银云测',
                 href: 'http://www.ibankmatch.com/',
                 blankTarget: true,
-              }, {
-                key: 'github',
-                title: <Icon type="github" />,
-                href: 'https://github.com/ant-design/ant-design-pro',
-                blankTarget: true,
-              }, {
-                key: '众易融',
-                title: '众易融',
-                href: 'http://www.zyrbank.com',
-                blankTarget: true,
               }]}
               copyright={
                 <div>
-                  Copyright <Icon type="copyright" /> 2018 众银云测技术部出品
+                  Copyright <Icon type="copyright" /> 2018 bank match
                 </div>
               }
             />

@@ -169,11 +169,13 @@ export default class BasicForms extends PureComponent {
         this.props.dispatch({
           type: 'setting/updateEmail',
           payload: values,
+          callback:() =>{
+            this.props.dispatch({
+              type: 'user/fetchCurrent',
+            })
+            this.toggleForm2()
+          }
         });
-        this.props.dispatch({
-          type: 'user/fetchCurrent',
-        })
-        this.toggleForm2()
       }
     });
   }
@@ -184,11 +186,14 @@ export default class BasicForms extends PureComponent {
         this.props.dispatch({
           type: 'setting/updatePhone',
           payload: values,
+          callback:() =>{
+            this.props.dispatch({
+              type: 'user/fetchCurrent',
+            })
+            this.toggleForm3()
+          }
         });
-        this.props.dispatch({
-          type: 'user/fetchCurrent',
-        })
-        this.toggleForm3()
+
       }
     });
   }

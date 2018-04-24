@@ -8,20 +8,13 @@ import logo from '../assets/logo.png';
 import { getRoutes } from '../utils/utils';
 
 const links = [{
-  key: 'help',
-  title: '帮助',
-  href: '',
-}, {
-  key: 'privacy',
-  title: '隐私',
-  href: '',
-}, {
-  key: 'terms',
-  title: '条款',
-  href: '',
+  key: '众银云测',
+  title: '众银云测',
+  href: 'http://www.ibankmatch.com/',
+  blankTarget: true,
 }];
 
-const copyright = <div>Copyright <Icon type="copyright" /> 2018 众银云测技术部出品</div>;
+const copyright = <div>Copyright <Icon type="copyright" /> 2018 bank match</div>;
 
 class UserLayout extends React.PureComponent {
   getPageTitle() {
