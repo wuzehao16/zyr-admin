@@ -27,26 +27,10 @@ class Step1 extends React.PureComponent {
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 5 },
+        span:24
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 17 },
-      },
-    };
-    const formItemLayout1 = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 19 },
+        span:24
       },
     };
 
@@ -72,7 +56,7 @@ class Step1 extends React.PureComponent {
       });
     };
     return (
-      <div>
+      <div className={styles.content}>
         <Form
           onSubmit={this.handleSubmit}
           hideRequiredMark

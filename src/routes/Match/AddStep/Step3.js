@@ -27,26 +27,10 @@ class Step1 extends React.PureComponent {
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 10 },
+        span:24
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 11 },
-      },
-    };
-    const formItemLayout1 = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 19 },
+        span:24
       },
     };
 
@@ -76,7 +60,7 @@ class Step1 extends React.PureComponent {
       });
     };
     return (
-      <div>
+      <div className={styles.content}>
         <Form
           onSubmit={this.handleSubmit}
           hideRequiredMark
@@ -144,7 +128,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('isParticleLoan',{
-              initialValue: [0,1,2,3,4],
+              initialValue: [0,1],
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -160,7 +144,7 @@ class Step1 extends React.PureComponent {
                     {...formItemLayout}
                   >
                     {getFieldDecorator('particleLoanLimit',{
-                      initialValue: [0,1,2,3,4],
+                      initialValue: [0,1,2,3],
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={0}>3千以下</Checkbox>
@@ -176,7 +160,7 @@ class Step1 extends React.PureComponent {
             label="是否允许名下贷款/信用卡账户状态有冻结/呆账/止付/挂失/收卡/作废"
             {...formItemLayout}
            >
-            {getFieldDecorator('particleLoanLimit',{
+            {getFieldDecorator('isLoanClose',{
               initialValue: [0,1],
             })(
               <CheckboxGroup  size="small">
