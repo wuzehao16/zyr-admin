@@ -4,6 +4,8 @@ import {
   Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Row, Col, Upload, Modal, message
 } from 'antd';
 import { routerRedux } from 'dva/router';
+import Debounce from 'lodash-decorators/debounce';
+import Bind from 'lodash-decorators/bind';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import UploadPicture from '../../components/UploadPicture';
 import styles from './style.less';
@@ -55,11 +57,27 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
+  // 模糊匹配时候调用
+  @Bind()
+  @Debounce(500)
+  getInstitutionVlookup(name) {
+    console.log(name)
+    this.props.dispatch({
+      type: 'institution/getInstitution',
+      payload: {
+        cityCode: this.state.cityCode,
+        manageName: name
+      },
+    });
+  }
   getInstitution = (code) => {
     const { resetFields,getFieldValue } = this.props.form;
     if(getFieldValue('sublInstitution')){
       resetFields(['sublInstitution','manageId'])
     }
+    this.setState({
+      cityCode:code
+    })
 
     this.props.dispatch({
       type: 'institution/getInstitution',
@@ -68,7 +86,27 @@ export default class BasicForms extends PureComponent {
       },
     });
   }
+  //模糊匹配时候
+  @Bind()
+  @Debounce(500)
+  getSubInstitutionVlookup(name) {
+    this.props.dispatch({
+      type: 'institution/getSubInstitution',
+      payload: {
+        parentId: this.state.parentId,
+        manageName:name
+      },
+    });
+  }
   getSubInstitution = (code) => {
+    //重复选择时候清除数据
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('manageId')){
+      resetFields(['manageId'])
+    }
+    this.setState({
+      parentId:code
+    })
     this.props.dispatch({
       type: 'institution/getSubInstitution',
       payload: {
@@ -166,7 +204,16 @@ export default class BasicForms extends PureComponent {
                                     message:'请选择银行名称'
                                   }]
                                 })(
-                                  <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getSubInstitution}>
+                                  <Select
+                                    placeholder="银行名称"
+                                    defaultActiveFirstOption={false}
+                                    showArrow={false}
+                                    showSearch={true}
+                                    filterOption={false}
+                                    onSearch={this.getInstitutionVlookup}
+                                    onChange={this.getSubInstitution}
+                                    style={{ width: '100%' }}
+                                    >
                                   { institutionListOptions }
                                   </Select>
                                 )}
@@ -182,7 +229,15 @@ export default class BasicForms extends PureComponent {
                                     message:'请选择下属机构'
                                   }]
                                 })(
-                                  <Select placeholder="请选择" style={{ width: '100%' }} >
+                                  <Select
+                                    placeholder="下属机构"
+                                    defaultActiveFirstOption={false}
+                                    showArrow={false}
+                                    showSearch={true}
+                                    filterOption={false}
+                                    onSearch={this.getSubInstitutionVlookup}
+                                    style={{ width: '100%' }}
+                                    >
                                     { subInstitutionListOptions }
                                   </Select>
                                 )}
