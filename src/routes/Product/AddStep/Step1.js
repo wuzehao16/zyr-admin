@@ -178,7 +178,7 @@ class Step1 extends React.PureComponent {
           return
         }
 
-        if (reg.test(form.getFieldValue('productTimeLimitEnd')) && (form.getFieldValue('productTimeLimitEnd') < form.getFieldValue('productTimeLimitStart'))) {
+        if (reg.test(form.getFieldValue('productTimeLimitEnd')) && Number((form.getFieldValue('productTimeLimitEnd')) < Number(form.getFieldValue('productTimeLimitStart')))) {
           form.setFields({
             productTimeLimitEnd: {
               value: values.productTimeLimitEnd,
@@ -209,7 +209,7 @@ class Step1 extends React.PureComponent {
         }
 
 
-        if (reg.test(form.getFieldValue('approvalAgingEnd')) && (form.getFieldValue('approvalAgingEnd') < form.getFieldValue('approvalAgingStart'))) {
+        if (reg.test(form.getFieldValue('approvalAgingEnd')) && Number((form.getFieldValue('approvalAgingEnd')) < Number(form.getFieldValue('approvalAgingStart')))) {
           form.setFields({
             approvalAgingEnd: {
               value: values.approvalAgingEnd,
