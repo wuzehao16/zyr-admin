@@ -79,14 +79,6 @@ class Step1 extends React.PureComponent {
           hideRequiredMark
           style={{ marginTop: 8 }}
         >
-          {/* <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={12} sm={24}>
-
-            </Col>
-            <Col md={12} sm={24}>
-
-            </Col>
-          </Row> */}
           <Form.Item
             label="请输入本单位连续上班月份要求"
             {...formItemLayout}
