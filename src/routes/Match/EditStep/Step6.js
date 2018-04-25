@@ -101,11 +101,11 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="等额本息每月还款总额要求"
+            label="等额本息类要求"
             {...formItemLayout}
            >
-            {getFieldDecorator('equalInteresMonthPayment',{
-              initialValue: item.equalInteresMonthPayment,
+            {getFieldDecorator('sumEqualInterest',{
+              initialValue: item.sumEqualInterest,
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}
