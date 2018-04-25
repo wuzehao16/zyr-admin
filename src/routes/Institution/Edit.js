@@ -178,7 +178,7 @@ export default class BasicForms extends PureComponent {
                       required: true, message: '请选择机构类型',
                     }],
                   })(
-                    <Select placeholder="请选择" style={{ width: '100%' }}>
+                    <Select disabled placeholder="请选择" style={{ width: '100%' }}>
                     { institutionTypeOptions }
                     </Select>
                   )}
@@ -194,7 +194,7 @@ export default class BasicForms extends PureComponent {
                       required: true, message: '请选择算在城市',
                     }],
                   })(
-                    <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.changeCity}>
+                    <Select disabled placeholder="请选择" style={{ width: '100%' }} onChange={this.changeCity}>
                       {cityOptions}
                     </Select>
                   )}
@@ -212,7 +212,7 @@ export default class BasicForms extends PureComponent {
                                 {...formItemLayout}
                                  label="银行名称">
                                 {getFieldDecorator('sublInstitution')(
-                                  <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getSubInstitution}>
+                                  <Select disabled placeholder="请选择" style={{ width: '100%' }} onChange={this.getSubInstitution}>
                                   { institutionListOptions }
                                   </Select>
                                 )}
@@ -223,7 +223,7 @@ export default class BasicForms extends PureComponent {
                                 {...formItemLayout}
                                  label="下属机构">
                                 {getFieldDecorator('manageId')(
-                                  <Select placeholder="请选择" style={{ width: '100%' }} >
+                                  <Select disabled placeholder="请选择" style={{ width: '100%' }} >
                                     { subInstitutionListOptions }
                                   </Select>
                                 )}
@@ -247,6 +247,7 @@ export default class BasicForms extends PureComponent {
                                   ],
                                 })(
                                   <Input
+                                    disabled
                                     placeholder="机构名称"
                                   />
                                 )}
@@ -269,6 +270,7 @@ export default class BasicForms extends PureComponent {
                                 ],
                               })(
                                 <Input
+                                  disabled
                                   placeholder="机构名称"
                                 />
                               )}
