@@ -120,7 +120,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('maritalStatus').indexOf(0) >= 0) ?
+            (getFieldValue('maritalStatus').indexOf(0) < 0) ?
               <div>
                 <Form.Item
                   label="是否必须配偶同意贷款"
@@ -267,7 +267,7 @@ class Step1 extends React.PureComponent {
                   )}
                 </Form.Item>
                 {
-                  (getFieldValue('isInsurance').indexOf(1) >= 0)?
+                  (getFieldValue('isInsurance').indexOf(0) < 0)?
                     <div>
                       <Form.Item
                         label="现单位社保缴纳基数要求"
@@ -317,7 +317,7 @@ class Step1 extends React.PureComponent {
                   )}
                 </Form.Item>
                 {
-                  (getFieldValue('isProvidentFund').indexOf(1) >= 0)?
+                  (getFieldValue('isProvidentFund').indexOf(0) == -1)?
                     <div>
                       <Form.Item
                         label="现单位公积金缴纳基数要求"
