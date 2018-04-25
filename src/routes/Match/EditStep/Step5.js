@@ -108,8 +108,8 @@ class Step1 extends React.PureComponent {
                   label="名下房产数量要求"
                   {...formItemLayout}
                 >
-                  {getFieldDecorator('sumOneMonthQueries',{
-                    initialValue: item.sumOneMonthQueries,
+                  {getFieldDecorator('sumHouseProperty',{
+                    initialValue: item.sumHouseProperty,
                   })(
                       <Input  type="text" style={{width:200}} addonAfter="套"/>
                   )}
