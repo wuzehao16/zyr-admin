@@ -261,8 +261,8 @@ class Step1 extends React.PureComponent {
                         label="现单位社保缴纳基数要求"
                         {...formItemLayout}
                       >
-                        {getFieldDecorator('insurancePaymonth',{
-                          initialValue: item.insurancePaymonth,
+                        {getFieldDecorator('insuranceBase',{
+                          initialValue: item.insuranceBase,
                         })(
                           <CheckboxGroup  >
                             <Checkbox value={0}>4千以下</Checkbox>

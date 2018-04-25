@@ -147,8 +147,8 @@ class Step1 extends React.PureComponent {
                   label="房产类型要求"
                   {...formItemLayout}
                 >
-                  {getFieldDecorator('ownership',{
-                    initialValue: item.ownership,
+                  {getFieldDecorator('propertyType',{
+                    initialValue: item.propertyType,
                   })(
                     <CheckboxGroup  >
                       <Checkbox value={0}>住宅</Checkbox>
