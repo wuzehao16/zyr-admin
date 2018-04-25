@@ -87,6 +87,14 @@ export default class BasicForms extends PureComponent {
            </DescriptionList>
            <DescriptionList size="large" style={{ marginBottom: 32 }} col={1}>
              <Description term="产品类别">{item.productTypeName}</Description>
+             {
+               item.matchingModeName1
+               ?<Description term="匹配模型（信用贷款）">{item.matchingModeName1}</Description>:<div/>
+             }
+             {
+               item.matchingModeName2
+               ? <Description term="匹配模型（抵押贷款）">{item.matchingModeName2}</Description>:<div/>
+             }
              <Description term="房产类型">{item.propertyTypeName}</Description>
              <Description term="客户类别">{item.customerTypeName}</Description>
              <Description term="还款方式">{item.productPayWayName}</Description>

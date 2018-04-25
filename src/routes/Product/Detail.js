@@ -50,13 +50,19 @@ export default class BasicForms extends PureComponent {
             <Description term="推荐语">{item.productRecommend}</Description>
             <Description term="排序">{item.productSort}</Description>
             <Description term="上架状态">{item.shelfState==1?'已上架':'已下架'}</Description>
-            <Description term="匹配模型（信用贷款）">{item.matchingModeName1}</Description>
-            <Description term="匹配模型（抵押贷款）">{item.matchingModeName2}</Description>
             <Description term="是否纳入评测">{item.isEvaluating==1?'是':'否'}</Description>
             <Description term="是否为火">{item.isFire==1?'是':'否'}</Description>
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32 }} col={1}>
             <Description term="产品类别">{item.productTypeName}</Description>
+            {
+              item.matchingModeName1
+              ?<Description term="匹配模型（信用贷款）">{item.matchingModeName1}</Description>:<div/>
+            }
+            {
+              item.matchingModeName2
+              ? <Description term="匹配模型（抵押贷款）">{item.matchingModeName2}</Description>:<div/>
+            }
             <Description term="房产类型">{item.propertyTypeName}</Description>
             <Description term="客户类别">{item.customerTypeName}</Description>
             <Description term="还款方式">{item.productPayWayName}</Description>
