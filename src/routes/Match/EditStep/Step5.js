@@ -102,7 +102,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('isHouseProperty').indexOf(1) >= 0)?
+            (getFieldValue('isHouseProperty').indexOf(0) < 0)?
               <div>
                 <Form.Item
                   label="名下房产数量要求"
@@ -282,7 +282,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('businessPolicy').indexOf(1) >= 0)?
+            (getFieldValue('businessPolicy').indexOf(0) < 0)?
               <div>
                 <Form.Item
                   label="名下保单份数要求"
@@ -383,7 +383,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('isFamilyCar').indexOf(1) >= 0)?
+            (getFieldValue('isFamilyCar').indexOf(0) < 0)?
               <div>
                 <Form.Item
                   label="名下车辆数量要求"

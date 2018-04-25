@@ -131,7 +131,7 @@ class AdvancedForm extends PureComponent {
           <Col span={8}>
             <Card title="收入指标" bordered={false}>
               <Card.Grid style={gridStyle}>S3：近三个月税前月均收入</Card.Grid>
-              <Card.Grid style={gridStyle}>S6：近三个月税前月均收入</Card.Grid>
+              <Card.Grid style={gridStyle}>S6：近六个月税前月均收入</Card.Grid>
               <Card.Grid style={gridStyle}>S12：近十二个月税前月均收入</Card.Grid>
               <Card.Grid style={gridStyle}>S24：上一年度税前月均收入</Card.Grid>
               <Card.Grid style={gridStyle}>B1：社保缴纳基数</Card.Grid>
