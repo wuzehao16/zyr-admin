@@ -120,7 +120,6 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('sumFirstInterest',{
               initialValue: item.sumFirstInterest,
-              initialValue: "<10",
             })(
                 <Input  type="text" style={{width:200}} addonAfter="笔"/>
             )}

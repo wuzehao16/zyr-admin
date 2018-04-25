@@ -273,7 +273,7 @@ class Step1 extends React.PureComponent {
             {...formItemLayout}
            >
             {getFieldDecorator('businessPolicy',{
-              initialValue: [0,1],
+              initialValue: item.businessPolicy,
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>是</Checkbox>
