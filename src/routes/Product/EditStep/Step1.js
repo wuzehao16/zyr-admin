@@ -70,8 +70,24 @@ class Step1 extends React.PureComponent {
       });
     }
   }
+  getInstitution1 = (code) => {
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('manageId')){
+      resetFields(['manageId'])
+    }
+    this.props.dispatch({
+      type: 'product/getInstitution',
+      payload: {
+        cityCode: getFieldValue('cityCode'),
+        institutionCode: code,
+      },
+    });
+  }
   getInstitution = (code) => {
-    const { getFieldValue } = this.props.form;
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('manageId')){
+      resetFields(['manageId'])
+    }
     this.props.dispatch({
       type: 'product/getInstitution',
       payload: {
@@ -275,7 +291,7 @@ class Step1 extends React.PureComponent {
                                 required: true, message: '请选择机构类型',
                               }],
                             })(
-                              <Select placeholder="请选择" style={{ width: '100%' }}>
+                              <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getInstitution1}>
                               { institutionTypeOptions }
                               </Select>
                             )}
