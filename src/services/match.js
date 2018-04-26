@@ -52,3 +52,11 @@ export async function addAi(params) {
     },
   });
 }
+export async function editAi(params) {
+  return request('/sys/updateModeAlgorithm', {
+    method: 'PUT',
+    body: {
+      ...params,
+    },
+  });
+}

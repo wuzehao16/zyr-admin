@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, addAi, query,queryAI, queryDetail,queryAIDetail, update, updateStatus, remove } from '../services/match';
+import { add, addAi,editAi, query,queryAI, queryDetail,queryAIDetail, update, updateStatus, remove } from '../services/match';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -68,6 +68,17 @@ export default {
       const response = yield call(addAi, payload);
       if (response.code === 0) {
         message.success('新建成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/match'));
+      if (callback) callback();
+    },
+    *editAi({ payload, callback }, { call, put }) {
+      const response = yield call(editAi, payload);
+      if (response.code === 0) {
+        message.success('编辑成功');
       } else {
         message.error(response.msg)
         return

@@ -28,7 +28,7 @@ class AdvancedForm extends PureComponent {
   componentDidMount() {
     window.addEventListener('resize', this.resizeFooterToolbar);
     const id = this.props.match.params.id;
-    this.props.form.getFieldDecorator('modelId',{initialValue:id})
+    this.props.form.getFieldDecorator('id',{initialValue:id})
     this.props.dispatch({
       type:'match/fetchAI',
       payload:{ id:id}
@@ -72,7 +72,7 @@ class AdvancedForm extends PureComponent {
           }
           // submit the values
           dispatch({
-            type: 'match/addAi',
+            type: 'match/editAi',
             payload: values,
           });
         }
