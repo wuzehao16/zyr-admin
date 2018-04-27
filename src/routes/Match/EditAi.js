@@ -49,7 +49,7 @@ class AdvancedForm extends PureComponent {
     if (this.props.AI.algorithmFormula) {
        tableData = JSON.parse(this.props.AI.algorithmFormula)
     }
-    const modelName = this.props.location.search.slice(1)
+    const modelName = decodeURI(this.props.location.search.slice(1))
     const { form, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;
     const validate = () => {
