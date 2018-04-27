@@ -108,7 +108,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('maritalStatus').indexOf(0) < 0)?
+            (getFieldValue('maritalStatus').indexOf(0) >= 0)?
               <div>
                 <Form.Item
                   label="是否必须配偶同意贷款"
