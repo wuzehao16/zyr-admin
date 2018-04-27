@@ -891,7 +891,6 @@ class Step1 extends React.PureComponent {
               </Col>
             </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-
           </Row>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" >

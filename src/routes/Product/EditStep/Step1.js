@@ -402,7 +402,7 @@ class Step1 extends React.PureComponent {
             <Col md={12} sm={24}>
               <Form.Item
                 label="产品名称"
-                {...formItemLayout}
+                {...formItemLayout2}
                >
                 {getFieldDecorator('productName',{
                   initialValue: item.productName,
