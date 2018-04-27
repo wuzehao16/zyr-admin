@@ -148,38 +148,91 @@ class Step1 extends React.PureComponent {
       var cusCategoryOptions = cusCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var repMethodOptions = repMethod.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var prodFeaturesOptions = prodFeatures.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+
       getFieldDecorator('productId',{
         initialValue: item.productId,})
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 5 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 12 },
-      },
-    };
-    const formItemLayout1 = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 19 },
-      },
-    };
+
+        const formItemLayout = {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 7 },
+            md: { span: 5 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 12 },
+            md: { span: 10 },
+          },
+        };
+
+        const formItemLayout1 = {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 7 },
+            md: { span: 6 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 12 },
+            md: { span: 14 },
+          },
+        };
+
+        const formItemLayout2 = {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 7 },
+            md: { span: 12 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 12 },
+            md: { span: 10 },
+          },
+        };
+
+        const formItemLayout3 = {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 7 },
+            md: { span: 4, offset: 0.5 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 12 },
+            md: { span: 10 },
+          },
+        };
+    // const formItemLayout = {
+    //   labelCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 7 },
+    //     md: { span: 5 },
+    //   },
+    //   wrapperCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 12 },
+    //     md: { span: 12 },
+    //   },
+    // };
+    // const formItemLayout1 = {
+    //   labelCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 7 },
+    //     md: { span: 2 },
+    //   },
+    //   wrapperCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 12 },
+    //     md: { span: 19 },
+    //   },
+    // };
 
 
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
     const onValidateForm = (e) => {
@@ -275,7 +328,7 @@ class Step1 extends React.PureComponent {
         <Form
           onSubmit={onValidateForm}
           hideRequiredMark
-          style={{ marginTop: 8 }}
+          style={{ marginTop: 50 }}
         >
           {
             currentUser.data.userIdentity == 0
@@ -283,7 +336,7 @@ class Step1 extends React.PureComponent {
                         >
                         <Col md={12} sm={24}>
                           <FormItem
-                            {...formItemLayout}
+                            {...formItemLayout2}
                              label="机构类型">
                             {getFieldDecorator('institutionCode', {
                               initialValue: item.institutionCode,
@@ -322,7 +375,7 @@ class Step1 extends React.PureComponent {
                               >
                               <Form.Item
                                 label="机构名称"
-                                {...formItemLayout}
+                                {...formItemLayout2}
                                >
                                 {getFieldDecorator('manageId',{
                                   initialValue: item.manageId,
@@ -371,7 +424,7 @@ class Step1 extends React.PureComponent {
             <Col md={12} sm={24}>
               <Form.Item
                 label="最高可贷"
-                {...formItemLayout}
+                {...formItemLayout2}
                >
                 {getFieldDecorator('productMaxLoad',{
                   initialValue: item.productMaxLoad,
@@ -421,7 +474,7 @@ class Step1 extends React.PureComponent {
             <Col md={12} sm={24}>
               <Form.Item
                 label="月费率"
-                {...formItemLayout}
+                {...formItemLayout2}
                >
                 {getFieldDecorator('monthlyFeeRate',{
                   initialValue: item.monthlyFeeRate,
@@ -489,7 +542,7 @@ class Step1 extends React.PureComponent {
             <Col md={12} sm={24}>
               <Form.Item
                 label="手续费"
-                {...formItemLayout}
+                {...formItemLayout2}
                >
                 {getFieldDecorator('productPoundage',{
                   initialValue: item.productPoundage,
@@ -554,7 +607,7 @@ class Step1 extends React.PureComponent {
             <Col md={12} sm={24}>
               <Form.Item
                 label="产品须知"
-                {...formItemLayout}
+                {...formItemLayout2}
                >
                 {getFieldDecorator('productNotice',{
                   initialValue: item.productNotice,
@@ -598,7 +651,7 @@ class Step1 extends React.PureComponent {
             <Col md={12} sm={24}>
               <Form.Item
                 label="排序"
-                {...formItemLayout}
+                {...formItemLayout2}
                >
                 {getFieldDecorator('productSort',{
                   initialValue: item.productSort,
@@ -629,220 +682,223 @@ class Step1 extends React.PureComponent {
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="产品类别"
-                {...formItemLayout}
-               >
-                {getFieldDecorator('productType',{
-                  initialValue:item.productType?item.productType.split(','):[],
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择产品类别',
-                    },
-                  ],
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {prodCategoryOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          {
+          <div style={{paddingRight: 48}}>
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col
-                md={12}
-                sm={24}
-                style={{
-                  display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==100).length:'') == '1' ? 'block' : 'none',
-                }}
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="产品类别"
+                  {...formItemLayout1}
                 >
-                <Form.Item
-                  label="模型(信用贷)"
-                  {...formItemLayout}
-                 >
-                  {getFieldDecorator('matchingMode1',{
-                    initialValue: item.matchingMode1,
+                  {getFieldDecorator('productType',{
+                    initialValue: item.productType?item.productType.split(','):[],
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择产品类别',
+                      },
+                    ],
                   })(
                     <Select
+                      mode="multiple"
                       style={{ width: '100%' }}
                       placeholder="请选择"
+                      // defaultValue={['a10', 'c12']}
                       onChange={this.handleChange}
                     >
-                      {ModelList1Options}
-                    </Select>
-                  )}
-                </Form.Item>
-              </Col>
-              <Col md={12} sm={24}>
-                <Form.Item
-                  label="模型(抵押贷)"
-                  {...formItemLayout}
-                  style={{
-                    display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110).length:'') == '1' ? 'block' : 'none',
-                  }}
-                 >
-                  {getFieldDecorator('matchingMode2',{
-                    initialValue: item.matchingMode2,
-                  })(
-                    <Select
-                      style={{ width: '100%' }}
-                      placeholder="请选择"
-                      onChange={this.handleChange}
-                    >
-                      {ModelList2Options}
+                      {prodCategoryOptions}
                     </Select>
                   )}
                 </Form.Item>
               </Col>
             </Row>
+          {
+            <div>
+              <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                <Col md={24} sm={24}>
+                  <Form.Item
+                    label="模型(信用贷)"
+                    {...formItemLayout1}
+                    style={{
+                      display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==100).length:'') == '1' ? 'block' : 'none',
+                    }}
+                  >
+                    {getFieldDecorator('matchingMode1',{
+                      initialValue: item.matchingMode1,
+                    })(
+                      <Select
+                        style={{ width: '100%' }}
+                        placeholder="请选择"
+                        onChange={this.handleChange}
+                      >
+                        {ModelList1Options}
+                      </Select>
+                    )}
+                  </Form.Item>
+                </Col>
+                </Row>
+                <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                  <Col md={24} sm={24}>
+                    <Form.Item
+                      label="模型(抵押贷)"
+                      {...formItemLayout1}
+                      style={{
+                        display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110).length:'') == '1' ? 'block' : 'none',
+                      }}
+                    >
+                      {getFieldDecorator('matchingMode2',{
+                        initialValue: item.matchingMode2,
+                      })(
+                        <Select
+                          style={{ width: '100%' }}
+                          placeholder="请选择"
+                          onChange={this.handleChange}
+                        >
+                          {ModelList2Options}
+                        </Select>
+                      )}
+                    </Form.Item>
+                  </Col>
+              </Row>
+            </div>
           }
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="房产类型"
-                {...formItemLayout}
-                // (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'')
-                style={{
-                  display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'') == '1' ? 'block' : 'none',
-                }}
-               >
-                {getFieldDecorator('propertyType',{
-                  initialValue:item.propertyType?item.propertyType.split(','):[],
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {propCategoryOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="客户类型"
-                {...formItemLayout}
-               >
-                {getFieldDecorator('customerType',{
-                  initialValue:item.customerType?item.customerType.split(','):[],
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择客户类型',
-                    },
-                  ],
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {cusCategoryOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="还款方式"
-                {...formItemLayout}
-               >
-                {getFieldDecorator('productPayWay',{
-                  initialValue:item.productPayWay?item.productPayWay.split(','):[],
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择还款方式',
-                    },
-                  ],
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {repMethodOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="产品特点"
-                {...formItemLayout}
-               >
-                {getFieldDecorator('productFeatures',{
-                  initialValue:item.productFeatures?item.productFeatures.split(','):[],
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择产品特点',
-                    },
-                    {
-                      validator: (rule, value, callback) => {
-                        if (value) {
-                          if (value.length > 5) {
-                            callback("最多只可以选择5个产品特点");
-                          } else if (value.length <= 5) {
-                            callback();
+          </div>
+          <div style={{paddingRight: 48}}>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="房产类型"
+                  {...formItemLayout1}
+                  // (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'')
+                  style={{
+                    display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110).length:'') == '1' ? 'block' : 'none',
+                  }}
+                >
+                  {getFieldDecorator('propertyType', {
+                    initialValue: item.propertyType?item.propertyType.split(','):[],
+                  })(
+                    <Select
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="请选择"
+                      // defaultValue={['a10', 'c12']}
+                      onChange={this.handleChange}
+                    >
+                      {propCategoryOptions}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="客户类型"
+                  {...formItemLayout1}
+                >
+                  {getFieldDecorator('customerType',{
+                    initialValue: item.customerType?item.customerType.split(','):[],
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择客户类型',
+                      },
+                    ],
+                  })(
+                    <Select
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="请选择"
+                      // defaultValue={['a10', 'c12']}
+                      onChange={this.handleChange}
+                    >
+                      {cusCategoryOptions}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="还款方式"
+                  {...formItemLayout1}
+                >
+                  {getFieldDecorator('productPayWay',{
+                    initialValue: item.productPayWay?item.productPayWay.split(','):[],
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择还款方式',
+                      },
+                    ],
+                  })(
+                    <Select
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="请选择"
+                      // defaultValue={['a10', 'c12']}
+                      onChange={this.handleChange}
+                    >
+                      {repMethodOptions}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="产品特点"
+                  {...formItemLayout1}
+                >
+                  {getFieldDecorator('productFeatures',{
+                    initialValue: item.productFeatures?item.productFeatures.split(','):[],
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择产品特点',
+                      },
+                      {
+                        validator: (rule, value, callback) => {
+                          if (value) {
+                            if (value.length > 5) {
+                              callback("最多只可以选择5个产品特点");
+                            } else if (value.length <= 5) {
+                              callback();
+                            }
                           }
+                          callback("最多只可以选择5个产品特点");
                         }
-                        callback("最多只可以选择5个产品特点");
                       }
-                    }
-                  ],
-                })(
-                  <Select
-                    maxTagCount={5}
-                    max={5}
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {prodFeaturesOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-
-          </Row>
+                    ],
+                  })(
+                    <Select
+                      maxTagCount={5}
+                      max={5}
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="请选择"
+                      // defaultValue={['a10', 'c12']}
+                      onChange={this.handleChange}
+                    >
+                      {prodFeaturesOptions}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+          </div>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <Col md={12} sm={24}>
                 <FormItem
-                  {...formItemLayout}
+                  {...formItemLayout2}
                    label="是否纳入评测"
                    style={{
                      display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
                    }}
                    >
                    {getFieldDecorator('isEvaluating',{
-                     initialValue: item.isEvaluating,
+                     initialValue:item.isEvaluating,
                    })(
                      <Select placeholder="请选择">
                        <Option value={0}>否</Option>
@@ -853,14 +909,15 @@ class Step1 extends React.PureComponent {
               </Col>
               <Col md={12} sm={24}>
                 <FormItem
-                  {...formItemLayout}
+                  {...formItemLayout3}
                    label="是否为火"
                    style={{
                      display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
+                    //  marginRight:'28px'
                    }}
                    >
                    {getFieldDecorator('isFire',{
-                     initialValue: item.isFire,
+                     initialValue:item.isFire,
                    })(
                      <Select placeholder="请选择">
                        <Option value='0'>否</Option>
@@ -870,6 +927,8 @@ class Step1 extends React.PureComponent {
                 </FormItem>
               </Col>
             </Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          </Row>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" >
               下一步

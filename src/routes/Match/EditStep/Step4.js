@@ -28,26 +28,10 @@ class Step1 extends React.PureComponent {
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 12 },
+        span:24
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 12 },
-      },
-    };
-    const formItemLayout1 = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 19 },
+        span:24
       },
     };
 
@@ -155,6 +139,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('isEndowmentInsurance',{
               initialValue: item.isEndowmentInsurance,
+              rules:[{
+                required:true,
+                message:"请选择是否必须有养老保险"
+              }]
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>是</Checkbox>
@@ -168,6 +156,10 @@ class Step1 extends React.PureComponent {
           >
             {getFieldDecorator('isInsuranceAdjustment',{
               initialValue: item.isInsuranceAdjustment,
+              rules:[{
+                required:true,
+                message:"请选择本单位社保基数调整要求"
+              }]
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>无</Checkbox>
@@ -212,6 +204,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('isProvidentFundAdjustment',{
               initialValue: item.isProvidentFundAdjustment,
+              rules:[{
+                required:true,
+                message:"请选择本单位公积金基数调整要求"
+              }]
             })(
               <CheckboxGroup  >
                 <Checkbox value={0}>无</Checkbox>
