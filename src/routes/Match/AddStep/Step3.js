@@ -81,6 +81,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('recordTime',{
               initialValue: [0,1,2,3,4],
+              rules:[{
+                required:true,
+                message:"请选择征信记录时长要求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>无</Checkbox>
@@ -97,6 +101,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('sumPettyLoan',{
               initialValue: [0,1,2,3,4],
+              rules:[{
+                required:true,
+                message:"请选择名下上征信小额类贷款笔数要求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>无</Checkbox>
@@ -113,6 +121,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('sumConsumerFinanceLoan',{
               initialValue: [0,1,2,3,4],
+              rules:[{
+                required:true,
+                message:"请选择名下上征信消费金融类贷款笔数要求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>无</Checkbox>
@@ -129,6 +141,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('isParticleLoan',{
               initialValue: [0,1],
+              rules:[{
+                required:true,
+                message:"请选择是否允许使用过微粒贷"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -145,6 +161,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('particleLoanLimit',{
                       initialValue: [0,1,2,3],
+                      rules:[{
+                        required:true,
+                        message:"请选择使用微粒贷额度要求"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={0}>3千以下</Checkbox>
@@ -162,6 +182,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('isLoanClose',{
               initialValue: [0,1],
+              rules:[{
+                required:true,
+                message:"请选择是否允许名下贷款/信用卡账户状态有冻结/呆账/止付/挂失/收卡/作废求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -175,6 +199,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('isLoanLoss',{
               initialValue: [0,1],
+              rules:[{
+                required:true,
+                message:"请选择是否允许名下贷款/信用卡五级分类有关注/次级/可疑/损失"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -189,6 +217,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('isOverdue',{
               initialValue: [0,1],
+              rules:[{
+                required:true,
+                message:"请选择是否允许当前有逾期"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -205,6 +237,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('overdueCategory',{
                       initialValue: [0,1,2],
+                      rules:[{
+                        required:true,
+                        message:"请选择当前逾期类别要求"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={0}>信用卡逾期</Checkbox>
@@ -218,6 +254,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('overdueDays',{
                       initialValue: [0,1,2,3],
+                      rules:[{
+                        required:true,
+                        message:"请选择当前逾期天数要求"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={0}>3天以下</Checkbox>
@@ -233,6 +273,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('creditCardOverdueMoney',{
                       initialValue: [0,1,2,3],
+                      rules:[{
+                        required:true,
+                        message:"请选择当前信用卡逾期金额要求"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={0}>5百以下</Checkbox>
@@ -248,6 +292,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('loanOverdueMoney',{
                       initialValue: [0,1,2,3],
+                      rules:[{
+                        required:true,
+                        message:"请选择当前贷款逾期金额要求"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={0}>5百以下</Checkbox>
@@ -263,6 +311,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isOverdueBalance',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否必须当前逾期已经结算"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={1}>是</Checkbox>
@@ -276,6 +328,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isTwoMonthsOverdue',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许2个月内逾期"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={1}>是</Checkbox>
@@ -289,6 +345,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isThreeMonthsOverdue',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许3个月内逾期"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={1}>是</Checkbox>
@@ -302,6 +362,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isSixMonthsOverdue',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许近6个月内有逾期30天以上的情况"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={1}>是</Checkbox>
@@ -315,6 +379,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isOneYearOverdue',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许近1年内有逾期60天以上的情况"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={1}>是</Checkbox>
@@ -328,6 +396,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isTwoYearsOverdue',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许近2年内有逾期90天以上的情况"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={1}>是</Checkbox>
@@ -341,6 +413,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isFiveYearsOverdue',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许近5年内有逾期120天以上的情况"
+                      }]
                     })(
                       <CheckboxGroup  size="small">
                         <Checkbox value={1}>是</Checkbox>
@@ -358,7 +434,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumOneMonthQueries',{
               // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
@@ -368,7 +444,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumTwoMonthsQueries',{
               // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
@@ -378,7 +454,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumThreeMonthsQueries',{
               // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
@@ -388,7 +464,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumSixMonthsQueries',{
               // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
@@ -398,7 +474,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumOneYearQueries',{
               // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>

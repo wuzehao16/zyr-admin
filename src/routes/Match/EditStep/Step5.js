@@ -28,14 +28,10 @@ class Step1 extends React.PureComponent {
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 5 },
+        span:24
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 17 },
+        span:24
       },
     };
 
@@ -82,6 +78,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('isHouseProperty',{
               initialValue: item.isHouseProperty,
+              rules:[{
+                required:true,
+                message:"请选择名下是否必须有房产"
+              }]
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>是</Checkbox>
@@ -108,6 +108,10 @@ class Step1 extends React.PureComponent {
                 >
                   {getFieldDecorator('housePropertyDependency',{
                     initialValue: item.housePropertyDependency,
+                    rules:[{
+                      required:true,
+                      message:"请选择名下房产属地要求"
+                    }]
                   })(
                     <CheckboxGroup  >
                       <Checkbox value={0}>深房</Checkbox>
@@ -122,6 +126,10 @@ class Step1 extends React.PureComponent {
                 >
                   {getFieldDecorator('ownership',{
                     initialValue: item.ownership,
+                    rules:[{
+                      required:true,
+                      message:"请选择产权归属要求"
+                    }]
                   })(
                     <CheckboxGroup  >
                       <Checkbox value={0}>本人</Checkbox>
@@ -148,6 +156,10 @@ class Step1 extends React.PureComponent {
                 >
                   {getFieldDecorator('propertyType',{
                     initialValue: item.propertyType,
+                    rules:[{
+                      required:true,
+                      message:"请选择房产类型要求"
+                    }]
                   })(
                     <CheckboxGroup  >
                       <Checkbox value={0}>住宅</Checkbox>
@@ -165,6 +177,10 @@ class Step1 extends React.PureComponent {
                 >
                   {getFieldDecorator('propertyStatus',{
                     initialValue: item.propertyStatus,
+                    rules:[{
+                      required:true,
+                      message:"请选择房产状态要求"
+                    }]
                   })(
                     <CheckboxGroup  >
                       <Checkbox value={0}>红本在手</Checkbox>
@@ -183,6 +199,10 @@ class Step1 extends React.PureComponent {
                       >
                         {getFieldDecorator('repaymentMethod',{
                           initialValue: item.repaymentMethod,
+                          rules:[{
+                            required:true,
+                            message:"请选择还款方式要求"
+                          }]
                         })(
                           <CheckboxGroup  >
                             <Checkbox value={0}>等额本息</Checkbox>
@@ -263,8 +283,12 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('businessPolicy',{
               initialValue: item.businessPolicy,
+              rules:[{
+                required:true,
+                message:"请选择名下是否必须有商业保单"
+              }]
             })(
-              <CheckboxGroup  >
+              <CheckboxGroup>
                 <Checkbox value={1}>是</Checkbox>
                 <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
@@ -289,6 +313,10 @@ class Step1 extends React.PureComponent {
                 >
                   {getFieldDecorator('policyBrand',{
                     initialValue: item.policyBrand,
+                    rules:[{
+                      required:true,
+                      message:"请选择保单品牌要求"
+                    }]
                   })(
                     <CheckboxGroup  >
                       <Checkbox value={0}>中国平安</Checkbox>
@@ -320,6 +348,10 @@ class Step1 extends React.PureComponent {
                 >
                   {getFieldDecorator('policyBrandPaymentMethod',{
                     initialValue: item.policyBrandPaymentMethod,
+                    rules:[{
+                      required:true,
+                      message:"请选择保单缴费方式要求"
+                    }]
                   })(
                     <CheckboxGroup  >
                       <Checkbox value={0}>年缴</Checkbox>
@@ -335,6 +367,10 @@ class Step1 extends React.PureComponent {
                 >
                   {getFieldDecorator('policyPaymentYears',{
                     initialValue: item.policyPaymentYears,
+                    rules:[{
+                      required:true,
+                      message:"请选择保单缴费时长要求"
+                    }]
                   })(
                     <CheckboxGroup  >
                       <Checkbox value={0}>1年以下</Checkbox>
@@ -364,6 +400,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('isFamilyCar',{
               initialValue: item.isFamilyCar,
+              rules:[{
+                required:true,
+                message:"请选择名下是否必须有家用汽车"
+              }]
             })(
               <CheckboxGroup  >
                 <Checkbox value={1}>是</Checkbox>
@@ -390,6 +430,10 @@ class Step1 extends React.PureComponent {
                 >
                   {getFieldDecorator('carRegistStatus',{
                     initialValue: item.carRegistStatus,
+                    rules:[{
+                      required:true,
+                      message:"请选择车辆登记证状态要求"
+                    }]
                   })(
                     <CheckboxGroup  >
                       <Checkbox value={0}>绿本在手</Checkbox>

@@ -233,7 +233,8 @@ export default class BasicForms extends PureComponent {
     getFieldDecorator("orderId",{initialValue: item.orderId})
     return (
       <PageHeaderLayout>
-        <Card bordered={false} style={{padding:'0 146px 0 235px'}}>
+        <Col sm={12} md={20}>
+        <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
             hideRequiredMark
@@ -296,8 +297,12 @@ export default class BasicForms extends PureComponent {
           </DescriptionList>
           </Form>
         </Card>
+        </Col>
         <style jsx>{`
-            @media screen and (max-width:1400px) {
+            @media screen and (max-width:1800px) {
+              Card {
+                padding: 0 50px 0 50px;
+              }
               .banklogo {
                 display:none;
               }

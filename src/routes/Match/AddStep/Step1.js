@@ -109,7 +109,7 @@ class Step1 extends React.PureComponent {
                >
                 {getFieldDecorator('loanType',{
                   initialValue: 0,
-                })(
+                  })(
                   <RadioGroup  options={options}  />
                 )}
               </Form.Item>
@@ -124,7 +124,6 @@ class Step1 extends React.PureComponent {
             </Button>
           </FormItem>
         </Form>
-
       </div>
     );
   }

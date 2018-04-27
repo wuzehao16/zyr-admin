@@ -27,28 +27,13 @@ class Step1 extends React.PureComponent {
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 24 },
+        span:24
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 24 },
+        span:24
       },
     };
-    const formItemLayout1 = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 19 },
-      },
-    };
+
 
 
     const submitFormLayout = {
@@ -93,6 +78,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('age',{
               initialValue: [0,1,2,3],
+              rules:[{
+                required:true,
+                message:"请选择年龄要求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>18岁以下</Checkbox>
@@ -108,6 +97,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('maritalStatus',{
               initialValue: [0,1,2,3],
+              rules:[{
+                required:true,
+                message:"请选择婚姻状况要求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>已婚</Checkbox>
@@ -126,6 +119,10 @@ class Step1 extends React.PureComponent {
                 >
                   {getFieldDecorator('isAgreeLoan',{
                     initialValue: [0,1],
+                    rules:[{
+                      required:true,
+                      message:"请选择是否必须配偶同意贷款"
+                    }]
                   })(
                     <CheckboxGroup>
                       <Checkbox value={1}>是</Checkbox>
@@ -141,6 +138,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('location',{
               initialValue: [0,1,2,3],
+              rules:[{
+                required:true,
+                message:"请选择户籍所在地要求"
+              }]
             })(
               <CheckboxGroup >
                 <Checkbox value={0}>深户</Checkbox>
@@ -156,6 +157,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('education',{
               initialValue: [0,1,2,3],
+              rules:[{
+                required:true,
+                message:"请选择学历要求"
+              }]
             })(
               <CheckboxGroup>
                 <Checkbox value={0}>本科及以上</Checkbox>
@@ -172,6 +177,10 @@ class Step1 extends React.PureComponent {
            >
             {getFieldDecorator('occupation',{
               initialValue: [0,1,2,3],
+              rules:[{
+                required:true,
+                message:"请选择职业类别要求"
+              }]
             })(
               <CheckboxGroup>
                 <Checkbox value={0}>工薪族</Checkbox>
@@ -190,6 +199,10 @@ class Step1 extends React.PureComponent {
                     >
                       {getFieldDecorator('unitProperty',{
                         initialValue: [0,1,2,3,4,5,6,7],
+                        rules:[{
+                          required:true,
+                          message:"请选择单位性质要求"
+                        }]
                       })(
                         <CheckboxGroup >
                           <Checkbox value={0}>公立教师医生</Checkbox>
@@ -210,6 +223,10 @@ class Step1 extends React.PureComponent {
                     >
                       {getFieldDecorator('salaryDistribution',{
                         initialValue: [0,1,2],
+                        rules:[{
+                          required:true,
+                          message:"请选择工资发放方式要求"
+                        }]
                       })(
                         <CheckboxGroup>
                           <Checkbox value={0}>扣税代发</Checkbox>
@@ -224,6 +241,10 @@ class Step1 extends React.PureComponent {
                     >
                       {getFieldDecorator('workTime',{
                         initialValue: [0,1,2,3,4],
+                        rules:[{
+                          required:true,
+                          message:"请选择现单位上班时长要求"
+                        }]
                       })(
                         <CheckboxGroup >
                           <Checkbox value={0}>3个月以下</Checkbox>
@@ -240,6 +261,10 @@ class Step1 extends React.PureComponent {
                     >
                       {getFieldDecorator('monthAvgSalary',{
                         initialValue: [0,1,2,3,4,5],
+                        rules:[{
+                          required:true,
+                          message:"请选择现单位月均工资要求"
+                        }]
                       })(
                         <CheckboxGroup >
                           <Checkbox value={0}>4千以下</Checkbox>
@@ -257,6 +282,10 @@ class Step1 extends React.PureComponent {
                     >
                       {getFieldDecorator('isInsurance',{
                         initialValue: [0,1],
+                        rules:[{
+                          required:true,
+                          message:"请选择是否必须缴纳社保"
+                        }]
                       })(
                         <CheckboxGroup >
                           <Checkbox value={1}>是</Checkbox>
@@ -273,6 +302,10 @@ class Step1 extends React.PureComponent {
                             >
                               {getFieldDecorator('insuranceBase',{
                                 initialValue: [0,1,2,3,4],
+                                rules:[{
+                                  required:true,
+                                  message:"请选择现单位社保缴纳基数要求"
+                                }]
                               })(
                                 <CheckboxGroup  >
                                   <Checkbox value={0}>4千以下</Checkbox>
@@ -289,6 +322,10 @@ class Step1 extends React.PureComponent {
                             >
                               {getFieldDecorator('insurancePaymonth',{
                                 initialValue: [0,1,2,3,4],
+                                rules:[{
+                                  required:true,
+                                  message:"请选择现单位社保连续缴纳时长要求"
+                                }]
                               })(
                                 <CheckboxGroup >
                                   <Checkbox value={0}>3个月以下</Checkbox>
@@ -307,6 +344,10 @@ class Step1 extends React.PureComponent {
                     >
                       {getFieldDecorator('isProvidentFund',{
                         initialValue: [0,1],
+                        rules:[{
+                          required:true,
+                          message:"请选择是否必须缴纳公积金"
+                        }]
                       })(
                         <CheckboxGroup  >
                           <Checkbox value={1}>是</Checkbox>
@@ -323,6 +364,10 @@ class Step1 extends React.PureComponent {
                             >
                               {getFieldDecorator('providentFundBase',{
                                 initialValue: [0,1,2,3,4],
+                                rules:[{
+                                  required:true,
+                                  message:"请选择现单位公积金缴纳基数要求"
+                                }]
                               })(
                                 <CheckboxGroup  >
                                   <Checkbox value={0}>4千以下</Checkbox>
@@ -339,6 +384,10 @@ class Step1 extends React.PureComponent {
                             >
                               {getFieldDecorator('providentFundPaymonth',{
                                 initialValue: [0,1,2,3,4],
+                                rules:[{
+                                  required:true,
+                                  message:"请选择现单位公积金连续缴纳时长要求"
+                                }]
                               })(
                                 <CheckboxGroup >
                                   <Checkbox value={0}>3个月以下</Checkbox>
@@ -362,6 +411,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('licenseRegistTime',{
                       initialValue: [0,1,2,3,4,5],
+                      rules:[{
+                        required:true,
+                        message:"请选择本地营业执照注册时长要求"
+                      }]
                     })(
                       <CheckboxGroup  >
                         <Checkbox value={0}>暂未注册</Checkbox>
@@ -380,6 +433,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('invoiceValue',{
                       initialValue: [0,1,2,3],
+                      rules:[{
+                        required:true,
+                        message:"请选择企业一年开票金额要求"
+                      }]
                     })(
                       <CheckboxGroup  >
                         <Checkbox value={0}>2万以下</Checkbox>
@@ -395,6 +452,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('shareRatio',{
                       initialValue: [0,1,2,3],
+                      rules:[{
+                        required:true,
+                        message:"请选择股份占比要求"
+                      }]
                     })(
                       <CheckboxGroup  >
                         <Checkbox value={0}>0%</Checkbox>
@@ -410,6 +471,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isLegalPerson',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否必须是法人"
+                      }]
                     })(
                       <CheckboxGroup  >
                         <Checkbox value={1}>是</Checkbox>
@@ -423,6 +488,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isPhoneCall',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择单位座机是否必须能正常接听"
+                      }]
                     })(
                       <CheckboxGroup  >
                         <Checkbox value={1}>是</Checkbox>
@@ -436,6 +505,10 @@ class Step1 extends React.PureComponent {
                   >
                     {getFieldDecorator('isInvestigate',{
                       initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择公司是否必须方便实地考察"
+                      }]
                     })(
                       <CheckboxGroup  >
                         <Checkbox value={1}>是</Checkbox>
