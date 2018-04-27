@@ -165,6 +165,18 @@ class AdvancedForm extends PureComponent {
             </Card>
           </Col>
           <Col span={16}>
+            <Card>
+              <ul style={{listStyleType:'none'}}>
+                <div>提示：</div>
+                <li>1、计算时请用代号表示所求值，比如所求值为认定收入，用R表示认定收入，则在输入框输入"R=认定收入"，并在该代号右侧输入计算公式；</li>
+                <li>2、若所求值R必须大于10000才能选择该产品，请新增一个代号，并在该代号对应的等号右侧输入“R > 10000”；</li>
+                <li>3、公式请按先后顺序增加，最后一步为最终预估额度；</li>
+                <li>4、代号为大小写字母、数字，代号首位必须为英文字母；</li>
+                <li>5、同一匹配模型内所填代号建议控制在5位以内，不可重复，也不可与左侧指标代号相同；</li>
+                <li><span>6、运算符合可填 " + "," - "," * "," / "," && "," || "," 	&gt; "," &lt; "," 	&gt;= "," 	&lt;= "," MIN() "," MAX()"," SUM() "," ( "," ) ",",";</span></li>
+                <li>7、不需要填写计算公式时，请输入代号并在右边直接填写具体额度，单位为元。</li>
+              </ul>
+            </Card>
             <Card title="额度计算公式" bordered={false}>
               {getFieldDecorator('algorithmFormula', {
                 initialValue: tableData,
