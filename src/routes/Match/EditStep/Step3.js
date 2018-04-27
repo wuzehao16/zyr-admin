@@ -153,7 +153,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('isParticleLoan').indexOf(0) >= 0)?
+            (getFieldValue('isParticleLoan').indexOf(0) < 0)?
               <div>
                 <Form.Item
                   label="使用微粒贷额度要求"
