@@ -132,7 +132,7 @@ class Step2 extends React.PureComponent {
           style={{ marginBottom: 8 }}
           wrapperCol={{
             xs: { span: 24, offset: 0 },
-            sm: { span: formItemLayout.wrapperCol.span, offset: formItemLayout.labelCol.span },
+            sm: { span: 10, offset: 10 },
           }}
           label=""
         >

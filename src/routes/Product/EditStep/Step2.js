@@ -159,21 +159,29 @@ class Step2 extends React.PureComponent {
             />
         </Form.Item>
 
+        {/* <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
+          <Button onClick={onPrev}>
+            上一步
+          </Button>
+          <Button style={{ marginLeft: 50 }} type="primary" onClick={onValidateForm} loading={submitting}>
+            下一步
+          </Button>
+        </FormItem> */}
+
         <Form.Item
           style={{ marginBottom: 8 }}
           wrapperCol={{
             xs: { span: 24, offset: 0 },
-            sm: { span: formItemLayout.wrapperCol.span, offset: formItemLayout.labelCol.span },
+            sm: { span: 10, offset: 10 },
           }}
           label=""
         >
-          <Button onClick={onPrev} style={{ marginRight: 30 }}>
+          <Button onClick={onPrev} style={{ marginRight: 50 }}>
             上一步
           </Button>
           <Button type="primary" onClick={onValidateForm} loading={submitting}>
             下一步
           </Button>
-
         </Form.Item>
       </Form>
     );
