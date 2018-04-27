@@ -166,8 +166,8 @@ class Step1 extends React.PureComponent {
             label="是否允许名下贷款/信用卡账户状态有冻结/呆账/止付/挂失/收卡/作废"
             {...formItemLayout}
            >
-            {getFieldDecorator('particleLoanLimit',{
-              initialValue: item.particleLoanLimit,
+            {getFieldDecorator('isLoanClose',{
+              initialValue: item.isLoanClose,
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>

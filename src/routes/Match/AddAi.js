@@ -21,21 +21,6 @@ const { Option } = Select;
 
 
 const tableData = [
-  // {
-  //   key: '1',
-  //   expression: 'm',
-  //   name: 'John Brown',
-  // },
-  // {
-  //   key: '2',
-  //   expression: 'H',
-  //   name: 'Jim Green',
-  // },
-  // {
-  //   key: '3',
-  //   expression: 'a',
-  //   name: 'Joe Black',
-  // },
 ];
 
 class AdvancedForm extends PureComponent {
@@ -60,6 +45,7 @@ class AdvancedForm extends PureComponent {
   };
   render() {
     const { form, dispatch, submitting } = this.props;
+    const modelName = this.props.location.search.slice(1)
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;
     const validate = () => {
       validateFieldsAndScroll((error, values) => {
@@ -134,40 +120,43 @@ class AdvancedForm extends PureComponent {
     };
     return (
       <PageHeaderLayout
-        title="额度算法"
+        title={modelName}
         wrapperClassName={styles.advancedForm}
       >
         <Row gutter={16}>
-          <Col span={8} style={{height:1000,overflowY:'auto'}}>
-            <Card title="收入指标" bordered={false}>
-              <Card.Grid style={gridStyle}>S3：近三个月税前月均收入</Card.Grid>
-              <Card.Grid style={gridStyle}>S6：近六个月税前月均收入</Card.Grid>
-              <Card.Grid style={gridStyle}>S12：近十二个月税前月均收入</Card.Grid>
-              <Card.Grid style={gridStyle}>S24：上一年度税前月均收入</Card.Grid>
-              <Card.Grid style={gridStyle}>B1：社保缴纳基数</Card.Grid>
-              <Card.Grid style={gridStyle}>B2：调整前社保基数</Card.Grid>
-              <Card.Grid style={gridStyle}>J1：公积金缴纳基数</Card.Grid>
-              <Card.Grid style={gridStyle}>J2：调整前公积金缴纳基数</Card.Grid>
+          <Col span={8} >
+            <Card  bordered={false}>
+              <div>收入指标</div>
+              <li>S3：近三个月税前月均收入</li>
+              <li>S6：近六个月税前月均收入</li>
+              <li>S12：近十二个月税前月均收入</li>
+              <li>S24：上一年度税前月均收入</li>
+              <li>B1：社保缴纳基数</li>
+              <li>B2：调整前社保基数</li>
+              <li>J1：公积金缴纳基数</li>
+              <li>J2：调整前公积金缴纳基数</li>
             </Card>
-            <Card title="财产指标">
-              <Card.Grid style={gridStyle}>FM：房产总面积</Card.Grid>
-              <Card.Grid style={gridStyle}>FS：房产总市值</Card.Grid>
-              <Card.Grid style={gridStyle}>FY：房产抵押贷款余额</Card.Grid>
-              <Card.Grid style={gridStyle}>FH：房产抵押每月还款金额</Card.Grid>
-              <Card.Grid style={gridStyle}>BJ：保单年缴费金额</Card.Grid>
-              <Card.Grid style={gridStyle}>CC：车辆残值评估价</Card.Grid>
-              <Card.Grid style={gridStyle}>CH：车贷月还款金额</Card.Grid>
-              <Card.Grid style={gridStyle}>CY：车辆贷款余额</Card.Grid>
+            <Card >
+              <div>财产指标</div>
+              <li>FM：房产总面积</li>
+              <li>FS：房产总市值</li>
+              <li>FY：房产抵押贷款余额</li>
+              <li>FH：房产抵押每月还款金额</li>
+              <li>BJ：保单年缴费金额</li>
+              <li>CC：车辆残值评估价</li>
+              <li>CH：车贷月还款金额</li>
+              <li>CY：车辆贷款余额</li>
             </Card>
-            <Card title="负债指标" bordered={false}>
-              <Card.Grid style={gridStyle}>XS：信用卡当月已使用额度</Card.Grid>
-              <Card.Grid style={gridStyle}>XE：信用卡总额度</Card.Grid>
-              <Card.Grid style={gridStyle}>DH：等额本息月还款总额（信用类）</Card.Grid>
-              <Card.Grid style={gridStyle}>DY：等额本息类贷款总余额（信用类）</Card.Grid>
-              <Card.Grid style={gridStyle}>XH：先息后本每月还款利息（信用类）</Card.Grid>
-              <Card.Grid style={gridStyle}>XY：先息后本类贷款总余额（信用类）</Card.Grid>
-              <Card.Grid style={gridStyle}>SH：随借随还每月还款利息（信用类）</Card.Grid>
-              <Card.Grid style={gridStyle}>SY：随借随还类贷款总余额（信用类）</Card.Grid>
+            <Card  bordered={false}>
+              <div>负债指标</div>
+              <li>XS：信用卡当月已使用额度</li>
+              <li>XE：信用卡总额度</li>
+              <li>DH：等额本息月还款总额（信用类）</li>
+              <li>DY：等额本息类贷款总余额（信用类）</li>
+              <li>XH：先息后本每月还款利息（信用类）</li>
+              <li>XY：先息后本类贷款总余额（信用类）</li>
+              <li>SH：随借随还每月还款利息（信用类）</li>
+              <li>SY：随借随还类贷款总余额（信用类）</li>
             </Card>
           </Col>
           <Col span={16}>
@@ -179,7 +168,7 @@ class AdvancedForm extends PureComponent {
                 <li>3、公式请按先后顺序增加，最后一步为最终预估额度；</li>
                 <li>4、代号为大小写字母、数字，代号首位必须为英文字母；</li>
                 <li>5、同一匹配模型内所填代号建议控制在5位以内，不可重复，也不可与左侧指标代号相同；</li>
-                <li><span>6、运算符合可填 " + "," - "," * "," / "," && "," || "," 	&gt; "," &lt; "," 	&gt;= "," 	&lt;= "," Min() "," Max()"," sum() "," ( "," ) ";</span></li>
+                <li><span>6、运算符合可填 " + "," - "," * "," / "," && "," || "," 	&gt; "," &lt; "," 	&gt;= "," 	&lt;= "," MAX() "," MAX()"," SUM() "," ( "," ) ";</span></li>
                 <li>7、不需要填写计算公式时，请输入代号并在右边直接填写具体额度，单位为元。</li>
               </ul>
             </Card>
