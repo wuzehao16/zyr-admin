@@ -187,7 +187,7 @@ class BasicLayout extends React.PureComponent {
                   )
                 }
                 {/* <Route exact path="/system/user/add" component={routerData['/system/user/add'].component} /> */}
-                <Redirect exact from="/" to="/dashboard/analysis" />
+                <Redirect exact from="/" to="/product" />
                 <Route render={NotFound} />
               </Switch>
             </div>
