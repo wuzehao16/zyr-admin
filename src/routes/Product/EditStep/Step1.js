@@ -203,31 +203,6 @@ class Step1 extends React.PureComponent {
             md: { span: 10 },
           },
         };
-    // const formItemLayout = {
-    //   labelCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 7 },
-    //     md: { span: 5 },
-    //   },
-    //   wrapperCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 12 },
-    //     md: { span: 12 },
-    //   },
-    // };
-    // const formItemLayout1 = {
-    //   labelCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 7 },
-    //     md: { span: 2 },
-    //   },
-    //   wrapperCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 12 },
-    //     md: { span: 19 },
-    //   },
-    // };
-
 
     const submitFormLayout = {
       wrapperCol: {

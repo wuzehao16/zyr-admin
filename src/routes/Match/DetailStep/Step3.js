@@ -233,6 +233,7 @@ class Step1 extends React.PureComponent {
                     </CheckboxGroup>
                   )}
                 </Form.Item>
+
                 <Form.Item
                   label="当前信用卡逾期金额要求"
                   {...formItemLayout}
