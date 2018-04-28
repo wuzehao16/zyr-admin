@@ -88,7 +88,7 @@ class PicturesWall extends React.Component {
     return (
       <div className="clearfix">
         <Upload
-          action="https://app.ibankmatch.com:8000/sysAnno/uploadImage"
+          action="https://back.ibankmatch.com:8000/sysAnno/uploadImage"
           listType="picture-card"
           fileList={fileList}
           onPreview={this.handlePreview}
