@@ -195,6 +195,32 @@ class Step1 extends React.PureComponent {
       },
     };
 
+    // const formItemLayout4 = {
+    //   labelCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 7 },
+    //     md: { span: 11 },
+    //   },
+    //   wrapperCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 12 },
+    //     md: { span: 10 },
+    //   },
+    // };
+
+    // const formItemLayout5 = {
+    //   labelCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 7 },
+    //     md: { span: 6 },
+    //   },
+    //   wrapperCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 12 },
+    //     md: { span: 10 },
+    //   },
+    // };
+
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields((err, values) => {
@@ -322,58 +348,85 @@ class Step1 extends React.PureComponent {
                         </Col>
                       </Row> : null
           }
-         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
            {
              currentUser.data.userIdentity == 0
-                ?             <Col md={12} sm={24}
-                              >
-                              <Form.Item
-                                label="机构名称"
-                                {...formItemLayout2}
-                               >
-                                {getFieldDecorator('manageId',{
-                                  initialValue: step.manageId,
-                                  rules: [
-                                    {
-                                      required: true,
-                                      message: '请输入机构名称',
-                                    },
-                                  ],
-                                })(
-                                  <Select
-                                    // mode="combobox"
-                                    style={{ width: '100%' }}
-                                    placeholder="请选择"
-                                    // defaultValue={['a10', 'c12']}
-                                    onChange={this.handleChange}
-                                  >
-                                    {institutionListOptions}
-                                  </Select>
-                                )}
-                              </Form.Item>
-                            </Col> : <div>{getFieldDecorator('manageId',{initialValue: currentUser.data.manageId})}</div>
-           }
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="产品名称"
-                {...formItemLayout2}
-               >
-                {getFieldDecorator('productName',{
-                  initialValue: step.productName,
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入产品名称',
-                    },
-                  ],
-                })(
-                  <Input
-                    placeholder="请输入"
-                  />
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
+                ? <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                    <Col md={12} sm={24}>
+                    <Form.Item
+                      label="机构名称"
+                      {...formItemLayout2}
+                      >
+                      {getFieldDecorator('manageId',{
+                        initialValue: step.manageId,
+                        rules: [
+                          {
+                            required: true,
+                            message: '请输入机构名称',
+                          },
+                        ],
+                      })(
+                        <Select
+                          // mode="combobox"
+                          style={{ width: '100%' }}
+                          placeholder="请选择"
+                          // defaultValue={['a10', 'c12']}
+                          onChange={this.handleChange}
+                        >
+                          {institutionListOptions}
+                        </Select>
+                      )}
+                    </Form.Item>
+                  </Col>
+                  <Col md={12} sm={24}>
+                    <Form.Item
+                      label="产品名称"
+                      {...formItemLayout}
+                    >
+                      {getFieldDecorator('productName',{
+                        initialValue: step.productName,
+                        rules: [
+                          {
+                            required: true,
+                            message: '请输入产品名称',
+                          },
+                        ],
+                      })(
+                        <Input
+                          placeholder="请输入"
+                        />
+                      )}
+                    </Form.Item>
+                  </Col>
+                  </Row>:
+                    <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                      {getFieldDecorator('manageId',{initialValue: currentUser.data.manageId})}
+                      <Col md={12} sm={24}>
+                        <Form.Item
+                          label="产品名称"
+                          {...formItemLayout2}
+                        >
+                          {getFieldDecorator('productName',{
+                            initialValue: step.productName,
+                            rules: [
+                              {
+                                required: true,
+                                message: '请输入产品名称',
+                              },
+                            ],
+                          })(
+                            <Input
+                              placeholder="请输入"
+                            />
+                          )}
+                        </Form.Item>
+                      </Col>
+                    </Row>
+              }
+
+          {/* {
+            currentUser.data.userIdentity == 1?
+            :
+          } */}
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item

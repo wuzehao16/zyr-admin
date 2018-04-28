@@ -236,7 +236,7 @@ class Step1 extends React.PureComponent {
                     {...formItemLayout}
                   >
                     {getFieldDecorator('overdueCategory',{
-                      initialValue: [0,1,2],
+                      initialValue: [0,1],
                       rules:[{
                         required:true,
                         message:"请选择当前逾期类别要求"

@@ -343,10 +343,11 @@ class Step1 extends React.PureComponent {
                         </Col>
                       </Row> : null
           }
-         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+
            {
              currentUser.data.userIdentity == 0
-                ?             <Col md={12} sm={24}
+                ?<Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                    <Col md={12} sm={24}
                               >
                               <Form.Item
                                 label="机构名称"
@@ -372,29 +373,51 @@ class Step1 extends React.PureComponent {
                                   </Select>
                                 )}
                               </Form.Item>
-                            </Col> : null
+                            </Col>
+                            <Col md={12} sm={24}>
+                              <Form.Item
+                                label="产品名称"
+                                {...formItemLayout}
+                              >
+                                {getFieldDecorator('productName',{
+                                  initialValue: item.productName,
+                                  rules: [
+                                    {
+                                      required: true,
+                                      message: '请输入产品名称',
+                                    },
+                                  ],
+                                })(
+                                  <Input
+                                    placeholder="请输入"
+                                  />
+                                )}
+                              </Form.Item>
+                            </Col>
+                        </Row>
+                             : <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                                <Col md={12} sm={24}>
+                                <Form.Item
+                                  label="产品名称"
+                                  {...formItemLayout2}
+                                >
+                                  {getFieldDecorator('productName',{
+                                    initialValue: item.productName,
+                                    rules: [
+                                      {
+                                        required: true,
+                                        message: '请输入产品名称',
+                                      },
+                                    ],
+                                  })(
+                                    <Input
+                                      placeholder="请输入"
+                                    />
+                                  )}
+                                </Form.Item>
+                              </Col>
+                            </Row>
            }
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="产品名称"
-                {...formItemLayout2}
-               >
-                {getFieldDecorator('productName',{
-                  initialValue: item.productName,
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入产品名称',
-                    },
-                  ],
-                })(
-                  <Input
-                    placeholder="请输入"
-                  />
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item
