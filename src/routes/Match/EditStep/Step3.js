@@ -266,10 +266,9 @@ class Step1 extends React.PureComponent {
                     </CheckboxGroup>
                   )}
                 </Form.Item>
-                {console.log("测试",getFieldValue('overdueCategory'))}
                 {
-                  getFieldValue('overdueCategory')?(getFieldValue('overdueCategory').length==0 || getFieldValue('overdueCategory').indexOf(0)<0):false ?
-                      null:<Form.Item
+                  getFieldValue('overdueCategory')?(getFieldValue('overdueCategory').indexOf(0)>-1):false ?
+                      <Form.Item
                         label="当前信用卡逾期金额要求"
                         {...formItemLayout}
                       >
@@ -287,11 +286,11 @@ class Step1 extends React.PureComponent {
                             <Checkbox value={3}>2千以上</Checkbox>
                           </CheckboxGroup>
                         )}
-                      </Form.Item>
+                      </Form.Item>:null
                   }
                   {
-                    getFieldValue('overdueCategory')?(getFieldValue('overdueCategory').length==0 && getFieldValue('overdueCategory').indexOf(1)<0):false ?
-                      null:<Form.Item
+                    getFieldValue('overdueCategory')?(getFieldValue('overdueCategory').indexOf(1)>-1):false ?
+                      <Form.Item
                         label="当前贷款逾期金额要求"
                         {...formItemLayout}
                       >
@@ -309,7 +308,7 @@ class Step1 extends React.PureComponent {
                             <Checkbox value={3}>2千以上</Checkbox>
                           </CheckboxGroup>
                         )}
-                      </Form.Item>
+                      </Form.Item>:null
                   }
                 <Form.Item
                   label="是否必须当前逾期已经结算"
