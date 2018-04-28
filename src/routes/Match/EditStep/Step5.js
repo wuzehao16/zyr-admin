@@ -90,8 +90,8 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('isHouseProperty')!=0)?
-              <div>
+            (getFieldValue('isHouseProperty').length ==0 || getFieldValue('isHouseProperty').indexOf(0)>=0)?
+              null:<div>
                 <Form.Item
                   label="名下房产数量要求"
                   {...formItemLayout}
@@ -190,8 +190,8 @@ class Step1 extends React.PureComponent {
                   )}
                 </Form.Item>
                 {
-                  getFieldValue('propertyStatus')?(getFieldValue('propertyStatus').indexOf(0) == -1):''
-                  ?
+                  getFieldValue('propertyStatus').length==0 || (getFieldValue('propertyStatus').length==1 && getFieldValue('propertyStatus').indexOf(0) >=0)
+                  ?null:
                     <div>
                       <Form.Item
                         label="还款方式要求"
@@ -251,7 +251,7 @@ class Step1 extends React.PureComponent {
                             <Input  type="text" style={{width:200}} addonAfter="月"/>
                         )}
                       </Form.Item>
-                    </div>: null
+                    </div>
                 }
                 <Form.Item
                   label="本房产总面积要求"
@@ -273,7 +273,7 @@ class Step1 extends React.PureComponent {
                       <Input  type="text" style={{width:200}} addonAfter="万元"/>
                   )}
                 </Form.Item>
-              </div>: null
+              </div>
           }
           {/* 保单 */}
           <div style={{fontSize:20,fontWeight:'bold'}}>商业保单</div>
@@ -295,8 +295,8 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('businessPolicy')!=0)?
-              <div>
+            (getFieldValue('businessPolicy').length ==0 || getFieldValue('businessPolicy').indexOf(0)>=0)?
+              null:<div>
                 <Form.Item
                   label="名下保单份数要求"
                   {...formItemLayout}
@@ -390,7 +390,7 @@ class Step1 extends React.PureComponent {
                       <Input  type="text" style={{width:200}} addonAfter="元"/>
                   )}
                 </Form.Item>
-              </div>: null
+              </div>
           }
           {/* 汽车 */}
           <div style={{fontSize:20,fontWeight:'bold'}}>车辆状况</div>
@@ -412,8 +412,8 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('isFamilyCar')!=0)?
-              <div>
+            (getFieldValue('isFamilyCar').length==0 || getFieldValue('isFamilyCar').indexOf(0)>=0)?
+              null:<div>
                 <Form.Item
                   label="名下车辆数量要求"
                   {...formItemLayout}
@@ -455,9 +455,9 @@ class Step1 extends React.PureComponent {
                   )}
                 </Form.Item>
                 {
-                  getFieldValue('carRegistStatus')?(getFieldValue('carRegistStatus').indexOf(0) == -1) :''
+                  getFieldValue('carRegistStatus').length==0 || (getFieldValue('carRegistStatus').length==1 && getFieldValue('carRegistStatus').indexOf(0)>=0)
                   ?
-                    <div>
+                    null:<div>
                       <Form.Item
                       label="车辆贷款余额要求"
                       {...formItemLayout}
@@ -488,9 +488,9 @@ class Step1 extends React.PureComponent {
                           <Input  type="text" style={{width:200}} addonAfter="月"/>
                       )}
                     </Form.Item>
-                    </div>: null
+                    </div>
                 }
-              </div>: null
+              </div>
           }
 
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
