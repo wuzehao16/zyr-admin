@@ -233,22 +233,26 @@ class Step1 extends React.PureComponent {
                     </CheckboxGroup>
                   )}
                 </Form.Item>
-
-                <Form.Item
-                  label="当前信用卡逾期金额要求"
-                  {...formItemLayout}
-                >
-                  {getFieldDecorator('creditCardOverdueMoney',{
-                    initialValue: item.creditCardOverdueMoney,
-                  })(
-                    <CheckboxGroup  size="small">
-                      <Checkbox value={0}>5百以下</Checkbox>
-                      <Checkbox value={1}>5百-1千</Checkbox>
-                      <Checkbox value={2}>1-2千</Checkbox>
-                      <Checkbox value={3}>2千以上</Checkbox>
-                    </CheckboxGroup>
-                  )}
-                </Form.Item>
+                {
+                    getFieldValue('overdueCategory')==0?
+                    <Form.Item
+                      label="当前信用卡逾期金额要求"
+                      {...formItemLayout}
+                    >
+                      {getFieldDecorator('creditCardOverdueMoney',{
+                        initialValue: item.creditCardOverdueMoney,
+                      })(
+                        <CheckboxGroup  size="small">
+                          <Checkbox value={0}>5百以下</Checkbox>
+                          <Checkbox value={1}>5百-1千</Checkbox>
+                          <Checkbox value={2}>1-2千</Checkbox>
+                          <Checkbox value={3}>2千以上</Checkbox>
+                        </CheckboxGroup>
+                      )}
+                    </Form.Item>:null
+                }
+                {
+                    getFieldValue('overdueCategory')==1?
                 <Form.Item
                   label="当前贷款逾期金额要求"
                   {...formItemLayout}
@@ -263,7 +267,8 @@ class Step1 extends React.PureComponent {
                       <Checkbox value={3}>2千以上</Checkbox>
                     </CheckboxGroup>
                   )}
-                </Form.Item>
+                </Form.Item>:null
+                }
                 <Form.Item
                   label="是否必须当前逾期已经结算"
                   {...formItemLayout}
