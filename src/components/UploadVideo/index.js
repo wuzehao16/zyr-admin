@@ -76,7 +76,7 @@ class UploadVideo extends React.Component {
       <div className="clearfix">
         {/* http://47.104.27.184:8000/sysAnno/uploadImage */}
         <Upload
-          action="https://app.ibankmatch.com:8000/module/uploadVideo"
+          action="https://back.ibankmatch.com:8000/module/uploadVideo"
           // listType="picture-card"
           // headers={
           //   authorization=authorization-text
