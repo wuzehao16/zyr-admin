@@ -112,7 +112,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('maritalStatus').indexOf(0) >= 0) ?
+            (getFieldValue('maritalStatus')==0) ?
               <div>
                 <Form.Item
                   label="是否必须配偶同意贷款"
@@ -192,7 +192,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('occupation').indexOf(0) >= 0 || getFieldValue('occupation').indexOf(2) >= 0)?
+            (getFieldValue('occupation')==0 || getFieldValue('occupation')==2)?
               <div>
                 <Form.Item
                   label="单位性质要求"
@@ -295,7 +295,7 @@ class Step1 extends React.PureComponent {
                   )}
                 </Form.Item>
                 {
-                  (getFieldValue('isInsurance').indexOf(0) < 0 && getFieldValue('isInsurance').indexOf(1) >= 0)?
+                  (getFieldValue('isInsurance')==0 && getFieldValue('isInsurance')==1)?
                     <div>
                       <Form.Item
                         label="现单位社保缴纳基数要求"
@@ -357,7 +357,7 @@ class Step1 extends React.PureComponent {
                   )}
                 </Form.Item>
                 {
-                  (getFieldValue('isProvidentFund').indexOf(0) == -1 && getFieldValue('isProvidentFund').indexOf(1) >= 0)?
+                  (getFieldValue('isProvidentFund') !=0 && getFieldValue('isProvidentFund')==1)?
                     <div>
                       <Form.Item
                         label="现单位公积金缴纳基数要求"
@@ -404,7 +404,7 @@ class Step1 extends React.PureComponent {
               </div>: null
           }
           {
-            (getFieldValue('occupation').indexOf(1) >= 0 || getFieldValue('occupation').indexOf(2) >= 0)?
+            (getFieldValue('occupation')==1 || getFieldValue('occupation')==2)?
               <div>
                 <Form.Item
                   label="本地营业执照注册时长要求"

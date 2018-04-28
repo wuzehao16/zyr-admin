@@ -151,7 +151,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('isEndowmentInsurance').indexOf(0)<0 && getFieldValue('isEndowmentInsurance').indexOf(1)>=0) ?
+            (getFieldValue('isEndowmentInsurance') && getFieldValue('isEndowmentInsurance')!=0) ?
             <div>
               <Form.Item
               label="本单位社保基数调整要求"
@@ -172,7 +172,7 @@ class Step1 extends React.PureComponent {
               )}
             </Form.Item>
             {
-              (getFieldValue('isInsuranceAdjustment').indexOf(1)>0 || getFieldValue('isInsuranceAdjustment').indexOf(2)>0 && getFieldValue('isInsuranceAdjustment').indexOf(0)<0) ?
+              ((getFieldValue('isInsuranceAdjustment')==1 || getFieldValue('isInsuranceAdjustment')==2) && getFieldValue('isInsuranceAdjustment')!=0)?
               <div>
                 <Form.Item
                 label="调整前社保缴纳基数要求"
@@ -228,7 +228,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            ((getFieldValue('isProvidentFundAdjustment').indexOf(1) >= 0) || (getFieldValue('isProvidentFundAdjustment').indexOf(2) >= 0) && getFieldValue('isProvidentFundAdjustment').indexOf(0) < 0)?
+            ((getFieldValue('isProvidentFundAdjustment')==1) || getFieldValue('isProvidentFundAdjustment')==2) && getFieldValue('isProvidentFundAdjustment')!=0 ?
               <div>
                 <Form.Item
                   label="调整前公积金缴纳基数要求"
