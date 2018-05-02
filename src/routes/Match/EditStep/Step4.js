@@ -172,7 +172,7 @@ class Step1 extends React.PureComponent {
               )}
             </Form.Item>
             {
-              getFieldValue('isInsuranceAdjustment')?(getFieldValue('carRegistStatus').length!=0 && getFieldValue('isInsuranceAdjustment').indexOf(0)<0):false?
+              (getFieldValue('isInsuranceAdjustment') ? ( getFieldValue('isInsuranceAdjustment').length!=0 && getFieldValue('isInsuranceAdjustment').indexOf(0) < 0 ) : false) ?
               <div>
                 <Form.Item
                 label="调整前社保缴纳基数要求"

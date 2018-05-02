@@ -90,7 +90,7 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           {
-            (getFieldValue('isHouseProperty').indexOf(1)>=0 && getFieldValue('isHouseProperty').indexOf(0)<0)?
+           (getFieldValue('isHouseProperty').indexOf(1)>=0 && getFieldValue('isHouseProperty').indexOf(0)<0)?
               <div>
                 <Form.Item
                   label="名下房产数量要求"
@@ -190,7 +190,7 @@ class Step1 extends React.PureComponent {
                   )}
                 </Form.Item>
                 {
-                  getFieldValue('propertyStatus')?(getFieldValue('propertyStatus').length>0 && (getFieldValue('propertyStatus').indexOf(1)>=0 || getFieldValue('propertyStatus').indexOf(2)>=0)):false?
+                  (getFieldValue('propertyStatus')?(getFieldValue('propertyStatus').indexOf(1)>=0 || getFieldValue('propertyStatus').indexOf(2)>=0):false)?
                     <div>
                       <Form.Item
                         label="还款方式要求"
@@ -454,7 +454,7 @@ class Step1 extends React.PureComponent {
                   )}
                 </Form.Item>
                 {
-                  getFieldValue('carRegistStatus')?(getFieldValue('carRegistStatus').indexOf(1)>=0 || getFieldValue('carRegistStatus').indexOf(2)>=0 || getFieldValue('carRegistStatus').indexOf(3)>=0 || getFieldValue('carRegistStatus').indexOf(4)>=0):false?
+                  (getFieldValue('carRegistStatus')?(getFieldValue('carRegistStatus').indexOf(1)>=0 || getFieldValue('carRegistStatus').indexOf(2)>=0 || getFieldValue('carRegistStatus').indexOf(3)>=0 || getFieldValue('carRegistStatus').indexOf(4)>=0):false)?
                     <div>
                       <Form.Item
                       label="车辆贷款余额要求"

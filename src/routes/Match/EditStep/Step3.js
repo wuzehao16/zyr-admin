@@ -267,7 +267,7 @@ class Step1 extends React.PureComponent {
                   )}
                 </Form.Item>
                 {
-                  getFieldValue('overdueCategory')?(getFieldValue('overdueCategory').indexOf(0)>-1):false ?
+                  (getFieldValue('overdueCategory')?(getFieldValue('overdueCategory').indexOf(0)>-1):false) ?
                       <Form.Item
                         label="当前信用卡逾期金额要求"
                         {...formItemLayout}
@@ -289,7 +289,7 @@ class Step1 extends React.PureComponent {
                       </Form.Item>:null
                   }
                   {
-                    getFieldValue('overdueCategory')?(getFieldValue('overdueCategory').indexOf(1)>-1):false ?
+                    (getFieldValue('overdueCategory')?(getFieldValue('overdueCategory').indexOf(1)>-1):false) ?
                       <Form.Item
                         label="当前贷款逾期金额要求"
                         {...formItemLayout}
