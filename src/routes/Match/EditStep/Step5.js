@@ -147,7 +147,7 @@ class Step1 extends React.PureComponent {
                   {getFieldDecorator('propertyRightRatio',{
                     initialValue: item.propertyRightRatio,
                   })(
-                      <Input  type="text" style={{width:200}} addonAfter="%"/>
+                      <Input  type="text" max={100} style={{width:200}} addonAfter="%"/>
                   )}
                 </Form.Item>
                 <Form.Item
