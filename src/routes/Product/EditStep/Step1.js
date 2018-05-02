@@ -638,7 +638,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
-                    maxLength='25'
+                    maxLength='12'
                     placeholder="请输入"
                   />
                 )}
