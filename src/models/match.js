@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, addAi,editAi, query,queryAI, queryDetail,queryAIDetail, update, updateStatus, remove } from '../services/match';
+import { add, addAi,editAi, query,queryAI, queryDetail,queryAIDetail, update, updateStatus, remove,checkSaveFormula } from '../services/match';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -62,6 +62,15 @@ export default {
         return
       }
       yield put(routerRedux.push('/match'));
+      if (callback) callback();
+    },
+    *checkSaveFormula({ payload, callback }, { call, put }) {
+      const response = yield call(checkSaveFormula, payload);
+      if (response.code === 0) {
+      } else {
+        message.error(response.msg)
+        return
+      }
       if (callback) callback();
     },
     *addAi({ payload, callback }, { call, put }) {
