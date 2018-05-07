@@ -441,14 +441,14 @@ export const getRouterData = (app) => {
     },
     '/matchlist': {
       component: dynamicWrapper(app, ['matchList'], () => import('../routes/MatchList')),
-      name: '订单管理',
+      name: '用户匹配列表',
     },
     '/matchlist/list': {
       component: dynamicWrapper(app, ['matchList'], () => import('../routes/MatchList/List')),
     },
     '/matchlist/detail/:id': {
       component: dynamicWrapper(app, ['matchList'], () => import('../routes/MatchList/Detail')),
-      name: '订单详情',
+      name: '用户匹配列表详情',
     },
   };
   // Get name from ./menu.js or just set it in the router data.

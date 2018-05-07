@@ -89,12 +89,12 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title:'名称',
-        dataIndex:'userName'
+        title:'客户名称',
+        dataIndex:'customer'
       },
       {
-        title:'贷款人',
-        dataIndex:'customer'
+        title:'提单人',
+        dataIndex:'userName'
       },
       {
         title:'产品数量',
