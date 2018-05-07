@@ -213,115 +213,22 @@ export default class TableList extends PureComponent {
           <Col md={8} sm={24}
             style={{display: currentUser.data.userIdentity==0?'block':'none'}}
             >
-            <FormItem label="机构名称"
+            <FormItem label="客户名称"
               >
-              {getFieldDecorator('manageName')(
+              {getFieldDecorator('customer')(
                 <Input placeholder="请输入"/>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="产品名称">
-              {getFieldDecorator('productName')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}
-            style={{display: currentUser.data.userIdentity==1?'block':'none'}}
-            >
-            <FormItem label="订  单  号">
-              {getFieldDecorator('orderNo')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <span className={styles.submitButtons}>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-              <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-                展开 <Icon type="down" />
-              </a>
-            </span>
-          </Col>
-        </Row>
-      </Form>
-    );
-  }
-
-  renderAdvancedForm() {
-    const { getFieldDecorator } = this.props.form;
-    const { matchlist: { orderType }, user:{ currentUser }  } = this.props;
-    if (orderType) {
-      var orderTypeOptions = orderType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    return (
-      <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}
-            style={{display: currentUser.data.userIdentity==0?'block':'none'}}
-            >
-            <FormItem label="机构名称">
-              {getFieldDecorator('manageName')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="产品名称">
-              {getFieldDecorator('productName')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="订  单  号">
-              {getFieldDecorator('orderNo')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}
-            style={{display: currentUser.data.userIdentity==1?'block':'none'}}
-            >
-            <FormItem label="更新时间">
-              {getFieldDecorator('date')(
-                <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
-              )}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="提  单  人">
+            <FormItem label="提单人">
               {getFieldDecorator('userName')(
                   <Input placeholder="请输入"/>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="贷  款  人">
-              {getFieldDecorator('loanName')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="订单状态">
-              {getFieldDecorator('orderStatus')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  {orderTypeOptions}
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-
-          <Col md={8} sm={24}>
-            <FormItem label="更新时间"
-              style={{display: currentUser.data.userIdentity==0?'flex':'none'}}
+            <FormItem label="匹配时间"
               >
               {getFieldDecorator('date')(
                 <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
@@ -334,14 +241,12 @@ export default class TableList extends PureComponent {
           <span style={{ float: 'right', marginBottom: 24 }}>
             <Button type="primary" htmlType="submit">查询</Button>
             <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-            <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-              收起 <Icon type="up" />
-            </a>
           </span>
         </div>
       </Form>
     );
   }
+
 
   renderForm() {
     return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
