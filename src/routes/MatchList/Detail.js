@@ -207,7 +207,7 @@ export default class BasicForms extends PureComponent {
   const House = h.map((k,index) => {
     return (
       <div key={index}>
-        <SubTitle>房产{index+1}:</SubTitle>
+        <div className={styles.SubTitle}>房产{index+1}:</div>
         <div className={styles.Li}><div className={styles.L}>名下房产属地：</div><div className={styles.R}>{housePropertyDependency[assets.housePropertyDependency[index]]}</div></div>
         <div className={styles.Li}><div className={styles.L}>产权归属：</div><div className={styles.R}>{ownership[assets.ownership[index]]}</div></div>
         <div className={styles.Li}><div className={styles.L}>产权占比（%）：</div><div className={styles.R}>{assets.propertyRightRatio[index]}</div></div>
@@ -233,7 +233,7 @@ export default class BasicForms extends PureComponent {
   const Car = c.map((k,index) => {
     return (
       <div key={index}>
-        <SubTitle>辆车{index+1}:</SubTitle>
+        <div className={styles.SubTitle}>辆车{index+1}:</div>
         <div className={styles.Li}><div className={styles.L}>车辆登记状态：</div><div className={styles.R}>{carRegistStatus[assets.carRegistStatus[index]]}</div></div>
         <div className={styles.Li}><div className={styles.L}>车辆残值评估价格（元）：</div><div className={styles.R}>{assets.carPotentialPrice?assets.carPotentialPrice[index]:''}</div></div>
         {
@@ -251,7 +251,7 @@ export default class BasicForms extends PureComponent {
   const policy = p.map((k,index) => {
     return (
       <div key={index}>
-        <SubTitle>保单{index+1}:</SubTitle>
+        <div className={styles.SubTitle}>保单{index+1}:</div>
         <div className={styles.Li}><div className={styles.L}>保单品牌：</div><div className={styles.R}>{policyBrand[assets.policyBrand[index]]}</div></div>
         <div className={styles.Li}><div className={styles.L}>其他保单品牌：</div><div className={styles.R}>{assets.otherPolicyBrand?assets.otherPolicyBrand[index]:''}</div></div>
         <div className={styles.Li}><div className={styles.L}>保单缴纳方式：</div><div className={styles.R}>{policyBrandPaymentMethod[assets.policyBrandPaymentMethod[index]]}</div></div>
