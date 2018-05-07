@@ -240,6 +240,7 @@ export default class BasicForms extends PureComponent {
                   initialValue: item.contentTag,
                 })(
                   <Select allowClear placeholder="请选择">
+                    <Option value="">无</Option>
                     <Option value="0">荐</Option>
                     <Option value="1">热</Option>
                   </Select>
