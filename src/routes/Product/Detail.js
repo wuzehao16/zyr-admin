@@ -117,7 +117,7 @@ export default class BasicForms extends PureComponent {
             </Steps>
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
-            <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/product'))}>
+            <Button style={{ marginRight: 50 }} onClick={() => history.go(-1)}>
             返回
             </Button>
           </DescriptionList>

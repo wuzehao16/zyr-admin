@@ -24,100 +24,6 @@ export default class BasicForms extends PureComponent {
       },
     });
   }
-  renderForm() {
-    const { submitting, data: { item }, dispatch } = this.props
-    switch (item.orderStatus) {
-      case '5':
-        return this.renderloan();
-        break;
-      case '6':
-        return this.renderReject();
-        break;
-      case '7':
-        return this.renderCancel();
-        break;
-      default:
-        return this.renderDefault();
-    }
-  }
-  renderDefault = ()=> {
-    const { submitting, data: { item }, dispatch } = this.props;
-    item.orderStatus -= 0;
-    return (
-      <div>
-        <p style={{fontSize: '16px',fontWeight:700,color: '#000'}}>订单状态</p>
-        <Steps  current={item.orderStatus} style={{ marginBottom: 80, width: '80%' }}>
-          <Step title="申请中" />
-          <Step title="已申请" />
-          <Step title="已初审" />
-          <Step title="已终审" />
-          <Step title="已面签" />
-          <Step title="已放款" />
-        </Steps>
-      </div>
-
-    )
-  }
-  renderReject = ()=> {
-    const { submitting, data: { item }, dispatch } = this.props
-    return (
-      <div>
-        <p style={{fontSize: '16px',fontWeight:700,color: '#000'}}>订单状态</p>
-      <Steps   current={0} style={{ marginBottom: 80 }}>
-        <Step title="已拒绝" />
-        <Step title="申请中" />
-        <Step title="已申请" />
-        <Step title="已初审" />
-        <Step title="已终审" />
-        <Step title="已面签" />
-        <Step title="已放款" />
-      </Steps>
-      <DescriptionList size="large" style={{ marginBottom: 32 }} col={2}>
-        <Description term="拒绝原因">{item.cancelReason}</Description>
-      </DescriptionList>
-      </div>
-    )
-  }
-  renderCancel = ()=> {
-    const { submitting, data: { item }, dispatch } = this.props
-    return (
-      <div>
-        <p style={{fontSize: '16px',fontWeight:700,color: '#000'}}>订单状态</p>
-        <Steps status="error"  current={0} style={{ marginBottom: 80 }}>
-          <Step title="已取消" />
-          <Step title="申请中" />
-          <Step title="已申请" />
-          <Step title="已初审" />
-          <Step title="已终审" />
-          <Step title="已面签" />
-          <Step title="已放款" />
-        </Steps>
-      </div>
-    )
-  }
-  renderloan = ()=> {
-    const { submitting, data: { item }, dispatch } = this.props
-    return (
-      <div>
-        <p style={{fontSize: '16px',fontWeight:700,color: '#000'}}>订单状态</p>
-        <Steps  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
-          <Step title="申请中" />
-          <Step title="已申请" />
-          <Step title="已初审" />
-          <Step title="已终审" />
-          <Step title="已面签" />
-          <Step title="已放款" />
-        </Steps>
-        <DescriptionList size="large"  style={{ marginBottom: 32 }} col={2}>
-          <Description term="贷款金额">{item.realLoanMoney + '万'}</Description>
-          <Description term="实际贷款期限">{item.realLoanLimit + '期'}</Description>
-          <Description term="还款方式">{item.realTypeName}</Description>
-          <Description term="平台收益">{item.platformIncome + '元'}</Description>
-          <Description term="提单人佣金">{item.soleCommission + '元'}</Description>
-        </DescriptionList>
-      </div>
-    )
-  }
   render() {
     const { submitting, data: { item }, dispatch } = this.props
     return (
@@ -155,7 +61,6 @@ export default class BasicForms extends PureComponent {
             <Description term="申请备注">{item.applicationNotes}</Description>
           </DescriptionList>
             <Divider style={{ marginBottom: 32 }} />
-          {this.renderForm()}
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
             <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/order'))}>
             返回

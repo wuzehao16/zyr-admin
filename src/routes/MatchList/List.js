@@ -80,11 +80,8 @@ export default class TableList extends PureComponent {
     });
     this.handleModalVisible(true);
   }
-  handleReview = (item) => {
-    this.props.dispatch(routerRedux.push('/matchlist/review/' + item.orderId));
-  }
   handleDetail = (item) => {
-    this.props.dispatch(routerRedux.push('/matchlist/detail/' + item.orderId));
+    this.props.dispatch(routerRedux.push('/matchlist/detail/' + item.matchNo));
   }
 
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
@@ -192,6 +189,9 @@ export default class TableList extends PureComponent {
     this.setState({
       modalVisible: !!flag,
     });
+  }
+  handleToProductDetail = (i) => {
+    this.props.dispatch(routerRedux.push('/product/Detail/' + i.productId));
   }
 
   handleAdd = (fields) => {
@@ -388,7 +388,7 @@ export default class TableList extends PureComponent {
               handleResetPassword={this.handleResetPassword}
               handleEdit={this.handleEdit}
               handleDetail={this.handleDetail}
-              handleReview={this.handleReview}
+              handleToProductDetail={this.handleToProductDetail}
             />
           </div>
         </Card>
