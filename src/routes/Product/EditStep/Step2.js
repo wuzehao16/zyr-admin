@@ -132,7 +132,7 @@ class Step2 extends React.PureComponent {
           {...formItemLayout}
            label="负债要求">
            <ReactQuill
-             defaultValue={data.claims}
+             defaultValue={item.claims}
              value={this.state.claims}
              onChange={this.claims}
              placeholder='请输入...'
