@@ -133,7 +133,7 @@ export default class BasicForms extends PureComponent {
             <Description term="提单人">{item.userName}</Description>
             <Description term="提单人手机">{item.userPhone}</Description>
             <Description term="产品分润比例">{item.productRatio + '%'}</Description>
-            <div className='banklogo' style={{position:'absolute',top:'0',right:'0',width:'260px',height:'140px'}}>
+            <div className='banklogo' style={{paddingLeft:0,paddingRight:0,position:'absolute',top:'0',right:'0',width:'140px',height:'140px'}}>
               <img src={item.manageLogoId} />
             </div>
           </DescriptionList>
@@ -168,7 +168,10 @@ export default class BasicForms extends PureComponent {
                max-height: 100%;
               border:1px solid #c8c8c8;
             }
-            @media screen and (max-width:1400px) {
+            @media screen and (max-width:1800px) {
+              Card {
+                padding: 0 50px 0 50px;
+              }
               .banklogo {
                 display:none;
               }
