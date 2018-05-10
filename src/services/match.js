@@ -44,6 +44,18 @@ export async function add(params) {
     },
   });
 }
+/**
+ * 额度算法
+ * @param {[type]} params
+ */
+export async function checkSaveFormula(params) {
+  return request('/sys/checkSaveFormula', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
 export async function addAi(params) {
   return request('/sys/insertModeAlgorithm', {
     method: 'POST',

@@ -203,7 +203,7 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="标签选择"
               style={{
-                display: getFieldValue('contentType') === '0' ? 'block' : 'none',
+                display: getFieldValue('contentType') == '0' ? 'block' : 'none',
               }}
             >
               <div>

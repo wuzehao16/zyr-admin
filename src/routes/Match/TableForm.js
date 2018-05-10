@@ -1,7 +1,11 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'dva'
 import { Table, Button, Input, message, Popconfirm, Divider } from 'antd';
 import styles from './style.less';
 
+@connect(({ user, match }) => ({
+  match,
+}))
 export default class TableForm extends PureComponent {
   constructor(props) {
     super(props);
@@ -87,9 +91,24 @@ export default class TableForm extends PureComponent {
         });
         return;
       }
-      delete target.isNew;
-      this.toggleEditable(e, key);
-      this.props.onChange(this.state.data);
+      const list = this.state.data.map(item => {return item.name})
+      if (list.length >= 1) {
+        list.pop()
+      }
+      const data = {
+        list:list,
+        variableResult:target.name,
+        formula:target.expression,
+      }
+      this.props.dispatch({
+        type:'match/checkSaveFormula',
+        payload:data,
+        callback:()=>{
+          delete target.isNew;
+          this.toggleEditable(e, key);
+          this.props.onChange(this.state.data);
+        }
+      })
       this.setState({
         loading: false,
       });

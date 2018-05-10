@@ -130,7 +130,10 @@ export default class TableList extends PureComponent {
     this.props.dispatch({
       type:'content/clearItem',
       callback:() =>{
-        this.props.dispatch(routerRedux.push('/content/information/edit/' + item.contentId));
+        setTimeout(() => {
+          this.props.dispatch(routerRedux.push('/content/information/edit/' + item.contentId));
+
+        },200)
       }
     } )
 
