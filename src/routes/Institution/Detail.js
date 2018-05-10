@@ -24,23 +24,25 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data: { item }, dispatch } = this.props
     return (
-      <PageHeaderLayout title="机构管理详情" >
+      <PageHeaderLayout title="机构详情" >
         <Card bordered={false}>
-          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
+          <DescriptionList size="large" style={{ marginTop:50,marginBottom: 15,marginLeft:'15%'}} col={2}>
+            <div style={{marginBottom:'20px'}}>
+              <Description>
+                <img  src={item.manageLogoId} alt="机构logo" width={80} height={80}/>
+              </Description>
+            </div>
             <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
             <Description term="所在城市">{item.city}</Description>
             <Description term="机构名称">{item.manageName}</Description>
-            <Description term="用户名">{item.loginAccount}</Description>
-            <Description term="邮箱">{item.userEmail}</Description>
-            <Description term="手机">{item.userPhone}</Description>
-            <Description term="机构logo">
-              <img src={item.manageLogoId} alt="" width={80} height={80}/>
-            </Description>
+            <Description term="用户名称">{item.loginAccount}</Description>
+            <Description term="邮箱地址">{item.userEmail}</Description>
+            <Description term="手机号码">{item.userPhone}</Description>
           </DescriptionList>
-          <DescriptionList size="large" style={{ marginBottom: 32 }} col={2}>
-            <Description term="排序">{item.sort}</Description>
+          <DescriptionList size="large" style={{ marginBottom: 50,marginLeft:'15%' }} col={2} offset={1}>
+            <Description term="机构排序">{item.sort}</Description>
             <Description term="启用状态">{item.startStatus==1?'启用':'禁用'}</Description>
-            <Description term="操作者">{item.oper}</Description>
+            <Description term="操 作 者 ">{item.oper}</Description>
             <Description term="审核时间">{moment(item.approvalTime).format('llll')}</Description>
             <Description term="注册时间">{moment(item.registrationTime).format('llll')}</Description>
           </DescriptionList>

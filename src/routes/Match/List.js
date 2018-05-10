@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, AutoComplete } from 'antd';
 import StandardTable from '../../components/MatchTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -11,12 +11,13 @@ import styles from './List.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
+const InputGroup = Input.Group;
 
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 const CreateForm = Form.create()((props) => {
   const { modalVisible, form, handleAdd, handleModalVisible, item } = props;
-  const { getFieldDecorator } = form;
+  const { getFieldDecorator,getFieldValue } = form;
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
@@ -55,6 +56,7 @@ export default class TableList extends PureComponent {
     selectedRows: [],
     formValues: {},
     item: {},
+    selectValues: 'keyword'
   };
 
   componentDidMount() {
@@ -197,10 +199,13 @@ export default class TableList extends PureComponent {
         endTime: fieldsValue.date && moment(fieldsValue.date[1]).format('YYYY-MM-DD'),
       };
 
+      console.log('values',values)
+
       this.setState({
         formValues: values,
       });
 
+      console.log('this,state,formValues',this.state);
       dispatch({
         type: 'match/fetch',
         payload: values,
@@ -224,46 +229,115 @@ export default class TableList extends PureComponent {
     });
   }
 
-  renderSimpleForm() {
-    const { getFieldDecorator } = this.props.form;
-    const { match: { matchType }  } = this.props;
+  handleSelectChanges = (val) => {
+    console.log('this.state.selectValues1',this.state.selectValues)
+    if(val==='模型名称'){
+      val='modelName'
+    }else if(val==='机构名称'){
+      val='manageName'
+    }else{
+      val='keyword'
+    }
+    this.setState({
+      selectValues: val,
+    })
+    console.log('this.state.selectValues2',this.state.selectValues)
+  }
+
+  renderForm() {
+    const { getFieldDecorator,getFieldValue } = this.props.form;
+    const { match: { matchType }} = this.props;
+    const { match: { data, city }, loading, dispatch,user } = this.props;
+    const userIdentity = user.currentUser?user.currentUser.data.userIdentity:0;
     if (matchType) {
       var matchTypeOptions = matchType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="名称">
-              {getFieldDecorator('keyword')(
-                    <Input placeholder="请输入模型名称、机构名称" />
-              )}
-            </FormItem>
+        {
+          userIdentity ===1?
+          // <InputGroup compact style={{marginBottom:20}} >
+          <Row>
+            <Col span={3}>
+              <Select placeholder="模型名称"  disabled style={{width:'100%'}}>
+                <Option value="modelName">模型名称</Option>
+              </Select>
+            </Col>
+            <Col span={17}>
+              <FormItem>
+                {getFieldDecorator('modelName')(
+                <AutoComplete
+                  style={{width:'100%'}}
+                  placeholder="请输入模型名称"
+                />
+                )}
+              </FormItem>
+            </Col>
+            <Col span={3}>
+              <Button type="primary" icon="search" style={{width:'50%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <button onClick={() => dispatch(routerRedux.push('/match/add'))} style={{verticalAlign:'top',background:'rgb(238,86,72)',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
+                <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
+              </button>
+            </Col>
+            <Col span={1}>
+
+            </Col>
+          </Row>:
+          // </InputGroup>:
+          // <InputGroup compact style={{marginBottom:20}}>
+          <Row>
+            <Col span={3}>
+              <Select placeholder="不限" style={{width:'100%'}} onChange={this.handleSelectChanges}>
+                <Option value="不限">不限</Option>
+                <Option value="模型名称">模型名称</Option>
+                <Option value="机构名称">机构名称</Option>
+              </Select>
+            </Col>
+            <Col span={18}>
+              <FormItem>
+                {getFieldDecorator(this.state.selectValues)(
+                  <AutoComplete
+                    style={{width:'100%'}}
+                    placeholder="请输入模型名称或机构名称"
+                  />
+                )}
+              </FormItem>
+            </Col>
+            <Col span={2}>
+              <Button type="primary" icon="search" style={{width:'80%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+            </Col>
+          </Row>
+                 // </InputGroup>
+        }
+        <Row gutter={{md: 8, lg: 16, xl:48}} className='noborderrow'>
+          <Col md={3} sm={24}>
+            {getFieldDecorator('modeStatus')(
+              <Select placeholder="启用状态">
+                <Option value={0}>禁用</Option>
+                <Option value={1}>启用</Option>
+              </Select>
+            )}
           </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="启用状态">
-              {getFieldDecorator('modeStatus')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value={0}>禁用</Option>
-                  <Option value={1}>启用</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
+          <Col md={8} offset={2} sm={24}>
             <FormItem label="更新时间">
-              {getFieldDecorator('date')(
-                <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
-              )}
+                {getFieldDecorator('date')(
+                  <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
+                )}
             </FormItem>
+          </Col>
+          <Col md={3} offset={6} sm={24}>
+            <Button onClick={this.handleFormReset}>清空筛选条件</Button>
           </Col>
         </Row>
-        <div style={{ overflow: 'hidden' }}>
-          <span style={{ float: 'right', marginBottom: 24 }}>
-            <Button type="primary" htmlType="submit">查询</Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-          </span>
-        </div>
+          <style jsx>{`
+          .ant-select-selection__placeholder {
+            color:#000;
+          }
+          .noborderrow .ant-select-selection{
+            border:none;
+          }
+        `}
+        </style>
       </Form>
     );
   }
@@ -287,16 +361,9 @@ export default class TableList extends PureComponent {
       <PageHeaderLayout>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListForm}>
-              {this.renderSimpleForm()}
+          <div className={styles.tableListForm}>
+                {this.renderForm()}
             </div>
-            <div className={styles.tableListOperator}>
-              {
-                userIdentity ===1
-                ?              <Button icon="plus" type="primary" onClick={() => dispatch(routerRedux.push('/match/add'))}>
-                                新建
-                              </Button>:null
-              }
               {
                 selectedRows.length > 0 && (
                   <span>
@@ -309,7 +376,6 @@ export default class TableList extends PureComponent {
                   </span>
                 )
               }
-            </div>
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}
@@ -330,6 +396,13 @@ export default class TableList extends PureComponent {
           modalVisible={modalVisible}
           item={item}
         />
+        <style jsx>{`
+          .ant-table-thead {
+            font-size:15px;
+            font-weight:700;
+          }
+        `}
+        </style>
       </PageHeaderLayout>
     );
   }

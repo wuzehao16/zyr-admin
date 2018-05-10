@@ -9,10 +9,17 @@ import styles from './style.less';
 import quill from './quill.less'
 const formItemLayout = {
   labelCol: {
-    span: 5,
+    span: 4,
   },
   wrapperCol: {
     span: 24,
+  },
+};
+
+const submitFormLayout = {
+  wrapperCol: {
+    xs: { span: 24, offset: 0 },
+    sm: { span: 10, offset: 9 },
   },
 };
 
@@ -159,16 +166,7 @@ class Step2 extends React.PureComponent {
             />
         </Form.Item>
 
-        {/* <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-          <Button onClick={onPrev}>
-            上一步
-          </Button>
-          <Button style={{ marginLeft: 50 }} type="primary" onClick={onValidateForm} loading={submitting}>
-            下一步
-          </Button>
-        </FormItem> */}
-
-        <Form.Item
+        {/* <Form.Item
           style={{ marginBottom: 8 }}
           wrapperCol={{
             xs: { span: 24, offset: 0 },
@@ -182,6 +180,15 @@ class Step2 extends React.PureComponent {
           <Button type="primary" onClick={onValidateForm} loading={submitting}>
             下一步
           </Button>
+        </Form.Item> */}
+
+        <Form.Item {...submitFormLayout} style={{ marginTop: 32 }}>
+            <Button onClick={onPrev} style={{ marginRight: 50 }}>
+            上一步
+            </Button>
+            <Button type="primary" onClick={onValidateForm} loading={submitting}>
+            下一步
+            </Button>
         </Form.Item>
       </Form>
     );

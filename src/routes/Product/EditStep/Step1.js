@@ -207,7 +207,7 @@ class Step1 extends React.PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 10 },
+        sm: { span: 10, offset: 9 },
       },
     };
     const onValidateForm = (e) => {

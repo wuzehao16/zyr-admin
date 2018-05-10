@@ -75,6 +75,14 @@ export default class BasicForms extends PureComponent {
         md: { span: 12 },
       },
     };
+
+    const submitFormLayout = {
+      wrapperCol: {
+        xs: { span: 24, offset: 0 },
+        sm: { span: 10, offset: 10 },
+      },
+    };
+
     return (
       <PageHeaderLayout title="编辑用户详请" >
         <Card bordered={false}>
@@ -211,14 +219,16 @@ export default class BasicForms extends PureComponent {
                   </Col>: <div></div>
               }
               </Row>
-            <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
+            {/* <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={2}> */}
+            <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button style={{ marginRight: 50 }} type="primary" htmlType="submit" loading={submitting}>
                 保存
               </Button>
               <Button onClick={() => dispatch(routerRedux.push('/member'))}>
                 返回
               </Button>
-            </DescriptionList>
+            </FormItem>
+            {/* </DescriptionList> */}
           </Form>
         </Card>
       </PageHeaderLayout>

@@ -89,6 +89,17 @@ class BasicLayout extends React.PureComponent {
     });
     this.props.dispatch({
       type: 'user/fetchCurrent',
+      callback: (data)=>{
+        if(data.data.userIdentity == 1){
+        const manageId = data.data.manageId;
+        this.props.dispatch({
+          type: 'user/fetchDetail',
+          payload: {
+            manageId: manageId,
+          },
+        });
+      }
+      }
     });
   }
   getPageTitle() {
@@ -100,10 +111,10 @@ class BasicLayout extends React.PureComponent {
     }
     return title;
   }
-  handleMenuCollapse = (collapsed) => {
+  handleMenuCollapse = () => {
     this.props.dispatch({
       type: 'global/changeLayoutCollapsed',
-      payload: collapsed,
+      payload: false,
     });
   }
   handleNoticeClear = (type) => {
@@ -146,6 +157,7 @@ class BasicLayout extends React.PureComponent {
           // you will be forced to jump to the 403 interface without permission
           Authorized={Authorized}
           menuData={memus}
+          collapsible
           collapsed={collapsed}
           location={location}
           isMobile={this.state.isMobile}

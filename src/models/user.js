@@ -1,4 +1,5 @@
 import { query as queryUsers, queryCurrent } from '../services/user';
+import { queryDetail } from '../services/institution';
 
 export default {
   namespace: 'user',
@@ -6,8 +7,10 @@ export default {
   state: {
     list: [],
     currentUser: {
-      data: {}
+      data: {},
+      info:{}
     },
+
   },
 
   effects: {
@@ -18,11 +21,19 @@ export default {
         payload: response,
       });
     },
-    *fetchCurrent(_, { call, put }) {
+    *fetchCurrent({callback}, { call, put }) {
       const response = yield call(queryCurrent);
       yield put({
         type: 'saveCurrentUser',
         payload: response,
+      });
+      if (callback) callback(response);
+    },
+    *fetchDetail({payload}, { call, put }) {
+      const response = yield call(queryDetail, payload);
+      yield put({
+        type: 'saveDetail',
+        payload: response.data && response.data[0],
       });
     },
   },
@@ -46,6 +57,15 @@ export default {
         currentUser: {
           ...state.currentUser,
           notifyCount: action.payload,
+        },
+      };
+    },
+    saveDetail(state, action) {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          info: action.payload,
         },
       };
     },

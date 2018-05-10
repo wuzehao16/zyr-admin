@@ -604,12 +604,14 @@ export default class BasicForms extends PureComponent {
             <TabPane tab="基本信息" key="2" style={{fontSize:'16'}}>
               <DescriptionList size="large" title="机构logo" style={{ marginBottom: 32 }} col={2}>
                 <Description>
-                    <img src={item.manageLogoId} alt="" width={80} height={80}/>
+                  {
+                    item.manageLogoId?<img src={item.manageLogoId} alt="" width={80} height={80}/>:<div/>
+                  }
                 </Description>
               </DescriptionList>
               <Divider style={{ marginBottom: 32 }} />
               <DescriptionList size="large" title="其他信息" style={{ marginBottom: 32 }} col={1}>
-                <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
+                <Description term="机构类型">{item.institutionCode?(item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'):''}</Description>
                 <Description term="所在城市">{item.city}</Description>
                 <Description term="机构名称">{item.manageName}</Description>
                 <p>如需修改基本信息联系客服（0755）21046730</p>
