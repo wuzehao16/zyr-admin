@@ -30,7 +30,7 @@ export default class BasicForms extends PureComponent {
             arr[index] = { roleId: item };
           });
         this.props.dispatch({
-          type: 'systemUser/update',
+          type: 'systemUser/add',
           payload: newValues,
         });
       }
