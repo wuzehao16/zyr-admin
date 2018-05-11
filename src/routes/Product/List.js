@@ -196,18 +196,15 @@ export default class TableList extends PureComponent {
 
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-      console.log('fieldsValue',fieldsValue)
       const values = {
         ...fieldsValue,
         date: [],
         startTime: fieldsValue.date && moment(fieldsValue.date[0]).format('YYYY-MM-DD'),
         endTime: fieldsValue.date && moment(fieldsValue.date[1]).format('YYYY-MM-DD'),
       };
-      console.log('values',values)
       this.setState({
         formValues: values,
       });
-      console.log('this.state.formValues',this.state.formValues)
       dispatch({
         type: 'product/fetch',
         payload: values,
@@ -246,7 +243,6 @@ export default class TableList extends PureComponent {
     renderForm() {
     const { getFieldDecorator } = this.props.form;
     const { product: { city, audit, institutionType, intRange }, user:{ currentUser }  } = this.props;
-    console.log('currentUser',currentUser);
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
@@ -289,7 +285,7 @@ export default class TableList extends PureComponent {
               </FormItem>
             </Col>
             <Col span={3}>
-              <Button type="primary" icon="search" style={{width:'50%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <Button type="primary" icon="search" style={{width:'45%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
               <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
                 <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
               </button>
@@ -321,7 +317,7 @@ export default class TableList extends PureComponent {
               </FormItem>
             </Col>
             <Col span={3}>
-              <Button type="primary" icon="search" style={{width:'50%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <Button type="primary" icon="search" style={{width:'45%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
               <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
                 <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
               </button>
@@ -351,8 +347,8 @@ export default class TableList extends PureComponent {
             <FormItem>
               {getFieldDecorator('isEvaluating')(
                 <Select placeholder="是否纳入评测" style={{ width: '100%',border:'0' }}>
-                  <Option value="0">否</Option>
                   <Option value="1">是</Option>
+                  <Option value="0">否</Option>
                 </Select>
               )}
             </FormItem>
@@ -393,39 +389,10 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
-          <Col md={2}  offset={1} sm={24}>
-            <Button style={{ marginBottom: 4}} onClick={this.handleFormReset}>清空筛选条件</Button>
+          <Col md={3}  sm={24} style={{ textAlign:'right'}}>
+            <Button style={{ marginBottom: 4, border:'none'}} onClick={this.handleFormReset}>清空筛选条件</Button>
           </Col>
         </Row>
-        {/* <Row gutter={{ md: 8, lg: 24, xl: 48 }}
-          style={{display:currentUser.data.userIdentity==0?'block':'none'}}
-          > */}
-
-          {/* <Col md={8} sm={24}>
-            <FormItem label="机构名称">
-              {getFieldDecorator('manageName')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col> */}
-
-        {/* </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}> */}
-          {/* <Col md={8} sm={24}>
-            <FormItem label="产品名称">
-              {getFieldDecorator('productName')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col> */}
-
-
-        {/* // </Row> */}
-        {/* // <Row gutter={{ md: 8, lg: 24, xl: 48 }}> */}
-
-
-
-        {/* // </Row> */}
         <style jsx>{`
           .ant-select-selection__placeholder {
             color:#000;
@@ -455,9 +422,6 @@ export default class TableList extends PureComponent {
     );
   }
 
-  // renderForm() {
-  //   return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
-  // }
   render() {
     const { product: { data, city }, user:{ currentUser } , loading, dispatch } = this.props;
     const { selectedRows, modalVisible, addInputValue, item } = this.state;
@@ -478,12 +442,12 @@ export default class TableList extends PureComponent {
             <div className={styles.tableListForm}>
               {this.renderForm()}
             </div>
-            <div className={styles.tableListOperator}>
+            {/* <div className={styles.tableListOperator}>
               {
                 selectedRows.length > 0 && (
-                  <span>
+                  <span> */}
                     {/* <Button>批量操作</Button> */}
-                    <Dropdown overlay={menu}>
+                    {/* <Dropdown overlay={menu}>
                       <Button>
                         更多操作 <Icon type="down" />
                       </Button>
@@ -491,7 +455,7 @@ export default class TableList extends PureComponent {
                   </span>
                 )
               }
-            </div>
+            </div> */}
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}

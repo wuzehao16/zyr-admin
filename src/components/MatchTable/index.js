@@ -64,7 +64,7 @@ class StandardTable extends PureComponent {
     const { data: { data, count }, loading,userIdentity } = this.props
     const columns = [
       {
-        title: '模型名称',
+        // title: '模型名称',
         align: 'left',
         dataIndex: 'modeName',
         render: (text, record, index) => {
@@ -76,20 +76,20 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title: '机构名称',
-        align: 'center',
+        // title: '机构名称',
+        // align: 'center',
         dataIndex: 'manageName',
         render:val => <span className={styles.manageName}>{val}</span>
       },
       {
-        title: '更新时间',
+        // title: '更新时间',
         align: 'center',
         dataIndex: 'updateTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
-        title: '启用状态',
-        align: 'center',
+        // title: '启用状态',
+        align: 'right',
         render: (text, record, index) => {
           return (
               <div className={record.modeStatus==1?styles.act:styles.disabled}>{record.modeStatus==1?'启用':'禁用'}</div>
@@ -97,8 +97,8 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title: '操作',
-        align: 'center',
+        // title: '操作',
+        align: 'right',
         render: (text, record) => {
           return (
             <Fragment>

@@ -263,7 +263,7 @@ export default class TableList extends PureComponent {
                 <Option value="modelName">模型名称</Option>
               </Select>
             </Col>
-            <Col span={17}>
+            <Col span={18}>
               <FormItem>
                 {getFieldDecorator('modelName')(
                 <AutoComplete
@@ -279,9 +279,6 @@ export default class TableList extends PureComponent {
                 <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
               </button>
             </Col>
-            <Col span={1}>
-
-            </Col>
           </Row>:
           // </InputGroup>:
           // <InputGroup compact style={{marginBottom:20}}>
@@ -293,7 +290,7 @@ export default class TableList extends PureComponent {
                 <Option value="机构名称">机构名称</Option>
               </Select>
             </Col>
-            <Col span={18}>
+            <Col span={19}>
               <FormItem>
                 {getFieldDecorator(this.state.selectValues)(
                   <AutoComplete
@@ -304,7 +301,7 @@ export default class TableList extends PureComponent {
               </FormItem>
             </Col>
             <Col span={2}>
-              <Button type="primary" icon="search" style={{width:'80%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <Button type="primary" icon="search" style={{width:'90%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
             </Col>
           </Row>
                  // </InputGroup>
@@ -313,20 +310,20 @@ export default class TableList extends PureComponent {
           <Col md={3} sm={24}>
             {getFieldDecorator('modeStatus')(
               <Select placeholder="启用状态">
-                <Option value={0}>禁用</Option>
                 <Option value={1}>启用</Option>
+                <Option value={0}>禁用</Option>
               </Select>
             )}
           </Col>
-          <Col md={8} offset={2} sm={24}>
+          <Col md={8} offset={4} sm={24}>
             <FormItem label="更新时间">
                 {getFieldDecorator('date')(
                   <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
                 )}
             </FormItem>
           </Col>
-          <Col md={3} offset={6} sm={24}>
-            <Button onClick={this.handleFormReset}>清空筛选条件</Button>
+          <Col md={9} sm={24} style={{textAlign:'right'}}>
+            <Button onClick={this.handleFormReset} style={{border:'none'}}>清空筛选条件</Button>
           </Col>
         </Row>
           <style jsx>{`
