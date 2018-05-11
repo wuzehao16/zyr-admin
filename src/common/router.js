@@ -360,7 +360,7 @@ export const getRouterData = (app) => {
     },
     '/match': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match')),
-      name: '模型匹配',
+      name: '匹配模型',
     },
     '/match/list': {
       component: dynamicWrapper(app, ['match'], () => import('../routes/Match/List')),

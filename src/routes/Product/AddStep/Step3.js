@@ -85,17 +85,17 @@ class Step3 extends React.Component {
     };
     return (
       <div style={{marginTop:"50px"}}>
-        <h1>申请流程:</h1>
+        <h3 style={{fontWeight:700}}>申请流程:</h3>
         <Steps current={6} progressDot style={{marginTop:"50px"}} >
-          <Step title="1" description={<Input value={this.state.step1} onChange={this.onChangeStep1} placeholder="请输入"/>} />
-          <Step title="2" description={<Input value={this.state.step2} onChange={this.onChangeStep2} placeholder="请输入"/>} />
-          <Step title="3" description={<Input value={this.state.step3} onChange={this.onChangeStep3} placeholder="请输入"/>} />
-          <Step title="4" description={<Input value={this.state.step4} onChange={this.onChangeStep4} placeholder="请输入"/>} />
-          <Step title="5" description={<Input value={this.state.step5} onChange={this.onChangeStep5} placeholder="请输入"/>} />
-          <Step title="6" description={<Input value={this.state.step6} onChange={this.onChangeStep6} placeholder="请输入"/>} />
+          <Step title="1" description={<Input value={this.state.step1} onChange={this.onChangeStep1} placeholder="请输入申请步骤1"/>} />
+          <Step title="2" description={<Input value={this.state.step2} onChange={this.onChangeStep2} placeholder="请输入申请步骤2"/>} />
+          <Step title="3" description={<Input value={this.state.step3} onChange={this.onChangeStep3} placeholder="请输入申请步骤3"/>} />
+          <Step title="4" description={<Input value={this.state.step4} onChange={this.onChangeStep4} placeholder="请输入申请步骤4"/>} />
+          <Step title="5" description={<Input value={this.state.step5} onChange={this.onChangeStep5} placeholder="请输入申请步骤5"/>} />
+          <Step title="6" description={<Input value={this.state.step6} onChange={this.onChangeStep6} placeholder="请输入申请步骤6"/>} />
         </Steps>
         <div style={{marginTop:"50px",textAlign:'center'}}>
-          <Button onClick={onPrev} style={{ marginRight: 30 }}>
+          <Button onClick={onPrev} style={{ marginRight: 50 }}>
             上一步
           </Button>
           <Button type="primary" onClick={onFinish} loading={submitting}>

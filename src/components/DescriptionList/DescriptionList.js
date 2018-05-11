@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Row } from 'antd';
 import styles from './index.less';
 
-export default ({ className, title, col = 3, layout = 'horizontal', gutter = 32,
+export default ({ className, title, col = 4, layout = 'horizontal', gutter = 32,
   children, size, ...restProps }) => {
   const clsString = classNames(styles.descriptionList, styles[layout], className, {
     [styles.small]: size === 'small',

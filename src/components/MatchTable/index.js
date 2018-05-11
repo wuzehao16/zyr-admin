@@ -64,34 +64,46 @@ class StandardTable extends PureComponent {
     const { data: { data, count }, loading,userIdentity } = this.props
     const columns = [
       {
-        // title: '模型名称',
+        title: '模型名称',
+        align: 'left',
         dataIndex: 'modeName',
         render: (text, record, index) => {
           return (
             <div className={styles.model_name}>
               <div className={styles.model_title}>{text}</div>
-              <div className={record.modeStatus==1?styles.act:styles.disabled}>{record.modeStatus==1?'启用':'禁用'}</div>
             </div>
-
           );
         },
       },
       {
-        // title: '机构名称',
+        title: '机构名称',
+        align: 'center',
         dataIndex: 'manageName',
         render:val => <span className={styles.manageName}>{val}</span>
       },
       {
-        // title: '更新时间',
+        title: '更新时间',
+        align: 'center',
         dataIndex: 'updateTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
-        // title: '操作',
+        title: '启用状态',
+        align: 'center',
+        render: (text, record, index) => {
+          return (
+              <div className={record.modeStatus==1?styles.act:styles.disabled}>{record.modeStatus==1?'启用':'禁用'}</div>
+          );
+        },
+      },
+      {
+        title: '操作',
         align: 'center',
         render: (text, record) => {
           return (
             <Fragment>
+              <a onClick={() => this.handleAddAi(record)}>额度算法</a>
+              <Divider type="vertical" />
               {
                 userIdentity ===0
                 ?              <span>
@@ -105,11 +117,7 @@ class StandardTable extends PureComponent {
                    <a onClick={() => this.handleEdit(record)}>编辑</a>
                    <Divider type="vertical" />
                  </span> :null
-
               }
-
-              <a onClick={() => this.handleAddAi(record)}>额度算法</a>
-              <Divider type="vertical" />
               <a onClick={() => this.handleDetail(record)}>详情</a>
             </Fragment>
           );

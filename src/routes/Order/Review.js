@@ -233,7 +233,7 @@ export default class BasicForms extends PureComponent {
     getFieldDecorator("orderId",{initialValue: item.orderId})
     return (
       <PageHeaderLayout>
-        <Col sm={12} md={20}>
+        <Col sm={12} md={24}>
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -250,8 +250,8 @@ export default class BasicForms extends PureComponent {
             <Description term="提单人">{item.userName}</Description>
             <Description term="提单人手机">{item.userPhone}</Description>
             <Description term="产品分润比例">{item.productRatio}%</Description>
-            <div className='banklogo' style={{position:'absolute',top:'0',right:'0',width:'260px',height:'140px',padding:'35px 31px',border:'solid 1px #c8c8c8'}}>
-              {/* <img src={item.logo} /> */}
+            <div className='banklogo' style={{position:'absolute',top:'0',right:'100px',width:'140px',height:'140px'}}>
+              <img src={item.manageLogoId} style={{width:'140px',height:'140px',border:'solid 1px #c8c8c8'}} />
             </div>
           </DescriptionList>
           <DescriptionList size="large" title="贷款人信息" style={{ marginBottom: 32 }} col={2}>

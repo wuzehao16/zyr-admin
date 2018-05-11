@@ -217,7 +217,7 @@ export default class TableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem>
+            <FormItem label="">
               {getFieldDecorator('condition')(
                 <Input placeholder="输入用户名称、真实姓名、手机号查询" />
               )}

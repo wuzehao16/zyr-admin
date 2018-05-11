@@ -363,8 +363,8 @@ export default class TableList extends PureComponent {
             <FormItem label="启用状态">
               {getFieldDecorator('startStatus')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">禁用</Option>
                   <Option value="1">启用</Option>
+                  <Option value="0">禁用</Option>
                 </Select>
               )}
             </FormItem>
@@ -386,7 +386,7 @@ export default class TableList extends PureComponent {
         </Row>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="手机号">
+            <FormItem label="手机号码">
               {getFieldDecorator('phone')(
                   <Input placeholder="请输入"/>
               )}

@@ -149,7 +149,7 @@ export default class BasicForms extends PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
     const uploadButton = (
@@ -168,7 +168,7 @@ export default class BasicForms extends PureComponent {
             style={{ marginTop: 8 }}
           >
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
+              <Col md={10} offset={2} sm={24}>
                 <FormItem
                   {...formItemLayout}
                    label="机构类型">
@@ -184,7 +184,7 @@ export default class BasicForms extends PureComponent {
                   )}
                 </FormItem>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={10} sm={24}>
                 <FormItem
                   {...formItemLayout}
                    label="所在城市">
@@ -207,7 +207,7 @@ export default class BasicForms extends PureComponent {
                  case '1':
                   return <div>
                           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                            <Col md={12} sm={24}>
+                            <Col md={10} offset={2} sm={24}>
                               <FormItem
                                 {...formItemLayout}
                                  label="银行名称">
@@ -218,7 +218,7 @@ export default class BasicForms extends PureComponent {
                                 )}
                               </FormItem>
                             </Col>
-                            <Col md={12} sm={24}>
+                            <Col md={10} sm={24}>
                               <FormItem
                                 {...formItemLayout}
                                  label="下属机构">
@@ -233,7 +233,7 @@ export default class BasicForms extends PureComponent {
                          </div>
                   case '2':
                     return <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                            <Col md={12} sm={24}>
+                            <Col md={10} offset={2} sm={24}>
                               <Form.Item
                                 label="机构名称"
                                 {...formItemLayout}
@@ -256,7 +256,7 @@ export default class BasicForms extends PureComponent {
                           </Row>
                   case '3':
                   return <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                          <Col md={12} sm={24}>
+                          <Col md={10} offset={2} sm={24}>
                             <Form.Item
                               label="机构名称"
                               {...formItemLayout}
@@ -283,10 +283,10 @@ export default class BasicForms extends PureComponent {
             })()
             }
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
+              <Col md={10} offset={2} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="邮箱">
+                   label="邮箱地址">
                   {getFieldDecorator('userEmail',{
                     initialValue: item.userEmail,
                     rules: [{
@@ -297,10 +297,10 @@ export default class BasicForms extends PureComponent {
                   )}
                 </FormItem>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={10} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="用户名">
+                   label="用户名称">
                   {getFieldDecorator('loginAccount',{
                     initialValue: item.loginAccount,
                     rules: [{
@@ -313,10 +313,10 @@ export default class BasicForms extends PureComponent {
               </Col>
             </Row>
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
+              <Col md={10} offset={2} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="手机号">
+                   label="手机号码">
                   {getFieldDecorator('userPhone',{
                     initialValue: item.userPhone,
                     rules: [{
@@ -330,10 +330,10 @@ export default class BasicForms extends PureComponent {
                   )}
                 </FormItem>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={10} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="排序">
+                   label="机构排序">
                   {getFieldDecorator('sort',{
                   initialValue: item.sort,
                 })(
@@ -343,7 +343,7 @@ export default class BasicForms extends PureComponent {
               </Col>
             </Row>
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
+              <Col md={10} offset={2} sm={24}>
                 <FormItem
                   {...formItemLayout}
                    label="启用状态">
@@ -360,7 +360,7 @@ export default class BasicForms extends PureComponent {
                   )}
                 </FormItem>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={10} sm={24}>
                 <FormItem
                   {...formItemLayout}
                    label="机构logo">

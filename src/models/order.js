@@ -13,6 +13,7 @@ export default {
       pagination: {},
     },
     item: {},
+    city: [],
     repMethod:[],
     orderType:[],
   },
@@ -67,6 +68,13 @@ export default {
         payload: response.data,
       });
     },
+    *fetchCity({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveCity',
+        payload: response.data,
+      });
+    },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
       if (response.code === 0) {
@@ -110,6 +118,12 @@ export default {
       return {
         ...state,
         item: action.payload,
+      };
+    },
+    saveCity(state, action) {
+      return {
+        ...state,
+        city: action.payload,
       };
     },
   },

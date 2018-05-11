@@ -9,7 +9,7 @@ import styles from './style.less';
 import quill from './quill.less'
 const formItemLayout = {
   labelCol: {
-    span: 5,
+    span: 4,
   },
   wrapperCol: {
     span: 24,
@@ -63,7 +63,7 @@ class Step2 extends React.PureComponent {
              valuePropName: "defaultValue",
            })(
              <ReactQuill
-               placeholder='请输入...'
+               placeholder='请输入产品介绍'
              />
            )}
         </Form.Item>
@@ -75,7 +75,7 @@ class Step2 extends React.PureComponent {
              valuePropName: "defaultValue",
            })(
              <ReactQuill
-               placeholder='请输入...'
+               placeholder='请输入基本要求'
              />
            )}
         </Form.Item>
@@ -87,7 +87,7 @@ class Step2 extends React.PureComponent {
              valuePropName: "defaultValue",
            })(
              <ReactQuill
-               placeholder='请输入...'
+               placeholder='请输入征信要求'
              />
            )}
         </Form.Item>
@@ -99,7 +99,7 @@ class Step2 extends React.PureComponent {
              valuePropName: "defaultValue",
            })(
              <ReactQuill
-               placeholder='请输入...'
+               placeholder='请输入负债要求'
              />
            )}
         </Form.Item>
@@ -111,7 +111,7 @@ class Step2 extends React.PureComponent {
              valuePropName: "defaultValue",
            })(
              <ReactQuill
-               placeholder='请输入...'
+               placeholder='请输入额度计算'
              />
            )}
         </Form.Item>
@@ -123,7 +123,7 @@ class Step2 extends React.PureComponent {
              valuePropName: "defaultValue",
            })(
              <ReactQuill
-               placeholder='请输入...'
+               placeholder='请输入其它要求'
              />
            )}
         </Form.Item>
@@ -132,18 +132,23 @@ class Step2 extends React.PureComponent {
           style={{ marginBottom: 8 }}
           wrapperCol={{
             xs: { span: 24, offset: 0 },
-            sm: { span: 10, offset: 10 },
+            sm: { span: 13, offset: 9 },
           }}
           label=""
         >
-          <Button onClick={onPrev} style={{ marginRight: 30 }}>
+          <Button onClick={onPrev} style={{ marginRight: 50 }}>
             上一步
           </Button>
           <Button type="primary" onClick={onValidateForm} loading={submitting}>
             下一步
           </Button>
-
         </Form.Item>
+        <style jsx>{`
+          .ant-form label{
+            font-weight:700;
+          }
+          `}
+        </style>
       </Form>
     );
   }

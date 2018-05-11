@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, AutoComplete } from 'antd';
 import StandardTable from '../../components/ProductTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -11,6 +11,7 @@ import styles from './List.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
+const InputGroup = Input.Group;
 
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
@@ -52,10 +53,10 @@ export default class TableList extends PureComponent {
   state = {
     addInputValue: '',
     modalVisible: false,
-    expandForm: false,
     selectedRows: [],
     formValues: {},
     item: {},
+    selectValues: 'keyword'
   };
 
   componentDidMount() {
@@ -157,12 +158,6 @@ export default class TableList extends PureComponent {
     });
   }
 
-  toggleForm = () => {
-    this.setState({
-      expandForm: !this.state.expandForm,
-    });
-  }
-
   handleMenuClick = (e) => {
     const { dispatch } = this.props;
     const { selectedRows } = this.state;
@@ -201,18 +196,18 @@ export default class TableList extends PureComponent {
 
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-
+      console.log('fieldsValue',fieldsValue)
       const values = {
         ...fieldsValue,
         date: [],
         startTime: fieldsValue.date && moment(fieldsValue.date[0]).format('YYYY-MM-DD'),
         endTime: fieldsValue.date && moment(fieldsValue.date[1]).format('YYYY-MM-DD'),
       };
-
+      console.log('values',values)
       this.setState({
         formValues: values,
       });
-
+      console.log('this.state.formValues',this.state.formValues)
       dispatch({
         type: 'product/fetch',
         payload: values,
@@ -242,82 +237,16 @@ export default class TableList extends PureComponent {
     });
   }
 
-  renderSimpleForm() {
-    const { getFieldDecorator } = this.props.form;
-    const { product: { city, audit }, user:{ currentUser }  } = this.props;
-    if (city) {
-      var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    if (audit) {
-      var auditOptions = audit.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-    }
-    return (
-      <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}
-          style={{display:currentUser.data.userIdentity==0?'block':'none'}}
-          >
-          <Col md={8} sm={24}>
-            <FormItem label="机构名称">
-              {getFieldDecorator('manageName')(
-                <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="所在城市">
-              {getFieldDecorator('cityCode')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  {cityOptions}
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <span className={styles.submitButtons}>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-              <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-                展开 <Icon type="down" />
-              </a>
-            </span>
-          </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}
-          style={{display:currentUser.data.userIdentity==1?'block':'none'}}
-          >
-          <Col md={8} sm={24}>
-            <FormItem label="产品名称">
-              {getFieldDecorator('productName')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="审核状态">
-              {getFieldDecorator('approvalStatuts')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  { auditOptions }
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <span className={styles.submitButtons}>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-              <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-                展开 <Icon type="down" />
-              </a>
-            </span>
-          </Col>
-        </Row>
-      </Form>
-    );
+  handleSelectChanges = (val) => {
+    this.setState({
+      selectValues: val,
+    })
   }
 
-  renderAdvancedForm() {
+    renderForm() {
     const { getFieldDecorator } = this.props.form;
     const { product: { city, audit, institutionType, intRange }, user:{ currentUser }  } = this.props;
+    console.log('currentUser',currentUser);
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
@@ -331,108 +260,204 @@ export default class TableList extends PureComponent {
       var intRangeOptions = intRange.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }
     return (
-      <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}
-          style={{display:currentUser.data.userIdentity==0?'block':'none'}}
-          >
-          <Col md={8} sm={24}>
-            <FormItem label="机构名称">
-              {getFieldDecorator('manageName')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="所在城市">
+      <Form onSubmit={this.handleSearch}>
+        {
+          currentUser.data.userIdentity==0?
+          <Row>
+            <Col span={3}>
               {getFieldDecorator('cityCode')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
+                <Select placeholder="所在城市" style={{width:'100%'}}>
                   {cityOptions}
                 </Select>
               )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="机构类型">
-              {getFieldDecorator('institutionCode')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                { institutionTypeOptions }
+            </Col>
+            <Col span={3}>
+              <Select defaultValue="不限" style={{width:'100%'}} onChange={this.handleSelectChanges}>
+                <Option value="keyword">不限</Option>
+                <Option value="productName">产品名称</Option>
+                <Option value="manageName">机构名称</Option>
+              </Select>
+            </Col>
+            <Col span={15}>
+              <FormItem>
+                {getFieldDecorator(this.state.selectValues)(
+                  <AutoComplete
+                    style={{width:'100%'}}
+                    placeholder="请输入产品名称、机构名称"
+                  />
+                )}
+              </FormItem>
+            </Col>
+            <Col span={3}>
+              <Button type="primary" icon="search" style={{width:'50%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
+                <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
+              </button>
+            </Col>
+          </Row>:
+          <Row>
+            <Col span={3}>
+              {getFieldDecorator('cityCode',{
+                initialValue:currentUser.info.cityCode,
+              })(
+                <Select  disabled style={{width:'100%'}}>
+                  {cityOptions}
                 </Select>
               )}
-            </FormItem>
+            </Col>
+            <Col span={3}>
+              <Select defaultValue="产品名称" disabled style={{width:'100%'}}>
+                <Option value="productName">产品名称</Option>
+              </Select>
+            </Col>
+            <Col span={15}>
+              <FormItem>
+                {getFieldDecorator('productName')(
+                  <AutoComplete
+                    style={{width:'100%'}}
+                    placeholder="请输入产品名称"
+                  />
+                )}
+              </FormItem>
+            </Col>
+            <Col span={3}>
+              <Button type="primary" icon="search" style={{width:'50%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
+                <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
+              </button>
+            </Col>
+          </Row>
+        }
+        <Row gutter={{md: 8, lg: 8, xl: 16}} className='noborderrow'>
+          <Col md={3} sm={24}>
+              <FormItem>
+                {getFieldDecorator('monthlyFeeRate')(
+                  <Select placeholder="利息区间" style={{ width: '100%',border:'0' }}>
+                    { intRangeOptions }
+                  </Select>
+                )}
+              </FormItem>
           </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="产品名称">
-              {getFieldDecorator('productName')(
-                  <Input placeholder="请输入"/>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="审核状态">
+          <Col md={3} sm={24}>
+            <FormItem>
               {getFieldDecorator('approvalStatuts')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
+                <Select placeholder="审核状态" style={{ width: '100%',border:'0' }}>
                   { auditOptions }
                 </Select>
               )}
             </FormItem>
           </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="是否纳入评测">
+          <Col md={3} sm={24}>
+            <FormItem>
               {getFieldDecorator('isEvaluating')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
+                <Select placeholder="是否纳入评测" style={{ width: '100%',border:'0' }}>
                   <Option value="0">否</Option>
                   <Option value="1">是</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="上架状态">
+          <Col md={3} sm={24}>
+            <FormItem>
               {getFieldDecorator('shelfState')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">已下架</Option>
+                <Select placeholder="上架状态" style={{ width: '100%',border:'0' }}>
                   <Option value="1">已上架</Option>
+                  <Option value="0">已下架</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
-          <Col md={8} sm={24}>
+          <Col md={3} sm={24}>
+            {
+              currentUser.data.userIdentity==0?
+              <FormItem>
+                {getFieldDecorator('institutionCode')(
+                  <Select placeholder="机构类型" style={{ width: '100%',border:'0'}}>
+                  { institutionTypeOptions }
+                  </Select>
+                )}
+              </FormItem>:
+              <FormItem>
+                {getFieldDecorator('institutionCode',{initialValue:currentUser.info.institutionCode})(
+                  <Select disabled style={{ width: '100%',border:'0'}}>
+                  { institutionTypeOptions }
+                  </Select>
+                )}
+              </FormItem>
+            }
+          </Col>
+          <Col md={6} sm={24}>
             <FormItem label="更新时间">
               {getFieldDecorator('date')(
                 <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
               )}
             </FormItem>
           </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="利息区间">
-              {getFieldDecorator('monthlyFeeRate')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  { intRangeOptions }
-                </Select>
-              )}
-            </FormItem>
+          <Col md={2}  offset={1} sm={24}>
+            <Button style={{ marginBottom: 4}} onClick={this.handleFormReset}>清空筛选条件</Button>
           </Col>
         </Row>
-        <div style={{ overflow: 'hidden' }}>
-          <span style={{ float: 'right', marginBottom: 24 }}>
-            <Button type="primary" htmlType="submit">查询</Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-            <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-              收起 <Icon type="up" />
-            </a>
-          </span>
-        </div>
+        {/* <Row gutter={{ md: 8, lg: 24, xl: 48 }}
+          style={{display:currentUser.data.userIdentity==0?'block':'none'}}
+          > */}
+
+          {/* <Col md={8} sm={24}>
+            <FormItem label="机构名称">
+              {getFieldDecorator('manageName')(
+                  <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+          </Col> */}
+
+        {/* </Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}> */}
+          {/* <Col md={8} sm={24}>
+            <FormItem label="产品名称">
+              {getFieldDecorator('productName')(
+                  <Input placeholder="请输入"/>
+              )}
+            </FormItem>
+          </Col> */}
+
+
+        {/* // </Row> */}
+        {/* // <Row gutter={{ md: 8, lg: 24, xl: 48 }}> */}
+
+
+
+        {/* // </Row> */}
+        <style jsx>{`
+          .ant-select-selection__placeholder {
+            color:#000;
+          }
+          .noborderrow .ant-select-selection{
+            border:none;
+          }
+          // .noborderrow.ant-select-open,.noborderrow .ant-select-focused {
+          //   border:none;
+          //   color:rgb(238，86，72)
+          // }
+          input::-webkit-input-placeholder{
+            color:red;
+          }
+          input:-moz-placeholder{
+            color:red;
+          }
+          input::-moz-placeholder{
+            color:red;
+          }
+          input::-moz-placeholder{
+            color:red;
+          }
+        `}
+        </style>
       </Form>
     );
   }
 
-  renderForm() {
-    return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
-  }
+  // renderForm() {
+  //   return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
+  // }
   render() {
     const { product: { data, city }, user:{ currentUser } , loading, dispatch } = this.props;
     const { selectedRows, modalVisible, addInputValue, item } = this.state;
@@ -454,9 +479,6 @@ export default class TableList extends PureComponent {
               {this.renderForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={this.toAdd}>
-                新建
-              </Button>
               {
                 selectedRows.length > 0 && (
                   <span>
