@@ -8,7 +8,10 @@ export default {
     list: [],
     currentUser: {
       data: {},
-      info:{}
+      info:{
+        cityCode:'',
+        institutionCode: ''
+      }
     },
 
   },

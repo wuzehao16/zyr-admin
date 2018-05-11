@@ -195,16 +195,18 @@ export default class TableList extends PureComponent {
     const { dispatch, form } = this.props;
 
     form.validateFields((err, fieldsValue) => {
+      console.log(fieldsValue)
       if (err) return;
       const values = {
         ...fieldsValue,
         date: [],
-        startTime: fieldsValue.date && moment(fieldsValue.date[0]).format('YYYY-MM-DD'),
-        endTime: fieldsValue.date && moment(fieldsValue.date[1]).format('YYYY-MM-DD'),
+        startTime: fieldsValue.date && fieldsValue.date[0] && moment(fieldsValue.date[0]).format('YYYY-MM-DD'),
+        endTime: fieldsValue.date && fieldsValue.date[1] &&  moment(fieldsValue.date[1]).format('YYYY-MM-DD'),
       };
       this.setState({
         formValues: values,
       });
+      console.log(values)
       dispatch({
         type: 'product/fetch',
         payload: values,
