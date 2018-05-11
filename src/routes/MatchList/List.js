@@ -101,7 +101,7 @@ export default class TableList extends PureComponent {
       ...filters,
     };
     if (sorter.field) {
-      params.sorter = `${sorter.field}_${sorter.matchlist}`;
+      params.sorter = `${sorter.field}_${sorter.order}`;
     }
 
     dispatch({
