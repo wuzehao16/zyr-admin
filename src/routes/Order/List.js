@@ -227,13 +227,6 @@ export default class TableList extends PureComponent {
         currentUser.data.userIdentity==0?
         <Row>
           <Col span={3}>
-            {getFieldDecorator('cityCode')(
-              <Select placeholder="所在城市" style={{width:'100%'}}>
-                {cityOptions}
-              </Select>
-            )}
-          </Col>
-          <Col span={3}>
             <Select defaultValue="不限" style={{width:'100%'}} onChange={this.handleSelectChanges}>
                 <Option value="keyword">不限</Option>
                 <Option value="productName">产品名称</Option>
@@ -243,7 +236,7 @@ export default class TableList extends PureComponent {
                 <Option value="loanName">贷款人</Option>
             </Select>
           </Col>
-          <Col span={16}>
+          <Col span={19}>
             <FormItem>
               {getFieldDecorator(this.state.selectValues)(
                 <AutoComplete
@@ -254,17 +247,10 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col span={2}>
-            <Button type="primary" icon="search" style={{width:'80%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+            <Button type="primary" icon="search" style={{width:'90%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
           </Col>
         </Row>:
         <Row>
-          <Col span={3}>
-            {getFieldDecorator('cityCode',{initialValue:currentUser.info.cityCode})(
-            <Select disabled style={{width:'100%'}}>
-              {cityOptions}
-            </Select>
-              )}
-          </Col>
           <Col span={3}>
             <Select defaultValue="不限" style={{width:'100%'}} onChange={this.handleSelectChanges}>
               <Option value="keyword">不限</Option>
@@ -274,7 +260,7 @@ export default class TableList extends PureComponent {
               <Option value="loanName">贷款人</Option>
             </Select>
           </Col>
-          <Col span={16}>
+          <Col span={19}>
             <FormItem>
               {getFieldDecorator(this.state.selectValues)(
                 <AutoComplete
@@ -285,7 +271,7 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col span={2}>
-            <Button type="primary" icon="search" style={{width:'80%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+            <Button type="primary" icon="search" style={{width:'90%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
           </Col>
         </Row>
       }
@@ -304,8 +290,8 @@ export default class TableList extends PureComponent {
                 )}
             </FormItem>
           </Col>
-          <Col md={4} offset={6} sm={24}>
-            <Button style={{ marginBottom: 4}} onClick={this.handleFormReset}>清空筛选条件</Button>
+          <Col md={10} sm={24} style={{textAlign:'right'}}>
+            <Button style={{ marginBottom: 4, border:'none'}} onClick={this.handleFormReset}>清空筛选条件</Button>
           </Col>
       </Row>
         <style jsx>{`
@@ -339,12 +325,12 @@ export default class TableList extends PureComponent {
             <div className={styles.tableListForm}>
                 {this.renderForm()}
             </div>
-            <div className={styles.tableListOperator}>
+            {/* <div className={styles.tableListOperator}>
               {
                 selectedRows.length > 0 && (
-                  <span>
+                  <span> */}
                     {/* <Button>批量操作</Button> */}
-                    <Dropdown overlay={menu}>
+                    {/* <Dropdown overlay={menu}>
                       <Button>
                         更多操作 <Icon type="down" />
                       </Button>
@@ -352,7 +338,7 @@ export default class TableList extends PureComponent {
                   </span>
                 )
               }
-            </div>
+            </div> */}
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}
