@@ -56,6 +56,7 @@ export default class TableList extends PureComponent {
     selectedRows: [],
     formValues: {},
     item: {},
+    selectValues: 'keyword'
   };
 
   componentDidMount() {
@@ -235,6 +236,13 @@ export default class TableList extends PureComponent {
       modalVisible: false,
     });
   }
+
+  handleSelectChanges = (val) => {
+    this.setState({
+      selectValues: val,
+    })
+  }
+
     renderForm() {
     const { getFieldDecorator } = this.props.form;
     const { product: { city, audit, institutionType, intRange }, user:{ currentUser }  } = this.props;
@@ -255,47 +263,71 @@ export default class TableList extends PureComponent {
       <Form onSubmit={this.handleSearch}>
         {
           currentUser.data.userIdentity==0?
-          <InputGroup compact style={{marginBottom:20}}>
-            {getFieldDecorator('cityCode')(
-              <Select placeholder="所在城市" style={{width:'10%'}}>
-                {cityOptions}
+          <Row>
+            <Col span={3}>
+              {getFieldDecorator('cityCode')(
+                <Select placeholder="所在城市" style={{width:'100%'}}>
+                  {cityOptions}
+                </Select>
+              )}
+            </Col>
+            <Col span={3}>
+              <Select defaultValue="不限" style={{width:'100%'}} onChange={this.handleSelectChanges}>
+                <Option value="keyword">不限</Option>
+                <Option value="productName">产品名称</Option>
+                <Option value="manageName">机构名称</Option>
               </Select>
-            )}
-            <Select defaultValue="产品名称" style={{width:'10%'}}>
-              <Option value="产品名称">产品名称</Option>
-              <Option value="机构名称">机构名称</Option>
-            </Select>
-            <AutoComplete
-              style={{width:'70%'}}
-              placeholder="请输入产品名称、机构名称"
-            />
-            <Button type="primary" icon="search" style={{width:'5%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
-            <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',width:'5%',border:'none',borderLeft:'1px solid #fff'}} >
-              <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
-            </button>
-          </InputGroup>:
-          <InputGroup compact style={{marginBottom:20}}>
-            {getFieldDecorator('cityCode',{
-              initialValue:currentUser.info.cityCode,
-            })(
-              <Select  disabled style={{width:'10%'}}>
-                {cityOptions}
+            </Col>
+            <Col span={15}>
+              <FormItem>
+                {getFieldDecorator(this.state.selectValues)(
+                  <AutoComplete
+                    style={{width:'100%'}}
+                    placeholder="请输入产品名称、机构名称"
+                  />
+                )}
+              </FormItem>
+            </Col>
+            <Col span={3}>
+              <Button type="primary" icon="search" style={{width:'50%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
+                <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
+              </button>
+            </Col>
+          </Row>:
+          <Row>
+            <Col span={3}>
+              {getFieldDecorator('cityCode',{
+                initialValue:currentUser.info.cityCode,
+              })(
+                <Select  disabled style={{width:'100%'}}>
+                  {cityOptions}
+                </Select>
+              )}
+            </Col>
+            <Col span={3}>
+              <Select defaultValue="产品名称" disabled style={{width:'100%'}}>
+                <Option value="productName">产品名称</Option>
               </Select>
-            )}
-            <Select defaultValue="产品名称" style={{width:'10%'}}>
-              <Option value="产品名称">产品名称</Option>
-            </Select>
-            <AutoComplete
-              style={{width:'70%'}}
-              placeholder="请输入产品名称"
-            />
-            <Button type="primary" icon="search" style={{width:'5%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
-            <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',width:'5%',border:'none',borderLeft:'1px solid #fff'}} >
-              <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
-            </button>
-          </InputGroup>
+            </Col>
+            <Col span={15}>
+              <FormItem>
+                {getFieldDecorator('productName')(
+                  <AutoComplete
+                    style={{width:'100%'}}
+                    placeholder="请输入产品名称"
+                  />
+                )}
+              </FormItem>
+            </Col>
+            <Col span={3}>
+              <Button type="primary" icon="search" style={{width:'50%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
+                <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
+              </button>
+            </Col>
+          </Row>
         }
-
         <Row gutter={{md: 8, lg: 8, xl: 16}} className='noborderrow'>
           <Col md={3} sm={24}>
               <FormItem>

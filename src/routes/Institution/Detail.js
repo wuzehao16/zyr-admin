@@ -26,7 +26,7 @@ export default class BasicForms extends PureComponent {
     return (
       <PageHeaderLayout title="机构详情" >
         <Card bordered={false}>
-          <DescriptionList size="large" style={{ marginTop:50,marginBottom: 15,marginLeft:'15%'}} col={2}>
+          <DescriptionList size="large" style={{ marginTop:30,marginBottom: 15,marginLeft:'15%'}} col={2}>
             <div style={{marginBottom:'20px'}}>
               <Description>
                 <img  src={item.manageLogoId} alt="机构logo" width={80} height={80}/>

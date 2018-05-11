@@ -56,6 +56,7 @@ export default class TableList extends PureComponent {
     selectedRows: [],
     formValues: {},
     item: {},
+    selectValues:'keyword'
   };
 
   componentDidMount() {
@@ -205,104 +206,11 @@ export default class TableList extends PureComponent {
     });
   }
 
-  // renderSimpleForm() {
-  //   const { user:{ currentUser }  } = this.props;
-  //   const { getFieldDecorator } = this.props.form;
-  //   return (
-  //     <Form onSubmit={this.handleSearch} layout="inline">
-  //       <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-  //         <Col md={8} sm={24}
-  //           style={{display: currentUser.data.userIdentity==0?'block':'none'}}
-  //           >
-  //           <FormItem label="机构名称"
-  //             >
-  //             {getFieldDecorator('manageName')(
-  //               <Input placeholder="请输入"/>
-  //             )}
-  //           </FormItem>
-  //         </Col>
-  //         <Col md={8} sm={24}>
-  //           <FormItem label="产品名称">
-  //             {getFieldDecorator('productName')(
-  //                 <Input placeholder="请输入"/>
-  //             )}
-  //           </FormItem>
-  //         </Col>
-  //         <Col md={8} sm={24}
-  //           style={{display: currentUser.data.userIdentity==1?'block':'none'}}
-  //           >
-  //           <FormItem label="订  单  号">
-  //             {getFieldDecorator('orderNo')(
-  //                 <Input placeholder="请输入"/>
-  //             )}
-  //           </FormItem>
-  //         </Col>
-  //         <Col md={8} sm={24}>
-  //           <span className={styles.submitButtons}>
-  //             <Button type="primary" htmlType="submit">查询</Button>
-  //             <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-  //             <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-  //               展开 <Icon type="down" />
-  //             </a>
-  //           </span>
-  //         </Col>
-  //       </Row>
-  //     </Form>
-  //   );
-  // }
-
-  // renderAdvancedForm() {
-  //   const { getFieldDecorator } = this.props.form;
-  //   const { order: { orderType }, user:{ currentUser }  } = this.props;
-  //   if (orderType) {
-  //     var orderTypeOptions = orderType.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
-  //   }
-  //   return (
-  //     <Form onSubmit={this.handleSearch}>
-  //       <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-  //         <Col md={8} sm={24}
-  //           style={{display: currentUser.data.userIdentity==0?'block':'none'}}
-  //           >
-  //           <FormItem label="机构名称">
-  //             {getFieldDecorator('manageName')(
-  //                 <Input placeholder="请输入"/>
-  //             )}
-  //           </FormItem>
-  //         </Col>
-  //         <Col md={8} sm={24}>
-  //           <FormItem label="产品名称">
-  //             {getFieldDecorator('productName')(
-  //                 <Input placeholder="请输入"/>
-  //             )}
-  //           </FormItem>
-  //         </Col>
-  //         <Col md={8} sm={24}>
-  //           <FormItem label="订  单  号">
-  //             {getFieldDecorator('orderNo')(
-  //                 <Input placeholder="请输入"/>
-  //             )}
-  //           </FormItem>
-  //         </Col>
-  //       </Row>
-  //       <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-  //         <Col md={8} sm={24}>
-  //           <FormItem label="提  单  人">
-  //             {getFieldDecorator('userName')(
-  //                 <Input placeholder="请输入"/>
-  //             )}
-  //           </FormItem>
-  //         </Col>
-  //         <Col md={8} sm={24}>
-  //           <FormItem label="贷  款  人">
-  //             {getFieldDecorator('loanName')(
-  //                 <Input placeholder="请输入"/>
-  //             )}
-  //           </FormItem>
-  //         </Col>
-  //       </Row>
-  //     </Form>
-  //   );
-  // }
+  handleSelectChanges = (val) => {
+    this.setState({
+      selectValues: val,
+    })
+  }
 
   renderForm() {
     const { getFieldDecorator } = this.props.form;
@@ -317,46 +225,70 @@ export default class TableList extends PureComponent {
     <Form onSubmit={this.handleSearch}>
       {
         currentUser.data.userIdentity==0?
-        <InputGroup compact style={{marginBottom:20}}>
-          {getFieldDecorator('cityCode')(
-            <Select placeholder="所在城市" style={{width:'10%'}}>
+        <Row>
+          <Col span={3}>
+            {getFieldDecorator('cityCode')(
+              <Select placeholder="所在城市" style={{width:'100%'}}>
+                {cityOptions}
+              </Select>
+            )}
+          </Col>
+          <Col span={3}>
+            <Select defaultValue="不限" style={{width:'100%'}} onChange={this.handleSelectChanges}>
+                <Option value="keyword">不限</Option>
+                <Option value="productName">产品名称</Option>
+                <Option value="manageName">机构名称</Option>
+                <Option value="orderNo">订单号</Option>
+                <Option value="userName">提单人</Option>
+                <Option value="loanName">贷款人</Option>
+            </Select>
+          </Col>
+          <Col span={16}>
+            <FormItem>
+              {getFieldDecorator(this.state.selectValues)(
+                <AutoComplete
+                style={{width:'100%'}}
+                placeholder="请输入产品名称、机构名称、订单号、提单人或贷款人"
+              />
+              )}
+            </FormItem>
+          </Col>
+          <Col span={2}>
+            <Button type="primary" icon="search" style={{width:'80%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+          </Col>
+        </Row>:
+        <Row>
+          <Col span={3}>
+            {getFieldDecorator('cityCode',{initialValue:currentUser.info.cityCode})(
+            <Select disabled style={{width:'100%'}}>
               {cityOptions}
             </Select>
               )}
-            <Select defaultValue="产品名称" style={{width:'10%'}}>
-              <Option value="产品名称">产品名称</Option>
-              <Option value="机构名称">机构名称</Option>
-              <Option value="机构名称">订单号</Option>
-              <Option value="机构名称">提单人</Option>
-              <Option value="机构名称">贷款人</Option>
+          </Col>
+          <Col span={3}>
+            <Select defaultValue="不限" style={{width:'100%'}} onChange={this.handleSelectChanges}>
+              <Option value="keyword">不限</Option>
+              <Option value="productName">产品名称</Option>
+              <Option value="orderNo">订单号</Option>
+              <Option value="userName">提单人</Option>
+              <Option value="loanName">贷款人</Option>
             </Select>
-            <AutoComplete
-              style={{width:'70%'}}
-              placeholder="请输入产品名称、机构名称、订单号、提单人、贷款人"
-            />
-            <Button type="primary" icon="search" style={{width:'5%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
-        </InputGroup>:
-        <InputGroup compact style={{marginBottom:20}}>
-          {getFieldDecorator('cityCode',{initialValue:currentUser.info.cityCode})(
-            <Select disabled style={{width:'10%'}}>
-              {cityOptions}
-            </Select>
+          </Col>
+          <Col span={16}>
+            <FormItem>
+              {getFieldDecorator(this.state.selectValues)(
+                <AutoComplete
+                  style={{width:'100%'}}
+                  placeholder="请输入产品名称、订单号、提单人或贷款人"
+                />
               )}
-            <Select defaultValue="产品名称" style={{width:'10%'}}>
-              <Option value="产品名称">产品名称</Option>
-              <Option value="机构名称">订单号</Option>
-              <Option value="机构名称">提单人</Option>
-              <Option value="机构名称">贷款人</Option>
-            </Select>
-            <AutoComplete
-              style={{width:'70%'}}
-              placeholder="请输入产品名称、订单号、提单人、贷款人"
-            />
-            <Button type="primary" icon="search" style={{width:'5%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
-        </InputGroup>
+            </FormItem>
+          </Col>
+          <Col span={2}>
+            <Button type="primary" icon="search" style={{width:'80%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+          </Col>
+        </Row>
       }
-
-
       <Row gutter={{md: 8, lg: 16, xl:48}} className='noborderrow'>
           <Col md={3} sm={24}>
               {getFieldDecorator('orderStatus')(
@@ -365,26 +297,26 @@ export default class TableList extends PureComponent {
                 </Select>
               )}
           </Col>
-          <Col md={8} offset={2} sm={24}>
+          <Col md={8} offset={3} sm={24}>
             <FormItem label="更新时间">
                 {getFieldDecorator('date')(
                   <RangePicker style={{ width: '100%' }} placeholder={['开始时间', '结束时间']} />
                 )}
             </FormItem>
           </Col>
-          <Col md={4} offset={7} sm={24}>
+          <Col md={4} offset={6} sm={24}>
             <Button style={{ marginBottom: 4}} onClick={this.handleFormReset}>清空筛选条件</Button>
           </Col>
-        </Row>
-          <style jsx>{`
-          .ant-select-selection__placeholder {
-            color:#000;
-          }
-          .noborderrow .ant-select-selection{
-            border:none;
-          }
-        `}
-        </style>
+      </Row>
+        <style jsx>{`
+        .ant-select-selection__placeholder {
+          color:#000;
+        }
+        .noborderrow .ant-select-selection{
+          border:none;
+        }
+      `}
+      </style>
     </Form>
     )
   }

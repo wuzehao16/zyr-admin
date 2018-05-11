@@ -74,8 +74,8 @@ export default class BasicForms extends PureComponent {
                  hideRequiredMark
                  style={{ marginTop: 8 }}
                >
-          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 15, marginLeft:'15%' }} col={2}>
-            <div style={{margin:'30px 0'}}>
+          <DescriptionList size="large" style={{ marginBottom: 15, marginLeft:'15%' }} col={2}>
+            <div style={{margin:'20px 0'}}>
               <Description>
                 <img src={item.manageLogoId} alt="" width={80} height={80}/>
               </Description>
@@ -97,8 +97,8 @@ export default class BasicForms extends PureComponent {
           </DescriptionList>
           {item.approvalStatus == 1
            ?  <div>
-                  <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                      <Col md={10} offset={3} sm={24}>
+                  <Row gutter={{ md: 16, lg: 24, xl: 48 }}>
+                      <Col md={13} offset={3} sm={24}>
                         {/* <Icon type="clock-circle-o" /> */}
                         <FormItem
                           {...formItemLayout}
@@ -115,7 +115,7 @@ export default class BasicForms extends PureComponent {
                       </Col>
                     </Row>
                     <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                        <Col md={10} offset={3} sm={24}>
+                        <Col md={13} offset={3} sm={24}>
                           <FormItem
                             {...formItemLayout}
                              label="审核备注"
