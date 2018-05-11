@@ -107,7 +107,7 @@ class StandardTable extends PureComponent {
       },
       {
         title: '匹配时间',
-        dataIndex: 'creatTime',
+        dataIndex: 'createTime',
         sorter: true,
       },
       {
