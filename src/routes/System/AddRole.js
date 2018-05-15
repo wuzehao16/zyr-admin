@@ -49,6 +49,7 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
+    console.log('data',data);
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },

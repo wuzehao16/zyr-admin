@@ -155,30 +155,37 @@ export const getRouterData = (app) => {
     },
     '/content/information': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Information')),
+      name: '内容管理',
     },
     '/content/information/list': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/InformationList')),
     },
     '/content/information/add': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/AddInformation')),
+      name: '新增内容',
     },
     '/content/information/edit/:id': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/EditInformation')),
+      name: '编辑内容',
     },
     '/content/information/detail': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/Detail')),
+      name: '内容详情',
     },
     '/content/column': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Column')),
+      name: '栏目管理',
     },
     '/content/column/list': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/ColumnList')),
     },
     '/content/column/add': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/AddColumn')),
+      name: '新增栏目',
     },
     '/content/column/edit': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/EditColumn')),
+      name: '编辑栏目',
     },
     '/system/user': {
       component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/User')),
@@ -257,7 +264,7 @@ export const getRouterData = (app) => {
     },
     '/member/detail/:id': {
       component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Detail')),
-      name: '查看用户详情',
+      name: '用户详情',
     },
     '/product': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product')),
@@ -341,7 +348,7 @@ export const getRouterData = (app) => {
     },
     '/setting': {
       component: dynamicWrapper(app, ['setting'], () => import('../routes/Setting')),
-      name: '设置',
+      name: '账号设置',
     },
     '/order': {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order')),

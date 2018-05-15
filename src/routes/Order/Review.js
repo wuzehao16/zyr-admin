@@ -79,7 +79,7 @@ export default class BasicForms extends PureComponent {
         <Step title="已面签" />
         <Step title="已放款" />
       </Steps>
-      <DescriptionList size="large" title="" style={{ marginBottom: 32 }} col={2}>
+      <DescriptionList size="large" title="" style={{ marginBottom: 16}} col={2}>
       <Description term="更新状态"  style={{marginBottom:'36px'}}>
         <Col sm={12} xs={24}>
           <FormItem>
@@ -154,7 +154,7 @@ export default class BasicForms extends PureComponent {
           <Step title="已面签" />
           <Step title="已放款" />
         </Steps>
-        <DescriptionList size="large" title="" style={{ marginBottom: 32 }} col={2}>
+        <DescriptionList size="large" title="" style={{ marginBottom: 16 }} col={2}>
         <Description term="更新状态">
           <Col sm={12} xs={24}>
             <FormItem >
@@ -234,7 +234,7 @@ export default class BasicForms extends PureComponent {
     return (
       <PageHeaderLayout>
         <Col sm={12} md={24}>
-        <Card bordered={false}>
+        <Card bordered={false} style={{padding:'0 10%'}}>
           <Form
             onSubmit={this.handleSubmit}
             hideRequiredMark
@@ -270,21 +270,12 @@ export default class BasicForms extends PureComponent {
             <Description term="申请备注">{item.applicationNotes}</Description>
           </DescriptionList>
           {this.renderForm()}
-          <DescriptionList col={1} style={{ marginBottom: 32 }}>
-          <Description
-            style={{
-            display: getFieldValue('orderStatus') === 6 ? 'block' : 'none'
-          }}
-          >
-            <Col sm={24} xs={24}>
-                <FormItem
-                  >
-                  {getFieldDecorator('cancelReason',{
-                  })(
-                    <TextArea  rows={4}  placeholder="在这里写拒绝原因" style={{width:'1195px'}}/>
-                )}
-                </FormItem>
-            </Col>
+          <DescriptionList col={5} style={{ marginBottom: 50 }}>
+            <Description style={{display: getFieldValue('orderStatus') === 6 ? 'block' : 'none'}}>
+              {getFieldDecorator('cancelReason',{
+              })(
+                <TextArea  rows={4}  placeholder="在这里写拒绝原因" style={{width:'800px'}}/>
+              )}
           </Description>
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>

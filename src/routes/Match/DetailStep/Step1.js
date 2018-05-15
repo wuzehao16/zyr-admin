@@ -62,7 +62,7 @@ class Step1 extends React.PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 10 },
+        sm: { span: 10, offset: 11 },
       },
     };
     const onValidateForm = () => {
@@ -79,7 +79,7 @@ class Step1 extends React.PureComponent {
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
               <Form.Item
-                style={{marginTop:100}}
+                style={{marginTop:50}}
                 label="模型名称"
                 {...formItemLayout}
                >

@@ -263,7 +263,7 @@ export default class BasicForms extends PureComponent {
     const { submitting, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
     return(
-      <DescriptionList size="large" title="修改密码" style={{ marginBottom: 32 }} col={1}>
+      <DescriptionList size="small" title="修改密码" style={{ marginBottom: 32 }} col={1}>
         <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过<a  onClick={()=> dispatch(routerRedux.push('/user/reset-password'))}>手机号重置</a>或通过<a onClick={() => dispatch(routerRedux.push('/user/reset-password'))}>邮箱重置</a>您的密码。</Description>
         <Form
           onSubmit={this.handleSubmit}
@@ -584,10 +584,11 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data:{ currentUser } , setting:{ item }, dispatch } = this.props;
     return (
-      <PageHeaderLayout title="账号设置">
+      // <PageHeaderLayout title="账号设置">
+      <PageHeaderLayout>
         <Card bordered={false} style={{padding:'26px 147px 136px 147px'}}>
           <Tabs defaultActiveKey="1">
-            <TabPane tab="基本设置" key="1">
+            <TabPane tab="基本设置" key="1" style={{paddingLeft:'1%',paddingRight:'1%'}}>
                 {currentUser.data.loginAccount ? (
                   <div>
                     {this.renderForm1()}
@@ -601,7 +602,7 @@ export default class BasicForms extends PureComponent {
 
 
             </TabPane>
-            <TabPane tab="基本信息" key="2" style={{fontSize:'16'}}>
+            <TabPane tab="基本信息" key="2" style={{paddingLeft:'1%',paddingRight:'1%'}}>
               <DescriptionList size="large" title="机构logo" style={{ marginBottom: 32 }} col={2}>
                 <Description>
                   {
@@ -617,9 +618,15 @@ export default class BasicForms extends PureComponent {
                 <p>如需修改基本信息联系客服（0755）21046730</p>
               </DescriptionList>
             </TabPane>
-
           </Tabs>
         </Card>
+        <style jsx>{`
+          .ant-tabs-tab , .ant-tabs-tab-active {
+            font-size:18px;
+            font-weight:700;
+         }
+        `}
+        </style>
       </PageHeaderLayout>
     );
   }

@@ -28,16 +28,15 @@ class Step1 extends React.PureComponent {
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 10 },
+        // span:12,
+        offset:2,
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 11 },
+        span:22,
+        offset:2,
       },
     };
+
     const formItemLayout1 = {
       labelCol: {
         xs: { span: 24 },
@@ -370,7 +369,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumOneMonthQueries',{
               initialValue: item.sumOneMonthQueries,
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
@@ -380,7 +379,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumTwoMonthsQueries',{
               initialValue: item.sumTwoMonthsQueries,
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
@@ -390,7 +389,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumThreeMonthsQueries',{
               initialValue: item.sumThreeMonthsQueries,
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
@@ -400,7 +399,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumSixMonthsQueries',{
               initialValue: item.sumSixMonthsQueries,
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
@@ -410,7 +409,7 @@ class Step1 extends React.PureComponent {
             {getFieldDecorator('sumOneYearQueries',{
               initialValue: item.sumOneYearQueries,
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>

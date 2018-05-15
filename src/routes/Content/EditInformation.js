@@ -95,6 +95,7 @@ export default class BasicForms extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
+        sm: { span: 12 },
         sm: { span: 7 },
       },
       wrapperCol: {
@@ -157,7 +158,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="标题"
+              label="栏目标题"
             >
               {getFieldDecorator('contentTitle',{
                 initialValue: item.contentTitle,
@@ -170,7 +171,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="简介"
+              label="栏目简介"
             >
               {getFieldDecorator('contentBrief',{
                 initialValue: item.contentBrief,
@@ -180,7 +181,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="来源"
+              label="站点来源"
             >
               {getFieldDecorator('source',{
                 initialValue: item.source,
@@ -249,7 +250,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="排序"
+              label="栏目排序"
             >
               {getFieldDecorator('contentSort',{
                 initialValue: item.contentSort,
@@ -302,9 +303,9 @@ export default class BasicForms extends PureComponent {
                           }}
                           wrapperCol={{
                             xs: { span: 24, offset: 0 },
-                            sm: { span: 24, offset: 7 },
+                            sm: { span: 24, offset: 16 },
                           }}
-                          style={{width:'60%'}}
+                          style={{width:'43%'}}
                            >
                              {getFieldDecorator('content', {
                                initialValue: item.content,
@@ -325,7 +326,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content/information'))}>
+              <Button style={{ marginLeft: 50}} onClick={() => dispatch(routerRedux.push('/content/information'))}>
                 返回
               </Button>
             </FormItem>

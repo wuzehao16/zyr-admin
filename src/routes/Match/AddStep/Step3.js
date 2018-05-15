@@ -25,15 +25,24 @@ class Step1 extends React.PureComponent {
     } = this.props;
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
+    // const formItemLayout = {
+    //   labelCol: {
+    //     span:24
+    //   },
+    //   wrapperCol: {
+    //     span:24
+    //   },
+    // };
+
     const formItemLayout = {
       labelCol: {
-        span:24
+        offset:2,
       },
       wrapperCol: {
-        span:24
+        span:22,
+        offset:2,
       },
     };
-
 
     const submitFormLayout = {
       wrapperCol: {

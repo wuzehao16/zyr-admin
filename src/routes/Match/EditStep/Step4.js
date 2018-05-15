@@ -28,10 +28,14 @@ class Step1 extends React.PureComponent {
 
     const formItemLayout = {
       labelCol: {
-        span:24
+        xs: { span: 24 },
+        sm: { span: 7 },
+        md: { span: 12 },
       },
       wrapperCol: {
-        span:24
+        xs: { span: 24 },
+        sm: { span: 12 },
+        md: { span: 12 },
       },
     };
 
@@ -39,7 +43,7 @@ class Step1 extends React.PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 10 },
+        sm: { span: 10, offset: 12 },
       },
     };
     const onValidateForm = () => {
@@ -61,7 +65,7 @@ class Step1 extends React.PureComponent {
         <Form
           onSubmit={this.handleSubmit}
           hideRequiredMark
-          style={{ marginTop: 8 }}
+          style={{ margin: '30px 0 50px 0' }}
         >
           <Form.Item
             label="请输入本单位连续上班月份要求"

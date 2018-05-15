@@ -54,7 +54,7 @@ class StandardTable extends PureComponent {
       const columns = [
         { title: '产品名称', dataIndex: 'productName',key:'productName'},
         { title: '是否新品', dataIndex: 'isNew',render:val => val==1?'是':'否',key:'isNew'},
-        { title: '是否为火', dataIndex: 'isFire',render:val => val==1?'是':'否',key:'isFire'},
+        { title: '是否热门', dataIndex: 'isFire',render:val => val==1?'是':'否',key:'isFire'},
         { title: '预估额度', dataIndex: 'productMaxLoad', key: 'productMaxLoad'},
         { title: '月费率', dataIndex: 'monthlyFeeRate',key:'monthlyFeeRate'},
         {

@@ -46,7 +46,7 @@ export default class BasicForms extends PureComponent {
     return (
       <div>
         <p style={{fontSize: '16px',fontWeight:700,color: '#000'}}>订单状态</p>
-        <Steps  current={item.orderStatus} style={{ marginBottom: 80, width: '80%' }}>
+        <Steps  current={item.orderStatus} style={{ marginBottom: 80}}>
           <Step title="申请中" />
           <Step title="已申请" />
           <Step title="已初审" />
@@ -122,7 +122,7 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <PageHeaderLayout style={{ marginBottom: 32}} style={{fontWeight:'normal'}}>
-        <Card bordered={false} style={{padding:'0 146px 0 135px'}}>
+        <Card bordered={false} style={{padding:'0 10%'}}>
           <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32,position:'relative'}} col={2}>
             <Description term="订单号">{item.orderNo}</Description>
             <Description term="更新时间">{moment(item.updateTime).format('llll')}</Description>

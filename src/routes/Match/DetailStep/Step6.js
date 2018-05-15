@@ -55,7 +55,7 @@ class Step1 extends React.PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 10 },
+        sm: { span: 10, offset: 11 },
       },
     };
     return (
@@ -63,7 +63,7 @@ class Step1 extends React.PureComponent {
         <Form
           onSubmit={this.handleSubmit}
           hideRequiredMark
-          style={{ marginTop: 8 }}
+          style={{ margin: '30px 0 50px 0' }}
         >
           {/* <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>

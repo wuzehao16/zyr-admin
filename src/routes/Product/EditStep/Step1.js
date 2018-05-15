@@ -462,7 +462,7 @@ class Step1 extends React.PureComponent {
                     max={100}
                     min={0}
                     addonAfter="%"
-                    placeholder="请输入"
+                    placeholder="请输入分润比例"
                   />
                 )}
               </Form.Item>
@@ -471,7 +471,7 @@ class Step1 extends React.PureComponent {
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item
-                label="月费率"
+                label="月均费率"
                 {...formItemLayout2}
                >
                 {getFieldDecorator('monthlyFeeRate',{
@@ -479,7 +479,7 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入月费率',
+                      message: '请输入月均费率',
                     },
                   ],
                 })(
@@ -489,7 +489,7 @@ class Step1 extends React.PureComponent {
                     max={3}
                     min={0}
                     addonAfter="%"
-                    placeholder="请输入"
+                    placeholder="请输入月均费率"
                   />
                 )}
               </Form.Item>
@@ -539,7 +539,7 @@ class Step1 extends React.PureComponent {
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item
-                label="手续费"
+                label="手续费用"
                 {...formItemLayout2}
                >
                 {getFieldDecorator('productPoundage',{
@@ -551,7 +551,7 @@ class Step1 extends React.PureComponent {
                     step="0.01"
                     min={0}
                     addonAfter="%"
-                    placeholder="请输入"
+                    placeholder="请输入手续费用"
                   />
                 )}
               </Form.Item>
@@ -618,14 +618,14 @@ class Step1 extends React.PureComponent {
                 })(
                   <Input
                     maxLength='25'
-                    placeholder="请输入"
+                    placeholder="请输入产品须知"
                   />
                 )}
               </Form.Item>
             </Col>
             <Col md={12} sm={24}>
               <Form.Item
-                label="推荐语"
+                label="产品简介"
                 {...formItemLayout}
                >
                 {getFieldDecorator('productRecommend',{
@@ -633,13 +633,13 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入推荐语',
+                      message: '请输入产品简介',
                     },
                   ],
                 })(
                   <Input
                     maxLength='12'
-                    placeholder="请输入"
+                    placeholder="请输入产品简介"
                   />
                 )}
               </Form.Item>
@@ -648,13 +648,13 @@ class Step1 extends React.PureComponent {
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item
-                label="排序"
+                label="产品排序"
                 {...formItemLayout2}
                >
                 {getFieldDecorator('productSort',{
                   initialValue: item.productSort,
                 })(
-                  <Input min={1} max={10000} type="number" placeholder="请输入"/>
+                  <Input min={1} max={10000} type="number" placeholder="请输入产品排序"/>
                 )}
               </Form.Item>
             </Col>
@@ -672,7 +672,7 @@ class Step1 extends React.PureComponent {
                     },
                   ],
                 })(
-                  <Select placeholder="请选择">
+                  <Select placeholder="请选择上架状态">
                     <Option value="1">上架</Option>
                     <Option value="0">下架</Option>
                   </Select>
@@ -699,7 +699,7 @@ class Step1 extends React.PureComponent {
                     <Select
                       mode="multiple"
                       style={{ width: '100%' }}
-                      placeholder="请选择"
+                      placeholder="请选择产品类别"
                       // defaultValue={['a10', 'c12']}
                       onChange={this.handleChange}
                     >
@@ -725,7 +725,7 @@ class Step1 extends React.PureComponent {
                     })(
                       <Select
                         style={{ width: '100%' }}
-                        placeholder="请选择"
+                        placeholder="请选择信用贷模型"
                         onChange={this.handleChange}
                       >
                         {ModelList1Options}
@@ -748,7 +748,7 @@ class Step1 extends React.PureComponent {
                       })(
                         <Select
                           style={{ width: '100%' }}
-                          placeholder="请选择"
+                          placeholder="请选择抵押贷模型"
                           onChange={this.handleChange}
                         >
                           {ModelList2Options}
@@ -777,7 +777,7 @@ class Step1 extends React.PureComponent {
                     <Select
                       mode="multiple"
                       style={{ width: '100%' }}
-                      placeholder="请选择"
+                      placeholder="请选择房产类型"
                       // defaultValue={['a10', 'c12']}
                       onChange={this.handleChange}
                     >
@@ -805,7 +805,7 @@ class Step1 extends React.PureComponent {
                     <Select
                       mode="multiple"
                       style={{ width: '100%' }}
-                      placeholder="请选择"
+                      placeholder="请选择客户类型"
                       // defaultValue={['a10', 'c12']}
                       onChange={this.handleChange}
                     >
@@ -833,7 +833,7 @@ class Step1 extends React.PureComponent {
                     <Select
                       mode="multiple"
                       style={{ width: '100%' }}
-                      placeholder="请选择"
+                      placeholder="请选择还款方式"
                       // defaultValue={['a10', 'c12']}
                       onChange={this.handleChange}
                     >
@@ -875,7 +875,7 @@ class Step1 extends React.PureComponent {
                       max={5}
                       mode="multiple"
                       style={{ width: '100%' }}
-                      placeholder="请选择"
+                      placeholder="请选择产品特点"
                       // defaultValue={['a10', 'c12']}
                       onChange={this.handleChange}
                     >
@@ -890,7 +890,7 @@ class Step1 extends React.PureComponent {
               <Col md={12} sm={24}>
                 <FormItem
                   {...formItemLayout2}
-                   label="是否纳入评测"
+                   label="纳入评测"
                    style={{
                      display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
                    }}
@@ -898,7 +898,7 @@ class Step1 extends React.PureComponent {
                    {getFieldDecorator('isEvaluating',{
                      initialValue:item.isEvaluating,
                    })(
-                     <Select placeholder="请选择">
+                     <Select placeholder="请选择是否纳入评测">
                        <Option value={0}>否</Option>
                        <Option value={1}>是</Option>
                      </Select>
@@ -908,7 +908,7 @@ class Step1 extends React.PureComponent {
               <Col md={12} sm={24}>
                 <FormItem
                   {...formItemLayout3}
-                   label="是否为火"
+                   label="是否热门"
                    style={{
                      display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
                     //  marginRight:'28px'
@@ -917,7 +917,7 @@ class Step1 extends React.PureComponent {
                    {getFieldDecorator('isFire',{
                      initialValue:item.isFire,
                    })(
-                     <Select placeholder="请选择">
+                     <Select placeholder="请选择是否热门">
                        <Option value='0'>否</Option>
                        <Option value='1'>是</Option>
                      </Select>

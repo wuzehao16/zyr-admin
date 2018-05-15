@@ -41,12 +41,13 @@ export default class BasicForms extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 },
+        sm: { span: 12 },
+        md: { span: 6, offset: 3 },
       },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 },
-        md: { span: 10 },
+        md: { span: 6 },
       },
     };
 
@@ -109,7 +110,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="排序"
+              label="会员排序"
             >
               {getFieldDecorator('leveSort', {
                 rules: [{
@@ -121,11 +122,11 @@ export default class BasicForms extends PureComponent {
             </FormItem>
 
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit" loading={submitting}>
-                提交
-              </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/membership'))}>
+              <Button onClick={() => dispatch(routerRedux.push('/membership'))}>
                 返回
+              </Button>
+              <Button  style={{ marginLeft: 50 }} type="primary" htmlType="submit" loading={submitting}>
+                提交
               </Button>
             </FormItem>
           </Form>

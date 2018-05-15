@@ -78,14 +78,14 @@ class Step3 extends React.PureComponent {
     };
     return (
       <div style={{marginTop:"50px"}}>
-        <h1>申请流程:</h1>
+        <h3 style={{fontWeight:700}}>申请流程:</h3>
         <Steps current={6} progressDot style={{marginTop:"50px"}} >
           <Step title="1" description={<Input value={this.state.step1} onChange={this.onChangeStep1} placeholder="申请"/>} />
           <Step title="2" description={<Input value={this.state.step2} onChange={this.onChangeStep2} placeholder="申请"/>} />
           <Step title="3" description={<Input value={this.state.step3} onChange={this.onChangeStep3} placeholder="申请"/>} />
           <Step title="4" description={<Input value={this.state.step4} onChange={this.onChangeStep4} placeholder="申请"/>} />
           <Step title="5" description={<Input value={this.state.step5} onChange={this.onChangeStep5} placeholder="申请"/>} />
-          <Step title="6" description={<Input value={this.state.step6} onChange={this.onChangeStep6} placeholder="申请"/>} />
+          <Step title="6" description={<Input value={this.state.step6} onChange={this.onChangeStep6} placeholder="完成贷款申请"/>} />
         </Steps>
         <div style={{marginTop:"50px",textAlign:'center'}}>
           <Button onClick={onPrev} style={{ marginRight: 30 }}>

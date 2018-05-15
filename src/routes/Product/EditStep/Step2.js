@@ -190,6 +190,12 @@ class Step2 extends React.PureComponent {
             下一步
             </Button>
         </Form.Item>
+        <style jsx>{`
+          .ant-form label{
+            font-weight:700;
+          }
+          `}
+        </style>
       </Form>
     );
   }

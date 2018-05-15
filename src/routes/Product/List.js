@@ -245,6 +245,8 @@ export default class TableList extends PureComponent {
     renderForm() {
     const { getFieldDecorator } = this.props.form;
     const { product: { city, audit, institutionType, intRange }, user:{ currentUser }  } = this.props;
+    // console.log('user',user);
+    console.log('currentUser.info',currentUser.info);
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
     }

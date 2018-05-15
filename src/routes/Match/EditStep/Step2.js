@@ -29,10 +29,11 @@ class Step1 extends React.PureComponent {
 
     const formItemLayout = {
       labelCol: {
-        span:24
+        offset:2,
       },
       wrapperCol: {
-        span:24
+        span:22,
+        offset:2,
       },
     };
 

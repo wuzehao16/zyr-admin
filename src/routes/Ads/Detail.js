@@ -7,8 +7,16 @@ import {
 } from 'antd';
 import DescriptionList from '../../components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+const FormItem = Form.Item;
 
 const { Description } = DescriptionList;
+
+const submitFormLayout = {
+  wrapperCol: {
+    xs: { span: 24, offset: 0 },
+    sm: { span: 10, offset: 10 },
+  },
+};
 
 @connect(({ ads }) => ({
   data: ads,
@@ -24,17 +32,18 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data: { item }, dispatch } = this.props
     return (
-      <PageHeaderLayout title="广告管理详情" >
+      // <PageHeaderLayout title="广告管理详情" >
+      <PageHeaderLayout>
         <Card bordered={false}>
-          <DescriptionList size="large" title="广告详情" style={{ marginBottom: 32 }} col={1}>
-            <Description term="标题">{item.adsTitle}</Description>
-            <Description term="内容">{item.adsContent}</Description>
-            <Description term="匹配词">{item.adsMatch}</Description>
-            <Description term="图片"><img src={item.adsPic} alt=""/></Description>
-            <Description term="跳转链接">{item.adsUrl}</Description>
-            <Description term="排序">{item.adsSort}</Description>
-            <Description term="上架状态">{item.upState==0?'待上架':item.upState==1?'已上架':'已下架'}</Description>
+          <DescriptionList size="large" title="广告详情" style={{ marginBottom: 50,marginLeft:'15%'}} col={2}>
+            <div>
+              <Description term=""><img src={item.adsPic}  style={{width:80,height:80,margin:'20px 0'}} alt="广告图片"/></Description>
+            </div>
+            <Description term="广告标题">{item.adsTitle}</Description>
             <Description term="广告类型">{item.adsTypeName}</Description>
+            <Description term="匹配词">{item.adsMatch}</Description>
+            <Description term="广告排序">{item.adsSort}</Description>
+            <Description term="上架状态">{item.upState==0?'待上架':item.upState==1?'已上架':'已下架'}</Description>
             {
               item.upState ==0
                 ? <div>
@@ -43,13 +52,14 @@ export default class BasicForms extends PureComponent {
                   </div>
                 : <Description></Description>
             }
-
+            <Description term="广告内容">{item.adsContent}</Description>
+            <Description term="跳转链接">{item.adsUrl}</Description>
           </DescriptionList>
-          <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
-            <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/ads'))}>
-            返回
-            </Button>
-          </DescriptionList>
+          <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
+              <Button onClick={() => dispatch(routerRedux.push('/ads'))}>
+                返回
+              </Button>
+          </FormItem>
         </Card>
       </PageHeaderLayout>
     );

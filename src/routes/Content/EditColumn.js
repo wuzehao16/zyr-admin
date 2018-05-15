@@ -15,13 +15,13 @@ const { TextArea } = Input;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 7 },
-    md: { span: 5 },
+    sm: { span: 12 },
+    md: { span: 7 },
   },
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 12 },
-    md: { span: 12 },
+    md: { span: 9 },
   },
 };
 
@@ -132,16 +132,16 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="排序"
+              label="栏目排序"
             >
               {getFieldDecorator('adsSort', {
                 initialValue: item.adsSort,
                 rules: [{
                   required: true,
-                  message: '请输入栏目名称',
+                  message: '请输入栏目排序',
                 }],
               })(
-                <Input min={1} max={10000} type="number" placeholder="请输入"/>
+                <Input min={1} max={10000} type="number" placeholder="请输入栏目排序"/>
               )}
             </FormItem>
 
@@ -162,7 +162,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content/column'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/content/column'))}>
                 返回
               </Button>
             </FormItem>

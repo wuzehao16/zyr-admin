@@ -15,13 +15,13 @@ const { TextArea } = Input;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 7 },
-    md: { span: 5 },
+    sm: { span: 12 },
+    md: { span: 7 },
   },
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 12 },
-    md: { span: 12 },
+    md: { span: 9 },
   },
 };
 
@@ -127,7 +127,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="排序"
+              label="栏目排序"
             >
               {getFieldDecorator('adsSort', {
                 rules: [{
@@ -156,7 +156,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content/column'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/content/column'))}>
                 返回
               </Button>
             </FormItem>

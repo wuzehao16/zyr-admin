@@ -33,9 +33,10 @@ export default class BasicForms extends PureComponent {
     )
     // const step1 = item.applyFlow.split(',').map(item => <Step key={item} title={item}  />)
     return (
-      <PageHeaderLayout title="产品管理详情" >
+      // <PageHeaderLayout title="产品管理详情" >
+      <PageHeaderLayout>
         <Card bordered={false}>
-          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
+          <DescriptionList size="large" title="基本信息" style={{ marginBottom: '16px',marginLeft:'15%' }} col={2}>
             <Description term="所在城市">{item.city}</Description>
             <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
             <Description term="机构名称">{item.manageName}</Description>
@@ -51,9 +52,9 @@ export default class BasicForms extends PureComponent {
             <Description term="排序">{item.productSort}</Description>
             <Description term="上架状态">{item.shelfState==1?'已上架':'已下架'}</Description>
             <Description term="是否纳入评测">{item.isEvaluating==1?'是':'否'}</Description>
-            <Description term="是否为火">{item.isFire==1?'是':'否'}</Description>
+            <Description term="是否热门">{item.isFire==1?'是':'否'}</Description>
           </DescriptionList>
-          <DescriptionList size="large" style={{ marginBottom: 32 }} col={1}>
+          <DescriptionList size="large" style={{ marginBottom: 32,  marginLeft:'15%' }} col={1}>
             <Description term="产品类别">{item.productTypeName}</Description>
             {
               item.matchingModeName1
@@ -68,50 +69,50 @@ export default class BasicForms extends PureComponent {
             <Description term="还款方式">{item.productPayWayName}</Description>
             <Description term="产品特点">{item.productFeaturesName}</Description>
           </DescriptionList>
-          <Divider style={{ marginBottom: 12 }} />
-          <DescriptionList size="large" title="产品介绍" style={{ marginBottom: 12 }} col={1}>
+          <Divider style={{ marginBottom: 12, marginLeft:'15%', width:'30%' }} />
+          <DescriptionList size="large" title="产品介绍" style={{ marginBottom: 12,  marginLeft:'15%' }} col={1}>
             {/* <Description>{item.productIntroduction}</Description> */}
             <div dangerouslySetInnerHTML={{
              __html: item.productIntroduction
            }}/>
           </DescriptionList>
-          <Divider style={{ marginBottom: 12 }} />
-          <DescriptionList size="large" title="基本要求" style={{ marginBottom: 12 }} col={1}>
+          <Divider style={{ marginBottom: 12, marginLeft:'15%', width:'30%' }} />
+          <DescriptionList size="large" title="基本要求" style={{ marginBottom: 12, marginLeft:'15%' }} col={1}>
             {/* <Description>{item.basieReq}</Description> */}
             <div dangerouslySetInnerHTML={{
              __html: item.basieReq
            }}/>
           </DescriptionList>
-          <Divider style={{ marginBottom: 12 }} />
-          <DescriptionList size="large" title="征信要求" style={{ marginBottom: 12 }} col={1}>
+          <Divider style={{ marginBottom: 12, marginLeft:'15%', width:'30%' }} />
+          <DescriptionList size="large" title="征信要求" style={{ marginBottom: 12, marginLeft:'15%' }} col={1}>
             {/* <Description>{item.creditReq}</Description> */}
             <div dangerouslySetInnerHTML={{
              __html: item.creditReq
            }}/>
           </DescriptionList>
-          <Divider style={{ marginBottom: 12 }} />
-          <DescriptionList size="large" title="负债要求" style={{ marginBottom: 12 }} col={1}>
+          <Divider style={{ marginBottom: 12, marginLeft:'15%', width:'30%' }} />
+          <DescriptionList size="large" title="负债要求" style={{ marginBottom: 12, marginLeft:'15%' }} col={1}>
             {/* <Description>{item.claims}</Description> */}
             <div dangerouslySetInnerHTML={{
              __html: item.claims
            }}/>
           </DescriptionList>
-          <Divider style={{ marginBottom: 12 }} />
-          <DescriptionList size="large" title="额度计算" style={{ marginBottom: 12 }} col={1}>
+          <Divider style={{ marginBottom: 12, marginLeft:'15%', width:'30%' }} />
+          <DescriptionList size="large" title="额度计算" style={{ marginBottom: 12, marginLeft:'15%' }} col={1}>
             {/* <Description>{item.positonCount}</Description> */}
             <div dangerouslySetInnerHTML={{
              __html: item.positonCount
            }}/>
           </DescriptionList>
-          <Divider style={{ marginBottom: 12 }} />
-          <DescriptionList size="large" title="其他要求" style={{ marginBottom: 32 }} col={1}>
+          <Divider style={{ marginBottom: 12, marginLeft:'15%', width:'30%' }} />
+          <DescriptionList size="large" title="其他要求" style={{ marginBottom: 32, marginLeft:'15%' }} col={1}>
             {/* <Description>{item.otherReq}</Description> */}
             <div dangerouslySetInnerHTML={{
              __html: item.otherReq
            }}/>
           </DescriptionList>
-          <Divider style={{ marginBottom: 12 }} />
-          <DescriptionList size="large" title="产品申请流程" style={{ marginBottom: 32 }} col={1}>
+          <Divider style={{ marginBottom: 12, marginLeft:'15%', width:'0%'}} />
+          <DescriptionList size="large" title="产品申请流程" style={{ marginBottom: 50, marginLeft:'15%' }} col={1}>
             <Steps size="small" current={-1} style={{width:'80%'}}>
               {step}
             </Steps>

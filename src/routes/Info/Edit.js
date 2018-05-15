@@ -15,13 +15,13 @@ const { TextArea } = Input;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 7 },
-    md: { span: 5 },
+    sm: { span: 12 },
+    md: { span: 7 },
   },
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 12 },
-    md: { span: 12 },
+    md: { span: 9 },
   },
 };
 
@@ -104,7 +104,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="标题"
+              label="消息标题"
             >
               {getFieldDecorator('paltforMsgTitle', {
                 initialValue: item.paltforMsgTitle,
@@ -118,7 +118,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="内容"
+              label="消息内容"
             >
               {getFieldDecorator('paltforMsgContent', {
                 initialValue: item.paltforMsgContent,
@@ -151,7 +151,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/info/notification'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/info/notification'))}>
                 返回
               </Button>
             </FormItem>
