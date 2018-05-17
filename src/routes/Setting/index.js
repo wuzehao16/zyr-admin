@@ -583,6 +583,8 @@ export default class BasicForms extends PureComponent {
   }
   render() {
     const { submitting, data:{ currentUser } , setting:{ item }, dispatch } = this.props;
+    const { getFieldDecorator } = this.props.form;
+    console.log('item.manageLogoId',item.manageLogoId)
     return (
       // <PageHeaderLayout title="账号设置">
       <PageHeaderLayout>
@@ -615,7 +617,7 @@ export default class BasicForms extends PureComponent {
                 <Description term="机构类型">{item.institutionCode?(item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'):''}</Description>
                 <Description term="所在城市">{item.city}</Description>
                 <Description term="机构名称">{item.manageName}</Description>
-                <p>如需修改基本信息联系客服（0755）21046730</p>
+                {/* <p>如需修改基本信息联系客服（0755）21046730</p> */}
               </DescriptionList>
             </TabPane>
           </Tabs>

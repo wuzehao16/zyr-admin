@@ -33,9 +33,11 @@ export default class BasicForms extends PureComponent {
         <Card bordered={false}>
           <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
             <div>
-              <Description>
+              {item.userHead?
+                <Description>
                 <img src={item.userHead} alt="用户头像" style={{margin:'20px 0'}} height={80} width={80}/>
-              </Description>
+                </Description>
+                :null}
             </div>
             <Description term="用户编号">{item.userId}</Description>
             <Description term="手机号码">{item.loginAccount}</Description>

@@ -93,11 +93,13 @@ export default class BasicForms extends PureComponent {
             style={{ marginTop: 8 }}
           >
             <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
-              <div>
+            <div>
+              {item.userHead?
                 <Description>
-                  <img src={item.userHead} style={{margin:'20px 0'}} alt="用户头像" height={80} width={80}/>
+                <img src={item.userHead} alt="用户头像" style={{margin:'20px 0'}} height={80} width={80}/>
                 </Description>
-              </div>
+                :null}
+            </div>
               <Description term="用户编号">{item.userId}</Description>
               <Description term="手机">{item.loginAccount}</Description>
               <Description term="用户名称">{item.userName}</Description>
@@ -106,15 +108,25 @@ export default class BasicForms extends PureComponent {
             <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
             <DescriptionList size="large" title="认证消息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
               <Description term="真实姓名">{item.realName}</Description>
-              <Description term="性别">{item.userSex === 1 ? '女' : '男'}</Description>
+              <Description term="性别">{item.userSex?(item.userSex === 1 ? '女' : '男'):''}</Description>
               <Description term="身份证号">{item.idNumber}</Description>
               <Description>&nbsp;</Description>
               <Description >
+                {item.upperPictureId?
+                  <img src={item.upperPictureId} alt="" height={200} width={400}/>:null
+                }
+              </Description>
+              <Description >
+                {item.backPictureId?
+                  <img src={item.backPictureId} alt="" height={200} width={400}/>:null
+                }
+              </Description>
+              {/* <Description >
                 <img src={item.upperPictureId} alt="" height={200} width={400}/>
               </Description>
               <Description >
                 <img src={item.backPictureId} alt="" height={200} width={400}/>
-              </Description>
+              </Description> */}
             </DescriptionList>
             <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
             <DescriptionList size="large" title="会员信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>

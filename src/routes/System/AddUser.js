@@ -53,12 +53,13 @@ export default class BasicForms extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 },
+        sm: { span: 12 },
+        md: { span: 8 },
       },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 },
-        md: { span: 10 },
+        md: { span: 8 },
       },
     };
 
@@ -144,7 +145,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/user'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/system/user'))}>
                 返回
               </Button>
             </FormItem>

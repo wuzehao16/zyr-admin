@@ -37,7 +37,9 @@ export default class BasicForms extends PureComponent {
         <Card bordered={false}>
           <DescriptionList size="large" title="广告详情" style={{ marginBottom: 50,marginLeft:'15%'}} col={2}>
             <div>
-              <Description term=""><img src={item.adsPic}  style={{width:80,height:80,margin:'20px 0'}} alt="广告图片"/></Description>
+              {
+                item.adsPic?<Description term=""><img src={item.adsPic}  style={{width:80,height:80,margin:'20px 0'}} alt="广告图片"/></Description>:null
+              }
             </div>
             <Description term="广告标题">{item.adsTitle}</Description>
             <Description term="广告类型">{item.adsTypeName}</Description>
