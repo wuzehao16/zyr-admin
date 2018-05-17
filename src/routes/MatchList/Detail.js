@@ -261,10 +261,11 @@ export default class BasicForms extends PureComponent {
     )
   })
   return (
-    <PageHeaderLayout title="匹配详情">
+    // <PageHeaderLayout title="匹配详情">
+    <PageHeaderLayout>
       <div className={styles.Wrapper}>
 
-         <span style={{fontSize:18,color:'#000'}}>{loanDemand.name}</span>
+         <span style={{fontSize:16,fontWeight:700,color:'rgba(0, 0, 0, 0.65)'}}>{loanDemand.name}</span>
         <div className={styles.More}>
           <div><span>{location[basicInformation.location]}</span></div>
           <div><span>{age[basicInformation.age]}</span></div>
@@ -272,8 +273,8 @@ export default class BasicForms extends PureComponent {
           <div><span>{maritalStatus[basicInformation.maritalStatus]}</span></div>
         </div>
         <div>
-          <div><span>期望贷款：{loanDemand.exLoanAmount}元</span></div>
-          <div><span>贷款类型：{loanType[loanDemand.loanType]}</span></div>
+          <div  className={styles.Li}><span className={styles.L}>期望贷款：{loanDemand.exLoanAmount}元</span></div>
+          <div className={styles.Li}><span className={styles.L}>贷款类型：{loanType[loanDemand.loanType]}</span></div>
         </div>
       </div>
       <div className={styles.Wrapper}>

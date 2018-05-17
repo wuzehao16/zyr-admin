@@ -81,7 +81,8 @@ class StandardTable extends PureComponent {
     };
     const columns = [
       {
-        title: '序号',
+        title: '记录序号',
+        align:'center',
         dataIndex: 'no',
         render: (text, record, index) => {
           return (
@@ -91,22 +92,27 @@ class StandardTable extends PureComponent {
       },
       {
         title:'客户名称',
+        align:'center',
         dataIndex:'customer'
       },
       {
         title:'提单人',
+        align:'center',
         dataIndex:'userName'
       },
       {
         title:'产品数量',
+        align:'center',
         dataIndex:'productNum'
       },
       {
         title:'综合得分',
+        align:'center',
         dataIndex:'matchScore'
       },
       {
         title: '匹配时间',
+        align:'center',
         dataIndex: 'createTime',
         sorter: true,
       },

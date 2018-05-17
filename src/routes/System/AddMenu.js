@@ -16,11 +16,12 @@ const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
     sm: { span: 7 },
+    md: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 12 },
-    md: { span: 10 },
+    md: { span: 8 },
   },
 };
 
@@ -75,19 +76,19 @@ export default class BasicForms extends PureComponent {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="排序号"
+          label="菜单排序"
         >
           {getFieldDecorator('orderNum', {
             rules: [{
-              required: true, message: '请输入排序号',
+              required: true, message: '请输入菜单排序',
             }],
           })(
-            <Input min={1} max={10000} type="number" placeholder="请输入"/>
+            <Input min={1} max={10000} type="number" placeholder="请输入菜单排序"/>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="图标"
+          label="菜单图标"
           help="获取图标：https://ant.design/components/icon-cn/#header"
         >
           {getFieldDecorator('icon', {
@@ -127,19 +128,19 @@ export default class BasicForms extends PureComponent {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="排序号"
+          label="菜单排序"
         >
           {getFieldDecorator('orderNum', {
             rules: [{
-              required: true, message: '请输入排序号',
+              required: true, message: '请输入菜单排序号',
             }],
           })(
-            <Input min={1} max={10000} type="number" placeholder="请输入"/>
+            <Input min={1} max={10000} type="number" placeholder="请输入菜单排序"/>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="图标"
+          label="菜单图标"
           help="获取图标：https://ant.design/components/icon-cn/#header"
         >
           {getFieldDecorator('icon', {
@@ -205,7 +206,7 @@ export default class BasicForms extends PureComponent {
           >
             <FormItem
               {...formItemLayout}
-              label="类型"
+              label="菜单类型"
             >
               {getFieldDecorator('type', {
                 initialValue: 1,
@@ -219,7 +220,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="名称"
+              label="菜单名称"
             >
               {getFieldDecorator('name', {
                 rules: [{
@@ -235,7 +236,8 @@ export default class BasicForms extends PureComponent {
             >
               {getFieldDecorator('parentId', {
                 rules: [{
-                  required: true, message: '菜单名称或按钮名称',
+                  required: true,
+                  message: '菜单名称或按钮名称',
                 }],
               })(
                 <TreeSelect
@@ -249,12 +251,18 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/menu'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/system/menu'))}>
                 返回
               </Button>
             </FormItem>
           </Form>
         </Card>
+        {/* <style jsx>{`
+          span.ant-select, span.ant-select-enabled {
+            width:100%;
+          }
+        `}
+        </style> */}
       </PageHeaderLayout>
     );
   }

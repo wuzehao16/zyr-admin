@@ -111,10 +111,10 @@ class BasicLayout extends React.PureComponent {
     }
     return title;
   }
-  handleMenuCollapse = () => {
+  handleMenuCollapse = collapsed => {
     this.props.dispatch({
       type: 'global/changeLayoutCollapsed',
-      payload: false,
+      payload: collapsed,
     });
   }
   handleNoticeClear = (type) => {
@@ -157,7 +157,7 @@ class BasicLayout extends React.PureComponent {
           // you will be forced to jump to the 403 interface without permission
           Authorized={Authorized}
           menuData={memus}
-          collapsible
+          // collapsible
           collapsed={collapsed}
           location={location}
           isMobile={this.state.isMobile}
