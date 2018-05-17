@@ -1,19 +1,7 @@
+import { isUrl, formatter } from '../utils/utils';
 import { queryNotices, queryMenus } from '../services/api';
 import store from '../index';
 
-function formatter(data, parentPath = '', parentAuthority) {
-  return data.map((item) => {
-    const result = {
-      ...item,
-      path: `${parentPath}${item.path}`,
-      authority: item.authority || parentAuthority,
-    };
-    if (item.children) {
-      result.children = formatter(item.children, `${parentPath}${item.path}/`, item.authority);
-    }
-    return result;
-  });
-}
 
 export default {
   namespace: 'global',
@@ -41,8 +29,6 @@ export default {
           type: 'login/logout',
         });
         window.location.reload();
-      } finally {
-
       }
       const menus = formatter(response.data.children)
       yield put({
