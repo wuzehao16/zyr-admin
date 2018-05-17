@@ -460,8 +460,12 @@ export const getRouterData = (app) => {
   };
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());
+
+  // Route configuration data
+  // eg. {name,authority ...routerConfig }
   const routerData = {};
-  Object.keys(routerConfig).forEach((path) => {
+  // The route matches the menu
+  Object.keys(routerConfig).forEach(path => {
     // Regular match item name
     // eg.  router /user/:id === /user/chen
     const pathRegexp = pathToRegexp(path);
@@ -479,6 +483,7 @@ export const getRouterData = (app) => {
       ...router,
       name: router.name || menuItem.name,
       authority: router.authority || menuItem.authority,
+      hideInBreadcrumb: router.hideInBreadcrumb || menuItem.hideInBreadcrumb,
     };
     routerData[path] = router;
   });
