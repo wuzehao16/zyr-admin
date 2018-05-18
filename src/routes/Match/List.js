@@ -267,6 +267,7 @@ export default class TableList extends PureComponent {
               <FormItem>
                 {getFieldDecorator('modelName')(
                 <AutoComplete
+                  className="searchInput"
                   style={{width:'100%'}}
                   placeholder="请输入模型名称"
                 />
@@ -274,9 +275,9 @@ export default class TableList extends PureComponent {
               </FormItem>
             </Col>
             <Col span={3}>
-              <Button type="primary" icon="search" style={{width:'50%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
-              <button onClick={() => dispatch(routerRedux.push('/match/add'))} style={{verticalAlign:'top',background:'rgb(238,86,72)',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
-                <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
+              <Button type="primary" icon="search" style={{width:'50%',height:'40px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <button onClick={() => dispatch(routerRedux.push('/match/add'))} style={{verticalAlign:'top',background:'rgb(238,86,72)',width:'50%',border:'none',borderLeft:'1px solid #fff',borderBottomRightRadius:'3px',borderTopRightRadius:'3px'}} >
+                <span style={{fontSize:14,lineHeight:'38px',color:'#fff'}}>新增</span>
               </button>
             </Col>
           </Row>:
@@ -294,6 +295,7 @@ export default class TableList extends PureComponent {
               <FormItem>
                 {getFieldDecorator(this.state.selectValues)(
                   <AutoComplete
+                    className="searchInput"
                     style={{width:'100%'}}
                     placeholder="请输入模型名称或机构名称"
                   />
@@ -301,7 +303,7 @@ export default class TableList extends PureComponent {
               </FormItem>
             </Col>
             <Col span={2}>
-              <Button type="primary" icon="search" style={{width:'90%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <Button type="primary" icon="search" style={{width:'90%',height:'40px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center',borderBottomRightRadius:'3px',borderTopRightRadius:'3px'}} htmlType="submit"></Button>
             </Col>
           </Row>
                  // </InputGroup>
@@ -395,8 +397,38 @@ export default class TableList extends PureComponent {
         />
         <style jsx>{`
           .ant-table-thead {
-            font-size:15px;
-            font-weight:700;
+            font-size: 15px;
+            font-weight: 700;
+          }
+          .ant-select-selection__placeholder {
+            height: 40px;
+            color: rgba(0,0,0,.65);
+            line-height: 40px;
+            margin-top:-20px;
+          }
+          .searchInput .ant-select-selection__placeholder {
+            margin-top:-15px;
+          }
+          .ant-select-selection--single{
+            height: 40px;
+          }
+          .ant-select-selection__rendered {
+            line-height: 40px;
+          }
+          .ant-form-item .ant-form-item-control{
+            line-height: 40px;
+          }
+          .ant-select-auto-complete.ant-select .ant-input {
+            height: 40px;
+          }
+          .ant-input {
+            height: 40px;
+          }
+          .List__tableListForm___2Fzic .ant-form-item > .ant-form-item-label {
+            line-height: 40px;
+          }
+          .ant-btn {
+            height: 40px;
           }
         `}
         </style>
