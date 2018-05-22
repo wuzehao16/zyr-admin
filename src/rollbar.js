@@ -1,9 +1,9 @@
 import Rollbar from 'rollbar';
 
 // Track error by rollbar.com
-if (location.host === 'preview.pro.ant.design') {
+if (location.host === 'app.ibankmatch.com') {
   Rollbar.init({
-    accessToken: '033ca6d7c0eb4cc1831cf470c2649971',
+    accessToken: 'b1bae8b02bd8478baff2b26f691580ee',
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {

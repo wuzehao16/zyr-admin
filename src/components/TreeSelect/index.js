@@ -14,7 +14,6 @@ class MenuTreeSelect extends React.Component {
     }
   }
   onChange = (value) => {
-    console.log(arguments);
     this.setState({ value });
     if (this.props.onChange) {
       this.props.onChange(value)
