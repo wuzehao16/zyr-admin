@@ -46,7 +46,6 @@ class Step1 extends React.PureComponent {
     };
     const onValidateForm = () => {
       validateFields((err, values) => {
-        console.log(values,err)
         if (!err) {
           dispatch({
             type: 'match/saveStep2FormData',

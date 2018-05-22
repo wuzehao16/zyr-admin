@@ -18,7 +18,6 @@ export default class BasicForms extends PureComponent {
 
   render() {
     const { submitting, data: { item }, dispatch } = this.props
-    console.log(item)
     return (
       // <PageHeaderLayout title="内容管理详情" >
       <PageHeaderLayout>

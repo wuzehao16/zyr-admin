@@ -25,7 +25,6 @@ export default class StepForm extends PureComponent {
   }
   render() {
     const { match, routerData,history } = this.props;
-    console.log(this.props)
     return (
       <PageHeaderLayout>
         <Card bordered={false}>

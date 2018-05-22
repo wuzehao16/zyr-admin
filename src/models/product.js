@@ -57,7 +57,6 @@ export default {
       });
     },
     *fetchModel1({ payload }, { call, put }) {
-      console.log(1)
       const response = yield call(queryModel, payload);
       yield put({
         type: 'saveThing',
@@ -77,7 +76,6 @@ export default {
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
-      console.log(response)
       if (response.code === 0) {
         message.success('删除成功');
       } else {
@@ -318,7 +316,6 @@ export default {
       // const newList = state.data.data.map(product => product.productId == updateProduct.productId ? {...product, ...updateProduct,} : product);
       //处理跟新之后吧数据移动到第一位，以及更新时间
       const newList = state.data.data;
-      console.log(updateProduct)
       var a = {};
       for (var i = 0; i < newList.length; i++) {
           if (newList[i].productId == updateProduct.productId) {

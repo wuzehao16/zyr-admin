@@ -192,7 +192,6 @@ export default class TableList extends PureComponent {
   }
 
   handleAdd = (fields) => {
-    console.log(fields)
     this.props.dispatch({
       type: 'info/upPMIState',
       payload: fields,

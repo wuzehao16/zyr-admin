@@ -24,7 +24,6 @@ class Step1 extends React.PureComponent {
       dispatch
     } = this.props;
     var item = step.basicInformation;
-    console.log(item);
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
     const formItemLayout = {
@@ -46,7 +45,7 @@ class Step1 extends React.PureComponent {
     };
     const onValidateForm = () => {
       validateFields((err, values) => {
-        console.log(values,err)
+
         if (!err) {
           dispatch({
             type: 'match/saveStep2FormData',

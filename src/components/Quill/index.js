@@ -9,7 +9,6 @@ import styles from './index.less'
 class Editor extends React.Component {
   constructor (props) {
     super(props)
-    console.log(props,"props")
     this.state = { editorHtml: props.defaultValue, theme: 'snow' }
     this.handleChange = this.handleChange.bind(this)
   }

@@ -64,9 +64,7 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  onChange = (value) => {
-    console.log(value);
-  }
+
   render() {
     const { submitting, data:{ data}, data:{ data: { item } },  dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -163,7 +161,7 @@ export default class BasicForms extends PureComponent {
               label="用户权限"
             >
               {getFieldDecorator('sysRoles')(
-                <CheckboxGroup onChange={this.onChange} >
+                <CheckboxGroup  >
                   {RoleOptions}
                 </CheckboxGroup>
 

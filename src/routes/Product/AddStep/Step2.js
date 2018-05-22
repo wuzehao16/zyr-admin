@@ -36,7 +36,6 @@ class Step2 extends React.PureComponent {
 
       e.preventDefault();
       validateFields((err, values) => {
-        console.log(values)
         if (!err) {
           dispatch({
             type: 'product/saveStepFormData',

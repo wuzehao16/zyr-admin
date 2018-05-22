@@ -46,7 +46,6 @@ export default class TableForm extends PureComponent {
     this.props.onChange(newData);
   }
   newMember = () => {
-    console.log(this.state,"2")
     const defaultValue = this.state.data.length || 0
     const newData = this.state.data.map(item => ({ ...item }));
     newData.push({

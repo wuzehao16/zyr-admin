@@ -34,7 +34,6 @@ export default {
     },
     *updatePassword({ payload, callback }, { call, put }) {
       const response = yield call(updatePassword, payload);
-      console.log(callback)
       if(response.code === 0){
         message.success('重置密码成功');
         yield put(routerRedux.push('/member'));

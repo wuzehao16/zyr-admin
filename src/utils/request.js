@@ -74,7 +74,6 @@ export default function request(url, options) {
     .catch((e) => {
       const { dispatch } = store;
       const status = e.name;
-      console.log(status)
       // if (status === 'SyntaxError') {
       //   dispatch({
       //     type: 'login/logout',

@@ -118,7 +118,6 @@ export default class TableList extends PureComponent {
     });
   }
   handleResetPassword = (v) => {
-    console.log(v)
     this.setState({
       item: {
         loginAccount: v.loginAccount,

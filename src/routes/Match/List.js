@@ -199,13 +199,11 @@ export default class TableList extends PureComponent {
         endTime: fieldsValue.date && moment(fieldsValue.date[1]).format('YYYY-MM-DD'),
       };
 
-      console.log('values',values)
 
       this.setState({
         formValues: values,
       });
 
-      console.log('this,state,formValues',this.state);
       dispatch({
         type: 'match/fetch',
         payload: values,
@@ -230,7 +228,6 @@ export default class TableList extends PureComponent {
   }
 
   handleSelectChanges = (val) => {
-    console.log('this.state.selectValues1',this.state.selectValues)
     if(val==='模型名称'){
       val='modelName'
     }else if(val==='机构名称'){
@@ -241,7 +238,6 @@ export default class TableList extends PureComponent {
     this.setState({
       selectValues: val,
     })
-    console.log('this.state.selectValues2',this.state.selectValues)
   }
 
   renderForm() {

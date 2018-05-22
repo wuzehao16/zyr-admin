@@ -70,7 +70,6 @@ export default class TableList extends PureComponent {
     const { selectedRows } = this.state;
 
     if (!selectedRows) return;
-    selectedRows.map(row => console.log(row.meunId));
     switch (e.key) {
       case 'remove':
         dispatch({

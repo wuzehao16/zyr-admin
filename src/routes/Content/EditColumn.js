@@ -49,7 +49,6 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
-        console.log(fieldsValue.adsPic)
         const values = {
           ...fieldsValue,
         };

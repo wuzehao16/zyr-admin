@@ -51,7 +51,6 @@ class Step3 extends React.Component {
   }
   render() {
     const { dispatch, data, submitting } = this.props;
-    console.log(data)
     const onFinish = () => {
       const applyFlow = Object.values(this.state).join(",")
       dispatch({
