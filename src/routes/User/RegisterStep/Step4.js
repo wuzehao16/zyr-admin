@@ -136,7 +136,6 @@ class Step4 extends React.PureComponent {
   @Bind()
   @Debounce(500)
   getInstitutionVlookup(name) {
-    console.log(name)
     this.props.dispatch({
       type: 'register/getInstitution',
       payload: {

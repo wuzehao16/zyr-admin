@@ -36,9 +36,6 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  onChange = (value) => {
-    // console.log(value);
-  }
   queryAllRole = () => {
     this.props.dispatch({
       type: 'systemUser/queryAllRole',
@@ -136,7 +133,7 @@ export default class BasicForms extends PureComponent {
               label="用户权限"
             >
               {getFieldDecorator('sysRoles')(
-                <CheckboxGroup onChange={this.onChange} >
+                <CheckboxGroup  >
                   {RoleOptions}
                 </CheckboxGroup>
               )}

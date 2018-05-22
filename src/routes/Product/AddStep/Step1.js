@@ -85,9 +85,6 @@ class Step1 extends React.PureComponent {
       },
     });
   }
-  handleChange = (value) => {
-    console.log(`selected ${value}`);
-  }
   render() {
     const {
       product: {
@@ -288,7 +285,7 @@ class Step1 extends React.PureComponent {
           return
         }
 
-        console.log(values,err);
+        ;
         if (!err) {
           dispatch({
             type: 'product/saveStepFormData',
@@ -370,7 +367,7 @@ class Step1 extends React.PureComponent {
                           style={{ width: '100%' }}
                           placeholder="请选择机构名称"
                           // defaultValue={['a10', 'c12']}
-                          onChange={this.handleChange}
+
                         >
                           {institutionListOptions}
                         </Select>
@@ -719,7 +716,7 @@ class Step1 extends React.PureComponent {
                       style={{ width: '100%' }}
                       placeholder="请选择产品类别"
                       // defaultValue={['a10', 'c12']}
-                      onChange={this.handleChange}
+
                     >
                       {prodCategoryOptions}
                     </Select>
@@ -744,7 +741,7 @@ class Step1 extends React.PureComponent {
                       <Select
                         style={{ width: '100%' }}
                         placeholder="请选择信用贷模型"
-                        onChange={this.handleChange}
+
                       >
                         {ModelList1Options}
                       </Select>
@@ -767,7 +764,7 @@ class Step1 extends React.PureComponent {
                         <Select
                           style={{ width: '100%' }}
                           placeholder="请选择抵押贷模型"
-                          onChange={this.handleChange}
+
                         >
                           {ModelList2Options}
                         </Select>
@@ -797,7 +794,7 @@ class Step1 extends React.PureComponent {
                       style={{ width: '100%' }}
                       placeholder="请选择房产类型"
                       // defaultValue={['a10', 'c12']}
-                      onChange={this.handleChange}
+
                     >
                       {propCategoryOptions}
                     </Select>
@@ -825,7 +822,7 @@ class Step1 extends React.PureComponent {
                       style={{ width: '100%' }}
                       placeholder="请选择客户类型"
                       // defaultValue={['a10', 'c12']}
-                      onChange={this.handleChange}
+
                     >
                       {cusCategoryOptions}
                     </Select>
@@ -853,7 +850,7 @@ class Step1 extends React.PureComponent {
                       style={{ width: '100%' }}
                       placeholder="请选择还款方式"
                       // defaultValue={['a10', 'c12']}
-                      onChange={this.handleChange}
+
                     >
                       {repMethodOptions}
                     </Select>
@@ -895,7 +892,7 @@ class Step1 extends React.PureComponent {
                       style={{ width: '100%' }}
                       placeholder="请选择产品特点"
                       // defaultValue={['a10', 'c12']}
-                      onChange={this.handleChange}
+
                     >
                       {prodFeaturesOptions}
                     </Select>

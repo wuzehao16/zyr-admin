@@ -60,8 +60,6 @@ class StandardTable extends PureComponent {
     const approvalStatus = ['未通过', '审核中', '已通过'];
     const institutionType = ['无','银行机构','金融机构','小额贷款'];
     const isEvaluaStatuts = ['未纳入评测', '已纳入评测'];
-    {console.log('data',data)}
-    // {console.log('text-record',text,record)}
     const columns = [
       {
         // title: '产品信息',

@@ -15,7 +15,6 @@ const options = [
 class Step1 extends React.PureComponent {
   componentDidMount () {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.props)
     const id = this.props.location.search.split("=")[1];
     this.props.dispatch({
       type:'match/fetchDetail',
@@ -57,7 +56,7 @@ class Step1 extends React.PureComponent {
     };
     const onValidateForm = () => {
       validateFields((err, values) => {
-        console.log(values,err)
+        
         if (!err) {
           dispatch({
             type: 'match/saveStep1FormData',

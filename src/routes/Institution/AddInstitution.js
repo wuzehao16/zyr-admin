@@ -61,7 +61,6 @@ export default class BasicForms extends PureComponent {
   @Bind()
   @Debounce(500)
   getInstitutionVlookup(name) {
-    console.log(name)
     this.props.dispatch({
       type: 'institution/getInstitution',
       payload: {

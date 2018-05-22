@@ -135,24 +135,11 @@ export default {
         modelName:response.data.modeName,
         ...JSON.parse(response.data.modeJson)
       }
-      console.log(step,'step')
       yield put({
         type: 'saveDetail',
         payload: step,
       });
-      console.log(response)
-      // yield put(routerRedux.push('/match/Detail'));
     },
-    // *fetchReview({payload}, { call, put }) {
-    //   const response = yield call(queryDetail, payload);
-    //
-    //   console.log(step,"step")
-    //   yield put({
-    //     type: 'saveDetail',
-    //     payload: response.data,
-    //   });
-    //   yield put(routerRedux.push('/match/Review'));
-    // },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
       if (response.code === 0) {
@@ -202,7 +189,6 @@ export default {
     },
     updateShelves(state, action) {
       const updateMatch = action.payload;
-      console.log(updateMatch,"e")
       const newList = state.data.data;
       var a = {};
       for (var i = 0; i < newList.length; i++) {

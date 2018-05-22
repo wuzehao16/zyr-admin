@@ -57,7 +57,6 @@ class StandardTable extends PureComponent {
   render() {
     // const { selectedRowKeys } = this.state;
     const { data: { data, count }, userIdentity,  loading } = this.props;
-    console.log('data',data)
     const orderStatus = ['申请中', '已申请','已初审','已终审','已面签','已放款','已拒绝','已取消'];
     const columns = [
       {

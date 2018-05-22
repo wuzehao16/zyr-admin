@@ -20,13 +20,11 @@ export default class BasicForms extends PureComponent {
     if (this.props.data.item) {
       const { item } = this.props.data;
       let sysMenus = [];
-      console.log(item,"item")
       if (item.sysMenus) {
         sysMenus = item.sysMenus.map((m) => {
           return m.meunId;
         });
       }
-      console.log(sysMenus,"sysMenus")
       setFieldsValue({
         remark: item.remark,
         roleId: item.roleId,
@@ -47,7 +45,6 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         if (values.sysMenus) {
           /* eslint-disable no-param-reassign */
-          console.log(values.sysMenus)
           if (values.sysMenus) {
             values.sysMenus.forEach((item, index, arr) => {
               arr[index] = { meunId: item };
@@ -66,7 +63,6 @@ export default class BasicForms extends PureComponent {
     const { submitting, data, data:{ item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     getFieldDecorator('roleId');
-    console.log(getFieldValue('sysMenus'),"getsys")
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },

@@ -29,7 +29,6 @@ class AdvancedForm extends PureComponent {
   };
   componentDidMount() {
     window.addEventListener('resize', this.resizeFooterToolbar);
-    console.log(this.props)
     const id = this.props.match.params.id;
     this.props.form.getFieldDecorator('modelId',{initialValue:id})
   }
@@ -55,14 +54,12 @@ class AdvancedForm extends PureComponent {
           if (values.algorithmFormula.length >=1) {
              var a ={}
             values.algorithmFormula.map(item=>{
-            	console.log(item['name'])
             	a[item['name']] = item['expression']
             })
             values.algorithmStepsJson = {}
             Object.assign(values.algorithmStepsJson,a)
             values.algorithmFormula = JSON.stringify(values.algorithmFormula)
             values.algorithmStepsJson = JSON.stringify(values.algorithmStepsJson)
-            console.log(values)
           } else{
             message.error('请填写计公式');
             return

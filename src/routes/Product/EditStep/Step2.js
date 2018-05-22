@@ -87,7 +87,6 @@ class Step2 extends React.PureComponent {
     const onPrev = () => {
       dispatch(routerRedux.push('/product/edit/step1'));
     };
-    console.log(item)
     const onValidateForm = (e) => {
       dispatch(routerRedux.push('/product/edit/step3'));
       e.preventDefault();

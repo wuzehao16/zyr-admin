@@ -189,7 +189,6 @@ export default class BasicForms extends PureComponent {
   render() {
   const { submitting, data: { item }, dispatch } = this.props
   const i = item.objectUserJson;
-  console.log(i,"iiiiiiii")
   //贷款需求
   const loanDemand = i.loanDemand || {};
   //基本信息

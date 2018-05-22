@@ -206,7 +206,6 @@ export default class BasicForms extends PureComponent {
     }
   };
   checkPassword = (rule, value, callback) => {
-    console.log(value)
     if (!value) {
       this.setState({
         help: '请输入密码！',
@@ -584,7 +583,6 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data:{ currentUser } , setting:{ item }, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
-    console.log('item.manageLogoId',item.manageLogoId)
     return (
       // <PageHeaderLayout title="账号设置">
       <PageHeaderLayout>

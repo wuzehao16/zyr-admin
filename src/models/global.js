@@ -16,7 +16,6 @@ export default {
     *fetchMenus(_, { call, put }) {
       const response = yield call(queryMenus);
       const { dispatch } = store;
-      console.log(1)
       try {
         if (response.code !== 0) {
           dispatch({
