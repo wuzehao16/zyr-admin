@@ -240,6 +240,7 @@ export default class TableList extends PureComponent {
             <FormItem>
               {getFieldDecorator(this.state.selectValues)(
                 <AutoComplete
+                className="searchInput"
                 style={{width:'100%'}}
                 placeholder="请输入产品名称、机构名称、订单号、提单人或贷款人"
               />
@@ -247,7 +248,7 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col span={2}>
-            <Button type="primary" icon="search" style={{width:'90%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+            <Button type="primary" icon="search" style={{width:'95%',height:'40px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center',borderBottomRightRadius:'3px',borderTopRightRadius:'3px'}} htmlType="submit"></Button>
           </Col>
         </Row>:
         <Row>
@@ -264,6 +265,7 @@ export default class TableList extends PureComponent {
             <FormItem>
               {getFieldDecorator(this.state.selectValues)(
                 <AutoComplete
+                  className="searchInput"
                   style={{width:'100%'}}
                   placeholder="请输入产品名称、订单号、提单人或贷款人"
                 />
@@ -271,7 +273,7 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col span={2}>
-            <Button type="primary" icon="search" style={{width:'90%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+            <Button type="primary" icon="search" style={{width:'95%',height:'40px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center',borderBottomRightRadius:'3px',borderTopRightRadius:'3px'}} htmlType="submit"></Button>
           </Col>
         </Row>
       }
@@ -358,6 +360,39 @@ export default class TableList extends PureComponent {
           modalVisible={modalVisible}
           item={item}
         />
+        <style jsx>{`
+          .ant-select-selection__placeholder {
+            height: 40px;
+            color: rgba(0,0,0,.65);
+            line-height: 40px;
+            margin-top:-20px;
+          }
+          .searchInput .ant-select-selection__placeholder {
+            margin-top:-15px;
+          }
+          .ant-select-selection--single{
+            height: 40px;
+          }
+          .ant-select-selection__rendered {
+            line-height: 40px;
+          }
+          .ant-form-item .ant-form-item-control{
+            line-height: 40px;
+          }
+          .ant-select-auto-complete.ant-select .ant-input {
+            height: 40px;
+          }
+          .ant-input {
+            height: 40px;
+          }
+          .List__tableListForm___tKOBQ .ant-form-item > .ant-form-item-label {
+            line-height: 40px;
+          }
+          .ant-btn {
+            height: 40px;
+          }
+        `}
+        </style>
       </PageHeaderLayout>
     );
   }

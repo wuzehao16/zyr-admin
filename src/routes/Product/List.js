@@ -282,6 +282,7 @@ export default class TableList extends PureComponent {
               <FormItem>
                 {getFieldDecorator(this.state.selectValues)(
                   <AutoComplete
+                    className="searchInput"
                     style={{width:'100%'}}
                     placeholder="请输入产品名称、机构名称"
                   />
@@ -289,9 +290,9 @@ export default class TableList extends PureComponent {
               </FormItem>
             </Col>
             <Col span={3}>
-              <Button type="primary" icon="search" style={{width:'45%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
-              <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
-                <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
+              <Button type="primary" icon="search" style={{width:'45%',height:'40px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff',borderBottomRightRadius:'3px',borderTopRightRadius:'3px'}} >
+                <span style={{fontSize:14,lineHeight:'38px',color:'#fff'}}>新增</span>
               </button>
             </Col>
           </Row>:
@@ -314,6 +315,7 @@ export default class TableList extends PureComponent {
               <FormItem>
                 {getFieldDecorator('productName')(
                   <AutoComplete
+                    className="searchInput"
                     style={{width:'100%'}}
                     placeholder="请输入产品名称"
                   />
@@ -321,9 +323,9 @@ export default class TableList extends PureComponent {
               </FormItem>
             </Col>
             <Col span={3}>
-              <Button type="primary" icon="search" style={{width:'45%',height:'32px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
-              <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff'}} >
-                <span style={{fontSize:14,lineHeight:'30px',color:'#fff'}}>新增</span>
+              <Button type="primary" icon="search" style={{width:'45%',height:'40px',borderRadius:'0',fontSize:'20px',fontWeight:700,textAlign:'center'}} htmlType="submit"></Button>
+              <button onClick={this.toAdd} style={{background:'rgb(238,86,72)',verticalAlign:'top',width:'50%',border:'none',borderLeft:'1px solid #fff',borderBottomRightRadius:'3px',borderTopRightRadius:'3px'}} >
+                <span style={{fontSize:14,lineHeight:'38px',color:'#fff'}}>新增</span>
               </button>
             </Col>
           </Row>
@@ -404,21 +406,35 @@ export default class TableList extends PureComponent {
           .noborderrow .ant-select-selection{
             border:none;
           }
-          // .noborderrow.ant-select-open,.noborderrow .ant-select-focused {
-          //   border:none;
-          //   color:rgb(238，86，72)
-          // }
-          input::-webkit-input-placeholder{
-            color:red;
+          .ant-select-selection__placeholder {
+            height: 40px;
+            color: rgba(0,0,0,.65);
+            line-height: 40px;
+            margin-top:-20px;
           }
-          input:-moz-placeholder{
-            color:red;
+          .searchInput .ant-select-selection__placeholder {
+            margin-top:-15px;
           }
-          input::-moz-placeholder{
-            color:red;
+          .ant-select-selection--single{
+            height: 40px;
           }
-          input::-moz-placeholder{
-            color:red;
+          .ant-select-selection__rendered {
+            line-height: 40px;
+          }
+          .ant-form-item .ant-form-item-control{
+            line-height: 40px;
+          }
+          .ant-select-auto-complete.ant-select .ant-input {
+            height: 40px;
+          }
+          .ant-input {
+            height: 40px;
+          }
+          .List__tableListForm___sRn1M .ant-form-item > .ant-form-item-label {
+            line-height: 40px;
+          }
+          .ant-btn {
+            height: 40px;
           }
         `}
         </style>
