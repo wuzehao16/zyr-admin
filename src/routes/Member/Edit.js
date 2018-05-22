@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import {
-  Form, Input, Button, Card, Divider, Col, Select, Row
+  Form, Input, Button, Card, Divider, Col, Select, Row, Switch
 } from 'antd';
 import DescriptionList from '../../components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -106,7 +106,7 @@ export default class BasicForms extends PureComponent {
               <Description term="微信号">{item.wachatNo}</Description>
             </DescriptionList>
             <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
-            <DescriptionList size="large" title="认证消息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
+            <DescriptionList size="large" title="认证信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
               <Description term="真实姓名">{item.realName}</Description>
               <Description term="性别">{item.userSex?(item.userSex === 1 ? '女' : '男'):''}</Description>
               <Description term="身份证号">{item.idNumber}</Description>
@@ -142,6 +142,32 @@ export default class BasicForms extends PureComponent {
              }
             </DescriptionList>
             <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
+            {/* 招聘资质审核，待修改字段 */}
+            <DescriptionList size="large" title="公司信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
+              <div>
+              <Description term="营业执照">
+                <img src={item.userHead} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+              </Description>
+              </div>
+              <Description term="公司名称">{item.leveName}</Description>
+              <Description term="机构类型">{item.leveName}</Description>
+              <Description term="公司规模">{item.leveName}</Description>
+              {/* <Description term="招聘资格">
+                {getFieldDecorator('islock',{
+                    initialValue:item.islock,
+                  })(
+                    <Select placeholder="请选择" style={{ width: '60%' }}>
+                      <Option value={1}>有</Option>
+                      <Option value={0}>无</Option>
+                    </Select>
+                )}
+              </Description> */}
+              <Description term="招聘资格">
+                <Switch checkedChildren="有" unCheckedChildren="无" />
+              </Description>
+            </DescriptionList>
+            <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
+
             <DescriptionList size="large" title="其他信息" style={{ marginBottom: 50, marginLeft:'15%' }} col={2}>
               <Description term="是否客服">
                 {getFieldDecorator('isCustom',{

@@ -448,7 +448,7 @@ export const getRouterData = (app) => {
     },
     '/matchlist': {
       component: dynamicWrapper(app, ['matchList'], () => import('../routes/MatchList')),
-      name: '用户匹配记录',
+      name: '匹配记录',
     },
     '/matchlist/list': {
       component: dynamicWrapper(app, ['matchList'], () => import('../routes/MatchList/List')),

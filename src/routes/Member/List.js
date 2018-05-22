@@ -272,6 +272,19 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
+          {/* 招聘资质，待修改接口参数后调整字段 */}
+          <Col md={8} sm={24}>
+            <FormItem label="招聘资格">
+              {getFieldDecorator('isCustom')(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  <Option value="1">有</Option>
+                  <Option value="0">无</Option>
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+        </Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="启用状态">
               {getFieldDecorator('islock')(
@@ -282,8 +295,6 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="注册日期">
               {getFieldDecorator('date')(
