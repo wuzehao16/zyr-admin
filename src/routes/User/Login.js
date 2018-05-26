@@ -69,7 +69,7 @@ export default class LoginPage extends Component {
           </div>
             <Submit loading={submitting}>登录</Submit>
           <div className={styles.other}>
-            如果您还没有账号，
+            如果您还没有账号,
             {/* <Icon className={styles.icon} type="alipay-circle" />
             <Icon className={styles.icon} type="taobao-circle" />
             <Icon className={styles.icon} type="weibo-circle" /> */}
