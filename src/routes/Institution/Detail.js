@@ -28,8 +28,8 @@ export default class BasicForms extends PureComponent {
         <Card bordered={false}>
           <DescriptionList size="large" style={{ marginTop:30,marginBottom: 15,marginLeft:'15%'}} col={2}>
             <div style={{marginBottom:'20px'}}>
-              <Description>
-                <img  src={item.manageLogoId} alt="机构logo" width={80} height={80}/>
+              <Description >
+                <img  src={item.manageLogoId} alt="机构logo" style={{width:100,height:100,border:'1px solid #ddd',objectFit: 'contain'}}/>
               </Description>
             </div>
             <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
