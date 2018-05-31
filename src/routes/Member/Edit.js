@@ -143,14 +143,15 @@ export default class BasicForms extends PureComponent {
             <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
             {/* 招聘资质审核，待修改字段 */}
             <DescriptionList size="large" title="公司信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
-              <div>
-              <Description term="营业执照">
-                <img src={item.userHead} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
-              </Description>
-              </div>
               <Description term="公司名称">{item.leveName}</Description>
+              <Description term="公司简称">{item.leveName}</Description>
               <Description term="机构类型">{item.leveName}</Description>
               <Description term="公司规模">{item.leveName}</Description>
+              <Description term="接收邮箱">{item.leveName}</Description>
+              <Description term="任职岗位">{item.leveName}</Description>
+              <div>
+              <Description term="所在地址">{item.leveName}</Description>
+              </div>
               {/* <Description term="招聘资格">
                 {getFieldDecorator('islock',{
                     initialValue:item.islock,
@@ -161,6 +162,12 @@ export default class BasicForms extends PureComponent {
                     </Select>
                 )}
               </Description> */}
+              <Description term="营业执照">
+                <img src={item.userHead} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+              </Description>
+              <Description term="公司logo">
+                <img src={item.userHead} alt="公司logo"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+              </Description>
               <Description term="招聘资格">
                 <Switch checkedChildren="有" unCheckedChildren="无" />
               </Description>
