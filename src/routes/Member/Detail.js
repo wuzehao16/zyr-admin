@@ -26,69 +26,69 @@ export default class BasicForms extends PureComponent {
   }
   render() {
     const { submitting, data: { item }, dispatch } = this.props;
-
+    console.log('item',item)
     return (
       // <PageHeaderLayout title="用户详情" >
       <PageHeaderLayout>
         <Card bordered={false}>
           <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
             <div>
-              {item.userHead?
+              {item.appUser.userHead?
                 <Description>
-                <img src={item.userHead} alt="用户头像" style={{margin:'20px 0'}} height={80} width={80}/>
+                <img src={item.appUser.userHead} alt="用户头像" style={{margin:'20px 0'}} height={80} width={80}/>
                 </Description>
                 :null}
             </div>
-            <Description term="用户编号">{item.userId}</Description>
-            <Description term="手机号码">{item.loginAccount}</Description>
-            <Description term="用户名称">{item.userName}</Description>
-            <Description term="微信号">{item.wachatNo}</Description>
+            <Description term="用户编号">{item.appUser.userId}</Description>
+            <Description term="手机号码">{item.appUser.loginAccount}</Description>
+            <Description term="用户名称">{item.appUser.userName}</Description>
+            <Description term="微信号">{item.appUser.wachatNo}</Description>
 
           </DescriptionList>
           <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%' }} />
           <DescriptionList size="large" title="认证消息" style={{ marginBottom: 32, marginLeft:'15%'  }} col={2}>
-            <Description term="真实姓名">{item.realName}</Description>
-            <Description term="性别">{item.userSex?(item.userSex === 1 ? '女' : '男'):''}</Description>
-            <Description term="身份证号">{item.idNumber}</Description>
+            <Description term="真实姓名">{item.appUser.realName}</Description>
+            <Description term="性别">{item.appUser.userSex?(item.appUser.userSex === 1 ? '女' : '男'):''}</Description>
+            <Description term="身份证号">{item.appUser.idNumber}</Description>
             <Description>&nbsp;</Description>
             {/* {item.idNumber?
 
           } */}
             <Description >
-              {item.upperPictureId?
-                <img src={item.upperPictureId} alt="" height={200} width={400}/>:null
+              {item.appUser.upperPictureId?
+                <img src={item.appUser.upperPictureId} alt="" height={200} width={400}/>:null
               }
             </Description>
             <Description >
-            {item.backPictureId?
-              <img src={item.backPictureId} alt="" height={200} width={400}/>:null
+            {item.appUser.backPictureId?
+              <img src={item.appUser.backPictureId} alt="" height={200} width={400}/>:null
             }
             </Description>
           </DescriptionList>
           <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%' }} />
           <DescriptionList size="large" title="会员信息" style={{ marginBottom: 18, marginLeft:'15%'  }} col={2}>
-            <Description term="是否会员">{item.isMember === 1 ? '否' : '是'}</Description>
+            <Description term="是否会员">{item.appUser.isMember === 1 ? '否' : '是'}</Description>
           </DescriptionList>
-          { item.isMember === 0
-              ?            <DescriptionList style={{ marginBottom: 32 }} col={2}>
-                            <Description term="会员等级">{item.leveName}</Description>
-                            <Description term="购买时间">{moment(item.appMemberInfo.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
-                            <Description term="有效时间">{moment(item.appMemberInfo.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
-                            <Description term="购买时长">{item.appMemberInfo.longTime}个月</Description>
-                            <Description term="价格">{item.appMemberInfo.memberPrice}元</Description>
+          { item.appUser.isMember === 0
+              ?            <DescriptionList size="large" style={{ marginBottom: 18, marginLeft:'15%'  }} col={2}>
+                            <Description term="会员等级">{item.appUser.leveName}</Description>
+                            <Description term="购买时间">{moment(item.appUser.appMemberInfo.buyTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+                            <Description term="有效时间">{moment(item.appUser.appMemberInfo.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+                            <Description term="购买时长">{item.appUser.appMemberInfo.longTime}个月</Description>
+                            <Description term="价格">{item.appUser.appMemberInfo.memberPrice}元</Description>
                           </DescriptionList>: null
           }
           <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%' }} />
           {/* 招聘资质审核，待修改字段 */}
           <DescriptionList size="large" title="公司信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
-              <Description term="公司名称">{item.leveName}</Description>
-              <Description term="公司简称">{item.leveName}</Description>
-              <Description term="机构类型">{item.leveName}</Description>
-              <Description term="公司规模">{item.leveName}</Description>
-              <Description term="接收邮箱">{item.leveName}</Description>
-              <Description term="任职岗位">{item.leveName}</Description>
+              <Description term="公司名称">{item.appUser.leveName}</Description>
+              <Description term="公司简称">{item.appUser.leveName}</Description>
+              <Description term="机构类型">{item.appUser.leveName}</Description>
+              <Description term="公司规模">{item.appUser.leveName}</Description>
+              <Description term="接收邮箱">{item.appUser.leveName}</Description>
+              <Description term="任职岗位">{item.appUser.leveName}</Description>
               <div>
-              <Description term="所在地址">{item.leveName}</Description>
+              <Description term="所在地址">{item.appUser.leveName}</Description>
               </div>
               {/* <Description term="招聘资格">
                 {getFieldDecorator('islock',{
@@ -100,25 +100,30 @@ export default class BasicForms extends PureComponent {
                     </Select>
                 )}
               </Description> */}
-              <Description term="营业执照">
-                <img src={item.userHead} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
-              </Description>
-              <Description term="营业执照">
-                <img src={item.userHead} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
-              </Description>
+              {item.appUser.userHead?
+              <div>
+                <Description term="营业执照">
+                <img src={item.appUser.userHead} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+                </Description>
+                <Description term="营业执照">
+                  <img src={item.appUser.userHead} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+                </Description>
+              </div>:null
+              }
+
               <Description term="招聘资格">
-                <Switch checkedChildren="有" unCheckedChildren="无" disabled={item.islock} />
+                <Switch checkedChildren="有" unCheckedChildren="无" disabled={item.appUser.islock} />
               </Description>
             </DescriptionList>
             <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
 
           <DescriptionList size="large" title="其他信息" style={{ marginBottom: 18, marginLeft:'15%'  }} col={2}>
-            <Description term="是否客服">{item.isCustom === 1 ? '是' : '否'}</Description>
-              { item.isCustom === 1
+            <Description term="是否客服">{item.appUser.isCustom === 1 ? '是' : '否'}</Description>
+              { item.appUser.isCustom === 1
                 ?<div>
-                  <Description term="客服类型">{item.userIdentity === 1 ? '机构客服' : '平台客服'}</Description>
-                  { item.userIdentity === 1 ? <Description term="机构名称">{item.manageName}</Description> : null}
-                  <Description term="启用状态">{item.islock === 1 ? '启用' : '禁用'}</Description>
+                  <Description term="客服类型">{item.appUser.userIdentity === 1 ? '机构客服' : '平台客服'}</Description>
+                  { item.appUser.userIdentity === 1 ? <Description term="机构名称">{item.manageName}</Description> : null}
+                  <Description term="启用状态">{item.appUser.islock === 1 ? '启用' : '禁用'}</Description>
                 </div> : <div></div>
               }
           </DescriptionList>
