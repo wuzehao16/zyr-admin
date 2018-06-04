@@ -7,7 +7,8 @@ import { routerRedux } from 'dva/router';
 import Debounce from 'lodash-decorators/debounce';
 import Bind from 'lodash-decorators/bind';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import UploadPicture from '../../components/UploadPicture';
+// import UploadPicture from '../../components/UploadPicture';
+import UploadPicture  from 'react-core-image-upload';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -367,7 +368,14 @@ export default class BasicForms extends PureComponent {
                      },
                     ],
                    })(
-                     <UploadPicture />
+                    //  <UploadPicture />
+                     <UploadPicture
+                      text="Upload Your Image"
+                      className='pure-button'
+                      inputOfFile="files"
+                      url="./api/upload.php"
+                      imageUploaded={this.handleRes}>
+                    </UploadPicture>
                    )}
 
                 </FormItem>
