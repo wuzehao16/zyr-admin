@@ -47,6 +47,8 @@ export default class BasicForms extends PureComponent {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
+      console.log('values',values)
+      console.log('err',err)
       if (!err) {
         this.props.dispatch({
           type: 'member/update',
@@ -175,8 +177,8 @@ export default class BasicForms extends PureComponent {
                 :<div></div>
               }
               <Description term="招聘资格">
-                {getFieldDecorator('islock',{
-                    initialValue:item.appCompany.status,
+                {getFieldDecorator('status',{
+                    initialValue:item.appCompany.status
                   })(
                     <Select placeholder="请选择" style={{ width: '60%' }}>
                       <Option value={1}>有</Option>
@@ -265,8 +267,6 @@ export default class BasicForms extends PureComponent {
           </DescriptionList>
             :null
             }
-
-
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button style={{ marginRight: 50 }} type="primary" htmlType="submit" loading={submitting}>
                 保存
