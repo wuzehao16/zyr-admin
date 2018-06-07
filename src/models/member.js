@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { query, queryDetail, update, updatePassword, queryInstitution } from '../services/member';
+import { query, queryDetail, updateAppUser, updatePassword, queryInstitution,updateCompanyStatus } from '../services/member';
 import { routerRedux } from 'dva/router';
 
 export default {
@@ -22,8 +22,17 @@ export default {
         payload: response,
       });
     },
-    *update({ payload }, { call, put }) {
-      const response = yield call(update, payload);
+    *updateCompanyStatus({ payload }, { call, put }) {
+      const response = yield call(updateCompanyStatus, payload);
+      if (response.code === 0) {
+        // message.success('提交成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+    },
+    *updateAppUser({ payload }, { call, put }) {
+      const response = yield call(updateAppUser, payload);
       if (response.code === 0) {
         message.success('提交成功');
       } else {

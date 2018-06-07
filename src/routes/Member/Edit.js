@@ -47,12 +47,26 @@ export default class BasicForms extends PureComponent {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log('values',values)
-      console.log('err',err)
       if (!err) {
+        const companyValue = {
+          companyId:this.props.data.item.appCompany.companyId,
+          status:values.status
+        }
         this.props.dispatch({
-          type: 'member/update',
-          payload: values,
+          type: 'member/updateCompanyStatus',
+          payload: companyValue,
+        });
+
+        const userValue = {
+          userId:this.props.data.item.appUser.userId,
+          isCustom:values.isCustom,
+          islock:values.islock,
+          userIdentity:values.userIdentity,
+          manageId:values.manageId
+        }
+        this.props.dispatch({
+          type: 'member/updateAppUser',
+          payload: userValue,
         });
       }
     });
@@ -61,7 +75,6 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item, institutionList }, dispatch } = this.props;
     const scale = ['','20人以下','20-49人','50-99人','100-499人','500人以上']
     const { getFieldDecorator, getFieldValue, setFieldsValue } = this.props.form;
-    getFieldDecorator('userId',{initialValue:item.userId});
     if (institutionList) {
       var institutionListOptions = institutionList.map(item => <Option key={item.manageId} title={item.manageName} >{item.manageName}</Option>);
     }
@@ -126,12 +139,6 @@ export default class BasicForms extends PureComponent {
                   <img src={item.appUser.backPictureId} alt="" height={200} width={400}/>:null
                 }
               </Description>
-              {/* <Description >
-                <img src={item.upperPictureId} alt="" height={200} width={400}/>
-              </Description>
-              <Description >
-                <img src={item.backPictureId} alt="" height={200} width={400}/>
-              </Description> */}
             </DescriptionList>
             <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
             <DescriptionList size="large" title="会员信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
@@ -153,39 +160,43 @@ export default class BasicForms extends PureComponent {
             {
               item.appCompany?<div>
               <DescriptionList size="large" title="公司信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
-              <Description term="公司名称">{item.appCompany.companyName}</Description>
-              <Description term="公司简称">{item.appCompany.intro}</Description>
-              <Description term="机构类型">{item.appCompany.organizationCategory}</Description>
-              <Description term="公司规模">{scale[item.appCompany.scale]}</Description>
-              <Description term="接收邮箱">{item.appCompany.mail}</Description>
-              <Description term="任职岗位">{item.appCompany.job}</Description>
-              <div>
-              <Description term="所在地址">{item.appCompany.address}{item.appCompany.addressDetial}</Description>
-              </div>
-              {
-                item.appCompany.businessLicense?
-                <Description term="营业执照">
-                <img src={item.appCompany.businessLicense} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+                <Description term="公司名称">{item.appCompany.companyName}</Description>
+                <Description term="公司简称">{item.appCompany.intro}</Description>
+                <Description term="机构类型">{item.appCompany.organizationCategory}</Description>
+                <Description term="公司规模">{scale[item.appCompany.scale]}</Description>
+                <Description term="接收邮箱">{item.appCompany.mail}</Description>
+                <Description term="任职岗位">{item.appCompany.job}</Description>
+                <div>
+                <Description term="所在地址">{item.appCompany.address}{item.appCompany.addressDetial}</Description>
+                </div>
+                {
+                  item.appCompany.businessLicense?
+                  <Description term="营业执照">
+                  <img src={item.appCompany.businessLicense} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+                  </Description>
+                  :<div></div>
+                }
+                {
+                  item.appCompany.logo?
+                  <Description term="公司logo">
+                    <img src={item.appCompany.logo} alt="公司logo"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+                  </Description>
+                  :<div></div>
+                }
+                <Description term="招聘资格">
+                  {getFieldDecorator('status',{
+                      initialValue:item.appCompany.status,
+                      rules:[{
+                        required:true,
+                        message:'请选择是否有招聘资格'
+                      }]
+                    })(
+                      <Select placeholder="请选择" style={{ width: '60%' }}>
+                        <Option value={1}>有</Option>
+                        <Option value={0}>无</Option>
+                      </Select>
+                  )}
                 </Description>
-                :<div></div>
-              }
-              {
-                item.appCompany.logo?
-                <Description term="公司logo">
-                  <img src={item.appCompany.logo} alt="公司logo"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
-                </Description>
-                :<div></div>
-              }
-              <Description term="招聘资格">
-                {getFieldDecorator('status',{
-                    initialValue:item.appCompany.status
-                  })(
-                    <Select placeholder="请选择" style={{ width: '60%' }}>
-                      <Option value={1}>有</Option>
-                      <Option value={0}>无</Option>
-                    </Select>
-                )}
-              </Description>
 
             </DescriptionList>
             <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
@@ -196,74 +207,74 @@ export default class BasicForms extends PureComponent {
             {
             item.appUser?
             <DescriptionList size="large" title="其他信息" style={{ marginBottom: 50, marginLeft:'15%' }} col={2}>
-            <Description term="是否客服">
-              {getFieldDecorator('isCustom',{
-                    initialValue:item.appUser.isCustom,
-                    rules:[{
-                      required:true,
-                      message:'请选择是否为客服'
-                    }]
-                  })(
-                    <Select placeholder="请选择" style={{ width: '60%' }}>
-                      <Option value={0}>否</Option>
-                      <Option value={1}>是</Option>
-                    </Select>
-              )}
-            </Description>
-            <Description term="启用状态">
-              {getFieldDecorator('islock',{
-                  initialValue:item.appUser.islock,
-                })(
-                  <Select placeholder="请选择" style={{ width: '60%' }}>
-                    <Option value={0}>禁用</Option>
-                    <Option value={1}>启用</Option>
-                  </Select>
-              )}
-            </Description>
-            {
-              getFieldValue('isCustom') === 1
-                ?<Description term="客服类型">
-                    {getFieldDecorator('userIdentity',{
-                      initialValue:item.appUser.userIdentity,
+              <Description term="是否客服">
+                {getFieldDecorator('isCustom',{
+                      initialValue:item.appUser.isCustom?item.appUser.isCustom:0,
                       rules:[{
                         required:true,
-                        message:'请选择客服类型'
+                        message:'请选择是否为客服'
                       }]
                     })(
                       <Select placeholder="请选择" style={{ width: '60%' }}>
-                        <Option value={1}>机构客服</Option>
-                        <Option value={2}>平台客服</Option>
+                        <Option value={0}>否</Option>
+                        <Option value={1}>是</Option>
                       </Select>
-                  )}
-              </Description>: <div></div>
-            }
-            {
-              getFieldValue('userIdentity') === 1
-              ?<Description term="机构名称">
-                {getFieldDecorator('manageId',{
-                  initialValue:item.appUser.manageId,
-                  rules:[{
-                    required:true,
-                    message:'请选择机构名称'
-                  }]
-                })(
-                  <Select
-                    // mode="tags"
-                    // value={this.state.value}
-                    placeholder={this.props.placeholder}
-                    style={this.props.style}
-                    defaultActiveFirstOption={false}
-                    showArrow={false}
-                    showSearch={true}
-                    filterOption={false}
-                    onSearch={this.handleChange}
-                    style={{ width: '60%' }}
-                  >
-                    {institutionListOptions}
-                  </Select>
                 )}
-              </Description>: <div></div>
-            }
+              </Description>
+              <Description term="启用状态">
+                {getFieldDecorator('islock',{
+                    initialValue:item.appUser.islock,
+                  })(
+                    <Select placeholder="请选择" style={{ width: '60%' }}>
+                      <Option value={0}>禁用</Option>
+                      <Option value={1}>启用</Option>
+                    </Select>
+                )}
+              </Description>
+              {
+                getFieldValue('isCustom') === 1
+                  ?<Description term="客服类型">
+                      {getFieldDecorator('userIdentity',{
+                        initialValue:item.appUser.userIdentity,
+                        rules:[{
+                          required:true,
+                          message:'请选择客服类型'
+                        }]
+                      })(
+                        <Select placeholder="请选择" style={{ width: '60%' }}>
+                          <Option value={1}>机构客服</Option>
+                          <Option value={2}>平台客服</Option>
+                        </Select>
+                    )}
+                </Description>: <div></div>
+              }
+              {
+                getFieldValue('userIdentity') === 1
+                ?<Description term="机构名称">
+                  {getFieldDecorator('manageId',{
+                    initialValue:item.appUser.manageId,
+                    rules:[{
+                      required:true,
+                      message:'请选择机构名称'
+                    }]
+                  })(
+                    <Select
+                      // mode="tags"
+                      // value={this.state.value}
+                      placeholder={this.props.placeholder}
+                      style={this.props.style}
+                      defaultActiveFirstOption={false}
+                      showArrow={false}
+                      showSearch={true}
+                      filterOption={false}
+                      onSearch={this.handleChange}
+                      style={{ width: '60%' }}
+                    >
+                      {institutionListOptions}
+                    </Select>
+                  )}
+                </Description>: <div></div>
+              }
           </DescriptionList>
             :null
             }
