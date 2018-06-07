@@ -106,7 +106,7 @@ export default class BasicForms extends PureComponent {
                 </Description>
                 :<div></div>
               }
-              <Description term="招聘资格">{item.appCompany.status === 1 ? '有' : '无'}</Description>
+              <Description term="招聘资格">{item.appCompany.status == 1 ? '有' : '无'}</Description>
             </DescriptionList>
             <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
           </div>:null}
