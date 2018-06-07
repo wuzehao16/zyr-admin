@@ -184,18 +184,14 @@ export default class BasicForms extends PureComponent {
                   :<div></div>
                 }
                 <Description term="招聘资格">
-                  {getFieldDecorator('status',{
-                      initialValue:item.appCompany.status,
-                      rules:[{
-                        required:true,
-                        message:'请选择是否有招聘资格'
-                      }]
-                    })(
-                      <Select placeholder="请选择" style={{ width: '60%' }}>
-                        <Option value={1}>有</Option>
-                        <Option value={0}>无</Option>
-                      </Select>
-                  )}
+                {getFieldDecorator('status',{
+                    initialValue:parseInt(item.appCompany.status),
+                  })(
+                    <Select placeholder="请选择是否有招聘资格" style={{ width: '60%' }}>
+                      <Option value={1}>有</Option>
+                      <Option value={0}>无</Option>
+                    </Select>
+                )}
                 </Description>
 
             </DescriptionList>

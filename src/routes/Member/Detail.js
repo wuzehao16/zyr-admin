@@ -75,55 +75,57 @@ export default class BasicForms extends PureComponent {
                             <Description term="有效时间">{moment(item.appUser.appMemberInfo.expirdTime).format('YYYY-MM-DD HH:mm:ss')}</Description>
                             <Description term="购买时长">{item.appUser.appMemberInfo.longTime}个月</Description>
                             <Description term="价格">{item.appUser.appMemberInfo.memberPrice}元</Description>
-                          </DescriptionList>: null
+                          </DescriptionList>: <div></div>
           }
           <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%' }} />
         </div>
-          :null}
-
-          {item.appCompany?<div>
-            <DescriptionList size="large" title="公司信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
-              <Description term="公司名称">{item.appCompany.companyName}</Description>
-              <Description term="公司简称">{item.appCompany.intro}</Description>
-              <Description term="机构类型">{item.appCompany.organizationCategory}</Description>
-              <Description term="公司规模">{scale[item.appCompany.scale]}</Description>
-              <Description term="接收邮箱">{item.appCompany.mail}</Description>
-              <Description term="任职岗位">{item.appCompany.job}</Description>
-              <div>
-              <Description term="所在地址">{item.appCompany.address}{item.appCompany.addressDetial}</Description>
-              </div>
-              {
-                item.appCompany.businessLicense?
-                <Description term="营业执照">
-                <img src={item.appCompany.businessLicense} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
-                </Description>
-                :<div></div>
-              }
-              {
-                item.appCompany.logo?
-                <Description term="公司logo">
-                  <img src={item.appCompany.logo} alt="公司logo"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
-                </Description>
-                :<div></div>
-              }
-              <Description term="招聘资格">{item.appCompany.status == 1 ? '有' : '无'}</Description>
-            </DescriptionList>
-            <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
-          </div>:null}
+          :<div></div>}
 
           {
-            item.appUser?<div>
+              item.appCompany?<div>
+              <DescriptionList size="large" title="公司信息" style={{ marginBottom: 32, marginLeft:'15%' }} col={2}>
+                <Description term="公司名称">{item.appCompany.companyName}</Description>
+                <Description term="公司简称">{item.appCompany.intro}</Description>
+                <Description term="机构类型">{item.appCompany.organizationCategory}</Description>
+                <Description term="公司规模">{scale[item.appCompany.scale]}</Description>
+                <Description term="接收邮箱">{item.appCompany.mail}</Description>
+                <Description term="任职岗位">{item.appCompany.job}</Description>
+                <div>
+                <Description term="所在地址">{item.appCompany.address}{item.appCompany.addressDetial}</Description>
+                </div>
+                {
+                  item.appCompany.businessLicense?
+                  <Description term="营业执照">
+                  <img src={item.appCompany.businessLicense} alt="营业执照"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+                  </Description>
+                  :<div></div>
+                }
+                {
+                  item.appCompany.logo?
+                  <Description term="公司logo">
+                    <img src={item.appCompany.logo} alt="公司logo"  style={{margin:'20px 0',borderRadius:'3px'}} height={150} width={200}/>
+                  </Description>
+                  :<div></div>
+                }
+                <Description term="招聘资格">{item.appCompany.status==1?"有":"无"}</Description>
+
+            </DescriptionList>
+            <Divider style={{ marginBottom: 32, width:'70%', marginLeft:'15%'  }} />
+            </div>
+            :<div></div>
+            }
+          {
+            item.appUser?
               <DescriptionList size="large" title="其他信息" style={{ marginBottom: 18, marginLeft:'15%'  }} col={2}>
                 <Description term="是否客服">{item.appUser.isCustom === 1 ? '是' : '否'}</Description>
                   { item.appUser.isCustom === 0
                     ?<div>
                       <Description term="客服类型">{item.appUser.userIdentity === 1 ? '机构客服' : '平台客服'}</Description>
-                      { item.appUser.userIdentity === 1 ? <Description term="机构名称">{item.manageName}</Description> : null}
+                      { item.appUser.userIdentity === 1 ? <Description term="机构名称">{item.manageName}</Description> : <div></div>}
                       <Description term="启用状态">{item.appUser.islock === 1 ? '启用' : '禁用'}</Description>
                     </div>:<div></div>
                   }
-              </DescriptionList>
-            </div>:null
+              </DescriptionList>:<div></div>
           }
 
 
