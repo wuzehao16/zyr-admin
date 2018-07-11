@@ -244,9 +244,9 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="标题">
+            <FormItem label="广告标题">
               {getFieldDecorator('adsTitle')(
-                <Input placeholder="请输入" />
+                <Input placeholder="请输入广告标题" />
               )}
             </FormItem>
           </Col>

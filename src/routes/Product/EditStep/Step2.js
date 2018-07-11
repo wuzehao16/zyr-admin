@@ -9,10 +9,17 @@ import styles from './style.less';
 import quill from './quill.less'
 const formItemLayout = {
   labelCol: {
-    span: 5,
+    span: 4,
   },
   wrapperCol: {
     span: 24,
+  },
+};
+
+const submitFormLayout = {
+  wrapperCol: {
+    xs: { span: 24, offset: 0 },
+    sm: { span: 10, offset: 9 },
   },
 };
 
@@ -27,13 +34,14 @@ class Step2 extends React.PureComponent {
    otherReq: '',
  };
  componentDidMount() {
-   const { product:{ item } } = this.props;
+   const { product:{ step } } = this.props;
    this.setState({
-     productIntroduction: item.productIntroduction,
-     basieReq: item.basieReq,
-     creditReq: item.creditReq,
-     positonCount: item.positonCount,
-     otherReq: item.otherReq
+     productIntroduction: step.productIntroduction,
+     basieReq: step.basieReq,
+     creditReq: step.creditReq,
+     claims: step.claims,
+     positonCount: step.positonCount,
+     otherReq: step.otherReq
    })
  }
  productIntroduction = (value) => {
@@ -73,12 +81,12 @@ class Step2 extends React.PureComponent {
   //   });
   // };
   render() {
-    const { form, data, dispatch, submitting, product:{ item } } = this.props;
+    const { form, data, dispatch, submitting, product:{ step } } = this.props;
+    const item = step ||{};
     const { getFieldDecorator, validateFields } = form;
     const onPrev = () => {
       dispatch(routerRedux.push('/product/edit/step1'));
     };
-    console.log(item)
     const onValidateForm = (e) => {
       dispatch(routerRedux.push('/product/edit/step3'));
       e.preventDefault();
@@ -130,7 +138,7 @@ class Step2 extends React.PureComponent {
           {...formItemLayout}
            label="负债要求">
            <ReactQuill
-             defaultValue={data.claims}
+             defaultValue={item.claims}
              value={this.state.claims}
              onChange={this.claims}
              placeholder='请输入...'
@@ -157,22 +165,36 @@ class Step2 extends React.PureComponent {
             />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           style={{ marginBottom: 8 }}
           wrapperCol={{
             xs: { span: 24, offset: 0 },
-            sm: { span: formItemLayout.wrapperCol.span, offset: formItemLayout.labelCol.span },
+            sm: { span: 10, offset: 10 },
           }}
           label=""
         >
-          <Button onClick={onPrev} style={{ marginRight: 30 }}>
+          <Button onClick={onPrev} style={{ marginRight: 50 }}>
             上一步
           </Button>
           <Button type="primary" onClick={onValidateForm} loading={submitting}>
             下一步
           </Button>
+        </Form.Item> */}
 
+        <Form.Item {...submitFormLayout} style={{ marginTop: 32 }}>
+            <Button onClick={onPrev} style={{ marginRight: 50 }}>
+            上一步
+            </Button>
+            <Button type="primary" onClick={onValidateForm} loading={submitting}>
+            下一步
+            </Button>
         </Form.Item>
+        <style jsx>{`
+          .ant-form label{
+            font-weight:700;
+          }
+          `}
+        </style>
       </Form>
     );
   }

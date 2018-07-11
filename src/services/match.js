@@ -4,20 +4,26 @@ import request from '../utils/request';
 export async function query(params) {
   return request(`/sys/selectModelList?${stringify(params)}`);
 }
+export async function queryAI(params) {
+  return request(`/sys/selectModeAlgorithm?${stringify(params)}`);
+}
 export async function queryDetail(params) {
-  return request(`/sys/selectAdsDetail?${stringify(params)}`);
+  return request(`/sys/selectModelDetail?${stringify(params)}`);
+}
+export async function queryAIDetail(params) {
+  return request(`/sys/selectModeAlgorithm?${stringify(params)}`);
 }
 
 export async function update(params) {
-  return request('/sys/updateAds', {
+  return request('/sys/updateModelInfo', {
     method: 'PUT',
     body: {
       ...params,
     },
   });
 }
-export async function upAdsState(params) {
-  return request('/sys/upStateAds', {
+export async function updateStatus(params) {
+  return request('/sys/updateStatus', {
     method: 'PUT',
     body: {
       ...params,
@@ -38,9 +44,29 @@ export async function add(params) {
     },
   });
 }
+/**
+ * 额度算法
+ * @param {[type]} params
+ */
+export async function checkSaveFormula(params) {
+  return request('/sys/checkSaveFormula', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
 export async function addAi(params) {
   return request('/sys/insertModeAlgorithm', {
     method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function editAi(params) {
+  return request('/sys/updateModeAlgorithm', {
+    method: 'PUT',
     body: {
       ...params,
     },

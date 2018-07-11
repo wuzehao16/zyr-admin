@@ -95,6 +95,12 @@ class StandardTable extends PureComponent {
         dataIndex: 'isCustom',
         render: val => <span>{status[val]}</span>
       },
+      // 招聘资质，待接口调整后修改字段
+      {
+        title: '招聘资格',
+        dataIndex: 'isCustom',
+        render: val => <span>{status[val]}</span>
+      },
       {
         title: '启用状态',
         dataIndex: 'islock',

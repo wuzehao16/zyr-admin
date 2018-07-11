@@ -46,6 +46,18 @@ class Step1 extends React.PureComponent {
         type: 'prodFeatures'
       },
     });
+    this.props.dispatch({
+      type: 'product/fetchModel1',
+      payload: {
+        loanType: '0'
+      },
+    });
+    this.props.dispatch({
+      type: 'product/fetchModel2',
+      payload: {
+        loanType: '1'
+      },
+    });
     if (this.props.product && this.props.product.item) {
       const { item } = this.props.product;
       const { getFieldValue } = this.props.form;
@@ -58,8 +70,24 @@ class Step1 extends React.PureComponent {
       });
     }
   }
+  getInstitution1 = (code) => {
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('manageId')){
+      resetFields(['manageId'])
+    }
+    this.props.dispatch({
+      type: 'product/getInstitution',
+      payload: {
+        cityCode: getFieldValue('cityCode'),
+        institutionCode: code,
+      },
+    });
+  }
   getInstitution = (code) => {
-    const { getFieldValue } = this.props.form;
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('manageId')){
+      resetFields(['manageId'])
+    }
     this.props.dispatch({
       type: 'product/getInstitution',
       payload: {
@@ -67,9 +95,6 @@ class Step1 extends React.PureComponent {
         institutionCode: getFieldValue('institutionCode'),
       },
     });
-  }
-  handleChange = (value) => {
-    console.log(`selected ${value}`);
   }
   render() {
     const {
@@ -84,7 +109,9 @@ class Step1 extends React.PureComponent {
         cusCategory,
         repMethod,
         prodFeatures,
-        item,
+        step,
+        ModelList1,
+        ModelList2
       },
       user:{
         currentUser
@@ -92,6 +119,7 @@ class Step1 extends React.PureComponent {
       submitting,
       dispatch
     } = this.props;
+    const item = step || {};
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
     if (city) {
       var cityOptions = city.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
@@ -105,49 +133,148 @@ class Step1 extends React.PureComponent {
     if (subInstitutionList) {
       var subInstitutionListOptions = subInstitutionList.map(item => <Option key={item.sublInstitution} value={item.sublInstitution}>{item.manageName}</Option>);
     }
+    // 匹配模型
+    if (ModelList1) {
+      var ModelList1Options = ModelList1.map(item => <Option key={item.modeNo} value={item.modeNo}>{item.modeName}</Option>);
+    }
+    if (ModelList2) {
+      var ModelList2Options = ModelList2.map(item => <Option key={item.modeNo} value={item.modeNo}>{item.modeName}</Option>);
+    }
       var prodCategoryOptions = prodCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var propCategoryOptions = propCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var cusCategoryOptions = cusCategory.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var repMethodOptions = repMethod.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
       var prodFeaturesOptions = prodFeatures.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>);
+
       getFieldDecorator('productId',{
         initialValue: item.productId,})
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 5 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 12 },
-      },
-    };
-    const formItemLayout1 = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 19 },
-      },
-    };
 
+        const formItemLayout = {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 7 },
+            md: { span: 5 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 12 },
+            md: { span: 10 },
+          },
+        };
+
+        const formItemLayout1 = {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 7 },
+            md: { span: 6 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 12 },
+            md: { span: 14 },
+          },
+        };
+
+        const formItemLayout2 = {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 7 },
+            md: { span: 12 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 12 },
+            md: { span: 10 },
+          },
+        };
+
+        const formItemLayout3 = {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 7 },
+            md: { span: 4, offset: 0.5 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 12 },
+            md: { span: 10 },
+          },
+        };
 
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 9 },
       },
     };
-    const onValidateForm = () => {
+    const onValidateForm = (e) => {
+      e.preventDefault();
         // dispatch(routerRedux.push('/product/add/step2'));
       validateFields((err, values) => {
-        console.log(values)
+        const { form } = this.props;
+        const reg = /^[1-9]+[0-9]*$/;
+
+        if (! reg.test(form.getFieldValue('productTimeLimitStart'))) {
+          form.setFields({
+            productTimeLimitStart: {
+              value: values.productTimeLimitStart,
+              errors: [new Error('请输入正整数值!')],
+            }
+          });
+          return
+        }
+
+        if (! reg.test(form.getFieldValue('productTimeLimitEnd'))) {
+          form.setFields({
+            productTimeLimitEnd: {
+              value: values.productTimeLimitEnd,
+              errors: [new Error('请输入正整数值!')],
+            }
+          });
+          return
+        }
+
+        if (reg.test(form.getFieldValue('productTimeLimitEnd')) && (Number(form.getFieldValue('productTimeLimitEnd')) < Number(form.getFieldValue('productTimeLimitStart'))) ) {
+          form.setFields({
+            productTimeLimitEnd: {
+              value: values.productTimeLimitEnd,
+              errors: [new Error('请输入大于最小值的正整数!')],
+            }
+          });
+          return
+        }
+
+        if (! reg.test(form.getFieldValue('approvalAgingStart'))) {
+          form.setFields({
+            approvalAgingStart: {
+              value: values.approvalAgingStart,
+              errors: [new Error('请输入正整数值!')],
+            }
+          });
+          return
+        }
+
+        if (! reg.test(form.getFieldValue('approvalAgingEnd'))) {
+          form.setFields({
+            approvalAgingEnd: {
+              value: values.approvalAgingEnd,
+              errors: [new Error('请输入正整数值!')],
+            }
+          });
+          return
+        }
+
+
+        if (reg.test(form.getFieldValue('approvalAgingEnd')) && Number((form.getFieldValue('approvalAgingEnd')) < Number(form.getFieldValue('approvalAgingStart')))) {
+          form.setFields({
+            approvalAgingEnd: {
+              value: values.approvalAgingEnd,
+              errors: [new Error('请输入大于最小值的正整数!')],
+            }
+          });
+          return
+        }
+
         if (!err) {
           dispatch({
             type: 'product/saveStepFormData',
@@ -161,6 +288,7 @@ class Step1 extends React.PureComponent {
               productTimeLimit: values.productTimeLimitStart + ',' + values.productTimeLimitEnd,
               approvalAging: values.approvalAgingStart + ',' + values.approvalAgingEnd,
               productPoundage: values.productPoundage ? values.productPoundage : 0,
+              matchingMode:values.matchingMode1+','+ values.matchingMode2
             },
           });
           dispatch(routerRedux.push('/product/edit/step2'));
@@ -170,9 +298,9 @@ class Step1 extends React.PureComponent {
     return (
       <div>
         <Form
-          onSubmit={this.handleSubmit}
+          onSubmit={onValidateForm}
           hideRequiredMark
-          style={{ marginTop: 8 }}
+          style={{ marginTop: 50 }}
         >
           {
             currentUser.data.userIdentity == 0
@@ -180,7 +308,7 @@ class Step1 extends React.PureComponent {
                         >
                         <Col md={12} sm={24}>
                           <FormItem
-                            {...formItemLayout}
+                            {...formItemLayout2}
                              label="机构类型">
                             {getFieldDecorator('institutionCode', {
                               initialValue: item.institutionCode,
@@ -188,7 +316,7 @@ class Step1 extends React.PureComponent {
                                 required: true, message: '请选择机构类型',
                               }],
                             })(
-                              <Select placeholder="请选择" style={{ width: '100%' }}>
+                              <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getInstitution1}>
                               { institutionTypeOptions }
                               </Select>
                             )}
@@ -212,14 +340,15 @@ class Step1 extends React.PureComponent {
                         </Col>
                       </Row> : null
           }
-         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+
            {
              currentUser.data.userIdentity == 0
-                ?             <Col md={12} sm={24}
+                ?<Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                    <Col md={12} sm={24}
                               >
                               <Form.Item
                                 label="机构名称"
-                                {...formItemLayout}
+                                {...formItemLayout2}
                                >
                                 {getFieldDecorator('manageId',{
                                   initialValue: item.manageId,
@@ -235,40 +364,63 @@ class Step1 extends React.PureComponent {
                                     style={{ width: '100%' }}
                                     placeholder="请选择"
                                     // defaultValue={['a10', 'c12']}
-                                    onChange={this.handleChange}
+
                                   >
                                     {institutionListOptions}
                                   </Select>
                                 )}
                               </Form.Item>
-                            </Col> : null
+                            </Col>
+                            <Col md={12} sm={24}>
+                              <Form.Item
+                                label="产品名称"
+                                {...formItemLayout}
+                              >
+                                {getFieldDecorator('productName',{
+                                  initialValue: item.productName,
+                                  rules: [
+                                    {
+                                      required: true,
+                                      message: '请输入产品名称',
+                                    },
+                                  ],
+                                })(
+                                  <Input
+                                    maxLength='10'
+                                    placeholder="请输入"
+                                  />
+                                )}
+                              </Form.Item>
+                            </Col>
+                        </Row>
+                             : <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                                <Col md={12} sm={24}>
+                                <Form.Item
+                                  label="产品名称"
+                                  {...formItemLayout2}
+                                >
+                                  {getFieldDecorator('productName',{
+                                    initialValue: item.productName,
+                                    rules: [
+                                      {
+                                        required: true,
+                                        message: '请输入产品名称',
+                                      },
+                                    ],
+                                  })(
+                                    <Input
+                                      placeholder="请输入"
+                                    />
+                                  )}
+                                </Form.Item>
+                              </Col>
+                            </Row>
            }
-            <Col md={12} sm={24}>
-              <Form.Item
-                label="产品名称"
-                {...formItemLayout}
-               >
-                {getFieldDecorator('productName',{
-                  initialValue: item.productName,
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入产品名称',
-                    },
-                  ],
-                })(
-                  <Input
-                    placeholder="请输入"
-                  />
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item
                 label="最高可贷"
-                {...formItemLayout}
+                {...formItemLayout2}
                >
                 {getFieldDecorator('productMaxLoad',{
                   initialValue: item.productMaxLoad,
@@ -280,6 +432,7 @@ class Step1 extends React.PureComponent {
                   ],
                 })(
                   <Input
+                    min={0}
                     type="number"
                     addonAfter="万"
                     placeholder="请输入"
@@ -303,10 +456,11 @@ class Step1 extends React.PureComponent {
                 })(
                   <Input
                     type="number"
+                    step="0.01"
                     max={100}
                     min={0}
                     addonAfter="%"
-                    placeholder="请输入"
+                    placeholder="请输入分润比例"
                   />
                 )}
               </Form.Item>
@@ -315,24 +469,25 @@ class Step1 extends React.PureComponent {
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item
-                label="月费率"
-                {...formItemLayout}
+                label="月均费率"
+                {...formItemLayout2}
                >
                 {getFieldDecorator('monthlyFeeRate',{
                   initialValue: item.monthlyFeeRate,
                   rules: [
                     {
                       required: true,
-                      message: '请输入月费率',
+                      message: '请输入月均费率',
                     },
                   ],
                 })(
                   <Input
+                    step="0.001"
                     type="number"
-                    max={100}
+                    max={3}
                     min={0}
                     addonAfter="%"
-                    placeholder="请输入"
+                    placeholder="请输入月均费率"
                   />
                 )}
               </Form.Item>
@@ -342,33 +497,48 @@ class Step1 extends React.PureComponent {
                 label="产品期限(期)"
                 {...formItemLayout}
                >
-                 <InputGroup
-                    compact>
-                   {getFieldDecorator('productTimeLimitStart',{
-                     initialValue:item.productTimeLimit?item.productTimeLimit.split(',')[0]:''
-                   })(
-                  <Input
-                    type="number"
-                    style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
-                  )}
-                   <Input
-                     type="number"
-                     style={{ width: '20%',borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
-                   {getFieldDecorator('productTimeLimitEnd',{
-                     initialValue:item.productTimeLimit?item.productTimeLimit.split(',')[1]:''
-                   })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }}  placeholder="最大值" />
-                   )}
-                 </InputGroup>
-
+                <Col span={11}>
+                  <Form.Item>
+                    {getFieldDecorator('productTimeLimitStart',{
+                      initialValue:(item.productTimeLimit?item.productTimeLimit.split(',')[0]:''),
+                      rules:[{
+                        required: true,
+                        message: '请输入产品期限'
+                      }]
+                    })(
+                    <Input
+                      type="number"
+                      min={0}
+                      style={{ textAlign: 'center' }} placeholder="最小值" />
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={2}>
+                  <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
+                    -
+                  </span>
+                </Col>
+                <Col span={11}>
+                  <Form.Item>
+                    {getFieldDecorator('productTimeLimitEnd',{
+                      initialValue:(item.productTimeLimit?item.productTimeLimit.split(',')[1]:''),
+                      rules:[{
+                        required: true,
+                        message: '请输入产品期限'
+                      }]
+                    })(
+                    <Input style={{textAlign: 'center'}}  placeholder="最大值" />
+                    )}
+                  </Form.Item>
+                </Col>
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item
-                label="手续费"
-                {...formItemLayout}
+                label="手续费用"
+                {...formItemLayout2}
                >
                 {getFieldDecorator('productPoundage',{
                   initialValue: item.productPoundage,
@@ -376,9 +546,10 @@ class Step1 extends React.PureComponent {
                   <Input
                     type="number"
                     max={100}
+                    step="0.01"
                     min={0}
                     addonAfter="%"
-                    placeholder="请输入"
+                    placeholder="请输入手续费用"
                   />
                 )}
               </Form.Item>
@@ -388,7 +559,8 @@ class Step1 extends React.PureComponent {
                 label="审批时效(天)"
                 {...formItemLayout}
                >
-                 <InputGroup compact>
+                <Col span={11}>
+                  <Form.Item>
                     {getFieldDecorator('approvalAgingStart',{
                       initialValue: item.approvalAging?item.approvalAging.split(',')[0]:'',
                       rules:[{
@@ -396,24 +568,34 @@ class Step1 extends React.PureComponent {
                         message: '请输入审批时效'
                       }]
                     })(
-                   <Input
-                     type="number"
-                     style={{ width: '40%', textAlign: 'center' }} placeholder="最小值" />
-                   )}
-                   <Input
-                     type="number"
-                     style={{ width: '20%', borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} placeholder="~" disabled />
-                   {getFieldDecorator('approvalAgingEnd',{
-                     initialValue: item.approvalAging?item.approvalAging.split(',')[1]:'',
-                     rules:[{
-                       required: true,
-                       message: '请输入审批时效'
-                     }]
-                   })(
-                   <Input style={{ width: '40%', textAlign: 'center', borderLeft: 0 }} placeholder="最大值" />
-                   )}
-                 </InputGroup>
-
+                    <Input
+                      type="number"
+                      min={0}
+                      style={{textAlign: 'center' }} placeholder="最小值" />
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={2}>
+                  <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
+                    -
+                  </span>
+                </Col>
+                <Col span={11}>
+                  <Form.Item>
+                    {getFieldDecorator('approvalAgingEnd',{
+                      initialValue: item.approvalAging?item.approvalAging.split(',')[1]:'',
+                      rules:[{
+                        required: true,
+                        message: '请输入审批时效'
+                      }]
+                    })(
+                    <Input
+                    type="number"
+                    min={0}
+                    style={{textAlign: 'center'}} placeholder="最大值" />
+                    )}
+                  </Form.Item>
+                </Col>
               </Form.Item>
             </Col>
           </Row>
@@ -421,7 +603,7 @@ class Step1 extends React.PureComponent {
             <Col md={12} sm={24}>
               <Form.Item
                 label="产品须知"
-                {...formItemLayout}
+                {...formItemLayout2}
                >
                 {getFieldDecorator('productNotice',{
                   initialValue: item.productNotice,
@@ -434,14 +616,14 @@ class Step1 extends React.PureComponent {
                 })(
                   <Input
                     maxLength='25'
-                    placeholder="请输入"
+                    placeholder="请输入产品须知"
                   />
                 )}
               </Form.Item>
             </Col>
             <Col md={12} sm={24}>
               <Form.Item
-                label="推荐语"
+                label="产品简介"
                 {...formItemLayout}
                >
                 {getFieldDecorator('productRecommend',{
@@ -449,13 +631,13 @@ class Step1 extends React.PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '请输入推荐语',
+                      message: '请输入产品简介',
                     },
                   ],
                 })(
                   <Input
-                    maxLength='25'
-                    placeholder="请输入"
+                    maxLength='12'
+                    placeholder="请输入产品简介"
                   />
                 )}
               </Form.Item>
@@ -464,170 +646,16 @@ class Step1 extends React.PureComponent {
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item
-                label="排序"
-                {...formItemLayout}
+                label="产品排序"
+                {...formItemLayout2}
                >
                 {getFieldDecorator('productSort',{
                   initialValue: item.productSort,
                 })(
-                  <Input min={1} max={10000} type="number" placeholder="请输入"/>
+                  <Input min={1} max={10000} type="number" placeholder="请输入产品排序"/>
                 )}
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
-              <Form.Item
-                label="产品类别"
-                {...formItemLayout1}
-               >
-                {getFieldDecorator('productType',{
-                  initialValue:item.productType?item.productType.split(','):[],
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择产品类别',
-                    },
-                  ],
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {prodCategoryOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
-              <Form.Item
-                label="房产类型"
-                {...formItemLayout1}
-                // (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'')
-                style={{
-                  display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'') == '1' ? 'block' : 'none',
-                }}
-               >
-                {getFieldDecorator('propertyType',{
-                  initialValue:item.propertyType?item.propertyType.split(','):[],
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {propCategoryOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
-              <Form.Item
-                label="客户类型"
-                {...formItemLayout1}
-               >
-                {getFieldDecorator('customerType',{
-                  initialValue:item.customerType?item.customerType.split(','):[],
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择客户类型',
-                    },
-                  ],
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {cusCategoryOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
-              <Form.Item
-                label="还款方式"
-                {...formItemLayout1}
-               >
-                {getFieldDecorator('productPayWay',{
-                  initialValue:item.productPayWay?item.productPayWay.split(','):[],
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择还款方式',
-                    },
-                  ],
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {repMethodOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
-              <Form.Item
-                label="产品特点"
-                {...formItemLayout1}
-               >
-                {getFieldDecorator('productFeatures',{
-                  initialValue:item.productFeatures?item.productFeatures.split(','):[],
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择产品特点',
-                    },
-                    {
-                      validator: (rule, value, callback) => {
-                        if (value) {
-                          if (value.length > 5) {
-                            callback("最多只可以选择5个产品特点");
-                          } else if (value.length <= 5) {
-                            callback();
-                          }
-                        }
-                        callback("最多只可以选择5个产品特点");
-                      }
-                    }
-                  ],
-                })(
-                  <Select
-                    maxTagCount={5}
-                    max={5}
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    // defaultValue={['a10', 'c12']}
-                    onChange={this.handleChange}
-                  >
-                    {prodFeaturesOptions}
-                  </Select>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={12} sm={24}>
               <Form.Item
                 label="上架状态"
@@ -642,7 +670,7 @@ class Step1 extends React.PureComponent {
                     },
                   ],
                 })(
-                  <Select placeholder="请选择">
+                  <Select placeholder="请选择上架状态">
                     <Option value="1">上架</Option>
                     <Option value="0">下架</Option>
                   </Select>
@@ -650,8 +678,255 @@ class Step1 extends React.PureComponent {
               </Form.Item>
             </Col>
           </Row>
+          <div style={{paddingRight: 48}}>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="产品类别"
+                  {...formItemLayout1}
+                >
+                  {getFieldDecorator('productType',{
+                    initialValue: item.productType?item.productType.split(','):[],
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择产品类别',
+                      },
+                    ],
+                  })(
+                    <Select
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="请选择产品类别"
+                      // defaultValue={['a10', 'c12']}
+
+                    >
+                      {prodCategoryOptions}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+          {
+            <div>
+              <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                <Col md={24} sm={24}>
+                  <Form.Item
+                    label="模型(信用贷)"
+                    {...formItemLayout1}
+                    style={{
+                      display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==100).length:'') == '1' ? 'block' : 'none',
+                    }}
+                  >
+                    {getFieldDecorator('matchingMode1',{
+                      initialValue: item.matchingMode1,
+                    })(
+                      <Select
+                        style={{ width: '100%' }}
+                        placeholder="请选择信用贷模型"
+
+                      >
+                        {ModelList1Options}
+                      </Select>
+                    )}
+                  </Form.Item>
+                </Col>
+                </Row>
+                <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                  <Col md={24} sm={24}>
+                    <Form.Item
+                      label="模型(抵押贷)"
+                      {...formItemLayout1}
+                      style={{
+                        display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110).length:'') == '1' ? 'block' : 'none',
+                      }}
+                    >
+                      {getFieldDecorator('matchingMode2',{
+                        initialValue: item.matchingMode2,
+                      })(
+                        <Select
+                          style={{ width: '100%' }}
+                          placeholder="请选择抵押贷模型"
+
+                        >
+                          {ModelList2Options}
+                        </Select>
+                      )}
+                    </Form.Item>
+                  </Col>
+              </Row>
+            </div>
+          }
+          </div>
+          <div style={{paddingRight: 48}}>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="房产类型"
+                  {...formItemLayout1}
+                  // (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110?true:'').length:'')
+                  style={{
+                    display: (getFieldValue('productType')?getFieldValue('productType').filter((item)=> item==110).length:'') == '1' ? 'block' : 'none',
+                  }}
+                >
+                  {getFieldDecorator('propertyType', {
+                    initialValue: item.propertyType?item.propertyType.split(','):[],
+                  })(
+                    <Select
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="请选择房产类型"
+                      // defaultValue={['a10', 'c12']}
+
+                    >
+                      {propCategoryOptions}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="客户类型"
+                  {...formItemLayout1}
+                >
+                  {getFieldDecorator('customerType',{
+                    initialValue: item.customerType?item.customerType.split(','):[],
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择客户类型',
+                      },
+                    ],
+                  })(
+                    <Select
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="请选择客户类型"
+                      // defaultValue={['a10', 'c12']}
+
+                    >
+                      {cusCategoryOptions}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="还款方式"
+                  {...formItemLayout1}
+                >
+                  {getFieldDecorator('productPayWay',{
+                    initialValue: item.productPayWay?item.productPayWay.split(','):[],
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择还款方式',
+                      },
+                    ],
+                  })(
+                    <Select
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="请选择还款方式"
+                      // defaultValue={['a10', 'c12']}
+
+                    >
+                      {repMethodOptions}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Form.Item
+                  label="产品特点"
+                  {...formItemLayout1}
+                >
+                  {getFieldDecorator('productFeatures',{
+                    initialValue: item.productFeatures?item.productFeatures.split(','):[],
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择产品特点',
+                      },
+                      {
+                        validator: (rule, value, callback) => {
+                          if (value) {
+                            if (value.length > 5) {
+                              callback("最多只可以选择5个产品特点");
+                            } else if (value.length <= 5) {
+                              callback();
+                            }
+                          }
+                          callback("最多只可以选择5个产品特点");
+                        }
+                      }
+                    ],
+                  })(
+                    <Select
+                      maxTagCount={5}
+                      max={5}
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="请选择产品特点"
+                      // defaultValue={['a10', 'c12']}
+
+                    >
+                      {prodFeaturesOptions}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+          </div>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={12} sm={24}>
+                <FormItem
+                  {...formItemLayout2}
+                   label="纳入评测"
+                   style={{
+                     display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
+                   }}
+                   >
+                   {getFieldDecorator('isEvaluating',{
+                     initialValue:item.isEvaluating,
+                   })(
+                     <Select placeholder="请选择是否纳入评测">
+                       <Option value={0}>否</Option>
+                       <Option value={1}>是</Option>
+                     </Select>
+                   )}
+                </FormItem>
+              </Col>
+              <Col md={12} sm={24}>
+                <FormItem
+                  {...formItemLayout3}
+                   label="是否热门"
+                   style={{
+                     display: currentUser.data.userIdentity == 0 ? 'block' : 'none',
+                    //  marginRight:'28px'
+                   }}
+                   >
+                   {getFieldDecorator('isFire',{
+                     initialValue:item.isFire,
+                   })(
+                     <Select placeholder="请选择是否热门">
+                       <Option value='0'>否</Option>
+                       <Option value='1'>是</Option>
+                     </Select>
+                   )}
+                </FormItem>
+              </Col>
+            </Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          </Row>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-            <Button type="primary" htmlType="submit" onClick={onValidateForm}>
+            <Button type="primary" htmlType="submit" >
               下一步
             </Button>
             <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/product'))}>

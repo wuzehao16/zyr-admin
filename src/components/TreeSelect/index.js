@@ -14,7 +14,6 @@ class MenuTreeSelect extends React.Component {
     }
   }
   onChange = (value) => {
-    console.log(arguments);
     this.setState({ value });
     if (this.props.onChange) {
       this.props.onChange(value)
@@ -36,11 +35,11 @@ class MenuTreeSelect extends React.Component {
     const { data } = this.props;
     return (
       <TreeSelect
-        style={{ width: 300 }}
+        style={{ width: '100%' }}
         value={this.state.value}
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         // treeData={treeData}
-        placeholder="Please select"
+        placeholder="请选择"
         treeDefaultExpandAll
         onChange={this.onChange}
       >

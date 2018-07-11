@@ -16,7 +16,7 @@ class RoleTree extends React.Component {
     selectedKeys: [],
   }
   onExpand = (expandedKeys) => {
-    console.log('onExpand', arguments);
+    // console.log('onExpand', arguments);
     // if not set autoExpandParent to false, if children expanded, parent can not collapse.
     // or, you can remove all expanded children keys.
     this.setState({
@@ -32,10 +32,10 @@ class RoleTree extends React.Component {
     }
     this.setState({ checkedKeys });
 
-    console.log('onCheck', checkedKeys);
+    // console.log('onCheck', checkedKeys);
   }
   onSelect = (selectedKeys, info) => {
-    console.log('onSelect', info);
+    // console.log('onSelect', info);
     this.setState({ selectedKeys });
   }
   // defaultCheckedKeys = () => {
@@ -63,7 +63,9 @@ class RoleTree extends React.Component {
     return (
       <Tree
         checkable
+        showLine
         onExpand={this.onExpand}
+        defaultExpandAll
         expandedKeys={this.state.expandedKeys}
         autoExpandParent={this.state.autoExpandParent}
         checkStrictly="ture"

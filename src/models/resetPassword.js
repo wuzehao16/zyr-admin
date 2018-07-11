@@ -41,7 +41,7 @@ export default {
     *reset({ payload }, { call, put }) {
       const response = yield call(resetPassword, payload);
       if (response.code === 0) {
-        message.success('发送成功');
+        // message.success('发送成功');
       } else {
         message.error(response.msg);
         return;

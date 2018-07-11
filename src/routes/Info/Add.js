@@ -15,13 +15,13 @@ const { TextArea } = Input;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 7 },
-    md: { span: 5 },
+    sm: { span: 12 },
+    md: { span: 7 },
   },
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 12 },
-    md: { span: 12 },
+    md: { span: 9 },
   },
 };
 
@@ -72,7 +72,7 @@ export default class BasicForms extends PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
 
@@ -101,7 +101,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="标题"
+              label="消息标题"
             >
               {getFieldDecorator('paltforMsgTitle', {
                 rules: [{
@@ -109,12 +109,12 @@ export default class BasicForms extends PureComponent {
                   message: '请输入标题',
                 }],
               })(
-                <Input maxLength="30" placeholder="请输入"/>
+                <Input maxLength="30" placeholder="请输入" style={{ width: '100%' }}/>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="内容"
+              label="消息内容"
             >
               {getFieldDecorator('paltforMsgContent', {
                 rules: [{
@@ -122,7 +122,7 @@ export default class BasicForms extends PureComponent {
                   message: '请输入内容',
                 }],
               })(
-                <Input.TextArea rows={4} maxLength="200" placeholder="请输入"/>
+                <Input.TextArea rows={6} maxLength="200" style={{ width: '100%' }} placeholder="请输入"/>
               )}
             </FormItem>
             <FormItem
@@ -135,7 +135,7 @@ export default class BasicForms extends PureComponent {
                   message: '请选择上架状态',
                 }],
               })(
-                <Select  placeholder="请选择">
+                <Select  placeholder="请选择" style={{ width: '100%' }}>
                   <Option value={1}>上架</Option>
                   <Option value={2}>下架</Option>
                 </Select>
@@ -145,7 +145,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/info/notification'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/info/notification'))}>
                 返回
               </Button>
             </FormItem>

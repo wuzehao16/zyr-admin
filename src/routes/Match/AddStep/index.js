@@ -30,12 +30,12 @@ export default class StepForm extends PureComponent {
         <Card bordered={false}>
           <div>
             <Steps current={this.getCurrentStep()} className={styles.steps}>
-              <Step title="贷款需求" />
-              <Step title="基本信息" />
-              <Step title="征信信息" />
+              <Step title="贷款类型" />
+              <Step title="基本要求" />
+              <Step title="征信要求" />
               <Step title="工作收入" />
-              <Step title="资产状况" />
-              <Step title="资产负债" />
+              <Step title="资产要求" />
+              <Step title="负债要求" />
             </Steps>
             <Switch>
               {

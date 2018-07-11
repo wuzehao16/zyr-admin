@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, addAi, query, queryDetail, update, upAdsState, remove } from '../services/match';
+import { add, addAi,editAi, query,queryAI, queryDetail,queryAIDetail, update, updateStatus, remove,checkSaveFormula } from '../services/match';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -9,6 +9,7 @@ export default {
 
   state: {
     step:{
+      modelName:"",
       //贷款需求
       loanDemand: null,
       //基本信息
@@ -24,6 +25,9 @@ export default {
     },
     data:{
       data:[]
+    },
+    AI:{
+
     }
   },
 
@@ -33,6 +37,20 @@ export default {
       yield put({
         type: 'save',
         payload: response,
+      });
+    },
+    *fetchAI({ payload }, { call, put }) {
+      const response = yield call(queryAI, payload);
+      yield put({
+        type: 'saveAI',
+        payload: response.data,
+      });
+    },
+    *fetchAIDetail({ payload }, { call, put }) {
+      const response = yield call(queryAIDetail, payload);
+      yield put({
+        type: 'saveAI',
+        payload: response.data,
       });
     },
     *add({ payload, callback }, { call, put }) {
@@ -46,6 +64,15 @@ export default {
       yield put(routerRedux.push('/match'));
       if (callback) callback();
     },
+    *checkSaveFormula({ payload, callback }, { call, put }) {
+      const response = yield call(checkSaveFormula, payload);
+      if (response.code === 0) {
+      } else {
+        message.error(response.msg)
+        return
+      }
+      if (callback) callback();
+    },
     *addAi({ payload, callback }, { call, put }) {
       const response = yield call(addAi, payload);
       if (response.code === 0) {
@@ -57,8 +84,29 @@ export default {
       yield put(routerRedux.push('/match'));
       if (callback) callback();
     },
+    *editAi({ payload, callback }, { call, put }) {
+      const response = yield call(editAi, payload);
+      if (response.code === 0) {
+        message.success('编辑成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/match'));
+      if (callback) callback();
+    },
     *update({ payload }, { call, put }) {
-      const response = yield call(update, payload);
+      const modelName = payload.modelName;
+      const id = payload.id;
+      const loadType = payload.loanDemand.loanType[0]
+      delete payload['modelName']
+      delete payload['id']
+      const response = yield call(update, {
+        modelName:modelName,
+        loanType:loadType,
+        id:id,
+        modelJson:JSON.stringify(payload),
+      });
       if (response.code === 0) {
         message.success('提交成功');
       } else {
@@ -67,8 +115,8 @@ export default {
       }
       yield put(routerRedux.push('/match'));
     },
-    *upAdsState({ payload, callback }, { call, put }) {
-      const response = yield call(upAdsState, payload);
+    *updateStatus({ payload, callback }, { call, put }) {
+      const response = yield call(updateStatus, payload);
       if(response.code === 0){
         message.success('提交成功');
         yield put({
@@ -81,29 +129,16 @@ export default {
       }
       if (callback) callback();
     },
-    *fetchEdit({payload}, { call, put }) {
-      const response = yield call(queryDetail, payload);
-      yield put({
-        type: 'saveDetail',
-        payload: response.data,
-      });
-      yield put(routerRedux.push('/match/edit'));
-    },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
+      const step = {
+        modelName:response.data.modeName,
+        ...JSON.parse(response.data.modeJson)
+      }
       yield put({
         type: 'saveDetail',
-        payload: response.data,
+        payload: step,
       });
-      yield put(routerRedux.push('/match/Detail'));
-    },
-    *fetchReview({payload}, { call, put }) {
-      const response = yield call(queryDetail, payload);
-      yield put({
-        type: 'saveDetail',
-        payload: response.data,
-      });
-      yield put(routerRedux.push('/match/Review'));
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
@@ -120,9 +155,13 @@ export default {
       if (callback) callback();
     },
     *submitStepForm({ payload }, { call, put, select }) {
+      const modelName = payload.modelName;
+      const loadType = payload.loanDemand.loanType[0]
+      delete payload['modelName']
       const response = yield call(add, {
-        modelJson:payload,
-        modelName:payload.loanDemand.modelName
+        modelName:modelName,
+        loanType:loadType,
+        modelJson:JSON.stringify(payload),
       });
       if (response.code === 0) {
         message.success('新增成功');
@@ -142,9 +181,25 @@ export default {
         data: action.payload,
       };
     },
+    saveAI(state, action) {
+      return {
+        ...state,
+        AI: action.payload,
+      };
+    },
     updateShelves(state, action) {
-      const updateAds = action.payload;
-      const newList = state.data.data.map(item => item.matchId == updateAds.matchId ? {...item,...updateAds} : item);
+      const updateMatch = action.payload;
+      const newList = state.data.data;
+      var a = {};
+      for (var i = 0; i < newList.length; i++) {
+          if (newList[i].id == updateMatch.id) {
+            a =  newList.splice(i, 1)[0];
+            Object.assign(a,{modeStatus:updateMatch.modelStatus})
+            a.updateTime = new Date()
+            break;
+          }
+        }
+        newList.unshift(a);
       return {
         ...state,
         data:{
@@ -157,8 +212,9 @@ export default {
         ...state,
         step: {
           ...state.step,
+          ...payload,
           loanDemand:{
-            ...payload,
+            loanType:payload.loanType,
           }
         },
       };
@@ -227,7 +283,7 @@ export default {
     saveDetail(state, action) {
       return {
         ...state,
-        item: action.payload,
+        step: action.payload,
       };
     },
     removeAds(state, action) {

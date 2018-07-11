@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react';
+
+
+ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
@@ -13,8 +15,9 @@ const FormItem = Form.Item;
 const Step = Steps.Step;
 const { TextArea } = Input;
 const Option = Select.Option;
-@connect(({ order }) => ({
+@connect(({ order,loading }) => ({
   data: order,
+  submitting: loading.effects['order/updateOrderState'],
 }))
 @Form.create()
 export default class BasicForms extends PureComponent {
@@ -34,7 +37,8 @@ export default class BasicForms extends PureComponent {
       },
     });
   }
-  handleSubmit = (e) => {
+
+  handleSubmit= (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -67,7 +71,7 @@ export default class BasicForms extends PureComponent {
     return (
       <div>
       <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
-      <Steps progressDot  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
+      <Steps  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
         <Step title="申请中" />
         <Step title="已申请" />
         <Step title="已初审" />
@@ -75,18 +79,17 @@ export default class BasicForms extends PureComponent {
         <Step title="已面签" />
         <Step title="已放款" />
       </Steps>
-      <DescriptionList size="large" title="" style={{ marginBottom: 32 }} col={2}>
-      <Description term="更新状态">
+      <DescriptionList size="large" title="" style={{ marginBottom: 16}} col={2}>
+      <Description term="更新状态"  style={{marginBottom:'36px'}}>
         <Col sm={12} xs={24}>
-          <FormItem >
+          <FormItem>
             {getFieldDecorator('orderStatus', {
               rules: [{
                  required: true,
                  message: '请选择更新状态'
                }],
              })(
-              <Select placeholder="请选择" style={{ width: '100%' }}>
-
+              <Select placeholder="请选择" style={{ width: '100%'}}>
                 <Option
                   style={{display:(item.orderStatus < 5)?'block':'none'}}
                   value={item.orderStatus-1+2}>下一步</Option>
@@ -105,7 +108,7 @@ export default class BasicForms extends PureComponent {
     return (
       <div>
         <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
-      <Steps progressDot   current={0} style={{ marginBottom: 80 }}>
+      <Steps   current={0} style={{ marginBottom: 80 }}>
         <Step title="已拒绝" />
         <Step title="申请中" />
         <Step title="已申请" />
@@ -122,7 +125,7 @@ export default class BasicForms extends PureComponent {
     return (
       <div>
         <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
-        <Steps progressDot status="error"  current={0} style={{ marginBottom: 80 }}>
+        <Steps status="error"  current={0} style={{ marginBottom: 80 }}>
           <Step title="已取消" />
           <Step title="申请中" />
           <Step title="已申请" />
@@ -135,6 +138,7 @@ export default class BasicForms extends PureComponent {
 
     )
   }
+  // 当选择拒绝的时候 隐藏贷款金额等选项
   renderloan = ()=> {
     const { submitting, data: { item, repMethod }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -142,7 +146,7 @@ export default class BasicForms extends PureComponent {
     return (
       <div>
         <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>还款方式</p>
-        <Steps progressDot  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
+        <Steps  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
           <Step title="申请中" />
           <Step title="已申请" />
           <Step title="已初审" />
@@ -150,7 +154,7 @@ export default class BasicForms extends PureComponent {
           <Step title="已面签" />
           <Step title="已放款" />
         </Steps>
-        <DescriptionList size="large" title="" style={{ marginBottom: 32 }} col={2}>
+        <DescriptionList size="large" title="" style={{ marginBottom: 16 }} col={2}>
         <Description term="更新状态">
           <Col sm={12} xs={24}>
             <FormItem >
@@ -160,7 +164,7 @@ export default class BasicForms extends PureComponent {
                    message: '请选择更新状态'
                  }],
                })(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
+                <Select placeholder="请选择" style={{ width: '100%', background:'#f6f6f6'}}>
                   <Option
                     style={{display:(item.orderStatus < 5)?'block':'none'}}
                     value={item.orderStatus-1+2}>下一步</Option>
@@ -171,52 +175,55 @@ export default class BasicForms extends PureComponent {
           </Col>
         </Description>
         </DescriptionList>
-        <DescriptionList size="large" title="" style={{ marginBottom: 32 }} col={2}>
-        <Description term="贷款金额">
-          <Col sm={12} xs={24}>
-            <FormItem >
-              {getFieldDecorator('realLoanMoney', {
-                rules: [{
-                   required: true,
-                   message: '请输入贷款金额'
-                 }],
-          })(
-                  <Input type="number" min={0} max={10000} addonAfter="万" placeholder="请输入"/>
-            )}
-            </FormItem>
-          </Col>
-        </Description>
-        <Description term="贷款期限">
-          <Col sm={12} xs={24}>
-            <FormItem >
-              {getFieldDecorator('loanLimit', {
-                rules: [{
-                   required: true,
-                   message: '请输入贷款期限'
-                 }],
-               })(
-                  <Input type="number" min={0} max={100} addonAfter="期" placeholder="请输入"/>
-            )}
-            </FormItem>
-          </Col>
-        </Description>
-        <Description term="还款方式">
-          <Col sm={12} xs={24}>
-            <FormItem >
-              {getFieldDecorator('realLoanType', {
-                rules: [{
-                   required: true,
-                   message: '请选择还款方式'
-                 }],
-               })(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  { repMethodOptions }
-                </Select>
-            )}
-            </FormItem>
-          </Col>
-        </Description>
-        </DescriptionList>
+        {
+          getFieldValue('orderStatus') !== 6
+            ?       <DescriptionList size="large" title="" style={{ marginBottom: 36 }} col={2}>
+                    <Description term="贷款金额">
+                      <Col sm={12} xs={24}>
+                        <FormItem >
+                          {getFieldDecorator('realLoanMoney', {
+                            rules: [{
+                               required: true,
+                               message: '请输入贷款金额'
+                             }],
+                      })(
+                              <Input type="number" min={0} max={10000} addonAfter="万" placeholder="请输入"/>
+                        )}
+                        </FormItem>
+                      </Col>
+                    </Description>
+                    <Description term="贷款期限">
+                      <Col sm={12} xs={24}>
+                        <FormItem >
+                          {getFieldDecorator('loanLimit', {
+                            rules: [{
+                               required: true,
+                               message: '请输入贷款期限'
+                             }],
+                           })(
+                              <Input type="number" min={0} max={100} addonAfter="期" placeholder="请输入"/>
+                        )}
+                        </FormItem>
+                      </Col>
+                    </Description>
+                    <Description term="还款方式" style={{marginTop:'18px',marginBottom:'36px'}}>
+                      <Col sm={12} xs={24}>
+                        <FormItem style={{color:'red'}}>
+                          {getFieldDecorator('realLoanType', {
+                            rules: [{
+                               required: true,
+                               message: '请选择还款方式'
+                             }],
+                           })(
+                            <Select placeholder="请选择" className="formSelect" style={{ width: '100%'}}>
+                              { repMethodOptions }
+                            </Select>
+                        )}
+                        </FormItem>
+                      </Col>
+                    </Description>
+                  </DescriptionList>:null
+        }
       </div>
     )
   }
@@ -225,14 +232,15 @@ export default class BasicForms extends PureComponent {
     const { getFieldDecorator, getFieldValue, setFieldsValue } = this.props.form;
     getFieldDecorator("orderId",{initialValue: item.orderId})
     return (
-      <PageHeaderLayout title="订单详情" >
-        <Card bordered={false}>
+      <PageHeaderLayout>
+        <Col sm={12} md={24}>
+        <Card bordered={false} style={{padding:'0 10%'}}>
           <Form
             onSubmit={this.handleSubmit}
             hideRequiredMark
             style={{ marginTop: 8 }}
           >
-          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
+          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32,position:'relative'}} col={2}>
             <Description term="订单号">{item.orderNo}</Description>
             <Description term="更新时间">{moment(item.updateTime).format('llll')}</Description>
             <Description term="城市">{item.city}</Description>
@@ -242,6 +250,9 @@ export default class BasicForms extends PureComponent {
             <Description term="提单人">{item.userName}</Description>
             <Description term="提单人手机">{item.userPhone}</Description>
             <Description term="产品分润比例">{item.productRatio}%</Description>
+            <div className='banklogo' style={{position:'absolute',top:'0',right:'100px',width:'140px',height:'140px'}}>
+              <img src={item.manageLogoId} style={{width:'140px',height:'140px',border:'solid 1px #c8c8c8'}} />
+            </div>
           </DescriptionList>
           <DescriptionList size="large" title="贷款人信息" style={{ marginBottom: 32 }} col={2}>
             <Description term="姓名">{item.loanName}</Description>
@@ -259,20 +270,12 @@ export default class BasicForms extends PureComponent {
             <Description term="申请备注">{item.applicationNotes}</Description>
           </DescriptionList>
           {this.renderForm()}
-          <DescriptionList col={1} style={{ marginBottom: 32 }}>
-          <Description
-            term="拒绝原因"
-            style={{
-            display: getFieldValue('orderStatus') === 6 ? 'block' : 'none',
-          }}
-          >
-            <Col sm={12} xs={24}>
-              <FormItem >
-                {getFieldDecorator('cancelReason')(
-                  <TextArea  rows={4}/>
+          <DescriptionList col={5} style={{ marginBottom: 50 }}>
+            <Description style={{display: getFieldValue('orderStatus') === 6 ? 'block' : 'none'}}>
+              {getFieldDecorator('cancelReason',{
+              })(
+                <TextArea  rows={4}  placeholder="在这里写拒绝原因" style={{width:'800px'}}/>
               )}
-              </FormItem>
-            </Col>
           </Description>
           </DescriptionList>
           <DescriptionList size="large" style={{ marginBottom: 32, textAlign: 'center' }} col={1}>
@@ -285,6 +288,18 @@ export default class BasicForms extends PureComponent {
           </DescriptionList>
           </Form>
         </Card>
+        </Col>
+        <style jsx>{`
+            @media screen and (max-width:1800px) {
+              Card {
+                padding: 0 50px 0 50px;
+              }
+              .banklogo {
+                display:none;
+              }
+            }
+          `}
+        </style>
       </PageHeaderLayout>
     );
   }
