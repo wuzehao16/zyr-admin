@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, query, queryDetail, update, updateAprovalStatus, updateShelvesStatus, queryManage, remove } from '../services/product';
+import { add, query,queryModel, queryDetail, update, updateAprovalStatus, updateShelvesStatus, queryManage, remove } from '../services/product';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -33,6 +33,10 @@ export default {
       step4: '',
       step5: '',
       step6: '',
+      applyFlow:"",
+    },
+    item:{
+      applyFlow:''
     },
     prodCategory: [],
     propCategory: [],
@@ -40,6 +44,8 @@ export default {
     repMethod: [],
     prodFeatures: [],
     institutionList:[],
+    ModelList1:[],//信用贷
+    ModelList2:[],//抵押
   },
 
   effects: {
@@ -50,9 +56,26 @@ export default {
         payload: response,
       });
     },
+    *fetchModel1({ payload }, { call, put }) {
+      const response = yield call(queryModel, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          ModelList1: response.data
+        },
+      });
+    },
+    *fetchModel2({ payload }, { call, put }) {
+      const response = yield call(queryModel, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          ModelList2: response.data
+        },
+      });
+    },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
-      console.log(response)
       if (response.code === 0) {
         message.success('删除成功');
       } else {
@@ -138,7 +161,7 @@ export default {
     *fetchEdit({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
       yield put({
-        type: 'saveDetail',
+        type: 'saveEdit',
         payload: response.data,
       });
       yield put(routerRedux.push('/product/edit'));
@@ -290,7 +313,19 @@ export default {
     },
     updateShelves(state, action) {
       const updateProduct = action.payload;
-      const newList = state.data.data.map(product => product.productId == updateProduct.productId ? {...product, ...updateProduct} : product);
+      // const newList = state.data.data.map(product => product.productId == updateProduct.productId ? {...product, ...updateProduct,} : product);
+      //处理跟新之后吧数据移动到第一位，以及更新时间
+      const newList = state.data.data;
+      var a = {};
+      for (var i = 0; i < newList.length; i++) {
+          if (newList[i].productId == updateProduct.productId) {
+            a =  newList.splice(i, 1)[0];
+            Object.assign(a,{shelfState:updateProduct.shelfState})
+            a.updateTime = new Date()
+            break;
+          }
+        }
+        newList.unshift(a);
       return {
         ...state,
         data:{
@@ -314,6 +349,12 @@ export default {
       return {
         ...state,
         institutionType: action.payload,
+      };
+    },
+    saveEdit(state, action) {
+      return {
+        ...state,
+        step: action.payload,
       };
     },
     saveDetail(state, action) {

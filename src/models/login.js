@@ -28,7 +28,7 @@ export default {
       // Login successfully
       if (response.msg === 'ok') {
         reloadAuthorized();
-        yield put(routerRedux.push('/'));
+        yield put(routerRedux.push('/product'));
       }
     },
     *logout(_, { call, put, select }) {

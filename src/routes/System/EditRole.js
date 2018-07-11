@@ -20,13 +20,11 @@ export default class BasicForms extends PureComponent {
     if (this.props.data.item) {
       const { item } = this.props.data;
       let sysMenus = [];
-      console.log(item,"item")
       if (item.sysMenus) {
         sysMenus = item.sysMenus.map((m) => {
           return m.meunId;
         });
       }
-      console.log(sysMenus,"sysMenus")
       setFieldsValue({
         remark: item.remark,
         roleId: item.roleId,
@@ -47,7 +45,6 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         if (values.sysMenus) {
           /* eslint-disable no-param-reassign */
-          console.log(values.sysMenus)
           if (values.sysMenus) {
             values.sysMenus.forEach((item, index, arr) => {
               arr[index] = { meunId: item };
@@ -66,23 +63,23 @@ export default class BasicForms extends PureComponent {
     const { submitting, data, data:{ item }, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     getFieldDecorator('roleId');
-    console.log(getFieldValue('sysMenus'),"getsys")
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 },
+        sm: { span: 12 },
+        md: { span: 8 },
       },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 },
-        md: { span: 10 },
+        md: { span: 8 },
       },
     };
 
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
 
@@ -121,14 +118,14 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="备注"
+              label="角色备注"
             >
               {getFieldDecorator('remark', {
                 rules: [{
-                  required: true, message: '怎么可以不输入备注呢',
+                  required: true, message: '请输入角色备注',
                 }],
               })(
-                <Input placeholder="请输入备注" />
+                <Input placeholder="请输入角色备注" />
               )}
             </FormItem>
             <FormItem
@@ -144,12 +141,13 @@ export default class BasicForms extends PureComponent {
                 )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit" loading={submitting}>
-                提交
-              </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/role'))}>
+              <Button onClick={() => dispatch(routerRedux.push('/system/role'))}>
                 返回
               </Button>
+              <Button type="primary" style={{ marginLeft: 50 }}  htmlType="submit" loading={submitting}>
+                提交
+              </Button>
+
             </FormItem>
           </Form>
         </Card>

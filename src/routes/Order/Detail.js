@@ -45,8 +45,8 @@ export default class BasicForms extends PureComponent {
     item.orderStatus -= 0;
     return (
       <div>
-        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>订单状态</p>
-        <Steps progressDot  current={item.orderStatus} style={{ marginBottom: 80, width: '80%', }}>
+        <p style={{fontSize: '16px',fontWeight:700,color: '#000'}}>订单状态</p>
+        <Steps  current={item.orderStatus} style={{ marginBottom: 80}}>
           <Step title="申请中" />
           <Step title="已申请" />
           <Step title="已初审" />
@@ -62,8 +62,8 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <div>
-        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>订单状态</p>
-      <Steps progressDot   current={0} style={{ marginBottom: 80 }}>
+        <p style={{fontSize: '16px',fontWeight:700,color: '#000'}}>订单状态</p>
+      <Steps   current={0} style={{ marginBottom: 80 }}>
         <Step title="已拒绝" />
         <Step title="申请中" />
         <Step title="已申请" />
@@ -82,8 +82,8 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <div>
-        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>订单状态</p>
-        <Steps progressDot status="error"  current={0} style={{ marginBottom: 80 }}>
+        <p style={{fontSize: '16px',fontWeight:700,color: '#000'}}>订单状态</p>
+        <Steps status="error"  current={0} style={{ marginBottom: 80 }}>
           <Step title="已取消" />
           <Step title="申请中" />
           <Step title="已申请" />
@@ -99,8 +99,8 @@ export default class BasicForms extends PureComponent {
     const { submitting, data: { item }, dispatch } = this.props
     return (
       <div>
-        <p style={{fontSize: '16px',fontWeight:500,color: 'rgba(0, 0, 0, 0.85)'}}>订单状态</p>
-        <Steps progressDot  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
+        <p style={{fontSize: '16px',fontWeight:700,color: '#000'}}>订单状态</p>
+        <Steps  current={Number(item.orderStatus)} style={{ marginBottom: 80 }}>
           <Step title="申请中" />
           <Step title="已申请" />
           <Step title="已初审" />
@@ -110,7 +110,7 @@ export default class BasicForms extends PureComponent {
         </Steps>
         <DescriptionList size="large"  style={{ marginBottom: 32 }} col={2}>
           <Description term="贷款金额">{item.realLoanMoney + '万'}</Description>
-          <Description term="贷款期限">{item.loanLimit + '期'}</Description>
+          <Description term="实际贷款期限">{item.realLoanLimit + '期'}</Description>
           <Description term="还款方式">{item.realTypeName}</Description>
           <Description term="平台收益">{item.platformIncome + '元'}</Description>
           <Description term="提单人佣金">{item.soleCommission + '元'}</Description>
@@ -121,9 +121,9 @@ export default class BasicForms extends PureComponent {
   render() {
     const { submitting, data: { item }, dispatch } = this.props
     return (
-      <PageHeaderLayout title="订单详情" >
-        <Card bordered={false}>
-          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={2}>
+      <PageHeaderLayout style={{ marginBottom: 32}} style={{fontWeight:'normal'}}>
+        <Card bordered={false} style={{padding:'0 10%'}}>
+          <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32,position:'relative'}} col={2}>
             <Description term="订单号">{item.orderNo}</Description>
             <Description term="更新时间">{moment(item.updateTime).format('llll')}</Description>
             <Description term="城市">{item.city}</Description>
@@ -133,9 +133,12 @@ export default class BasicForms extends PureComponent {
             <Description term="提单人">{item.userName}</Description>
             <Description term="提单人手机">{item.userPhone}</Description>
             <Description term="产品分润比例">{item.productRatio + '%'}</Description>
+            <div className='banklogo' style={{paddingLeft:0,paddingRight:0,position:'absolute',top:'0',right:'0',width:'140px',height:'140px'}}>
+              <img src={item.manageLogoId} />
+            </div>
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
-          <DescriptionList size="large" title="贷款人信息" style={{ marginBottom: 32 }} col={2}>
+          <DescriptionList size="large" title="贷款人信息" style={{ marginBottom: 32}} col={2}>
             <Description term="姓名">{item.loanName}</Description>
             <Description term="年龄">{item.loanAge}</Description>
             <Description term="民族">{item.nationality}</Description>
@@ -145,7 +148,7 @@ export default class BasicForms extends PureComponent {
             <Description term="住址">{item.address}</Description>
           </DescriptionList>
           <Divider style={{ marginBottom: 32 }} />
-          <DescriptionList size="large" title="申请贷款信息" style={{ marginBottom: 32 }} col={2}>
+          <DescriptionList size="large" title="申请贷款信息" style={{ marginBottom: 32}} col={2}>
             <Description term="贷款金额">{item.loanMoney + '万'}</Description>
             <Description term="贷款期限">{item.loanLimit + '期'}</Description>
             <Description term="还款方式">{item.payTypeName}</Description>
@@ -159,6 +162,22 @@ export default class BasicForms extends PureComponent {
             </Button>
           </DescriptionList>
         </Card>
+          <style jsx>{`
+            .banklogo img{
+              max-width: 100%;
+               max-height: 100%;
+              border:1px solid #c8c8c8;
+            }
+            @media screen and (max-width:1800px) {
+              Card {
+                padding: 0 50px 0 50px;
+              }
+              .banklogo {
+                display:none;
+              }
+            }
+          `}
+          </style>
       </PageHeaderLayout>
     );
   }

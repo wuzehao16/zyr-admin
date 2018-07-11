@@ -1,7 +1,11 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'dva'
 import { Table, Button, Input, message, Popconfirm, Divider } from 'antd';
 import styles from './style.less';
 
+@connect(({ user, match }) => ({
+  match,
+}))
 export default class TableForm extends PureComponent {
   constructor(props) {
     super(props);
@@ -42,9 +46,10 @@ export default class TableForm extends PureComponent {
     this.props.onChange(newData);
   }
   newMember = () => {
+    const defaultValue = this.state.data.length || 0
     const newData = this.state.data.map(item => ({ ...item }));
     newData.push({
-      key: `NEW_TEMP_ID_${this.index}`,
+      key: `NEW_TEMP_ID_${defaultValue+this.index}`,
       name: '',
       expression: '',
       editable: true,
@@ -85,9 +90,24 @@ export default class TableForm extends PureComponent {
         });
         return;
       }
-      delete target.isNew;
-      this.toggleEditable(e, key);
-      this.props.onChange(this.state.data);
+      const list = this.state.data.map(item => {return item.name})
+      if (list.length >= 1) {
+        list.pop()
+      }
+      const data = {
+        list:list,
+        variableResult:target.name,
+        formula:target.expression,
+      }
+      this.props.dispatch({
+        type:'match/checkSaveFormula',
+        payload:data,
+        callback:()=>{
+          delete target.isNew;
+          this.toggleEditable(e, key);
+          this.props.onChange(this.state.data);
+        }
+      })
       this.setState({
         loading: false,
       });
@@ -128,25 +148,25 @@ export default class TableForm extends PureComponent {
           return text;
         },
       },
-      // {
-      //   title: '工号',
-      //   dataIndex: 'workId',
-      //   key: 'workId',
-      //   width: '20%',
-      //   render: (text, record) => {
-      //     if (record.editable) {
-      //       return (
-      //         <Input
-      //           value={text}
-      //           onChange={e => this.handleFieldChange(e, 'workId', record.key)}
-      //           onKeyPress={e => this.handleKeyPress(e, record.key)}
-      //           placeholder="工号"
-      //         />
-      //       );
-      //     }
-      //     return text;
-      //   },
-      // },
+      {
+        // title: '工号',
+        // dataIndex: 'workId',
+        // key: 'workId',
+        width: '5%',
+        render: (text, record) => {
+          // if (record.editable) {
+          //   return (
+          //     <Input
+          //       value={text}
+          //       onChange={e => this.handleFieldChange(e, 'workId', record.key)}
+          //       onKeyPress={e => this.handleKeyPress(e, record.key)}
+          //       placeholder="工号"
+          //     />
+          //   );
+          // }
+          return '=';
+        },
+      },
       {
         title: '算法公式',
         dataIndex: 'expression',

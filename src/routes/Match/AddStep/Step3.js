@@ -25,31 +25,24 @@ class Step1 extends React.PureComponent {
     } = this.props;
     const { getFieldDecorator, getFieldValue, validateFields } = this.props.form;
 
+    // const formItemLayout = {
+    //   labelCol: {
+    //     span:24
+    //   },
+    //   wrapperCol: {
+    //     span:24
+    //   },
+    // };
+
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 10 },
+        offset:2,
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 11 },
+        span:22,
+        offset:2,
       },
     };
-    const formItemLayout1 = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 19 },
-      },
-    };
-
 
     const submitFormLayout = {
       wrapperCol: {
@@ -59,7 +52,6 @@ class Step1 extends React.PureComponent {
     };
     const onValidateForm = () => {
       validateFields((err, values) => {
-        console.log(values,err)
         if (!err) {
           dispatch({
             type: 'match/saveStep3FormData',
@@ -67,12 +59,16 @@ class Step1 extends React.PureComponent {
               ...values,
             },
           });
-          dispatch(routerRedux.push('/match/add/step4'));
+          if(step.basicInformation.occupation.indexOf(0) > -1 || step.basicInformation.occupation.indexOf(0) > -1){
+            dispatch(routerRedux.push('/match/add/step4'));
+          } else {
+            dispatch(routerRedux.push('/match/add/step5'));
+          }
         }
       });
     };
     return (
-      <div>
+      <div className={styles.content}>
         <Form
           onSubmit={this.handleSubmit}
           hideRequiredMark
@@ -88,11 +84,15 @@ class Step1 extends React.PureComponent {
           </Row> */}
           <div style={{fontSize:20,fontWeight:'bold'}}>征信基本情况</div>
           <Form.Item
-            label="征信记录时长"
+            label="征信记录时长要求"
             {...formItemLayout}
            >
             {getFieldDecorator('recordTime',{
               initialValue: [0,1,2,3,4],
+              rules:[{
+                required:true,
+                message:"请选择征信记录时长要求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>无</Checkbox>
@@ -104,11 +104,15 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="名下上征信小额类贷款笔数"
+            label="名下上征信小额类贷款笔数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumPettyLoan',{
               initialValue: [0,1,2,3,4],
+              rules:[{
+                required:true,
+                message:"请选择名下上征信小额类贷款笔数要求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>无</Checkbox>
@@ -120,11 +124,15 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="名下上征信消费金融类贷款笔数"
+            label="名下上征信消费金融类贷款笔数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumConsumerFinanceLoan',{
               initialValue: [0,1,2,3,4],
+              rules:[{
+                required:true,
+                message:"请选择名下上征信消费金融类贷款笔数要求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={0}>无</Checkbox>
@@ -136,11 +144,56 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="是否使用过微粒贷"
+            label="是否允许使用过微粒贷"
             {...formItemLayout}
            >
             {getFieldDecorator('isParticleLoan',{
-              initialValue: [0,1,2,3,4],
+              initialValue: [0,1],
+              rules:[{
+                required:true,
+                message:"请选择是否允许使用过微粒贷"
+              }]
+            })(
+              <CheckboxGroup  size="small">
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
+              </CheckboxGroup>
+            )}
+          </Form.Item>
+          {
+            (getFieldValue('isParticleLoan').indexOf(0) < 0 && getFieldValue('isParticleLoan').indexOf(1) >= 0)
+              ? <div>
+                  <Form.Item
+                    label="使用微粒贷额度要求"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('particleLoanLimit',{
+                      initialValue: [0,1,2,3],
+                      rules:[{
+                        required:true,
+                        message:"请选择使用微粒贷额度要求"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={0}>3千以下</Checkbox>
+                        <Checkbox value={1}>3-5千</Checkbox>
+                        <Checkbox value={2}>5千-1万</Checkbox>
+                        <Checkbox value={3}>1万以上</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                </div>: null
+          }
+          <Form.Item
+            label="是否允许名下贷款/信用卡账户状态有冻结/呆账/止付/挂失/收卡/作废"
+            {...formItemLayout}
+           >
+            {getFieldDecorator('isLoanClose',{
+              initialValue: [0,1],
+              rules:[{
+                required:true,
+                message:"请选择是否允许名下贷款/信用卡账户状态有冻结/呆账/止付/挂失/收卡/作废求"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -149,125 +202,33 @@ class Step1 extends React.PureComponent {
             )}
           </Form.Item>
           <Form.Item
-            label="使用额度"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('particleLoanLimit',{
-              initialValue: [0,1,2,3,4],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={0}>3千以下</Checkbox>
-                <Checkbox value={1}>3-5千</Checkbox>
-                <Checkbox value={2}>5千-1万</Checkbox>
-                <Checkbox value={3}>1万以上</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="名下贷款/信用卡账户状态是否有冻结/呆账/止付/挂失/收卡/作废"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('particleLoanLimit',{
-              initialValue: [0,1],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="名下贷款/信用卡五级分类是否有关注/次级/可疑/损失"
+            label="是否允许名下贷款/信用卡五级分类有关注/次级/可疑/损失"
             {...formItemLayout}
            >
             {getFieldDecorator('isLoanLoss',{
               initialValue: [0,1],
+              rules:[{
+                required:true,
+                message:"请选择是否允许名下贷款/信用卡五级分类有关注/次级/可疑/损失"
+              }]
             })(
               <CheckboxGroup  size="small">
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
+                <Checkbox value={1}>是</Checkbox>
+                <Checkbox value={0}>否</Checkbox>
               </CheckboxGroup>
             )}
           </Form.Item>
-            <div style={{fontSize:20,fontWeight:'bold'}}>征信预期情况</div>
+            <div style={{fontSize:20,fontWeight:'bold'}}>征信逾期情况</div>
           <Form.Item
-            label="当前是否有逾期"
+            label="是否允许当前有逾期"
             {...formItemLayout}
            >
             {getFieldDecorator('isOverdue',{
               initialValue: [0,1],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={1}>有</Checkbox>
-                <Checkbox value={0}>无</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="当前逾期类别"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('overdueCategory',{
-              initialValue: [0,1,2],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={0}>信用卡逾期</Checkbox>
-                <Checkbox value={1}>贷款逾期</Checkbox>
-                <Checkbox value={2}>信用卡和贷款逾期</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="当前逾期天数"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('overdueDays',{
-              initialValue: [0,1,2,3],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={0}>3天以下</Checkbox>
-                <Checkbox value={1}>3-7天</Checkbox>
-                <Checkbox value={2}>7-15天</Checkbox>
-                <Checkbox value={3}>15天以上</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="当前信用卡逾期金额"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('creditCardOverdueMoney',{
-              initialValue: [0,1,2,3],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={0}>5百以下</Checkbox>
-                <Checkbox value={1}>5百-1千</Checkbox>
-                <Checkbox value={2}>1-2千</Checkbox>
-                <Checkbox value={3}>2千以上</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="当前贷款逾期金额"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('loanOverdueMoney',{
-              initialValue: [0,1,2,3],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={0}>5百以下</Checkbox>
-                <Checkbox value={1}>5百-1千</Checkbox>
-                <Checkbox value={2}>1-2千</Checkbox>
-                <Checkbox value={3}>2千以上</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="当前逾期是否已经结清"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('isOverdueBalance',{
-              initialValue: [0,1],
+              rules:[{
+                required:true,
+                message:"请选择是否允许当前有逾期"
+              }]
             })(
               <CheckboxGroup  size="small">
                 <Checkbox value={1}>是</Checkbox>
@@ -275,152 +236,268 @@ class Step1 extends React.PureComponent {
               </CheckboxGroup>
             )}
           </Form.Item>
-          <Form.Item
-            label="近2个月内逾期的情况"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('isTwoMonthsOverdue',{
-              initialValue: [0,1],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={1}>是</Checkbox>
-                <Checkbox value={0}>否</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="近3个月内逾期的情况"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('isThreeMonthsOverdue',{
-              initialValue: [0,1],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={1}>是</Checkbox>
-                <Checkbox value={0}>否</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="近6个月内是否有逾期30天以上的情况"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('isSixMonthsOverdue',{
-              initialValue: [0,1],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={1}>是</Checkbox>
-                <Checkbox value={0}>否</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="近1年内是否有逾期60天以上的情况"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('isOneYearOverdue',{
-              initialValue: [0,1],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={1}>是</Checkbox>
-                <Checkbox value={0}>否</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="近2年内是否有逾期90天以上的情况"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('isTwoYearsOverdue',{
-              initialValue: [0,1],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={1}>是</Checkbox>
-                <Checkbox value={0}>否</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="近5年内是否有逾期120天以上的情况"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('isFiveYearsOverdue',{
-              initialValue: [0,1],
-            })(
-              <CheckboxGroup  size="small">
-                <Checkbox value={1}>是</Checkbox>
-                <Checkbox value={0}>否</Checkbox>
-              </CheckboxGroup>
-            )}
-          </Form.Item>
+          {
+            (getFieldValue('isOverdue').indexOf(0) == -1 && getFieldValue('isOverdue').indexOf(1) >=0)
+              ? <div>
+                  <Form.Item
+                    label="当前逾期类别要求"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('overdueCategory',{
+                      initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择当前逾期类别要求"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={0}>信用卡逾期</Checkbox>
+                        <Checkbox value={1}>贷款逾期</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                  <Form.Item
+                    label="当前逾期天数要求"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('overdueDays',{
+                      initialValue: [0,1,2,3],
+                      rules:[{
+                        required:true,
+                        message:"请选择当前逾期天数要求"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={0}>3天以下</Checkbox>
+                        <Checkbox value={1}>3-7天</Checkbox>
+                        <Checkbox value={2}>7-15天</Checkbox>
+                        <Checkbox value={3}>15天以上</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                  {
+                    getFieldValue('overdueCategory').indexOf(0)>=0?
+                      <Form.Item
+                        label="当前信用卡逾期金额要求"
+                        {...formItemLayout}
+                      >
+                        {getFieldDecorator('creditCardOverdueMoney',{
+                          initialValue: [0,1,2,3],
+                          rules:[{
+                            required:true,
+                            message:"请选择当前信用卡逾期金额要求"
+                          }]
+                        })(
+                          <CheckboxGroup  size="small">
+                            <Checkbox value={0}>5百以下</Checkbox>
+                            <Checkbox value={1}>5百-1千</Checkbox>
+                            <Checkbox value={2}>1-2千</Checkbox>
+                            <Checkbox value={3}>2千以上</Checkbox>
+                          </CheckboxGroup>
+                        )}
+                      </Form.Item>:null
+                  }
+                  {
+                    getFieldValue('overdueCategory').indexOf(1)>=0?
+                      <Form.Item
+                        label="当前贷款逾期金额要求"
+                        {...formItemLayout}
+                      >
+                        {getFieldDecorator('loanOverdueMoney',{
+                          initialValue: [0,1,2,3],
+                          rules:[{
+                            required:true,
+                            message:"请选择当前贷款逾期金额要求"
+                          }]
+                        })(
+                          <CheckboxGroup  size="small">
+                            <Checkbox value={0}>5百以下</Checkbox>
+                            <Checkbox value={1}>5百-1千</Checkbox>
+                            <Checkbox value={2}>1-2千</Checkbox>
+                            <Checkbox value={3}>2千以上</Checkbox>
+                          </CheckboxGroup>
+                        )}
+                      </Form.Item>:null
+                  }
+                  <Form.Item
+                    label="是否必须当前逾期已经结算"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('isOverdueBalance',{
+                      initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否必须当前逾期已经结算"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={1}>是</Checkbox>
+                        <Checkbox value={0}>否</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                  <Form.Item
+                    label="是否允许2个月内逾期"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('isTwoMonthsOverdue',{
+                      initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许2个月内逾期"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={1}>是</Checkbox>
+                        <Checkbox value={0}>否</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                  <Form.Item
+                    label="是否允许3个月内逾期"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('isThreeMonthsOverdue',{
+                      initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许3个月内逾期"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={1}>是</Checkbox>
+                        <Checkbox value={0}>否</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                  <Form.Item
+                    label="是否允许近6个月内有逾期30天以上的情况"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('isSixMonthsOverdue',{
+                      initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许近6个月内有逾期30天以上的情况"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={1}>是</Checkbox>
+                        <Checkbox value={0}>否</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                  <Form.Item
+                    label="是否允许近1年内有逾期60天以上的情况"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('isOneYearOverdue',{
+                      initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许近1年内有逾期60天以上的情况"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={1}>是</Checkbox>
+                        <Checkbox value={0}>否</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                  <Form.Item
+                    label="是否允许近2年内有逾期90天以上的情况"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('isTwoYearsOverdue',{
+                      initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许近2年内有逾期90天以上的情况"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={1}>是</Checkbox>
+                        <Checkbox value={0}>否</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                  <Form.Item
+                    label="是否允许近5年内有逾期120天以上的情况"
+                    {...formItemLayout}
+                  >
+                    {getFieldDecorator('isFiveYearsOverdue',{
+                      initialValue: [0,1],
+                      rules:[{
+                        required:true,
+                        message:"请选择是否允许近5年内有逾期120天以上的情况"
+                      }]
+                    })(
+                      <CheckboxGroup  size="small">
+                        <Checkbox value={1}>是</Checkbox>
+                        <Checkbox value={0}>否</Checkbox>
+                      </CheckboxGroup>
+                    )}
+                  </Form.Item>
+                </div>: null
+          }
           <div style={{fontSize:20,fontWeight:'bold'}}>征信查询情况</div>
           <Form.Item
-            label="近1个月查询次数"
+            label="近1个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneMonthQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近2个月查询次数"
+            label="近2个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumTwoMonthsQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近2个月查询次数"
-            {...formItemLayout}
-           >
-            {getFieldDecorator('sumTwoMonthsQueries',{
-              initialValue: "<10",
-            })(
-                <Input  type="text" style={{width:100}}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="请输入近3个月查询次数"
+            label="近3个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumThreeMonthsQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近6个月查询次数"
+            label="近6个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumSixMonthsQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <Form.Item
-            label="请输入近12个月查询次数"
+            label="近12个月查询次数要求"
             {...formItemLayout}
            >
             {getFieldDecorator('sumOneYearQueries',{
-              initialValue: "<10",
+              // initialValue: "<10",
             })(
-                <Input  type="text" style={{width:100}}/>
+                <Input  type="text" style={{width:200}} addonAfter="次"/>
             )}
           </Form.Item>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
+            <Button style={{ marginRight: 50 }} onClick={() => dispatch(routerRedux.push('/match/add/step2'))}>
+              上一步
+            </Button>
             <Button type="primary" htmlType="submit" onClick={onValidateForm}>
               下一步
             </Button>
-            {/* <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/match'))}>
-              返回
-            </Button> */}
           </FormItem>
         </Form>
 

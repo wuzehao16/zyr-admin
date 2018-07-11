@@ -1,19 +1,7 @@
+import { isUrl, formatter } from '../utils/utils';
 import { queryNotices, queryMenus } from '../services/api';
 import store from '../index';
 
-function formatter(data, parentPath = '', parentAuthority) {
-  return data.map((item) => {
-    const result = {
-      ...item,
-      path: `${parentPath}${item.path}`,
-      authority: item.authority || parentAuthority,
-    };
-    if (item.children) {
-      result.children = formatter(item.children, `${parentPath}${item.path}/`, item.authority);
-    }
-    return result;
-  });
-}
 
 export default {
   namespace: 'global',
@@ -28,12 +16,18 @@ export default {
     *fetchMenus(_, { call, put }) {
       const response = yield call(queryMenus);
       const { dispatch } = store;
-      console.log(1)
-      if (response.code !== 0) {
+      try {
+        if (response.code !== 0) {
+          dispatch({
+            type: 'login/logout',
+          });
+          return;
+        }
+      } catch (e) {
         dispatch({
           type: 'login/logout',
         });
-        return;
+        window.location.reload();
       }
       const menus = formatter(response.data.children)
       yield put({

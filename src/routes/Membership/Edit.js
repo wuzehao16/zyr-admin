@@ -56,19 +56,20 @@ export default class BasicForms extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 },
+        sm: { span: 12 },
+        md: { span: 6, offset: 3 },
       },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 },
-        md: { span: 10 },
+        md: { span: 6 },
       },
     };
 
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
 
@@ -113,7 +114,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请输入价格',
                 }],
               })(
-                <Input type="number" min={0} max={10000} addonAfter="元" placeholder="请输入价格" />
+                <Input type="number" step="0.01" min={0} max={10000} addonAfter="元" placeholder="请输入价格" />
               )}
             </FormItem>
             <FormItem
@@ -136,12 +137,13 @@ export default class BasicForms extends PureComponent {
             </FormItem>
 
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit" loading={submitting}>
-                提交
-              </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/membership'))}>
+              <Button onClick={() => dispatch(routerRedux.push('/membership'))}>
                 返回
               </Button>
+              <Button style={{ marginLeft: 50 }}  type="primary" htmlType="submit" loading={submitting}>
+                提交
+              </Button>
+
             </FormItem>
           </Form>
         </Card>

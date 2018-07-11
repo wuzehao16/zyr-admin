@@ -14,7 +14,6 @@ export default {
   effects: {
     *fetch({ payload }, { call, put }) {
       const response = yield call(queryDict, payload);
-      console.log(response, "dict response")
       yield put({
         type: 'save',
         payload: response,

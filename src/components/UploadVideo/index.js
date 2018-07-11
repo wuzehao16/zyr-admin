@@ -4,6 +4,7 @@ class UploadVideo extends React.Component {
   state = {
     previewVisible: false,
     loading: false,
+    withCredentials: true,
     previewImage: '',
     fileList: [],
   };
@@ -23,19 +24,6 @@ class UploadVideo extends React.Component {
 
   handleCancel = () => this.setState({ previewVisible: false })
 
-  beforeUpload = (file) => {
-    const isPic = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isPic) {
-      message.error('上传的文件不是图片类型，请重新上传！');
-      this.setState({ fileList: [] })
-    }
-
-    // const isLt2M = file.size / 1024 / 1024 < 2;
-    // if (!isLt2M) {
-    //   message.error('上传图片大小应该小于 2MB!');
-    // }
-    return isPic ;
-  }
 
   handlePreview = (file) => {
     this.setState({
@@ -88,9 +76,11 @@ class UploadVideo extends React.Component {
       <div className="clearfix">
         {/* http://47.104.27.184:8000/sysAnno/uploadImage */}
         <Upload
-          action="http://192.168.2.115:8000/sys/uploadVideo"
+          action="https://back.ibankmatch.com:8000/module/uploadVideo"
           // listType="picture-card"
-          withCredentials='true'
+          // headers={
+          //   authorization=authorization-text
+          // }
           fileList={fileList}
           // onPreview={this.handlePreview}
           // beforeUpload={this.beforeUpload}
@@ -98,9 +88,7 @@ class UploadVideo extends React.Component {
         >
           {fileList.length >= 1 ? null : uploadButton}
         </Upload>
-        {/* <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
-        </Modal> */}
+
       </div>
     );
   }

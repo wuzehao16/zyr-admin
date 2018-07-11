@@ -192,7 +192,6 @@ export default class TableList extends PureComponent {
   }
 
   handleAdd = (fields) => {
-    console.log(fields)
     this.props.dispatch({
       type: 'info/upPMIState',
       payload: fields,
@@ -226,9 +225,9 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem>
+            <FormItem label="内容查询">
               {getFieldDecorator('condition')(
-                <Input placeholder="请输入标题、内容" />
+                <Input placeholder="请输入通知的标题、内容" />
               )}
             </FormItem>
           </Col>

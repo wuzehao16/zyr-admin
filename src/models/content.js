@@ -125,6 +125,14 @@ export default {
       }
       if (callback) callback();
     },
+    *clearItem({callback},{ put }) {
+      const list = {};
+      yield put({
+        type: 'saveclearItem',
+        payload: list,
+      });
+      if (callback) callback();
+    },
   },
 
   reducers: {
@@ -166,6 +174,12 @@ export default {
           data: newList
         }
       }
+    },
+    saveclearItem(state) {
+      return {
+        ...state,
+        item: {},
+      };
     },
     handleRemoveColumn(state, action) {
       const newList = state.column.data.filter(item => item.channelId != action.payload.id)

@@ -61,45 +61,63 @@ class StandardTable extends PureComponent {
   }
   render() {
     const { selectedRowKeys } = this.state;
-    const { data: { data, count }, loading } = this.props
+    const { data: { data, count }, loading,userIdentity } = this.props
     const columns = [
       {
         // title: '模型名称',
+        align: 'left',
         dataIndex: 'modeName',
         render: (text, record, index) => {
           return (
             <div className={styles.model_name}>
               <div className={styles.model_title}>{text}</div>
-              <div className={record.modelStatus===1?styles.act:styles.disabled}>{record.modelStatus===1?'启用':'禁用'}</div>
             </div>
-
           );
         },
       },
       {
         // title: '机构名称',
+        // align: 'center',
         dataIndex: 'manageName',
         render:val => <span className={styles.manageName}>{val}</span>
       },
       {
         // title: '更新时间',
-        dataIndex: 'createTime',
+        align: 'center',
+        dataIndex: 'updateTime',
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
+        // title: '启用状态',
+        align: 'right',
+        render: (text, record, index) => {
+          return (
+              <div className={record.modeStatus==1?styles.act:styles.disabled}>{record.modeStatus==1?'启用':'禁用'}</div>
+          );
+        },
+      },
+      {
         // title: '操作',
-        align: 'center',
+        align: 'right',
         render: (text, record) => {
           return (
             <Fragment>
-              <span>
-                <a onClick={() => this.handleResetPassword(record)}>{record.modelStatus==1?'禁止':'启用'}</a>
-                <Divider type="vertical" />
-              </span>
-              <a onClick={() => this.handleEdit(record)}>编辑</a>
-              <Divider type="vertical" />
               <a onClick={() => this.handleAddAi(record)}>额度算法</a>
               <Divider type="vertical" />
+              {
+                userIdentity ===0
+                ?              <span>
+                                <a onClick={() => this.handleResetPassword(record)}>{record.modeStatus==1?'禁止':'启用'}</a>
+                                <Divider type="vertical" />
+                              </span>:null
+              }
+              {
+                userIdentity===1
+                 ?<span>
+                   <a onClick={() => this.handleEdit(record)}>编辑</a>
+                   <Divider type="vertical" />
+                 </span> :null
+              }
               <a onClick={() => this.handleDetail(record)}>详情</a>
             </Fragment>
           );
@@ -138,7 +156,7 @@ class StandardTable extends PureComponent {
         </div> */}
         <Table
           loading={loading}
-          rowKey={record => record.modeName}
+          rowKey={record => record.id}
           // rowSelection={rowSelection}
           dataSource={data}
           // scroll={{ x: 1800}}

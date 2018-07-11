@@ -29,8 +29,8 @@ class Step1 extends React.PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 11 },
-        md: { span: 11 },
+        sm: { span: 12 },
+        md: { span: 10 },
       },
       wrapperCol: {
         xs: { span: 24 },
@@ -60,12 +60,13 @@ class Step1 extends React.PureComponent {
     };
     const onValidateForm = () => {
       validateFields((err, values) => {
-        console.log(values,err)
+        
         if (!err) {
           dispatch({
             type: 'match/saveStep1FormData',
             payload: {
               ...values,
+              loanType:[values.loanType]
             },
           });
           dispatch(routerRedux.push('/match/add/step2'));
@@ -79,10 +80,18 @@ class Step1 extends React.PureComponent {
           hideRequiredMark
           style={{ marginTop: 8 }}
         >
+          <Row>
+            <Col md={{span:16,offset:5}} sm={24}>
+              <div style={{fontSize:13,color:'#666',margin:'30px 0 50px 0'}}>
+                <p style={{textIndent: '-4.5em'}}>提示：1、选择题：请取消勾选不允许存在的选项，比如该产品只面向年龄为18岁及以上的客户，请取消勾选：“18岁以下”；若该产品对学历无要求，则保持全选状态，
+                依次类推！</p>
+                <p style={{textIndent: '-1.5em'}}>2、填空题：填写阈值时，阈值前必须使用"&gt;"、"&gt;="、"&lt;"、"&lt;=",不填写阈值表示对该选题无要求！</p>
+              </div>
+            </Col>
+          </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
               <Form.Item
-                style={{marginTop:100}}
                 label="模型名称"
                 {...formItemLayout}
                >
@@ -102,7 +111,7 @@ class Step1 extends React.PureComponent {
                >
                 {getFieldDecorator('loanType',{
                   initialValue: 0,
-                })(
+                  })(
                   <RadioGroup  options={options}  />
                 )}
               </Form.Item>
@@ -117,7 +126,6 @@ class Step1 extends React.PureComponent {
             </Button>
           </FormItem>
         </Form>
-
       </div>
     );
   }

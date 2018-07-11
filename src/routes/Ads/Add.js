@@ -16,13 +16,13 @@ const { TextArea } = Input;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 7 },
-    md: { span: 5 },
+    sm: { span: 12 },
+    md: { span: 7 },
   },
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 12 },
-    md: { span: 12 },
+    md: { span: 9 },
   },
 };
 
@@ -115,10 +115,10 @@ export default class BasicForms extends PureComponent {
       <div>
         <FormItem
           {...formItemLayout}
-          label="内容"
+          label="广告内容"
         >
           {getFieldDecorator('adsContent')(
-            <Input.TextArea rows={4} maxLength="50" placeholder="请输入"/>
+            <Input.TextArea rows={4} maxLength="50" placeholder="请输入广告内容"/>
           )}
         </FormItem>
         <FormItem
@@ -126,16 +126,16 @@ export default class BasicForms extends PureComponent {
           label="跳转链接"
         >
           {getFieldDecorator('adsUrl')(
-            <Input placeholder="请输入"/>
+            <Input placeholder="请输入跳转链接"/>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-           label="图片">
+           label="广告图片">
            {getFieldDecorator('adsPic',{
              rules:[{
                required:true,
-               message:'请选择图片'
+               message:'请选择广告图片'
              },
             ],
            })(
@@ -152,15 +152,15 @@ export default class BasicForms extends PureComponent {
       <div>
         <FormItem
           {...formItemLayout}
-          label="内容"
+          label="广告内容"
         >
           {getFieldDecorator('adsContent', {
             rules: [{
               required: true,
-              message: '请选择内容',
+              message: '请选择广告内容',
             }],
           })(
-            <Input.TextArea rows={4} maxLength="50" placeholder="请输入"/>
+            <Input.TextArea rows={4} maxLength="50" placeholder="请输入广告内容"/>
           )}
         </FormItem>
         <FormItem
@@ -173,7 +173,7 @@ export default class BasicForms extends PureComponent {
               message: '请输入跳转链接',
             }],
           })(
-            <Input placeholder="请输入"/>
+            <Input placeholder="请输入跳转链接"/>
           )}
         </FormItem>
       </div>
@@ -214,7 +214,7 @@ export default class BasicForms extends PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
 
@@ -236,31 +236,31 @@ export default class BasicForms extends PureComponent {
                   message: '请选择广告类型',
                 }],
               })(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
+                <Select placeholder="请选择广告类型" style={{ width: '100%' }}>
                   {adsTypeOptions}
                 </Select>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="标题"
+              label="广告标题"
             >
               {getFieldDecorator('adsTitle', {
                 rules: [{
                   required: true,
-                  message: '请选择标题',
+                  message: '请选择广告标题',
                 }],
               })(
-                <Input type="text" maxLength='20' placeholder="请输入"/>
+                <Input type="text" maxLength='20' placeholder="请输入广告标题"/>
               )}
             </FormItem>
             {this.renderForm()}
             <FormItem
               {...formItemLayout}
-              label="排序"
+              label="广告排序"
             >
               {getFieldDecorator('adsSort')(
-                <Input min={1} max={10000} type="number" placeholder="请输入"/>
+                <Input min={1} max={10000} type="number" placeholder="请输入广告排序"/>
               )}
             </FormItem>
             <FormItem
@@ -283,7 +283,7 @@ export default class BasicForms extends PureComponent {
             {getFieldValue('upState') ==='0'
                ?<FormItem
                 {...formItemLayout}
-                label="自动上架时间"
+                label="自动上下架时间"
                 >
                 {getFieldDecorator('time', {
                   rules:[{
@@ -306,7 +306,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/ads'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/ads'))}>
                 返回
               </Button>
             </FormItem>
