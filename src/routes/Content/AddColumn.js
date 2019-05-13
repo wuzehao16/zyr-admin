@@ -15,13 +15,13 @@ const { TextArea } = Input;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 7 },
-    md: { span: 5 },
+    sm: { span: 12 },
+    md: { span: 7 },
   },
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 12 },
-    md: { span: 12 },
+    md: { span: 9 },
   },
 };
 
@@ -49,7 +49,6 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
-        console.log(fieldsValue.adsPic)
         const values = {
           ...fieldsValue,
         };
@@ -69,7 +68,7 @@ export default class BasicForms extends PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
 
@@ -111,7 +110,23 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="排序"
+              label="是否视频"
+            >
+              {getFieldDecorator('uiType', {
+                rules: [{
+                  required: true,
+                  message: '请选择是否是视频',
+                }],
+              })(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  <Option value={0}>图文</Option>
+                  <Option value={1}>视频</Option>
+                </Select>
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="栏目排序"
             >
               {getFieldDecorator('adsSort', {
                 rules: [{
@@ -140,7 +155,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content/column'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/content/column'))}>
                 返回
               </Button>
             </FormItem>

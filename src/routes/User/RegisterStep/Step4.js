@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'dva';
 import { Form, Input, Button, Alert, Divider, Row, Col, Popover, Progress, Upload, Modal, Icon, Cascader, Select } from 'antd';
 import { routerRedux } from 'dva/router';
-import options from '../../../common/addressOptions';
+import Debounce from 'lodash-decorators/debounce';
+import Bind from 'lodash-decorators/bind';
 import { digitUppercase } from '../../../utils/utils';
 import UploadPicture from '../../../components/UploadPicture'
 import styles from './style.less';
@@ -116,6 +117,14 @@ class Step4 extends React.PureComponent {
     });
   }
   getInstitution = (code) => {
+    //重复选择时候清除数据
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('sublInstitution')){
+      resetFields(['sublInstitution','manageId'])
+    }
+    this.setState({
+      cityCode:code
+    })
     this.props.dispatch({
       type: 'register/getInstitution',
       payload: {
@@ -123,11 +132,43 @@ class Step4 extends React.PureComponent {
       },
     });
   }
+  // 模糊匹配时候调用
+  @Bind()
+  @Debounce(500)
+  getInstitutionVlookup(name) {
+    this.props.dispatch({
+      type: 'register/getInstitution',
+      payload: {
+        cityCode: this.state.cityCode,
+        manageName: name
+      },
+    });
+  }
   getSubInstitution = (code) => {
+    //重复选择时候清除数据
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('manageId')){
+      resetFields(['manageId'])
+    }
+    this.setState({
+      parentId:code
+    })
     this.props.dispatch({
       type: 'register/getSubInstitution',
       payload: {
         parentId: code
+      },
+    });
+  }
+  //模糊匹配时候
+  @Bind()
+  @Debounce(500)
+  getSubInstitutionVlookup(name) {
+    this.props.dispatch({
+      type: 'register/getSubInstitution',
+      payload: {
+        parentId: this.state.parentId,
+        manageName:name
       },
     });
   }
@@ -152,13 +193,13 @@ class Step4 extends React.PureComponent {
       e.preventDefault();
       validateFields((err, values) => {
         if (!err) {
-          const ndata = Object.assign(data,{city: '', institutionList: "", institutionTypeList: ""})
+          const ndata = {...data, ...{city: '', institutionList: "", institutionTypeList: ""}}
           dispatch({
             type: 'register/submitStep4Form',
             payload: {
               ...ndata,
               ...values,
-              manageLogoId: values.manageLogoId?values.manageLogoId.match(/ima[^\n]*Ex/)[0].slice(0,-3):values.manageLogoId,
+              manageLogoId: values.manageLogoId,
             },
           });
         }
@@ -240,7 +281,15 @@ class Step4 extends React.PureComponent {
                               },
                             ],
                           })(
-                            <Select placeholder="银行名称" onChange={this.getSubInstitution}>
+                            <Select
+                              placeholder="银行名称"
+                              defaultActiveFirstOption={false}
+                              showArrow={false}
+                              showSearch={true}
+                              filterOption={false}
+                              onSearch={this.getInstitutionVlookup}
+                              onChange={this.getSubInstitution}
+                              >
                               {data.institutionList
                                 ? institutionListOptions
                                 : null}
@@ -251,8 +300,22 @@ class Step4 extends React.PureComponent {
                           label="下属机构"
                           {...formItemLayout}
                           >
-                          {getFieldDecorator('manageId')(
-                            <Select placeholder="下属机构">
+                          {getFieldDecorator('manageId', {
+                            rules: [
+                              {
+                                required: true,
+                                message: '请选择下属机构！',
+                              },
+                            ],
+                          })(
+                            <Select
+                              placeholder="下属机构"
+                              defaultActiveFirstOption={false}
+                              showArrow={false}
+                              showSearch={true}
+                              filterOption={false}
+                              onSearch={this.getSubInstitutionVlookup}
+                              >
                               {data.subInstitutionList
                                 ? subInstitutionListOptions
                                 : null}

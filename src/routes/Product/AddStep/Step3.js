@@ -6,15 +6,19 @@ import Result from '../../../components/Result';
 import styles from './style.less';
 
 const Step = Steps.Step;
-class Step3 extends React.PureComponent {
-  state = {
-    step1: '',
-    step2: '',
-    step3: '',
-    step4: undefined,
-    step5: '',
-    step6: '',
+class Step3 extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+        step1: props.data.step1,
+        step2: props.data.step2,
+        step3: props.data.step3,
+        step4: props.data.step4,
+        step5: props.data.step5,
+        step6: props.data.step6,
+      }
   }
+
   onChangeStep1 = (e) =>{
     this.setState({
       step1: e.target.value
@@ -53,7 +57,13 @@ class Step3 extends React.PureComponent {
         type: 'product/submitStepForm',
         payload: {
           ...data,
-          applyFlow
+          productFeatures: data.productFeatures && data.productFeatures.join(','),
+          productPayWay: data.productPayWay && data.productPayWay.join(','),
+          customerType: data.customerType && data.customerType.join(','),
+          productType: data.productType && data.productType.join(','),
+          propertyType: data.propertyType && data.propertyType.join(','),
+          applyFlow,
+          matchingMode:data.matchingMode1+','+ data.matchingMode2
         },
       });
     };
@@ -63,21 +73,28 @@ class Step3 extends React.PureComponent {
       </Popover>
     );
     const onPrev = () => {
+      dispatch({
+        type: 'product/saveStepFormData',
+        payload: {
+          ...data,
+          ...this.state,
+        },
+      });
       dispatch(routerRedux.push('/product/add/step2'));
     };
     return (
       <div style={{marginTop:"50px"}}>
-        <h1>申请流程:</h1>
+        <h3 style={{fontWeight:700}}>申请流程:</h3>
         <Steps current={6} progressDot style={{marginTop:"50px"}} >
-          <Step title="1" description={<Input  onChange={this.onChangeStep1} placeholder="申请"/>} />
-          <Step title="2" description={<Input value={this.state.step2} onChange={this.onChangeStep2} placeholder="请输入"/>} />
-          <Step title="3" description={<Input value={this.state.step3} onChange={this.onChangeStep3} placeholder="请输入"/>} />
-          <Step title="4" description={<Input value={this.state.step4} onChange={this.onChangeStep4} placeholder="请输入"/>} />
-          <Step title="5" description={<Input value={this.state.step5} onChange={this.onChangeStep5} placeholder="请输入"/>} />
-          <Step title="6" description={<Input value={this.state.step6} onChange={this.onChangeStep6} placeholder="请输入"/>} />
+          <Step title="1" description={<Input value={this.state.step1} onChange={this.onChangeStep1} placeholder="请输入申请步骤1"/>} />
+          <Step title="2" description={<Input value={this.state.step2} onChange={this.onChangeStep2} placeholder="请输入申请步骤2"/>} />
+          <Step title="3" description={<Input value={this.state.step3} onChange={this.onChangeStep3} placeholder="请输入申请步骤3"/>} />
+          <Step title="4" description={<Input value={this.state.step4} onChange={this.onChangeStep4} placeholder="请输入申请步骤4"/>} />
+          <Step title="5" description={<Input value={this.state.step5} onChange={this.onChangeStep5} placeholder="请输入申请步骤5"/>} />
+          <Step title="6" description={<Input value={this.state.step6} onChange={this.onChangeStep6} placeholder="请输入申请步骤6"/>} />
         </Steps>
         <div style={{marginTop:"50px",textAlign:'center'}}>
-          <Button onClick={onPrev} style={{ marginRight: 30 }}>
+          <Button onClick={onPrev} style={{ marginRight: 50 }}>
             上一步
           </Button>
           <Button type="primary" onClick={onFinish} loading={submitting}>

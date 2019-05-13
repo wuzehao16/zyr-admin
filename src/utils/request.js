@@ -48,12 +48,20 @@ export default function request(url, options) {
   };
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
-    newOptions.headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json; charset=utf-8',
-      ...newOptions.headers,
-    };
-    newOptions.body = JSON.stringify(newOptions.body);
+    if (!(newOptions.body instanceof FormData)) {
+      newOptions.headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
+        ...newOptions.headers,
+      };
+      newOptions.body = JSON.stringify(newOptions.body);
+    } else {
+      // newOptions.body is FormData
+      newOptions.headers = {
+        Accept: 'application/json',
+        ...newOptions.headers,
+      };
+    }
   }
   return fetch(url, newOptions)
     .then(checkStatus)
@@ -66,10 +74,17 @@ export default function request(url, options) {
     .catch((e) => {
       const { dispatch } = store;
       const status = e.name;
-      if (status === 401) {
+      // if (status === 'SyntaxError') {
+      //   dispatch({
+      //     type: 'login/logout',
+      //   });
+      //   return;
+      // }
+      if (status === 302) {
         dispatch({
           type: 'login/logout',
         });
+        window.reload();
         return;
       }
       if (status === 403) {

@@ -55,84 +55,74 @@ class StandardTable extends PureComponent {
     }
   }
   render() {
-    const { selectedRowKeys } = this.state;
+    // const { selectedRowKeys } = this.state;
     const { data: { data, count }, userIdentity,  loading } = this.props;
     const orderStatus = ['申请中', '已申请','已初审','已终审','已面签','已放款','已拒绝','已取消'];
     const columns = [
       {
-        title: '序号',
-        dataIndex: 'no',
-        render: (text, record, index) => {
+        render: (record) => {
           return (
-              <span>{index+1}</span>
-          );
-        },
+            <div>
+              <div>
+                <span className={styles.txt}>{record.productName}</span>
+              </div>
+              <div>
+                <span>{record.manageName}</span>
+              </div>
+              <Fragment>
+                <span>提单人：{record.userName}<Divider type="vertical" /></span>
+                <span>{record.userPhone}</span>
+              </Fragment>
+            </div>
+          )
+        }
       },
       {
-        title: '订单号',
-        dataIndex: 'orderNo',
+        render: (record) => {
+          return (
+            <div>
+              <div>
+                <span>订单号：{record.orderNo}</span>
+              </div>
+              <div>
+                <span>贷款人：{record.loanName}</span>
+              </div>
+              <Fragment>
+                <span>申请{`${record.loanMoney}万`}<Divider type="vertical" /></span>
+                <span>{`${orderStatus[record.orderStatus]}`?`${orderStatus[record.orderStatus]}`:'--'}<Divider type="vertical" /></span>
+                {
+                record.realLoanMoney?
+                <span>实际放款{`${record.realLoanMoney}万`}<Divider type="vertical" /></span>:
+                <span>--<Divider type="vertical" /></span>
+                }
+                {
+                record.loanLimit?
+                <span>{`${record.loanLimit}期`}</span>:
+                <span>--</span>
+                }
+              </Fragment>
+            </div>
+          )
+        }
       },
       {
-        title: '机构名称',
-        dataIndex: 'manageName',
-      },
-      {
-        title: '产品名称',
-        dataIndex: 'productName',
-      },
-      {
-        title: '申请贷款金额',
-        dataIndex: 'loanMoney',
-        render: val => `${val}万`,
-      },
-      {
-        title: '实际贷款金额',
-        dataIndex: 'realLoanMoney',
-        render: val => `${val}万`,
-      },
-      {
-        title: '贷款期限',
-        dataIndex: 'loanLimit',
-        render: val => `${val}期`,
-      },
-      {
-        title: '贷款人',
-        dataIndex: 'loanName',
-      },
-      {
-        title: '提单人',
-        dataIndex: 'userName',
-      },
-      {
-        title: '提单人电话',
-        dataIndex: 'userPhone',
-      },
-      {
-        title: '订单状态',
-        dataIndex: 'orderStatus',
-        render: val => `${orderStatus[val]}`,
-      },
-      {
-        title: '更新时间',
+        // align:'center',
         dataIndex: 'updateTime',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}更新</span>,
       },
       {
-        title: '操作',
-        align: 'center',
+        align: 'right',
         render: (text, record) => {
           return (
             <Fragment>
               {
-                userIdentity===1
+                userIdentity===1 && (record.orderStatus == 1 || record.orderStatus == 2 || record.orderStatus == 3 || record.orderStatus == 4 )
                   ? <span>
                       <a onClick={() => this.handleReview(record)}>审批</a>
                       <Divider type="vertical" />
                     </span>
                   : null
               }
-
               <a onClick={() => this.handleDetail(record)}>详情</a>
             </Fragment>
           );
@@ -147,32 +137,20 @@ class StandardTable extends PureComponent {
       showTotal:total => `总共 ${total} 条`,
     };
 
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.handleRowSelectChange,
-      getCheckboxProps: record => ({
-        disabled: record.disabled,
-      }),
-    };
+    // const rowSelection = {
+    //   selectedRowKeys,
+    //   onChange: this.handleRowSelectChange,
+    //   getCheckboxProps: record => ({
+    //     disabled: record.disabled,
+    //   }),
+    // };
 
     return (
       <div className={styles.standardTable}>
-        <div className={styles.tableAlert}>
-          <Alert
-            message={(
-              <div>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
-              </div>
-            )}
-            type="info"
-            showIcon
-          />
-        </div>
         <Table
           loading={loading}
-          rowKey={record => record.orderId}
-          rowSelection={rowSelection}
+          // rowKey={record => record.orderId}
+          // rowSelection={rowSelection}
           userIdentity={userIdentity}
           dataSource={data}
           columns={columns}

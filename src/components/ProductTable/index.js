@@ -59,73 +59,62 @@ class StandardTable extends PureComponent {
     const { data: { data, count },userIdentity , loading } = this.props
     const approvalStatus = ['未通过', '审核中', '已通过'];
     const institutionType = ['无','银行机构','金融机构','小额贷款'];
-    const isEvaluaStatuts = ['否', '是'];
+    const isEvaluaStatuts = ['未纳入评测', '已纳入评测'];
     const columns = [
       {
-        title: '序号',
-        dataIndex: 'no',
-        render: (text, record, index) => {
+        // title: '产品信息',
+        // align:'center',
+        render(record) {
           return (
-              <span>{index+1}</span>
-          );
+            <div>
+              <div><span className={styles.txt}>{record.productName}</span></div>
+              <Fragment>
+                  <span>{approvalStatus[record.approvalStatuts]}<Divider type="vertical" /></span>
+                  <span>{isEvaluaStatuts[record.isEvaluating]||'--'}<Divider type="vertical" /></span>
+                  { record.approvalStatuts == 2
+                  ? <span>{record.shelfState==1?'已上架':'已下架'}
+                      <Divider type="vertical" />
+                    </span>
+                  : null
+                  }
+                  <span style={{color:'rgb(238,86,72)'}}>{`${record.monthlyFeeRate} %`}</span>
+              </Fragment>
+            </div>
+            )
         },
       },
       {
-        title: '产品编号',
-        dataIndex: 'productNo',
+        // title:'机构信息',
+        // align:'center',
+        render(record){
+          return (
+            <div>
+              <div>
+                <span className={styles.txt}>{record.manageName}</span>
+              </div>
+              <Fragment>
+                <span>{record.city}<Divider type="vertical" /></span>
+                <span>{institutionType[record.institutionCode]}</span>
+              </Fragment>
+            </div>
+          )
+        }
       },
       {
-        title: '产品名称',
-        dataIndex: 'productName',
-        render: (text) => <span className={styles.txt}>{text}</span>,
+        // title:'操作人信息',
+        align:'center',
+        render (record) {
+          return (
+            <Fragment>
+              <span>{record.oper}<Divider type="vertical" /></span>
+              <span>{`${moment(record.updateTime).format('YYYY-MM-DD HH:mm:ss')}更新`}</span>
+            </Fragment>
+          )
+        }
       },
       {
-        title: '城市',
-        dataIndex: 'city',
-      },
-      {
-        title: '机构类型',
-        dataIndex: 'institutionCode',
-        render(val) {
-          return <span>{institutionType[val]}</span>;
-        },
-      },
-      {
-        title: '机构名称',
-        dataIndex: 'manageName',
-      },
-      {
-        title: '月费率',
-        dataIndex: 'monthlyFeeRate',
-        render: val => `${val} %`,
-      },
-      {
-        title: '纳入评测',
-        dataIndex: 'isEvaluating',
-        render(val) {
-          return <span>{isEvaluaStatuts[val]||'--'}</span>;
-        },
-      },
-      {
-        title: '审核状态',
-        dataIndex: 'approvalStatuts',
-        render(val) {
-          return <Badge status={approvalStatusMap[val]} text={approvalStatus[val]} />;
-        },
-      },
-      {
-        title: '操作者',
-        dataIndex: 'oper',
-      },
-      {
-        title: '更新时间',
-        dataIndex: 'updateTime',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-      },
-      {
-        title: '操作',
-        align: 'center',
+        // title: '操作',
+        align:'right',
         render: (text, record) => {
           return (
             <Fragment>
@@ -169,22 +158,10 @@ class StandardTable extends PureComponent {
 
     return (
       <div className={styles.standardTable}>
-        <div className={styles.tableAlert}>
-          <Alert
-            message={(
-              <div>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
-              </div>
-            )}
-            type="info"
-            showIcon
-          />
-        </div>
         <Table
           loading={loading}
           rowKey={record => record.productId}
-          rowSelection={rowSelection}
+          // rowSelection={rowSelection}
           dataSource={data}
           userIdentity={userIdentity}
           columns={columns}

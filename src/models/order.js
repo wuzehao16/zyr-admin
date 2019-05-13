@@ -13,6 +13,8 @@ export default {
       pagination: {},
     },
     item: {},
+    city: [],
+    repMethod:[],
     orderType:[],
   },
 
@@ -49,21 +51,29 @@ export default {
       }
       if (callback) callback();
     },
+    // 还款方式
+    *fetchRepMethod({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          repMethod: response.data
+        },
+      });
+    },
     *fetchDetail({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
       yield put({
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/order/detail'));
     },
-    *fetchReview({payload}, { call, put }) {
-      const response = yield call(queryDetail, payload);
+    *fetchCity({ payload }, { call, put }) {
+      const response = yield call(queryDict, payload);
       yield put({
-        type: 'saveDetail',
+        type: 'saveCity',
         payload: response.data,
       });
-      yield put(routerRedux.push('/order/review'));
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
@@ -108,6 +118,12 @@ export default {
       return {
         ...state,
         item: action.payload,
+      };
+    },
+    saveCity(state, action) {
+      return {
+        ...state,
+        city: action.payload,
       };
     },
   },

@@ -23,9 +23,9 @@ class Step3 extends React.PureComponent {
     help: '',
   };
   checkPass = (s) => {
-    // if (s.length < 8) {
-    //   return 0;
-    // }
+    if (s.length < 6) {
+      return 0;
+    }
     let ls = 0;
     if (s.match(/([a-z])+/)) {
       ls += 1;

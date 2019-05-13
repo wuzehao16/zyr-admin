@@ -27,6 +27,8 @@ export default class BasicForms extends PureComponent {
     expandForm1: false,
     expandForm2: false,
     expandForm3: false,
+    visible: false,
+    help: '',
   }
 
   componentDidMount() {
@@ -167,10 +169,13 @@ export default class BasicForms extends PureComponent {
         this.props.dispatch({
           type: 'setting/updateEmail',
           payload: values,
+          callback:() =>{
+            this.props.dispatch({
+              type: 'user/fetchCurrent',
+            })
+            this.toggleForm2()
+          }
         });
-        this.props.dispatch({
-          type: 'user/fetchCurrent',
-        })
       }
     });
   }
@@ -181,24 +186,89 @@ export default class BasicForms extends PureComponent {
         this.props.dispatch({
           type: 'setting/updatePhone',
           payload: values,
+          callback:() =>{
+            this.props.dispatch({
+              type: 'user/fetchCurrent',
+            })
+            this.toggleForm3()
+          }
         });
-        this.props.dispatch({
-          type: 'user/fetchCurrent',
-        })
+
       }
     });
   }
+  checkConfirm = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && value !== form.getFieldValue('newPassword')) {
+      callback('两次输入的密码不一致!');
+    } else {
+      callback();
+    }
+  };
+  checkPassword = (rule, value, callback) => {
+    if (!value) {
+      this.setState({
+        help: '请输入密码！',
+        visible: !!value,
+      });
+      callback('error');
+    } else if(this.checkPass(value) < 2){
+      this.setState({
+        help: '请输入6-24位字母、数字或“_”,两种以上',
+        visible: !!value,
+      });
+      callback('error');
+    } else {
+      this.setState({
+        help: '',
+      });
+      if (value.length < 6) {
+        callback('error');
+      } else {
+        if (!this.state.visible) {
+          this.setState({
+            visible: !!value,
+          });
+        }
+        const { form } = this.props;
+        if (value && this.state.confirmDirty) {
+          form.validateFields(['confirm'], { force: true });
+        }
+        callback();
+      }
+    }
+  };
+  checkPass = (s) => {
+    if (s.length < 6) {
+      return 0;
+    }
+    let ls = 0;
+    if (s.match(/([a-z])+/)) {
+      ls += 1;
+    }
+    if (s.match(/([0-9])+/)) {
+      ls += 1;
+    }
+    if (s.match(/([A-Z])+/)) {
+      ls += 1;
+    }
+    if (s.match(/[^a-zA-Z0-9]+/)) {
+      ls += 1;
+    }
+    return ls
+  }
   renderAdvancedForm1() {
+    const { help } = this.state;
     const { submitting, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
     return(
-      <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={1}>
+      <DescriptionList size="small" title="修改密码" style={{ marginBottom: 32 }} col={1}>
         <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过<a  onClick={()=> dispatch(routerRedux.push('/user/reset-password'))}>手机号重置</a>或通过<a onClick={() => dispatch(routerRedux.push('/user/reset-password'))}>邮箱重置</a>您的密码。</Description>
         <Form
           onSubmit={this.handleSubmit}
           >
-        <Description term="旧密码">
-          <Col sm={12} xs={24}>
+        <Description>
+          <Col sm={24} xs={24}>
             <FormItem
               >
               {getFieldDecorator('oldPassword',{
@@ -207,23 +277,45 @@ export default class BasicForms extends PureComponent {
                   message: '请输入旧密码'
                 }]
               })(
-                <Input style={{width:'200px'}} type="password"/>
+                <Input style={{width:'400px',marginBottom:20,background:'#f6f6f6'}} type="password" placeholder="请输入旧密码"/>
             )}
             </FormItem>
           </Col>
         </Description>
-        <Description term="新密码">
-          <Col sm={12} xs={24}>
-            <FormItem >
+        <Description>
+          <Col sm={24} xs={24}>
+            <FormItem
+              help={this.state.help}
+              >
               {getFieldDecorator('newPassword',{
                 rules: [{
                   required: true,
                   message: '请输入新密码'
+                },
+                {
+                  validator: this.checkPassword,
                 }]
               })(
-                <Input style={{width:'200px'}} type="password"/>
+                <Input style={{width:'400px',marginBottom:20,background:'#f6f6f6'}} type="password" placeholder="请输入新密码"/>
             )}
             </FormItem>
+          </Col>
+        </Description>
+        <Description>
+          <Col sm={24} xs={24}>
+            <Form.Item>
+              {getFieldDecorator('confirm', {
+                rules: [
+                  {
+                    required: true,
+                    message: '请确认密码！',
+                  },
+                  {
+                    validator: this.checkConfirm,
+                  },
+                ],
+              })(<Input style={{width:'400px',marginBottom:20,background:'#f6f6f6'}}  type="password" placeholder="确认密码"/>)}
+          </Form.Item>
           </Col>
         </Description>
         <Description>
@@ -233,7 +325,7 @@ export default class BasicForms extends PureComponent {
         </Description>
         </Form>
         <a style={{ float:'right' }} onClick={this.toggleForm1}>
-          收起 <Icon type="up" />
+          <Icon type="caret-up" />
         </a>
       </DescriptionList>
 
@@ -242,12 +334,14 @@ export default class BasicForms extends PureComponent {
   renderSimpleForm1() {
     const {  dispatch } = this.props;
     return(
-    <DescriptionList size="large" title="基本信息" style={{ marginBottom: 32 }} col={1}>
-      <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过<a  onClick={()=> dispatch(routerRedux.push('/user/reset-password'))}>手机号重置</a>或通过<a onClick={() => dispatch(routerRedux.push('/user/reset-password'))}>邮箱重置</a>您的密码。</Description>
-      <a style={{ float:'right' }} onClick={this.toggleForm1}>
-        展开 <Icon type="down" />
-      </a>
-    </DescriptionList>
+      <div style={{position:'relative'}}>
+        <a style={{ float:'right',position:'absolute',top:0,right:0}} onClick={this.toggleForm1}>
+            <Icon type="caret-down" />
+          </a>
+        <DescriptionList size="large" title="修改密码" style={{ marginBottom: 32}} col={1}>
+          <Description>修改密码时需要输入当前密码，如果您忘记了当前密码，可以点击这里通过<a  onClick={()=> dispatch(routerRedux.push('/user/reset-password'))}>手机号重置</a>或通过<a onClick={() => dispatch(routerRedux.push('/user/reset-password'))}>邮箱重置</a>您的密码。</Description>
+        </DescriptionList>
+    </div>
     )
   }
   renderAdvancedForm2() {
@@ -257,13 +351,13 @@ export default class BasicForms extends PureComponent {
     return(
       <DescriptionList size="large" title="修改邮箱" style={{ marginBottom: 32 }} col={1}>
         <Description>为确保是您本人操作，我们将会把验证码发送到您已绑定的邮箱。</Description>
-        <Form
+          <Form
           onSubmit={this.handleSubmit2}
           >
-          <Description>
+          <Description style={{ marginBottom: 20 }}>
             <Form.Item>
               {/* <Row gutter={24}> */}
-                <Col span={14}>
+              <Col sm={24} xs={24}>
                   {getFieldDecorator('codeByoldEMail', {
                     rules: [
                       {
@@ -271,9 +365,7 @@ export default class BasicForms extends PureComponent {
                         message: '请输入验证码！',
                       },
                     ],
-                  })(<Input  placeholder="验证码" />)}
-                </Col>
-                <Col span={10}>
+                  })(<Input style={{width:'400px',background:'#f6f6f6'}} placeholder="请输入验证码" />)}
                   <Button
 
                     disabled={count1}
@@ -282,15 +374,15 @@ export default class BasicForms extends PureComponent {
                   >
                     {count1 ? `${count1} s` : '获取验证码'}
                   </Button>
-                </Col>
+              </Col>
               {/* </Row> */}
             </Form.Item>
           </Description>
-          <Description>
+          <Description  style={{ marginBottom: 20 }}>
             我们已经发送了验证码到您的邮箱
           </Description>
-          <Description term="新邮箱">
-            <Col sm={12} xs={24}>
+          <Description  style={{ marginBottom: 20 }}>
+            <Col sm={24} xs={24}>
               <FormItem
                 >
                 {getFieldDecorator('newEMail',{
@@ -302,15 +394,15 @@ export default class BasicForms extends PureComponent {
                     message: '请输入邮箱'
                   }]
                 })(
-                  <Input style={{width:'200px'}} />
+                  <Input style={{width:'400px',background:'#f6f6f6'}} placeholder="请输入新的邮箱地址"/>
               )}
               </FormItem>
             </Col>
           </Description>
-          <Description>
+          <Description style={{ marginBottom: 20 }}>
             <Form.Item>
               {/* <Row gutter={24}> */}
-                <Col span={14}>
+              <Col sm={24} xs={24}>
                   {getFieldDecorator('codeByNewEmail', {
                     rules: [
                       {
@@ -318,10 +410,8 @@ export default class BasicForms extends PureComponent {
                         message: '请输入验证码！',
                       },
                     ],
-                  })(<Input  placeholder="验证码" />)}
-                </Col>
-                <Col span={10}>
-                  <Button
+                  })(<Input  style={{width:'400px',background:'#f6f6f6'}} placeholder="请输入验证码" />)}
+                  <Button style={{marginLeft:'50'}}
 
                     disabled={count2}
                     // className={styles.getCaptcha}
@@ -329,7 +419,7 @@ export default class BasicForms extends PureComponent {
                   >
                     {count2 ? `${count2} s` : '获取验证码'}
                   </Button>
-                </Col>
+              </Col>
               {/* </Row> */}
             </Form.Item>
           </Description>
@@ -340,7 +430,7 @@ export default class BasicForms extends PureComponent {
         </Description>
         </Form>
         <a style={{ float:'right' }} onClick={this.toggleForm2}>
-          收起 <Icon type="up" />
+          <Icon type="caret-up" />
         </a>
       </DescriptionList>
 
@@ -349,12 +439,14 @@ export default class BasicForms extends PureComponent {
   renderSimpleForm2() {
     const { data:{ currentUser } } = this.props;
     return(
-    <DescriptionList size="large" title="修改邮箱" style={{ marginBottom: 32 }} col={1}>
-      <Description>{currentUser.data.userEmail}</Description>
-      <a style={{ float:'right' }} onClick={this.toggleForm2}>
-        展开 <Icon type="down" />
-      </a>
-    </DescriptionList>
+      <div style={{position:'relative'}}>
+        <a style={{ float:'right',position:'absolute',top:0,right:0 }} onClick={this.toggleForm2}>
+          <Icon type="caret-down" />
+        </a>
+        <DescriptionList size="large" title="修改邮箱" style={{ marginBottom: 32 }} col={1}>
+          <Description>{currentUser.data.userEmail}</Description>
+        </DescriptionList>
+      </div>
     )
   }
   renderAdvancedForm3() {
@@ -367,10 +459,10 @@ export default class BasicForms extends PureComponent {
         <Form
           onSubmit={this.handleSubmit3}
           >
-          <Description>
+          <Description style={{ marginBottom: 20}}>
             <Form.Item>
               {/* <Row gutter={24}> */}
-                <Col span={14}>
+                <Col sm={24} xs={24}>
                   {getFieldDecorator('codeByOldPhone', {
                     rules: [
                       {
@@ -378,13 +470,11 @@ export default class BasicForms extends PureComponent {
                         message: '请输入验证码！',
                       },
                     ],
-                  })(<Input  placeholder="验证码" />)}
-                </Col>
-                <Col span={10}>
+                  })(<Input  style={{width:'400px',background:'#f6f6f6'}} placeholder="请输入验证码" />)}
                   <Button
-
                     disabled={count3}
                     // className={styles.getCaptcha}
+                    // style={{color:'#ee5648',border:'none'}}
                     onClick={this.onGetCaptcha3}
                   >
                     {count3 ? `${count3} s` : '获取验证码'}
@@ -393,11 +483,11 @@ export default class BasicForms extends PureComponent {
               {/* </Row> */}
             </Form.Item>
           </Description>
-          <Description>
+          <Description >
             {/* 我们已经发送了验证码到您的手机 */}
           </Description>
-          <Description term="新手机">
-            <Col sm={12} xs={24}>
+          <Description style={{ marginBottom: 20}}>
+            <Col sm={24} xs={24}>
               <FormItem
                 >
                 {getFieldDecorator('newPhone',{
@@ -406,15 +496,15 @@ export default class BasicForms extends PureComponent {
                     message: '请输入新手机'
                   }]
                 })(
-                  <Input style={{width:'200px'}} />
+                  <Input style={{width:'400px',background:'#f6f6f6'}} placeholder="请输入新手机" />
               )}
               </FormItem>
             </Col>
           </Description>
-          <Description>
+          <Description style={{ marginBottom: 20}}>
             <Form.Item>
               {/* <Row gutter={24}> */}
-                <Col span={14}>
+                <Col sm={24} xs={24}>
                   {getFieldDecorator('codeByNewPhone', {
                     rules: [
                       {
@@ -422,11 +512,8 @@ export default class BasicForms extends PureComponent {
                         message: '请输入验证码！',
                       },
                     ],
-                  })(<Input  placeholder="验证码" />)}
-                </Col>
-                <Col span={10}>
+                  })(<Input  style={{width:'400px',background:'#f6f6f6'}} placeholder="请输入验证码" />)}
                   <Button
-
                     disabled={count4}
                     // className={styles.getCaptcha}
                     onClick={this.onGetCaptcha4}
@@ -437,14 +524,14 @@ export default class BasicForms extends PureComponent {
               {/* </Row> */}
             </Form.Item>
           </Description>
-        <Description>
+        <Description style={{ marginBottom: 20}}>
           <Button  type="primary" htmlType="submit" loading={submitting}>
             保存
           </Button>
         </Description>
         </Form>
         <a style={{ float:'right' }} onClick={this.toggleForm3}>
-          收起 <Icon type="up" />
+          <Icon type="caret-up" />
         </a>
       </DescriptionList>
 
@@ -453,12 +540,14 @@ export default class BasicForms extends PureComponent {
   renderSimpleForm3() {
     const { data:{ currentUser } } = this.props;
     return(
-    <DescriptionList size="large" title="修改手机" style={{ marginBottom: 32 }} col={1}>
-      <Description>{currentUser.data.userPhone}</Description>
-      <a style={{ float:'right' }} onClick={this.toggleForm3}>
-        展开 <Icon type="down" />
-      </a>
-    </DescriptionList>
+      <div style={{position:'relative'}}>
+        <a style={{ float:'right',position:'absolute',top:0,right:0 }} onClick={this.toggleForm3}>
+            <Icon type="caret-down" />
+          </a>
+        <DescriptionList size="large" title="修改手机" style={{ marginBottom: 32 }} col={1}>
+          <Description>{currentUser.data.userPhone}</Description>
+        </DescriptionList>
+      </div>
     )
   }
   renderForm1() {
@@ -493,15 +582,15 @@ export default class BasicForms extends PureComponent {
   }
   render() {
     const { submitting, data:{ currentUser } , setting:{ item }, dispatch } = this.props;
+    const { getFieldDecorator } = this.props.form;
     return (
-      <PageHeaderLayout title="账号设置" >
-        <Card bordered={false}>
+      // <PageHeaderLayout title="账号设置">
+      <PageHeaderLayout>
+        <Card bordered={false} style={{padding:'26px 147px 136px 147px'}}>
           <Tabs defaultActiveKey="1">
-            <TabPane tab="个人信息" key="1">
+            <TabPane tab="基本设置" key="1" style={{paddingLeft:'1%',paddingRight:'1%'}}>
                 {currentUser.data.loginAccount ? (
                   <div>
-
-
                     {this.renderForm1()}
                     <Divider style={{ marginBottom: 32 }} />
                     {this.renderForm2()}
@@ -513,24 +602,31 @@ export default class BasicForms extends PureComponent {
 
 
             </TabPane>
-            <TabPane tab="机构信息" key="2">
-              <DescriptionList size="large" title="设置LOGO" style={{ marginBottom: 32 }} col={2}>
-
-                <Description term="机构logo">
-                  <img src={item.manageLogoId} alt="" width={80} height={80}/>
+            <TabPane tab="基本信息" key="2" style={{paddingLeft:'1%',paddingRight:'1%'}}>
+              <DescriptionList size="large" title="机构logo" style={{ marginBottom: 32 }} col={2}>
+                <Description>
+                  {
+                    item.manageLogoId?<img src={item.manageLogoId} alt="" width={80} height={80}/>:<div/>
+                  }
                 </Description>
               </DescriptionList>
               <Divider style={{ marginBottom: 32 }} />
               <DescriptionList size="large" title="其他信息" style={{ marginBottom: 32 }} col={1}>
-                <Description term="机构类型">{item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'}</Description>
+                <Description term="机构类型">{item.institutionCode?(item.institutionCode==1?'银行':item.institutionCode==2?'金融机构':'小额贷款'):''}</Description>
                 <Description term="所在城市">{item.city}</Description>
                 <Description term="机构名称">{item.manageName}</Description>
-                <p>如需修改基本信息联系客服</p>
+                {/* <p>如需修改基本信息联系客服（0755）21046730</p> */}
               </DescriptionList>
             </TabPane>
-
           </Tabs>
         </Card>
+        <style jsx>{`
+          .ant-tabs-tab , .ant-tabs-tab-active {
+            font-size:18px;
+            font-weight:700;
+         }
+        `}
+        </style>
       </PageHeaderLayout>
     );
   }

@@ -72,6 +72,7 @@ export const getRouterData = (app) => {
   const routerConfig = {
     '/': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
+      // component: dynamicWrapper(app, ['user', 'login'], () => import('../routes/Product')),
     },
     '/dashboard/analysis': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
@@ -124,9 +125,6 @@ export const getRouterData = (app) => {
     '/user/register/step4': {
       component: dynamicWrapper(app, ['register'], () => import('../routes/User/RegisterStep/Step4')),
     },
-    '/user/register1': {
-      component: dynamicWrapper(app, ['register'], () => import('../routes/User/Register')),
-    },
     '/user/register-result': {
       component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
     },
@@ -158,30 +156,37 @@ export const getRouterData = (app) => {
     },
     '/content/information': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Information')),
+      name: '内容管理',
     },
     '/content/information/list': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/InformationList')),
     },
     '/content/information/add': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/AddInformation')),
+      name: '新增内容',
     },
-    '/content/information/edit': {
+    '/content/information/edit/:id': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/EditInformation')),
+      name: '编辑内容',
     },
     '/content/information/detail': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Content/Detail')),
+      name: '内容详情',
     },
     '/content/column': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/Column')),
+      name: '栏目管理',
     },
     '/content/column/list': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/ColumnList')),
     },
     '/content/column/add': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/AddColumn')),
+      name: '新增栏目',
     },
     '/content/column/edit': {
       component: dynamicWrapper(app, ['content'], () => import('../routes/Content/EditColumn')),
+      name: '编辑栏目',
     },
     '/system/user': {
       component: dynamicWrapper(app, ['systemUser'], () => import('../routes/System/User')),
@@ -254,13 +259,13 @@ export const getRouterData = (app) => {
     '/member/list': {
       component: dynamicWrapper(app, ['member'], () => import('../routes/Member/List')),
     },
-    '/member/edit': {
+    '/member/edit/:id': {
       component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Edit')),
       name: '编辑用户',
     },
-    '/member/detail': {
+    '/member/detail/:id': {
       component: dynamicWrapper(app, ['member'], () => import('../routes/Member/Detail')),
-      name: '查看用户详情',
+      name: '用户详情',
     },
     '/product': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product')),
@@ -269,11 +274,11 @@ export const getRouterData = (app) => {
     '/product/list': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product/List')),
     },
-    '/product/detail': {
+    '/product/detail/:id': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Detail')),
       name: '产品详情',
     },
-    '/product/Review': {
+    '/product/Review/:id': {
       component: dynamicWrapper(app, ['product'], () => import('../routes/Product/Review')),
       name: '产品审核',
     },
@@ -344,7 +349,7 @@ export const getRouterData = (app) => {
     },
     '/setting': {
       component: dynamicWrapper(app, ['setting'], () => import('../routes/Setting')),
-      name: '设置',
+      name: '账号设置',
     },
     '/order': {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order')),
@@ -353,22 +358,115 @@ export const getRouterData = (app) => {
     '/order/list': {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order/List')),
     },
-    '/order/detail': {
+    '/order/detail/:id': {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order/Detail')),
       name: '订单详情',
     },
-    '/order/review': {
+    '/order/review/:id': {
       component: dynamicWrapper(app, ['order'], () => import('../routes/Order/Review')),
-      name: '订单详情',
+      name: '订单审批',
     },
-    // '/user/:id': {
-    //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
-    // },
+    '/match': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match')),
+      name: '匹配模型',
+    },
+    '/match/list': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/List')),
+    },
+    '/match/add': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep')),
+      name: '新增模型',
+    },
+    '/match/addai/:id': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddAi')),
+      name: '额度算法',
+    },
+    '/match/editai/:id': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditAi')),
+      name: '额度算法',
+    },
+    '/match/add/step1': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step1')),
+    },
+    '/match/add/step2': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step2')),
+    },
+    '/match/add/step3': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step3')),
+    },
+    '/match/add/step4': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step4')),
+    },
+    '/match/add/step5': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step5')),
+    },
+    '/match/add/step6': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/AddStep/Step6')),
+    },
+    '/match/edit': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep')),
+      name: '编辑模型',
+    },
+    '/match/edit/step1': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step1')),
+    },
+    '/match/edit/step2': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step2')),
+    },
+    '/match/edit/step3': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step3')),
+    },
+    '/match/edit/step4': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step4')),
+    },
+    '/match/edit/step5': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step5')),
+    },
+    '/match/edit/step6': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/EditStep/Step6')),
+    },
+    '/match/detail': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep')),
+      name: '模型详情',
+    },
+    '/match/detail/step1': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step1')),
+    },
+    '/match/detail/step2': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step2')),
+    },
+    '/match/detail/step3': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step3')),
+    },
+    '/match/detail/step4': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step4')),
+    },
+    '/match/detail/step5': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step5')),
+    },
+    '/match/detail/step6': {
+      component: dynamicWrapper(app, ['match'], () => import('../routes/Match/DetailStep/Step6')),
+    },
+    '/matchlist': {
+      component: dynamicWrapper(app, ['matchList'], () => import('../routes/MatchList')),
+      name: '匹配记录',
+    },
+    '/matchlist/list': {
+      component: dynamicWrapper(app, ['matchList'], () => import('../routes/MatchList/List')),
+    },
+    '/matchlist/detail/:id': {
+      component: dynamicWrapper(app, ['matchList'], () => import('../routes/MatchList/Detail')),
+      name: '匹配详情',
+    },
   };
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());
+
+  // Route configuration data
+  // eg. {name,authority ...routerConfig }
   const routerData = {};
-  Object.keys(routerConfig).forEach((path) => {
+  // The route matches the menu
+  Object.keys(routerConfig).forEach(path => {
     // Regular match item name
     // eg.  router /user/:id === /user/chen
     const pathRegexp = pathToRegexp(path);
@@ -386,6 +484,7 @@ export const getRouterData = (app) => {
       ...router,
       name: router.name || menuItem.name,
       authority: router.authority || menuItem.authority,
+      hideInBreadcrumb: router.hideInBreadcrumb || menuItem.hideInBreadcrumb,
     };
     routerData[path] = router;
   });

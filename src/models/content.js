@@ -101,29 +101,34 @@ export default {
       const response = yield call(removeContent, payload);
       if (response.code === 0) {
         message.success('删除成功');
+        yield put({
+          type: 'handleRemoveContent',
+          payload: payload
+        })
       } else {
         message.error(response.msg)
         return
       }
-      const list = yield call(queryContent);
-      yield put({
-        type: 'save',
-        payload: list,
-      });
       if (callback) callback();
     },
     *removeColumn({ payload, callback }, { call, put }) {
       const response = yield call(removeColumn, payload);
-      console.log(response,response.code)
       if (response.code === 0) {
         message.success('删除成功');
+        yield put({
+          type: 'handleRemoveColumn',
+          payload: payload
+        });
       } else {
         message.error(response.msg)
         return
       }
-      const list = yield call(queryColumn);
+      if (callback) callback();
+    },
+    *clearItem({callback},{ put }) {
+      const list = {};
       yield put({
-        type: 'queryColumn',
+        type: 'saveclearItem',
         payload: list,
       });
       if (callback) callback();
@@ -160,6 +165,30 @@ export default {
         ...state,
         item: action.payload,
       };
+    },
+    handleRemoveContent(state, action) {
+      const newList = state.data.data.filter(item => item.contentId != action.payload.id)
+      return {
+        ...state,
+        data:{
+          data: newList
+        }
+      }
+    },
+    saveclearItem(state) {
+      return {
+        ...state,
+        item: {},
+      };
+    },
+    handleRemoveColumn(state, action) {
+      const newList = state.column.data.filter(item => item.channelId != action.payload.id)
+      return {
+        ...state,
+        column:{
+          data: newList
+        }
+      }
     },
   },
 };

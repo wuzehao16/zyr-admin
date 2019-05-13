@@ -4,8 +4,10 @@ import {
   Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip, Row, Col, Upload, Modal, message
 } from 'antd';
 import { routerRedux } from 'dva/router';
+import Debounce from 'lodash-decorators/debounce';
+import Bind from 'lodash-decorators/bind';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import UploadPicture from '../../components/UploadPicture';
+// import UploadPicture from '../../components/UploadPicture';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -45,7 +47,7 @@ export default class BasicForms extends PureComponent {
       if (!err) {
         const values = {
           ...fieldsValue,
-          manageLogoId: fieldsValue.manageLogoId?fieldsValue.manageLogoId.match(/ima[^\n]*Ex/)[0].slice(0,-3):fieldsValue.manageLogoId,
+          manageLogoId: fieldsValue.manageLogoId,
           sysRoles:[{roleId: "28d4c3a66ffa4e0d973c8177c611f109"}],
         };
         this.props.dispatch({
@@ -55,7 +57,27 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
+  // 模糊匹配时候调用
+  @Bind()
+  @Debounce(500)
+  getInstitutionVlookup(name) {
+    this.props.dispatch({
+      type: 'institution/getInstitution',
+      payload: {
+        cityCode: this.state.cityCode,
+        manageName: name
+      },
+    });
+  }
   getInstitution = (code) => {
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('sublInstitution')){
+      resetFields(['sublInstitution','manageId'])
+    }
+    this.setState({
+      cityCode:code
+    })
+
     this.props.dispatch({
       type: 'institution/getInstitution',
       payload: {
@@ -63,7 +85,27 @@ export default class BasicForms extends PureComponent {
       },
     });
   }
+  //模糊匹配时候
+  @Bind()
+  @Debounce(500)
+  getSubInstitutionVlookup(name) {
+    this.props.dispatch({
+      type: 'institution/getSubInstitution',
+      payload: {
+        parentId: this.state.parentId,
+        manageName:name
+      },
+    });
+  }
   getSubInstitution = (code) => {
+    //重复选择时候清除数据
+    const { resetFields,getFieldValue } = this.props.form;
+    if(getFieldValue('manageId')){
+      resetFields(['manageId'])
+    }
+    this.setState({
+      parentId:code
+    })
     this.props.dispatch({
       type: 'institution/getSubInstitution',
       payload: {
@@ -95,7 +137,7 @@ export default class BasicForms extends PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
     const uploadButton = (
@@ -114,7 +156,7 @@ export default class BasicForms extends PureComponent {
             style={{ marginTop: 8 }}
           >
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
+              <Col md={10} offset={2} sm={24}>
                 <FormItem
                   {...formItemLayout}
                    label="机构类型">
@@ -129,7 +171,7 @@ export default class BasicForms extends PureComponent {
                   )}
                 </FormItem>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={10} sm={24}>
                 <FormItem
                   {...formItemLayout}
                    label="所在城市">
@@ -151,23 +193,50 @@ export default class BasicForms extends PureComponent {
                  case '1':
                   return <div>
                           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                            <Col md={12} sm={24}>
+                            <Col md={10} offset={2} sm={24}>
                               <FormItem
                                 {...formItemLayout}
                                  label="银行名称">
-                                {getFieldDecorator('sublInstitution')(
-                                  <Select placeholder="请选择" style={{ width: '100%' }} onChange={this.getSubInstitution}>
+                                {getFieldDecorator('sublInstitution',{
+                                  rules:[{
+                                    required:true,
+                                    message:'请选择银行名称'
+                                  }]
+                                })(
+                                  <Select
+                                    placeholder="银行名称"
+                                    defaultActiveFirstOption={false}
+                                    showArrow={false}
+                                    showSearch={true}
+                                    filterOption={false}
+                                    onSearch={this.getInstitutionVlookup}
+                                    onChange={this.getSubInstitution}
+                                    style={{ width: '100%' }}
+                                    >
                                   { institutionListOptions }
                                   </Select>
                                 )}
                               </FormItem>
                             </Col>
-                            <Col md={12} sm={24}>
+                            <Col md={10} sm={24}>
                               <FormItem
                                 {...formItemLayout}
                                  label="下属机构">
-                                {getFieldDecorator('manageId')(
-                                  <Select placeholder="请选择" style={{ width: '100%' }} >
+                                {getFieldDecorator('manageId',{
+                                  rules:[{
+                                    required:true,
+                                    message:'请选择下属机构'
+                                  }]
+                                })(
+                                  <Select
+                                    placeholder="下属机构"
+                                    defaultActiveFirstOption={false}
+                                    showArrow={false}
+                                    showSearch={true}
+                                    filterOption={false}
+                                    onSearch={this.getSubInstitutionVlookup}
+                                    style={{ width: '100%' }}
+                                    >
                                     { subInstitutionListOptions }
                                   </Select>
                                 )}
@@ -177,7 +246,7 @@ export default class BasicForms extends PureComponent {
                          </div>
                   case '2':
                     return <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                            <Col md={12} sm={24}>
+                            <Col md={10} offset={2} sm={24}>
                               <Form.Item
                                 label="机构名称"
                                 {...formItemLayout}
@@ -199,7 +268,7 @@ export default class BasicForms extends PureComponent {
                           </Row>
                   case '3':
                   return <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                          <Col md={12} sm={24}>
+                          <Col md={10} offset={2} sm={24}>
                             <Form.Item
                               label="机构名称"
                               {...formItemLayout}
@@ -225,10 +294,10 @@ export default class BasicForms extends PureComponent {
             })()
             }
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
+              <Col md={10} offset={2} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="邮箱">
+                   label="邮箱地址">
                   {getFieldDecorator('userEmail',{
                     rules: [{
                         type: 'email',
@@ -241,10 +310,10 @@ export default class BasicForms extends PureComponent {
                   )}
                 </FormItem>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={10} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="手机号">
+                   label="手机号码">
                   {getFieldDecorator('userPhone',{
                     rules: [{
                       required: true, message: '请输入手机号',
@@ -260,16 +329,16 @@ export default class BasicForms extends PureComponent {
             </Row>
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
 
-              <Col md={12} sm={24}>
+              <Col md={10} offset={2} sm={24}>
                 <FormItem
                   {...formItemLayout}
-                   label="排序">
+                   label="机构排序">
                   {getFieldDecorator('sort')(
                     <Input min={1} max={10000} type="number" placeholder="请输入"/>
                   )}
                 </FormItem>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={10} sm={24}>
                 <FormItem
                   {...formItemLayout}
                    label="启用状态">
@@ -287,7 +356,7 @@ export default class BasicForms extends PureComponent {
               </Col>
             </Row>
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={12} sm={24}>
+              <Col md={10} offset={2} sm={24}>
                 <FormItem
                   {...formItemLayout}
                    label="机构logo">

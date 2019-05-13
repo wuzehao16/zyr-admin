@@ -24,20 +24,17 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        if (values.sysRoles) {
-          values.sysRoles.map((item, index, arr) => {
+        var newValues = [];
+          newValues = JSON.parse(JSON.stringify(values))
+          newValues.sysRoles.map((item, index, arr) => {
             arr[index] = { roleId: item };
           });
-        }
         this.props.dispatch({
           type: 'systemUser/add',
-          payload: values,
+          payload: newValues,
         });
       }
     });
-  }
-  onChange = (value) => {
-    // console.log(value);
   }
   queryAllRole = () => {
     this.props.dispatch({
@@ -53,19 +50,20 @@ export default class BasicForms extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 },
+        sm: { span: 12 },
+        md: { span: 8 },
       },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 },
-        md: { span: 10 },
+        md: { span: 8 },
       },
     };
 
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
 
@@ -135,7 +133,7 @@ export default class BasicForms extends PureComponent {
               label="用户权限"
             >
               {getFieldDecorator('sysRoles')(
-                <CheckboxGroup onChange={this.onChange} >
+                <CheckboxGroup  >
                   {RoleOptions}
                 </CheckboxGroup>
               )}
@@ -144,7 +142,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/user'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/system/user'))}>
                 返回
               </Button>
             </FormItem>

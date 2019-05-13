@@ -36,6 +36,9 @@ export default class TableList extends PureComponent {
       type: 'content/fetch',
     });
     dispatch({
+      type: 'content/fetchColumn',
+    });
+    dispatch({
       type: 'content/fetchColumnType',
       payload: {
         type: 'chaClassify'
@@ -118,14 +121,22 @@ export default class TableList extends PureComponent {
     });
   }
   handleEdit = (item) => {
-    const { dispatch } = this.props;
-    dispatch({
+    this.props.dispatch({
       type: 'content/fetchDetail',
       payload: {
         contentId: item.contentId,
       },
     });
-    dispatch(routerRedux.push('/content/information/edit'))
+    this.props.dispatch({
+      type:'content/clearItem',
+      callback:() =>{
+        setTimeout(() => {
+          this.props.dispatch(routerRedux.push('/content/information/edit/' + item.contentId));
+
+        },200)
+      }
+    } )
+
   }
   handleDetail = (item) => {
     const { dispatch } = this.props;
@@ -184,7 +195,7 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="标题">
+            <FormItem label="内容标题">
               {getFieldDecorator('contentTitle')(
                 <Input placeholder="请输入" />
               )}
@@ -230,8 +241,14 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="发 布 者 ">
+              {getFieldDecorator('oper')(
+                <Input placeholder="请输入" />
+              )}
+            </FormItem>
+          </Col>
         </Row>
-
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="更新时间">
@@ -241,15 +258,8 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="标题">
+            <FormItem label="内容标题">
               {getFieldDecorator('contentTitle')(
-                <Input placeholder="请输入" />
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="发布者">
-              {getFieldDecorator('oper')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>

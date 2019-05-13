@@ -107,7 +107,6 @@ export default {
   // subscriptions: {
   //   setup({ dispatch, history }) {
   //     return history.listen(({ pathname, state }) => {
-  //       console.log(state)
   //       if(pathname ==="/system/role/edit"){
   //         dispatch({
   //           type:'saveRole',

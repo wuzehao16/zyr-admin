@@ -53,18 +53,19 @@ export default class BasicForms extends PureComponent {
       labelCol: {
         xs: { span: 24 },
         sm: { span: 7 },
+        md: { span: 8 },
       },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 },
-        md: { span: 10 },
+        md: { span: 8 },
       },
     };
 
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
 
@@ -102,14 +103,14 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="备注"
+              label="角色备注"
             >
               {getFieldDecorator('remark', {
                 rules: [{
-                  required: true, message: '怎么可以不输入备注呢',
+                  required: true, message: '请输入角色备注',
                 }],
               })(
-                <Input placeholder="请输入备注" />
+                <Input placeholder="请输入角色备注" />
               )}
             </FormItem>
             <FormItem
@@ -124,11 +125,11 @@ export default class BasicForms extends PureComponent {
                 )}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit" loading={submitting}>
-                提交
-              </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/role'))}>
+              <Button onClick={() => dispatch(routerRedux.push('/system/role'))}>
                 返回
+              </Button>
+              <Button type="primary" style={{ marginLeft: 50 }}  htmlType="submit" loading={submitting}>
+                提交
               </Button>
             </FormItem>
           </Form>

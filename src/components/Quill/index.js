@@ -9,18 +9,19 @@ import styles from './index.less'
 class Editor extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { editorHtml: '', theme: 'snow' }
+    this.state = { editorHtml: props.defaultValue, theme: 'snow' }
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.state.editorHtml !== '') return
-    if ('defaultValue' in nextProps) {
-      this.setState({
-        editorHtml: nextProps.defaultValue,
-      });
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   // debugger;
+  //   if (this.state.editorHtml !== '') return
+  //   if ('defaultValue' in nextProps) {
+  //     this.setState({
+  //       editorHtml: nextProps.defaultValue,
+  //     });
+  //   }
+  // }
 
   handleChange (html) {
     this.setState({ editorHtml: html });

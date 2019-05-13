@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Menu, DatePicker, Modal } from 'antd';
+import { routerRedux } from 'dva/router';
 import StandardTable from '../../components/MemberTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -90,20 +91,10 @@ export default class TableList extends PureComponent {
     this.handleModalVisible(true);
   }
   handleEdit = (item) => {
-    this.props.dispatch({
-      type: 'member/fetchEdit',
-      payload: {
-        userId: item.userId,
-      },
-    });
+    this.props.dispatch(routerRedux.push('/member/edit/' + item.userId))
   }
   handleDetail = (item) => {
-    this.props.dispatch({
-      type: 'member/fetchDetail',
-      payload: {
-        userId: item.userId,
-      },
-    });
+    this.props.dispatch(routerRedux.push('/member/detail/' + item.userId))
   }
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
@@ -226,9 +217,9 @@ export default class TableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem>
+            <FormItem label="用户查询">
               {getFieldDecorator('condition')(
-                <Input placeholder="输入用户名称、真实姓名、手机号查询" />
+                <Input placeholder="输入用户名称、真实姓名、手机号查询" style={{ width: '100%' }} />
               )}
             </FormItem>
           </Col>
@@ -272,7 +263,7 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="是否是客服">
+            <FormItem label="是否客服">
               {getFieldDecorator('isCustom')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="0">否</Option>
@@ -281,6 +272,19 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
+          {/* 招聘资质，待修改接口参数后调整字段 */}
+          <Col md={8} sm={24}>
+            <FormItem label="招聘资格">
+              {getFieldDecorator('isCustom')(
+                <Select placeholder="请选择" style={{ width: '100%' }}>
+                  <Option value="1">有</Option>
+                  <Option value="0">无</Option>
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+        </Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="启用状态">
               {getFieldDecorator('islock')(
@@ -291,8 +295,6 @@ export default class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="注册日期">
               {getFieldDecorator('date')(
@@ -301,9 +303,9 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem>
+            <FormItem  label="用户查询">
               {getFieldDecorator('condition')(
-                <Input placeholder="输入用户名称、真实姓名、手机号查询" />
+                <Input placeholder="输入用户名称、真实姓名、手机号查询" style={{ width: '100%' }} />
               )}
             </FormItem>
           </Col>

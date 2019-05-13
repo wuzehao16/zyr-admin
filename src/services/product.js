@@ -10,6 +10,10 @@ export async function queryManage(params) {
 export async function queryDetail(params) {
   return request(`/sys/detailsProduct?${stringify(params)}`);
 }
+//模型查询
+export async function queryModel(params) {
+  return request(`/sys/selecMyManagetModelinfo?${stringify(params)}`);
+}
 
 export async function update(params) {
   return request('/sys/editProduct', {
@@ -33,6 +37,12 @@ export async function updateShelvesStatus(params) {
     body: {
       ...params,
     },
+  });
+}
+
+export async function remove(params) {
+  return request(`/sys/deleteProduct/${params.productId}`, {
+    method: 'Delete',
   });
 }
 

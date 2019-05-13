@@ -96,15 +96,14 @@ export default {
       const response = yield call(remove, payload);
       if (response.code === 0) {
         message.success('删除成功');
+        yield put({
+          type: 'removeAds',
+          payload: payload
+        })
       } else {
         message.error(response.msg)
         return
       }
-      const list = yield call(query);
-      yield put({
-        type: 'save',
-        payload: list,
-      });
       if (callback) callback();
     },
   },
@@ -147,5 +146,14 @@ export default {
         item: action.payload,
       };
     },
+    removeAds(state, action) {
+      const newList = state.data.data.filter(item => item.adsId != action.payload.adsId);
+      return{
+        ...state,
+        data:{
+          data: newList
+        }
+      }
+    }
   },
 };

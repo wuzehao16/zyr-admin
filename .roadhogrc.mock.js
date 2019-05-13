@@ -17,10 +17,11 @@ import { selectAllRole, deleteRole, updateRole, saveRole } from './mock/systemRo
 import { selectMemberRank, deleteMemberRank, updateMemberRank, saveMemberRank } from './mock/membership'
 import { getUser, updateUser, updatePassword, getUserDetail } from './mock/member.js'
 import { selectInstitution, updateInstitution, saveInstitution, getInstitutionDetail } from './mock/institution'
-import { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeName } from './mock/product'
+import { selectProduct, updateProduct, saveProduct, getProductDetail, getMangeName,selectMyModel } from './mock/product'
 import { selectAds, updateAds, saveAds, getAdsDetail, deleteAds } from './mock/advertisement'
 import { selectPMI,selectAllMI, updatePMI, savePMI, getPMIDetail, deletePMI } from './mock/info'
 import { selectOrder, selectOrderDetail, queryOrderByInstitution, updateOrder, deleteOrder } from './mock/order'
+import { selectModel, saveModel } from './mock/match'
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
@@ -43,7 +44,7 @@ const proxy = {
         avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
         userid: '00000001',
         userPhone:13812341234,
-        userIdentity: 0,
+        userIdentity: 1,
         userEmail:'cc@gmail.com',
       }
     },
@@ -246,6 +247,10 @@ const proxy = {
   'GET /sys/selectOrderByManageId': queryOrderByInstitution,
   'PUT /sys/updateOrderStauts': updateOrder,
   'DELETE /sys/deleteOrder/*': deleteOrder,
+  //智能匹配
+  'GET /sys/selectModelList': selectModel,
+  'GET /sys/newAddMode': saveModel,
+  'GET /sys/selecMyManagetModelinfo': selectMyModel,
 
 };
 

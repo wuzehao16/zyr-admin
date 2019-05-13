@@ -7,6 +7,7 @@ import {
 import ReactQuill from '../../components/QuillMore';
 import UploadPicture from '../../components/UploadPicture';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import UploadVideo from '../../components/UploadVideo';
 import styles from './AddInformation.less';
 
 const FormItem = Form.Item;
@@ -39,6 +40,14 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
+  changeUiType = (v) =>{
+    const { content: { columnType, column }  } = this.props;
+    const { getFieldDecorator, getFieldValue } = this.props.form;
+    var columnName = (column.data.filter(item => item.channelId ==v))[0];
+    getFieldDecorator('contentType', {
+      initialValue:columnName.uiType
+    })
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -48,7 +57,7 @@ export default class BasicForms extends PureComponent {
           payload: {
             ...values,
             // content: this.state.productIntroduction,
-            contentPic: values.contentPic.match(/ima[^\n]*Ex/)?values.contentPic.match(/ima[^\n]*Ex/)[0].slice(0,-3):values.contentPic,
+            contentPic: values.contentPic,
           },
         });
       }
@@ -65,7 +74,8 @@ export default class BasicForms extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 },
+        sm: { span: 12 },
+        md: { span: 7 },
       },
       wrapperCol: {
         xs: { span: 24 },
@@ -77,7 +87,7 @@ export default class BasicForms extends PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
     const uploadButton = (
@@ -104,7 +114,7 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请选择内容名称',
                 }],
               })(
-                <Select placeholder="请选择" onChange={this.onChange}>
+                <Select placeholder="请选择栏目分类" onChange={this.onChange}>
                   {columnTypeOptions}
                 </Select>
               )}
@@ -118,37 +128,37 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请选择栏目名称',
                 }],
               })(
-                <Select placeholder="请选择">
+                <Select placeholder="请选择栏目名称" onChange={this.changeUiType}>
                   {columnNameOptions}
                 </Select>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="标题"
+              label="栏目标题"
             >
               {getFieldDecorator('contentTitle',{
                 rules: [{
                   required: true, message: '请输入标题',
                 }],
               })(
-                <Input type="text" maxLength="20" placeholder="请输入"/>
+                <Input type="text" maxLength="20" placeholder="请输入栏目标题"/>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="简介"
+              label="栏目简介"
             >
               {getFieldDecorator('contentBrief')(
-                <Input placeholder="请输入"/>
+                <Input placeholder="请输入栏目简介"/>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="来源"
+              label="站点来源"
             >
               {getFieldDecorator('source')(
-                <Input placeholder="请输入"/>
+                <Input placeholder="请输入站点来源"/>
               )}
             </FormItem>
             <FormItem
@@ -156,7 +166,7 @@ export default class BasicForms extends PureComponent {
               label="来源网址"
             >
               {getFieldDecorator('sourceSite')(
-                <Input placeholder="请输入"/>
+                <Input placeholder="请输入来源网址"/>
               )}
             </FormItem>
             <FormItem
@@ -169,13 +179,13 @@ export default class BasicForms extends PureComponent {
                   message: "请选择是否显示"
                 }]
               })(
-                <Select placeholder="请选择">
+                <Select placeholder="请选择栏目是否显示">
                   <Option value="1">是</Option>
                   <Option value="0">否</Option>
                 </Select>
               )}
             </FormItem>
-            <FormItem
+            {/* <FormItem
               {...formItemLayout}
               label="内容类型"
             >
@@ -189,18 +199,18 @@ export default class BasicForms extends PureComponent {
                   <Option value="61000">视频</Option>
                 </Select>
               )}
-            </FormItem>
+            </FormItem> */}
             <FormItem
               {...formItemLayout}
               label="标签选择"
               style={{
-                display: getFieldValue('contentType') === '60000' ? 'block' : 'none',
+                display: getFieldValue('contentType') == '0' ? 'block' : 'none',
               }}
             >
               <div>
                 {getFieldDecorator('contentTag', {
                 })(
-                  <Select allowClear placeholder="请选择">
+                  <Select allowClear placeholder="请选择标签选择">
                     <Option value="0">荐</Option>
                     <Option value="1">热</Option>
                   </Select>
@@ -209,10 +219,10 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="排序"
+              label="栏目排序"
             >
               {getFieldDecorator('contentSort')(
-                <Input min={1} max={10000} type="number" placeholder="请输入"/>
+                <Input min={1} max={10000} type="number" placeholder="请输入栏目排序"/>
               )}
             </FormItem>
             <FormItem
@@ -230,38 +240,55 @@ export default class BasicForms extends PureComponent {
               )}
 
             </FormItem>
+            {
+              getFieldValue('contentType') == 1
+                ?             <FormItem
+                              label="栏目视频"
+                              {...formItemLayout}
+                            >
+                              {getFieldDecorator('content', {
+                                rules:[{
+                                  required:true,
+                                  message:'请选择视频'
+                                },
+                               ],
+                              })(
+                                 <UploadVideo />
+                              )}
 
-            <Form.Item
-              labelCol= {{
-                xs: { span: 24 },
-                sm: { span: 7 },
-              }}
-              wrapperCol={{
-                xs: { span: 24, offset: 0 },
-                sm: { span: 24, offset: 7 },
-              }}
-              style={{width:'60%'}}
-               >
-                 {getFieldDecorator('content', {
-                   rules:[{
-                     required:true,
-                     message:'请输入内容'
-                   },
-                  ],
-                 })(
-                   <ReactQuill
-                     placeholder='请输入...'
-                   />
-                 )}
+                            </FormItem>:<Form.Item
+                                          labelCol= {{
+                                            xs: { span: 24 },
+                                            sm: { span: 7 },
+                                          }}
+                                          wrapperCol={{
+                                            xs: { span: 24, offset: 0 },
+                                            sm: { span: 24, offset: 16},
+                                          }}
+                                          style={{width:'43%'}}
+                                           >
+                                             {getFieldDecorator('content', {
+                                               rules:[{
+                                                 required:true,
+                                                 message:'请输入内容'
+                                               },
+                                              ],
+                                             })(
+                                               <ReactQuill
+                                                 placeholder='请输入...'
+                                               />
+                                             )}
 
-            </Form.Item>
+                                        </Form.Item>
+            }
+
 
 
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content/information'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/content/information'))}>
                 返回
               </Button>
             </FormItem>

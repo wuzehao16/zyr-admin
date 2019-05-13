@@ -7,6 +7,7 @@ import {
 import ReactQuill from '../../components/QuillMore';
 import UploadPicture from '../../components/UploadPicture';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import UploadVideo from '../../components/UploadVideo';
 import styles from './AddInformation.less';
 
 const FormItem = Form.Item;
@@ -23,32 +24,32 @@ export default class BasicForms extends PureComponent {
   state = {
     productIntroduction: '',
   }
+
   componentDidMount() {
     const { content: { item }, dispatch } = this.props;
     const { getFieldDecorator } = this.props.form;
-    getFieldDecorator('contentId', {
-      initialValue: item.contentId,
-    })
+    const id = this.props.match.params.id;
+    dispatch({
+      type: 'content/fetchDetail',
+      payload: {
+        contentId: id,
+      },
+    });
     dispatch({
       type: 'content/fetchColumnType',
       payload: {
         type: 'chaClassify'
       }
     });
-    // if (item.content) {
+    // if (item.contentPic) {
     //   this.setState({
-    //     productIntroduction: item.content,
+    //     fileList:[{
+    //       uid:-1,
+    //       name:"xxx.png",
+    //       url: item.contentPic
+    //     }]
     //   })
     // }
-    if (item.contentPic) {
-      this.setState({
-        fileList:[{
-          uid:-1,
-          name:"xxx.png",
-          url: item.contentPic
-        }]
-      })
-    }
   }
   onChange = (value) =>{
     this.props.dispatch({
@@ -58,11 +59,15 @@ export default class BasicForms extends PureComponent {
       }
     });
   }
-  // productIntroduction = (value) => {
-  //    this.setState({
-  //      productIntroduction: value,
-  //    })
-  //  };
+
+  changeUiType = (v) =>{
+    const { content: { columnType, column }  } = this.props;
+    const { setFieldsValue, getFieldValue } = this.props.form;
+    var columnName = (column.data.filter(item => item.channelId ==v))[0];
+    setFieldsValue({
+      contentType:columnName.uiType
+    })
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -72,7 +77,8 @@ export default class BasicForms extends PureComponent {
           payload: {
             ...values,
             // content: this.state.productIntroduction,
-            contentPic: values.contentPic.match(/ima[^\n]*Ex/)?values.contentPic.match(/ima[^\n]*Ex/)[0].slice(0,-3):values.contentPic,
+            contentPic: values.contentPic,
+            contentId:this.props.content.item.contentId
           },
         });
       }
@@ -82,7 +88,6 @@ export default class BasicForms extends PureComponent {
   render() {
     const { content: { columnType, column, item }, submitting, dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-
     if (column.data) {
       var columnNameOptions = column.data.map(item => <Option key={item.channelId} value={item.channelId}>{item.channelName}</Option>);
     }
@@ -90,6 +95,7 @@ export default class BasicForms extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
+        sm: { span: 12 },
         sm: { span: 7 },
       },
       wrapperCol: {
@@ -102,7 +108,7 @@ export default class BasicForms extends PureComponent {
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
     const uploadButton = (
@@ -145,14 +151,14 @@ export default class BasicForms extends PureComponent {
                   required: true, message: '请选择栏目名称',
                 }],
               })(
-                <Select placeholder="请选择">
+                <Select placeholder="请选择" onChange={this.changeUiType}>
                   {columnNameOptions}
                 </Select>
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="标题"
+              label="栏目标题"
             >
               {getFieldDecorator('contentTitle',{
                 initialValue: item.contentTitle,
@@ -165,7 +171,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="简介"
+              label="栏目简介"
             >
               {getFieldDecorator('contentBrief',{
                 initialValue: item.contentBrief,
@@ -175,7 +181,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="来源"
+              label="站点来源"
             >
               {getFieldDecorator('source',{
                 initialValue: item.source,
@@ -209,6 +215,7 @@ export default class BasicForms extends PureComponent {
             <FormItem
               {...formItemLayout}
               label="内容类型"
+              style={{display:'none'}}
             >
               {getFieldDecorator('contentType', {
                 initialValue: item.contentType,
@@ -217,8 +224,8 @@ export default class BasicForms extends PureComponent {
                 }],
               })(
                 <Select placeholder="请选择">
-                  <Option value="60000">图文</Option>
-                  <Option value="61000">视频</Option>
+                  <Option value="0">图文</Option>
+                  <Option value="1">视频</Option>
                 </Select>
               )}
             </FormItem>
@@ -226,7 +233,7 @@ export default class BasicForms extends PureComponent {
               {...formItemLayout}
               label="标签选择"
               style={{
-                display: getFieldValue('contentType') === '60000' ? 'block' : 'none',
+                display: getFieldValue('contentType') === '0' ? 'block' : 'none',
               }}
             >
               <div>
@@ -234,6 +241,7 @@ export default class BasicForms extends PureComponent {
                   initialValue: item.contentTag,
                 })(
                   <Select allowClear placeholder="请选择">
+                    <Option value="">无</Option>
                     <Option value="0">荐</Option>
                     <Option value="1">热</Option>
                   </Select>
@@ -242,7 +250,7 @@ export default class BasicForms extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="排序"
+              label="栏目排序"
             >
               {getFieldDecorator('contentSort',{
                 initialValue: item.contentSort,
@@ -266,54 +274,59 @@ export default class BasicForms extends PureComponent {
                  <UploadPicture />
               )}
             </FormItem>
-            {/* <Form.Item
-              labelCol= {{
-                xs: { span: 24 },
-                sm: { span: 7 },
-              }}
-              wrapperCol={{
-                xs: { span: 24, offset: 0 },
-                sm: { span: 24, offset: 7 },
-              }}
-              style={{width:'60%'}}
-               >
-               <ReactQuill
-                 defaultValue={item.content}
-                 value={this.state.productIntroduction}
-                 onChange={this.productIntroduction}
-                 placeholder='请输入...'
-               />
-            </Form.Item> */}
-            <Form.Item
-              labelCol= {{
-                xs: { span: 24 },
-                sm: { span: 7 },
-              }}
-              wrapperCol={{
-                xs: { span: 24, offset: 0 },
-                sm: { span: 24, offset: 7 },
-              }}
-              style={{width:'60%'}}
-               >
-                 {getFieldDecorator('content', {
-                   initialValue: item.content,
-                   valuePropName: "defaultValue",
-                   rules:[{
-                     required:true,
-                     message:'请输入内容'
-                   },
-                  ],
-                 })(
-                   <ReactQuill
-                     placeholder='请输入...'
-                   />
-                 )}
-            </Form.Item>
+            {
+              getFieldValue('contentType') == 1
+                ?             <FormItem
+                              label="视频"
+                              {...formItemLayout}
+                            >
+                              {getFieldDecorator('content', {
+                                initialValue: item.content,
+                                valuePropName: "fileList",
+                                rules:[{
+                                  required:true,
+                                  message:'请选择视频'
+                                },
+                               ],
+                              })(
+                                 <UploadVideo />
+                              )}
+
+                            </FormItem>: null
+            }
+            {
+              getFieldValue('contentType') == 0
+                ?        <Form.Item
+                          labelCol= {{
+                            xs: { span: 24 },
+                            sm: { span: 7 },
+                          }}
+                          wrapperCol={{
+                            xs: { span: 24, offset: 0 },
+                            sm: { span: 24, offset: 16 },
+                          }}
+                          style={{width:'43%'}}
+                           >
+                             {getFieldDecorator('content', {
+                               initialValue: item.content,
+                               valuePropName: "defaultValue",
+                               rules:[{
+                                 required:true,
+                                 message:'请输入内容'
+                               },
+                              ],
+                             })(
+                               <ReactQuill
+                                 placeholder='请输入...'
+                               />
+                             )}
+                        </Form.Item>: null
+            }
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/content/information'))}>
+              <Button style={{ marginLeft: 50}} onClick={() => dispatch(routerRedux.push('/content/information'))}>
                 返回
               </Button>
             </FormItem>

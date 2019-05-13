@@ -1,7 +1,6 @@
 {
   "entry": "src/index.js",
   "extraBabelPlugins": [
-    "transform-decorators-legacy",
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }]
   ],
   "env": {
@@ -19,14 +18,14 @@
   "publicPath": "/",
   "hash": true,
   "proxy": {
-     "/sysAnno/*": {
-       "target": "http://47.104.27.184:8000"
+     "/sysAnno1/*": {
+       "target": "http://192.168.2.105:8000"
      },
-     "/sys/*": {
-       "target": "http://47.104.27.184:8000"
+     "/sys1/*": {
+       "target": "http://192.168.2.105:8000"
      },
-     "/module/*": {
-       "target": "http://47.104.27.184:8000"
+     "/module1/*": {
+       "target": "http://192.168.2.105:8000"
      }
    }
 }

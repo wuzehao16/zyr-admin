@@ -16,28 +16,6 @@ const CheckboxGroup = Checkbox.Group;
   submitting: loading.effects['systemUser/update'],
 }))
 @Form.create({
-  // mapPropsToFields(props) {
-  //   console.log('mapPropsToFields', props);
-  //   const item = props.data.data.item;
-  //   console.log(item.loginAccount)
-  //   return {
-  //     loginAccount: Form.createFormField(item.loginAccount),
-  //     loginPassord: Form.createFormField(item.loginPassord),
-  //     userName: Form.createFormField(item.userNames),
-  //     islock: Form.createFormField(item.islock),
-  //     userId: Form.createFormField(item.islock),
-  //   };
-  // },
-  // onFieldsChange(props, fields) {
-  //   console.log('onFieldsChange', fields);
-  //   props.dispatch({
-  //     type: 'save_fields',
-  //     payload: fields,
-  //   });
-  // },
-  //  onValuesChange(_, values) {
-  //   console.log(values);
-  // },
 })
 export default class BasicForms extends PureComponent {
   componentWillMount() {
@@ -73,21 +51,20 @@ export default class BasicForms extends PureComponent {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        if (values.sysRoles) {
-          values.sysRoles.map((item, index, arr) => {
+        var newValues = [];
+          newValues = JSON.parse(JSON.stringify(values))
+          newValues.sysRoles.map((item, index, arr) => {
             arr[index] = { roleId: item };
           });
-        }
+
         this.props.dispatch({
           type: 'systemUser/update',
-          payload: values,
+          payload: newValues,
         });
       }
     });
   }
-  onChange = (value) => {
-    console.log(value);
-  }
+
   render() {
     const { submitting, data:{ data}, data:{ data: { item } },  dispatch } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -98,19 +75,20 @@ export default class BasicForms extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 },
+        sm: { span: 12 },
+        md: { span: 8 },
       },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 },
-        md: { span: 10 },
+        md: { span: 8 },
       },
     };
 
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 10, offset: 10 },
       },
     };
 
@@ -183,7 +161,7 @@ export default class BasicForms extends PureComponent {
               label="用户权限"
             >
               {getFieldDecorator('sysRoles')(
-                <CheckboxGroup onChange={this.onChange} >
+                <CheckboxGroup  >
                   {RoleOptions}
                 </CheckboxGroup>
 
@@ -193,7 +171,7 @@ export default class BasicForms extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 提交
               </Button>
-              <Button style={{ marginLeft: 16 }} onClick={() => dispatch(routerRedux.push('/system/user'))}>
+              <Button style={{ marginLeft: 50 }} onClick={() => dispatch(routerRedux.push('/system/user'))}>
                 返回
               </Button>
             </FormItem>

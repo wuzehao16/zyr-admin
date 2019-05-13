@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { add, query, queryDetail, update, updateAprovalStatus, updateShelvesStatus, queryManage } from '../services/product';
+import { add, query,queryModel, queryDetail, update, updateAprovalStatus, updateShelvesStatus, queryManage, remove } from '../services/product';
 import { queryDict } from '../services/api';
 import { getInstitution, getSubInstitution } from '../services/register'
 
@@ -10,20 +10,42 @@ export default {
   state: {
     data: {
       data: [],
-      pagination: {},
+      pagination: "",
     },
-    item: {},
+    item: {
+      applyFlow:""
+    },
     city: [],
     intRange: [],
     audit: [],
     institutionType: [],
-    step:{},
+    step:{
+      productType:[],
+      productIntroduction: '',
+      basieReq: '',
+      creditReq: '',
+      positonCount: '',
+      claims:'',
+      otherReq: '',
+      step1: '',
+      step2: '',
+      step3: '',
+      step4: '',
+      step5: '',
+      step6: '',
+      applyFlow:"",
+    },
+    item:{
+      applyFlow:''
+    },
     prodCategory: [],
     propCategory: [],
     cusCategory: [],
     repMethod: [],
     prodFeatures: [],
     institutionList:[],
+    ModelList1:[],//信用贷
+    ModelList2:[],//抵押
   },
 
   effects: {
@@ -33,6 +55,39 @@ export default {
         type: 'save',
         payload: response,
       });
+    },
+    *fetchModel1({ payload }, { call, put }) {
+      const response = yield call(queryModel, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          ModelList1: response.data
+        },
+      });
+    },
+    *fetchModel2({ payload }, { call, put }) {
+      const response = yield call(queryModel, payload);
+      yield put({
+        type: 'saveThing',
+        payload: {
+          ModelList2: response.data
+        },
+      });
+    },
+    *remove({ payload, callback }, { call, put }) {
+      const response = yield call(remove, payload);
+      if (response.code === 0) {
+        message.success('删除成功');
+      } else {
+        message.error(response.msg)
+        return
+      }
+      const list = yield call(query);
+      yield put({
+        type: 'save',
+        payload: list,
+      });
+      if (callback) callback();
     },
     *fetchInstitutionType({ payload }, { call, put }) {
       const response = yield call(queryDict, payload);
@@ -70,6 +125,19 @@ export default {
       const response = yield call(update, payload);
       if (response.code === 0) {
         message.success('提交成功');
+        yield put({
+          type: 'removeStepFormDate',
+        });
+      } else {
+        message.error(response.msg)
+        return
+      }
+      yield put(routerRedux.push('/product'));
+    },
+    *updateAprovalStatus({ payload }, { call, put }) {
+      const response = yield call(updateAprovalStatus, payload);
+      if (response.code === 0) {
+        message.success('提交成功');
       } else {
         message.error(response.msg)
         return
@@ -93,7 +161,7 @@ export default {
     *fetchEdit({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
       yield put({
-        type: 'saveDetail',
+        type: 'saveEdit',
         payload: response.data,
       });
       yield put(routerRedux.push('/product/edit'));
@@ -104,7 +172,6 @@ export default {
         type: 'saveDetail',
         payload: response.data,
       });
-      yield put(routerRedux.push('/product/Detail'));
     },
     *fetchReview({payload}, { call, put }) {
       const response = yield call(queryDetail, payload);
@@ -159,15 +226,6 @@ export default {
         },
       });
     },
-    *fetchCusCategory({ payload }, { call, put }) {
-      const response = yield call(queryDict, payload);
-      yield put({
-        type: 'saveThing',
-        payload: {
-          cusCategory: response.data
-        },
-      });
-    },
     *fetchRepMethod({ payload }, { call, put }) {
       const response = yield call(queryDict, payload);
       yield put({
@@ -196,11 +254,17 @@ export default {
       });
     },
     *submitStepForm({ payload }, { call, put }) {
-      yield call(add, payload);
-      yield put({
-        type: 'saveStepFormData',
-        payload,
-      });
+      const response = yield call(add, payload);
+      if (response.code === 0) {
+        message.success('新增成功');
+        yield put({
+          type: 'removeStepFormDate',
+        });
+      } else {
+        message.error(response.msg)
+        return
+      }
+
       yield put(routerRedux.push('/product'));
     },
   },
@@ -221,6 +285,26 @@ export default {
         },
       };
     },
+    removeStepFormDate(state, { payload }) {
+      return {
+        ...state,
+        step:{
+          productType:[],
+          productIntroduction: '',
+          basieReq: '',
+          creditReq: '',
+          positonCount: '',
+          claims:'',
+          otherReq: '',
+          step1: '',
+          step2: '',
+          step3: '',
+          step4: '',
+          step5: '',
+          step6: '',
+        },
+      };
+    },
     saveThing(state, action) {
       return {
         ...state,
@@ -229,7 +313,19 @@ export default {
     },
     updateShelves(state, action) {
       const updateProduct = action.payload;
-      const newList = state.data.data.map(product => product.productId == updateProduct.productId ? {...product, ...updateProduct} : product);
+      // const newList = state.data.data.map(product => product.productId == updateProduct.productId ? {...product, ...updateProduct,} : product);
+      //处理跟新之后吧数据移动到第一位，以及更新时间
+      const newList = state.data.data;
+      var a = {};
+      for (var i = 0; i < newList.length; i++) {
+          if (newList[i].productId == updateProduct.productId) {
+            a =  newList.splice(i, 1)[0];
+            Object.assign(a,{shelfState:updateProduct.shelfState})
+            a.updateTime = new Date()
+            break;
+          }
+        }
+        newList.unshift(a);
       return {
         ...state,
         data:{
@@ -253,6 +349,12 @@ export default {
       return {
         ...state,
         institutionType: action.payload,
+      };
+    },
+    saveEdit(state, action) {
+      return {
+        ...state,
+        step: action.payload,
       };
     },
     saveDetail(state, action) {

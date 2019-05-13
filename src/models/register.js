@@ -20,7 +20,6 @@ export default {
       message.success('提交成功');
     },
     *submitStep1Form({ payload }, { call, put }) {
-      console.log(payload)
       const response = yield call(msgPhone, payload);
       if(response.code == 0){
         message.success('发送成功');
@@ -90,7 +89,7 @@ export default {
     *submitStep2Form({ payload }, { call, put }) {
       const response = yield call(validataPhone, payload);
       if(response.code == 0){
-        message.success('发送成功');
+        // message.success('发送成功');
       } else{
         message.error(response.msg);
         return
@@ -107,7 +106,7 @@ export default {
     *submitStep4Form({ payload }, { call, put }) {
       const response = yield call(register, payload);
       if(response.code == 0){
-        message.success('发送成功');
+        // message.success('发送成功');
       } else{
         message.error(response.msg);
         return
