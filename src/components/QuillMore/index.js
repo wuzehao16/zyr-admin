@@ -80,7 +80,7 @@ class Editor extends React.Component {
       formData.append('file', file, file.name);
 
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://back.ibankmatch.com:8000/sysAnno/uploadImage', true);
+      xhr.open('POST', `${location.origin}/sysAnno/uploadImage`, true);
       xhr.onload = function() {
         if (xhr.status === 200) {
           const url = JSON.parse(xhr.responseText).data;
